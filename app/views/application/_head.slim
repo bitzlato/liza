@@ -14,14 +14,14 @@ meta name="turbolinks-cache-control" content="no-preview"
 
 = stylesheet_link_tag 'https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css', media: 'all'
 
-= javascript_tag "https://code.jquery.com/jquery-3.3.1.slim.min.js"
-= javascript_tag "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+= javascript_include_tag "https://code.jquery.com/jquery-3.3.1.slim.min.js"
+= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 
 = stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
-= javascript_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
+= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
 
-= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+-#= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+-# = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 /! IE Polyfill for CSS Elements
 /! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
 /[if lt IE 9]

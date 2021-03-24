@@ -1,1 +1,13 @@
-h1 Welcome!
+.container
+  h1 Анализ изменения обязательств за период
+  hr
+  = simple_form_for liability_form, url: '/' do |f|
+    .row
+      .col-md-1 От
+      .col-md-4
+        = f.input :time_from, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year
+      .col-md-1 До
+      .col-md-4
+        = f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year
+      .col-md-2
+        = f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'

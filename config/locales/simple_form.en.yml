@@ -1,0 +1,17 @@
+en:
+  simple_form:
+    required:
+      mark: "*"
+      text: required
+    'yes': 'Yes'
+    'no': 'No'
+    error_notification:
+      blank: Must be presented
+      default_message: 'Please review the problems below:'
+    placeholders:
+      board:
+        title: My project tasks
+    hints:
+      report_liability_form:
+        time_from: Дата от
+        time_to: Дата до

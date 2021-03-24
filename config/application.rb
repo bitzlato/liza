@@ -1,6 +1,8 @@
 require_relative "boot"
 
-require "rails/all"
+require File.expand_path('../boot', __FILE__)
+ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -18,5 +20,9 @@ module Liza
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_paths += Dir[
+      "#{Rails.root}/app/reports",
+      "#{Rails.root}/app/inputs",
+    ]
   end
 end

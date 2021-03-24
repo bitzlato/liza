@@ -1,6 +1,6 @@
 defaults: &defaults
   signin_url: /signin
   root_prefix: /liza
-
+  start_year: 2021
 development:
   <<: *defaults
