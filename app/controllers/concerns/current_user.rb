@@ -3,6 +3,13 @@ module CurrentUser
 
   included do
     helper_method :current_user
+    before_action :authenticate!
+  end
+
+  private
+
+  def authenticate!
+    redirect_to Settings.signin_url unless current_user.present?
   end
 
   def current_user
@@ -11,10 +18,16 @@ module CurrentUser
 
   def load_current_user
     # jwt.payload provided by rack-jwt
-    raise 'No JWT payload to authenticate' unless request.env.key?('jwt.payload')
+    unless request.env.key?('jwt.payload')
+      Rails.logger.error 'No JWT payload to authenticate'
+      return
+    end
 
     payload = request.env['jwt.payload'].symbolize_keys
-    raise "Wrong user state (#{payload[:state]})" unless payload[:state] == 'active'
+    unless payload[:state] == 'active'
+      Rails.logger.warn "Wrong user state (#{payload[:state]})"
+      return
+    end
 
     Member.find_by(uid: payload[:uid])
   end
