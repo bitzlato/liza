@@ -1,0 +1,14 @@
+{
+  "application.js": "/liza/packs/js/application-f97658b5751435ce1d8e.js",
+  "application.js.map": "/liza/packs/js/application-f97658b5751435ce1d8e.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/liza/packs/js/application-f97658b5751435ce1d8e.js"
+      ],
+      "js.map": [
+        "/liza/packs/js/application-f97658b5751435ce1d8e.js.map"
+      ]
+    }
+  }
+}
