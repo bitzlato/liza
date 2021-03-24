@@ -232,6 +232,7 @@ GEM
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
     semver2 (3.4.2)
+    settingslogic (2.0.9)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -310,6 +311,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   semver2 (~> 3.4)
+  settingslogic
   simple_form
   slim-rails
   spring

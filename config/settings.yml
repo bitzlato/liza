@@ -1,0 +1,6 @@
+defaults: &defaults
+  signin_url: /signin
+  root_prefix: /liza
+
+development:
+  <<: *defaults
