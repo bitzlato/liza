@@ -1,0 +1,19 @@
+h1 Listing withdraws
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @withdraws.each do |withdraw|
+      tr
+        td = link_to 'Show', withdraw
+        td = link_to 'Edit', edit_withdraw_path(withdraw)
+        td = link_to 'Destroy', withdraw, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Withdraw', new_withdraw_path
