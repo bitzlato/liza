@@ -20,6 +20,9 @@ meta name="turbolinks-cache-control" content="no-preview"
 = stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
 = javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
 
+= stylesheet_link_tag :application, 'data-turbolinks-track' => :reload, :media => "all"
+= javascript_include_tag :application, 'data-turbolinks-track' => :reload
+
 -#= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
 -# = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 /! IE Polyfill for CSS Elements
