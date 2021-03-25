@@ -75,5 +75,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "semver2", "~> 3.4"
-
 gem "gravatarify", "~> 3.1"
+gem "title", "~> 0.0.8"

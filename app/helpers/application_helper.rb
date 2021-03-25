@@ -1,6 +1,6 @@
 module ApplicationHelper
   def app_title
-    'LIZA'
+    I18n.t 'titles.application'
   end
 
   def format_money(amount, currency_id)

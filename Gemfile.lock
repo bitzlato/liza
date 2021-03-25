@@ -267,6 +267,9 @@ GEM
     temple (0.8.2)
     thor (1.1.0)
     tilt (2.0.10)
+    title (0.0.8)
+      i18n
+      rails (>= 3.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -331,6 +334,7 @@ DEPENDENCIES
   simple_form
   slim-rails
   spring
+  title (~> 0.0.8)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
