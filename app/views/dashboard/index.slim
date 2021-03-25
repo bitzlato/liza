@@ -1,30 +1,40 @@
-.container
-  h1 Анализ изменения обязательств за период
-  hr
-  = simple_form_for liability_form, url: reports_url do |f|
-    .row
-      .col-md-1 От
-      .col-md-4
-        = f.input :time_from, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
-      .col-md-1 До
-      .col-md-4
-        = f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
-      .col-md-2
-        = f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'
+h1 Анализ изменения обязательств за период
+hr
+= simple_form_for liability_form, url: reports_url do |f|
+  .row
+    .col-md-1 От
+    .col-md-4
+      = f.input :time_from, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
+    .col-md-1 До
+    .col-md-4
+      = f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
+    .col-md-2
+      = f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'
 
-  table.table.table-condensed.table-narrow
-    thead
+table.table.table-condensed.table-striped
+  thead.thead-dark
+    tr
+      th Валюта
+      th.text-right Торговых счетов
+      th.text-right Введено
+      th.text-right Выведено
+      th.text-right title="(Введено - Выведено)" Ожидаемый баланс на счетах 
+      th.text-right title="(Доступно + Залочено)" Балансы на счетах
+      th.text-right Доступно на счетах
+      th.text-right Залочено на счетах
+        
+  tbody
+    - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
+      - currency_id = row[0]
       tr
-        th Валюта
-        th.text-right Счетов
-        th.text-right Баланс
-        th.text-right Залочено
-        th.text-right Сумма
-    tbody
-      - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
-        tr
-          th= row[0]
-          td.text-right= row[3]
-          td.text-right= format_money row[1], row[0]
-          td.text-right= format_money row[2], row[0]
-          td.text-right= format_money row[1] + row[2], row[0]
+        th= format_currency currency_id
+        - total_deposit = Deposit.completed.where(currency_id: currency_id).sum(:amount)
+        - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
+        td.text-right= link_to row[3], accounts_path(currency_id: currency_id)
+        td.text-right= format_money total_deposit, currency_id
+        td.text-right= format_money total_withdraw, currency_id
+        td.text-right= format_money total_deposit - total_withdraw, currency_id
+        td.text-right= format_money row[1] + row[2], currency_id, compare_amounts(total_deposit - total_withdraw, row[1] + row[2])
+        td.text-right= format_money row[1], currency_id
+        td.text-right= format_money row[2], currency_id
+

@@ -14,6 +14,7 @@ class Deposit < ApplicationRecord
 
   belongs_to :currency, required: true
   belongs_to :member, required: true
+  scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
 
   enumerize :aasm_state, in: STATES, predicates: true
 
