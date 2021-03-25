@@ -11,3 +11,20 @@
         = f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
       .col-md-2
         = f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'
+
+  table.table.table-condensed.table-narrow
+    thead
+      tr
+        th Валюта
+        th.text-right Счетов
+        th.text-right Баланс
+        th.text-right Залочено
+        th.text-right Сумма
+    tbody
+      - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
+        tr
+          th= row[0]
+          td.text-right= row[3]
+          td.text-right= format_money row[1], row[0]
+          td.text-right= format_money row[2], row[0]
+          td.text-right= format_money row[1] + row[2], row[0]
