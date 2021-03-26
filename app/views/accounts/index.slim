@@ -2,15 +2,6 @@
 h1= Account.model_name.human
 hr
 table.table.table-striped.table-hover
-  thead.thead-light
-    tr
-      th.text-right colspan=2 Итого
-      th.text-right= format_money currency.total_completed_deposits, currency
-      th.text-right= format_money currency.total_completed_withdraws, currency
-      th.text-right= format_money currency.estimated_amount, currency
-      th.text-right= format_money total_balance + total_locked, currency
-      th.text-right= format_money total_balance, currency
-      th.text-right= format_money total_locked, currency
   thead.thead-dark
     tr 
       th Владелец
@@ -18,14 +9,27 @@ table.table.table-striped.table-hover
       th.text-right Введено
       th.text-right Выведено
       th.text-right 
-        div Баланс счета по вводу-выводу
+        div Расчетный баланс
         = column_tip 'Введено - Выведено'
+      th.text-right
+        div Расхождение балансов
+        = column_tip 'Расчетный - фактический'
       th.text-right 
         div Актуальный баланс счета
         = column_tip 'Доступно + Заблокировано'
       th.text-right Доступно
       th.text-right Заблокировано
   tbody
+    tr
+      th Итого
+      td 
+      td.text-right= format_money currency.total_completed_deposits, currency
+      td.text-right= format_money currency.total_completed_withdraws, currency
+      td.text-right= format_money currency.estimated_amount, currency
+      td.text-right= format_divergence currency.estimated_amount - (total_balance + total_locked), currency
+      td.text-right= format_money total_balance + total_locked, currency
+      td.text-right= format_money total_balance, currency
+      td.text-right= format_money total_locked, currency
     - accounts.each do |account|
       tr
         td
@@ -35,6 +39,7 @@ table.table.table-striped.table-hover
         td.text-right= format_money account.total_deposit_amount, account.currency_id
         td.text-right= format_money account.total_withdraw_amount, account.currency_id
         td.text-right= format_money account.estimated_amount, account.currency_id
-        td.text-right= format_money account.amount, account.currency_id, compare_amounts(account.estimated_amount, account.amount)
+        td.text-right= format_divergence account.estimated_amount - account.amount, account.currency_id
+        td.text-right= format_money account.amount, account.currency_id
         td.text-right= format_money account.balance, account.currency_id
         td.text-right= format_money account.locked, account.currency_id

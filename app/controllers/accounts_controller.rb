@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  layout 'fluid'
+
   def index
     currency = Currency.find(params[:currency_id])
     accounts = Account

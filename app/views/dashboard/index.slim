@@ -15,12 +15,15 @@ table.table.table-condensed.table-striped
   thead.thead-dark
     tr
       th Валюта
-      th.text-right Торговых счетов
+      th.text-right Торговые счета
       th.text-right Введено
       th.text-right Выведено
       th.text-right
-        div Ожидаемый баланс на счетах
+        div Расчётный баланс на счетах
         = column_tip 'Введено - Выведено'
+      th.text-right
+        div Расхождение балансов
+        = column_tip 'Расчетный - фактический'
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
@@ -38,7 +41,8 @@ table.table.table-condensed.table-striped
         td.text-right= format_money total_deposit, currency_id
         td.text-right= format_money total_withdraw, currency_id
         td.text-right= format_money total_deposit - total_withdraw, currency_id
-        td.text-right= format_money row[1] + row[2], currency_id, compare_amounts(total_deposit - total_withdraw, row[1] + row[2])
+        td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]), currency_id
+        td.text-right= format_money row[1] + row[2], currency_id
         td.text-right= format_money row[1], currency_id
         td.text-right= format_money row[2], currency_id
 
