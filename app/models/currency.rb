@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 class Currency < ApplicationRecord
+  extend Memoist
 
   attr_readonly :id,
                 :type,
@@ -58,5 +59,20 @@ class Currency < ApplicationRecord
 
   def subunits
     Math.log(base_factor, 10).round
+  end
+
+
+  def total_completed_deposits
+    Deposit.completed.where(currency_id: id).sum(:amount)
+  end
+  memoize :total_completed_deposits
+
+  def total_completed_withdraws
+    Withdraw.completed.where(currency_id: id).sum(:amount)
+  end
+  memoize :total_completed_withdraws
+
+  def estimated_amount
+    total_completed_deposits - total_completed_withdraws
   end
 end

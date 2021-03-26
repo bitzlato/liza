@@ -3,6 +3,6 @@
 //= require better-dom
 //= require better-dateinput-polyfill/dist/better-dateinput-polyfill.min.js
 
-$(function () {
-  $('[title]').tooltip()
+document.addEventListener("turbolinks:load", function() {
+  $('[data-toggle="tooltip"]').tooltip()
 })

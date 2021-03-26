@@ -42,6 +42,7 @@ gem 'settingslogic'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'aasm', '~> 5.0.8'
 gem 'enumerize'
+gem 'memoist'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

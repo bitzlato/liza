@@ -1,15 +1,15 @@
 h1 Анализ изменения обязательств за период
 hr
-= simple_form_for liability_form, url: reports_url do |f|
-  .row
-    .col-md-1 От
-    .col-md-4
-      = f.input :time_from, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
-    .col-md-1 До
-    .col-md-4
-      = f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
-    .col-md-2
-      = f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'
+/= simple_form_for liability_form, url: reports_url do |f|
+  /.row
+    /.col-md-1 От
+    /.col-md-4
+      /= f.input :time_from, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
+    /.col-md-1 До
+    /.col-md-4
+      /= f.input :time_to, as: :date, label: false, start_year: Settings.start_year, end_year: Date.today.year, html5: true, required: true
+    /.col-md-2
+      /= f.button :submit, 'Сгенерировать отчёт', class: 'btn btn-primary'
 
 table.table.table-condensed.table-striped
   thead.thead-dark
@@ -18,10 +18,14 @@ table.table.table-condensed.table-striped
       th.text-right Торговых счетов
       th.text-right Введено
       th.text-right Выведено
-      th.text-right title="(Введено - Выведено)" Ожидаемый баланс на счетах 
-      th.text-right title="(Доступно + Залочено)" Балансы на счетах
+      th.text-right
+        div Ожидаемый баланс на счетах
+        = column_tip 'Введено - Выведено'
+      th.text-right 
+        div Балансы на счетах
+        = column_tip 'Доступно + Заблокировано'
       th.text-right Доступно на счетах
-      th.text-right Залочено на счетах
+      th.text-right Заблокировано на счетах
         
   tbody
     - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
