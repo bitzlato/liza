@@ -7,8 +7,8 @@ module ApplicationHelper
     content_tag :small, buffer, class: 'text-small text-monospace text-nowrap'
   end
 
-  def back_link
-    link_to '&larr; назад на глаавную'.html_safe, root_url
+  def back_link(url = nil)
+    link_to '&larr; назад на глаавную'.html_safe, url || root_url
   end
 
   def format_divergence(amount, currency)
@@ -36,6 +36,6 @@ module ApplicationHelper
   end
 
   def format_currency(currency_id)
-    content_tag :span, currency_id, class: 'text-uppercase text-monospace'
+    content_tag :span, currency_id.to_param, class: 'text-uppercase text-monospace'
   end
 end

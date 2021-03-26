@@ -1,0 +1,49 @@
+.py-3= back_link accounts_url(currency_id: account.currency)
+h1= '#' + account.id.to_s
+hr
+table.table.table-narrow
+  tbody
+    tr
+      th Member
+      td
+        = account.member.uid
+        .text-muted.text-small= account.member.email
+      th Currency
+      td= format_currency account.currency
+
+
+.row
+  .col-md-6
+    table.table.table-striped.table-hover.table-narrow
+      thead.thead-dark
+        tr
+          th.text-right
+            div Фактический баланс
+            = column_tip 'Доступные + Заблокировано'
+          th.text-right Доступные средства
+          th.text-right Заблокировано
+      tbody
+        tr
+          td.text-right= format_money account.amount, account.currency
+          td.text-right= format_money account.balance, account.currency
+          td.text-right= format_money account.locked, account.currency
+  .col-md-6
+
+    table.table.table-striped.table-hover.table-narrow
+      thead.thead-dark
+        tr
+          th 
+            div Расчетный баланс
+            = column_tip 'Введено - Выведено'
+          th Введено
+          th Выведено
+          th.text-right 
+            div Расхождение балансов
+            = column_tip 'Расчетный - фактический'
+      tbody
+        tr
+          td.text-right= format_money account.estimated_amount, account.currency
+          td.text-right= format_money account.total_deposit_amount, account.currency
+          td.text-right= format_money account.total_withdraw_amount, account.currency
+          td.text-right= format_divergence account.estimated_amount - account.amount, account.currency_id
+

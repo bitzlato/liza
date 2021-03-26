@@ -13,4 +13,8 @@ class AccountsController < ApplicationController
       total_locked: accounts.sum(:locked)
     }
   end
+
+  def show
+    render locals: { account: Account.find(params[:id]) }
+  end
 end

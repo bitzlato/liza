@@ -9,7 +9,6 @@ class Account < ApplicationRecord
   has_many :deposits, -> { order(id: :desc) }, through: :member
   has_many :beneficiaries, -> { order(id: :desc) }, through: :member
 
-
   scope :visible, -> { joins(:currency).merge(Currency.where(visible: true)) }
   scope :ordered, -> { joins(:currency).order(position: :asc) }
 

@@ -17,3 +17,10 @@
 code {
   color: inherit;
 }
+.table-narrow {
+  width: auto;
+}
+
+.table thead th {
+  vertical-align: top;
+}
