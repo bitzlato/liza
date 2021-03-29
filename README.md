@@ -1,24 +1,31 @@
-# README
+# LIZA is accountant reporter for Peatio
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Liza is a web server written on Ruby On Rails to monitor financial security of Peatio exchange service.
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+> git clone https://github.com/finfex/liza
+> bundle
 
-* System dependencies
+## Configure
 
-* Configuration
+1. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them all.
+2. Configure you gateway to map `/liza` route to Liza web-server.
 
-* Database creation
+## Run for development
 
-* Database initialization
+> HTTP_PROTOCOL=http bundle exec rails s -p 3000
 
-* How to run the test suite
+Open page http://localhost:3000/liza in browser
 
-* Services (job queues, cache servers, search engines, etc.)
+## Contributors
 
-* Deployment instructions
+* [Danil Pismenny](https://github.com/dapi)
 
-* ...
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md).
+
+## License
+
+MIT License, see [LICENSE](LICENSE).

@@ -3,8 +3,8 @@ defaults: &defaults
   root_prefix: /liza
   start_year: 2021
   default_url_options: &default_url_options
-    protocol: 'https'
-    host: dapi.bitzlato.bz
+    protocol: <%= ENV.fetch('HTTP_PROTOCOL', 'https') %>
+    host: <%= ENV.fetch('LIZA_HOST', 'localhost') %>
 
 development:
   <<: *defaults
