@@ -14,36 +14,28 @@ table.table.table-narrow
 
 .row
   .col-md-6
-    table.table.table-striped.table-hover.table-narrow
-      thead.thead-dark
-        tr
-          th.text-right
-            div Фактический баланс
-            = column_tip 'Доступные + Заблокировано'
-          th.text-right Доступные средства
-          th.text-right Заблокировано
-      tbody
-        tr
-          td.text-right= format_money account.amount, account.currency
-          td.text-right= format_money account.balance, account.currency
-          td.text-right= format_money account.locked, account.currency
+    = render 'brief', account: account
   .col-md-6
+    = render 'estimated', account: account
 
-    table.table.table-striped.table-hover.table-narrow
-      thead.thead-dark
-        tr
-          th 
-            div Расчетный баланс
-            = column_tip 'Введено - Выведено'
-          th Введено
-          th Выведено
-          th.text-right 
-            div Расхождение балансов
-            = column_tip 'Расчетный - фактический'
-      tbody
-        tr
-          td.text-right= format_money account.estimated_amount, account.currency
-          td.text-right= format_money account.total_deposit_amount, account.currency
-          td.text-right= format_money account.total_withdraw_amount, account.currency
-          td.text-right= format_divergence account.estimated_amount - account.amount, account.currency_id
+hr
+.row
+  .col-md-6
+    h2 Withdraws
+    = render 'withdraws', withdraws: account.withdraws.order('created_at desc')
 
+  .col-md-6
+    h2 Deposits
+    = render 'deposits', deposits: account.deposits.order('created_at desc')
+
+-# = render 'locked', account: account
+
+hr
+.row
+  .col-md-6
+    h2 Quote orders
+    = render 'orders', orders: account.quote_orders
+
+  .col-md-6
+    h2 Base orders
+    = render 'orders', orders: account.base_orders

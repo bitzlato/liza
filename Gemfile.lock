@@ -315,7 +315,7 @@ DEPENDENCIES
   jwt-multisig (~> 1.0.0)
   jwt-rack (~> 0.1.0)
   listen (~> 3.3)
-  memoist (~> 0.16.0)
+  memoist
   pagy
   pg (~> 1.1)
   premailer-rails

@@ -1,0 +1,17 @@
+table.table.table-striped.table-hover.table-narrow
+  thead.thead-dark
+    tr
+      th 
+        div Расчетный баланс
+        = column_tip 'Введено - Выведено'
+      th Введено
+      th Выведено
+      th.text-right 
+        div Расхождение балансов
+        = column_tip 'Расчетный - фактический'
+  tbody
+    tr
+      td.text-right= format_money account.estimated_amount, account.currency
+      td.text-right= format_money account.total_deposit_amount, account.currency
+      td.text-right= format_money account.total_withdraw_amount, account.currency
+      td.text-right= format_divergence account.estimated_amount - account.amount, account.currency_id

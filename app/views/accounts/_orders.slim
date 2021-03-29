@@ -1,0 +1,17 @@
+- if orders.empty?
+  p.text-muted Orders list is empty
+- else
+  table.table.table-striped.table-hover.table-narrow
+    - orders.each do |order|
+      tr
+        td= order.id
+        td= l order.created_at
+        td= order.market
+        td= order.type
+        td= format_money order.price, order.ask
+        td= format_money order.volume, order.bid
+        td= format_money order.origin_volume, order.bid
+        td= format_money order.origin_locked, order.bid
+        td= format_money order.funds_received, order.bid
+        td= format_money order.maker_fee, order.bid
+        td= format_money order.taker_fee, order.bid

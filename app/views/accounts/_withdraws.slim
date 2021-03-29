@@ -1,0 +1,21 @@
+- if withdraws.empty?
+  p.text-muted Withdraws list is empty
+- else
+  table.table.table-striped.table-hover.table-narrow
+    thead.thead-dark
+      tr
+        th ID
+        th Time
+        th State
+        th Amount
+        th Fee
+        th Sum
+    tbody
+      - withdraws.each do |withdraw|
+        tr
+          td.text-muted= withdraw.id
+          td= l withdraw.created_at, format: :short
+          td= withdraw.aasm_state
+          td= format_money withdraw.amount, withdraw.currency_id
+          td= format_money withdraw.fee, withdraw.currency_id
+          td= format_money withdraw.sum, withdraw.currency_id

@@ -1,0 +1,13 @@
+table.table.table-striped.table-hover.table-narrow
+  thead.thead-dark
+    tr
+      th.text-right
+        div Фактический баланс
+        = column_tip 'Доступные + Заблокировано'
+      th.text-right Доступные средства
+      th.text-right Заблокировано
+  tbody
+    tr
+      td.text-right= format_money account.amount, account.currency
+      td.text-right= format_money account.balance, account.currency
+      td.text-right= format_money account.locked, account.currency

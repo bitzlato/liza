@@ -33,7 +33,6 @@ gem 'simple_form'
 gem 'premailer-rails'
 gem 'auto_logger'
 gem 'pagy'
-gem 'memoist', '~> 0.16.0'
 gem 'jwt', github: 'jwt/ruby-jwt'
 gem 'jwt-multisig', '~> 1.0.0'
 gem 'jwt-rack', '~> 0.1.0', require: false

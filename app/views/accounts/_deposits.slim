@@ -1,0 +1,19 @@
+- if deposits.empty?
+  p.text-muted Deposits list is empty
+- else
+  table.table.table-striped.table-hover.table-narrow
+    thead.thead-dark
+      tr
+        th ID
+        th Time
+        th State
+        th Amount
+        th Fee
+    tbody
+      - deposits.each do |deposit|
+        tr
+          td.text-muted= deposit.id
+          td= l deposit.created_at, format: :short
+          td= deposit.aasm_state
+          td= format_money deposit.amount, deposit.currency_id
+          td= format_money deposit.fee, deposit.currency_id

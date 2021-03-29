@@ -5,12 +5,25 @@ class Account < ApplicationRecord
 
   belongs_to :currency, required: true
   belongs_to :member, required: true
-  has_many :withdraws, -> { order(id: :desc) }, through: :member
-  has_many :deposits, -> { order(id: :desc) }, through: :member
-  has_many :beneficiaries, -> { order(id: :desc) }, through: :member
 
   scope :visible, -> { joins(:currency).merge(Currency.where(visible: true)) }
   scope :ordered, -> { joins(:currency).order(position: :asc) }
+
+  def withdraws
+    member.withdraws.where(currency_id: currency_id)
+  end
+
+  def deposits
+    member.deposits.where(currency_id: currency_id)
+  end
+
+  def base_orders
+    member.orders.where(market_id: Market.where(base_unit: currency_id))
+  end
+
+  def quote_orders
+    member.orders.where(market_id: Market.where(base_unit: currency_id))
+  end
 
   def amount
     balance + locked
