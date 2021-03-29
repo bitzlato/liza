@@ -7,16 +7,34 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
 > git clone https://github.com/finfex/liza
 > bundle
 
-## Configure
+## Configure application
 
 1. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them all.
 2. Configure you gateway to map `/liza` route to Liza web-server.
 
-## Run for development
+## Configure and run for development
 
-> HTTP_PROTOCOL=http bundle exec rails s -p 3000
+Liza waits for JWT token in HTTP headers. That is why you need to user API
+gateway.
 
-Open page http://localhost:3000/liza in browser
+For development add next linex to `config/gateway/mapping-peatio.yaml` in
+peatio repo:
+
+```
+---
+apiVersion: ambassador/v1
+kind: Mapping
+name: liza_mapping
+host: PEATIO_HOST
+use_websocket: true
+prefix: /liza
+rewrite: /liza
+service: LIZA_HOST:LIZA_PORT
+```
+
+> HTTP_PROTOCOL=http bundle exec rails s -b LIZA_HOST -p LIZA_PORT
+
+Open page //PEATIO_HOST:3000/liza in browser
 
 ## Contributors
 
