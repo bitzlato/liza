@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :accounts
     namespace :operations do
       resources :liabilities
+      resources :accounts
     end
   end
 end
