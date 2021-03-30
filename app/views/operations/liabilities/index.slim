@@ -1,0 +1,24 @@
+.py-3= back_link
+h1= t '.liabilities'
+hr
+table.table.table-striped.table-hover.table-narrow
+  thead.thead-dark
+    tr 
+      th.text-right Создано
+      th Владелец
+      th.text-right Код
+      th.text-right Валюта
+      th.text-right Объект
+      th.text-right Дебет
+      th.text-right Кредит
+  tbody
+    - liabilities.each do |liability|
+      tr is='dapi-tr' data-href=operations_liability_path(liability)
+        td.text-right= l liability.created_at, format: :short
+        td= render 'member_brief', member: liability.member
+        td.text-right= liability.code
+        td.text-right= format_currency liability.currency_id
+        td.text-right
+          = present_liability_reference liability.reference
+        td.text-right= format_money liability.debit, liability.currency_id
+        td.text-right= format_money liability.credit, liability.currency_id

@@ -1,5 +1,5 @@
 .py-3= back_link
-h1= Account.model_name.human
+h1= t '.accounts'
 p= currency
 hr
 table.table.table-striped.table-hover
@@ -34,9 +34,7 @@ table.table.table-striped.table-hover
         td.text-right= format_money total_locked, currency
     - accounts.each do |account|
       tr is='dapi-tr' data-href=account_path(account)
-        td
-          = account.member.uid
-          .text-muted.text-small= account.member.email
+        td= render 'member_brief', member: account.member
         td.text-right= format_currency account.currency_id
         td.text-right= format_money account.total_deposit_amount, account.currency_id
         td.text-right= format_money account.total_withdraw_amount, account.currency_id

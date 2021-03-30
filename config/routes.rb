@@ -6,5 +6,8 @@ Rails.application.routes.draw do
     resources :reports
     resources :withdraws
     resources :accounts
+    namespace :operations do
+      resources :liabilities
+    end
   end
 end

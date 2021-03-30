@@ -8,12 +8,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        = active_link_to liabilities_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+        = active_link_to operations_liabilities_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
           -# span.mr-2= icon 'md-arrow-back'
           = t '.liabilities'
         = active_link_to accounts_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
           -# span.mr-2= icon 'md-arrow-back'
-          = t '.accounts'
+          = t '.user_accounts'
       ul.navbar-nav.navbar-right
         // li.nav-item.dropdown.mr-2.d-flex.align-items-center
           /- if current_user.notifications.unread.any?

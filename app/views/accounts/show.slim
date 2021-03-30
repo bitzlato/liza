@@ -5,9 +5,7 @@ table.table.table-narrow
   tbody
     tr
       th Member
-      td
-        = account.member.uid
-        .text-muted.text-small= account.member.email
+      td= render 'member_brief', member: account.member
       th Currency
       td= format_currency account.currency
 
