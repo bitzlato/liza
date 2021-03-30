@@ -3,6 +3,10 @@ module ApplicationHelper
     I18n.t 'titles.application'
   end
 
+  def active_class(css_classes, flag)
+    flag ? css_classes + ' active' : css_classes
+  end
+
   def present_liability_reference(reference)
     case reference
     when OrderBid

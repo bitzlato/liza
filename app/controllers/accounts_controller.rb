@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
-  layout 'fluid'
+  include CurrencySupport
 
-  helper_method :currency
+  layout 'fluid'
 
   def index
     render locals: {
@@ -21,9 +21,5 @@ class AccountsController < ApplicationController
     scope = Account.includes(:member)
     scope = scope.where(currency_id: currency.id) if currency.present?
     scope.order('created_at desc')
-  end
-
-  def currency
-    Currency.find(params[:currency_id]) if params[:currency_id].present?
   end
 end

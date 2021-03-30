@@ -1,4 +1,6 @@
 class Operations::LiabilitiesController < ApplicationController
+  include CurrencySupport
+
   layout 'fluid'
 
   def index
@@ -8,6 +10,8 @@ class Operations::LiabilitiesController < ApplicationController
   private
 
   def liabilities
-    Operations::Liability.includes(:member).order('created_at desc')
+    scope = Operations::Liability.includes(:member)
+    scope = scope.where(currency_id: currency.id) if currency.present?
+    scope.order('created_at desc')
   end
 end
