@@ -25,13 +25,13 @@ module ApplicationHelper
     return nil
   end
 
-  def format_money(amount, currency_id, css_class: nil, tooltip: nil)
-    currency_id = currency_id.id if currency_id.is_a? Currency
+  def format_money(amount, currency, css_class: nil, tooltip: nil)
+    currency = currency.is_a?(Currency) ? currency : Currency.find(currency)
     css_classes = ['text-nowrap', 'text-monospace']
     css_classes << css_class
     content_tag :span, class: css_classes.join(' '), title: tooltip, data: { toggle: :tooltip } do
       # TODO Взять число после запятой с валюты
-      amount == 0 ? '0' : "%0.8f" % amount
+      amount == 0 ? '0' : "%0.#{currency.precision}f" % amount
     end
   end
 
