@@ -8,12 +8,14 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        - if controller_name == 'boards' && action_name == 'show'
-          = active_link_to accounts_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-            span.mr-2= icon 'md-arrow-back'
-            = t '.boards'
+        = active_link_to liabilities_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+          -# span.mr-2= icon 'md-arrow-back'
+          = t '.liabilities'
+        = active_link_to accounts_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+          -# span.mr-2= icon 'md-arrow-back'
+          = t '.accounts'
       ul.navbar-nav.navbar-right
-        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+        // li.nav-item.dropdown.mr-2.d-flex.align-items-center
           /- if current_user.notifications.unread.any?
             /= link_to '#', class: 'my-lg-0 py-lg-0 nav-link', data: { toggle: 'dropdown' }, id: :notificationsDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do
               /span.nav-icon= icon 'md-notifications'

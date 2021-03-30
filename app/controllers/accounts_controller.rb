@@ -1,13 +1,10 @@
 class AccountsController < ApplicationController
   layout 'fluid'
 
+  helper_method :currency
+
   def index
-    currency = Currency.find(params[:currency_id])
-    accounts = Account
-      .includes(:member)
-      .where(currency_id: currency.id).order('created_at desc')
     render locals: {
-      currency: currency,
       accounts: accounts,
       total_balance: accounts.sum(:balance),
       total_locked: accounts.sum(:locked)
@@ -16,5 +13,17 @@ class AccountsController < ApplicationController
 
   def show
     render locals: { account: Account.find(params[:id]) }
+  end
+
+  private
+
+  def accounts
+    scope = Account.includes(:member)
+    scope = scope.where(currency_id: currency.id) if currency.present?
+    scope.order('created_at desc')
+  end
+
+  def currency
+    Currency.find(params[:currency_id]) if params[:currency_id].present?
   end
 end

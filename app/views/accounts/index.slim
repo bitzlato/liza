@@ -1,5 +1,6 @@
 .py-3= back_link
 h1= Account.model_name.human
+p= currency
 hr
 table.table.table-striped.table-hover
   thead.thead-dark
@@ -20,16 +21,17 @@ table.table.table-striped.table-hover
       th.text-right Доступно
       th.text-right Заблокировано
   tbody
-    tr
-      th Итого
-      td 
-      td.text-right= format_money currency.total_completed_deposits, currency
-      td.text-right= format_money currency.total_completed_withdraws, currency
-      td.text-right= format_money currency.estimated_amount, currency
-      td.text-right= format_divergence currency.estimated_amount - (total_balance + total_locked), currency
-      td.text-right= format_money total_balance + total_locked, currency
-      td.text-right= format_money total_balance, currency
-      td.text-right= format_money total_locked, currency
+    - if currency.present?
+      tr
+        th Итого
+        td 
+        td.text-right= format_money currency.total_completed_deposits, currency
+        td.text-right= format_money currency.total_completed_withdraws, currency
+        td.text-right= format_money currency.estimated_amount, currency
+        td.text-right= format_divergence currency.estimated_amount - (total_balance + total_locked), currency
+        td.text-right= format_money total_balance + total_locked, currency
+        td.text-right= format_money total_balance, currency
+        td.text-right= format_money total_locked, currency
     - accounts.each do |account|
       tr is='dapi-tr' data-href=account_path(account)
         td
