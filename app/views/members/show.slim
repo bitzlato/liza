@@ -1,0 +1,13 @@
+.py-3= back_link root_url
+h1= '#' + member.uid
+hr
+.row
+  .col-md-6
+    table.table.table-narrow
+      tbody
+        tr
+          th= t '.member'
+          td= render 'member_brief', member: member
+  .col-md-6
+    h2= t '.accounts'
+    = render 'table', items: member.accounts

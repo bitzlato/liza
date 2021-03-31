@@ -4,9 +4,9 @@ hr
 table.table.table-narrow
   tbody
     tr
-      th Member
+      th= t '.member'
       td= render 'member_brief', member: account.member
-      th Currency
+      th= t '.currency'
       td= format_currency account.currency
 
 
@@ -19,11 +19,11 @@ table.table.table-narrow
 hr
 .row
   .col-md-6
-    h2 Withdraws
+    h2= t '.withdraws'
     = render 'withdraws', withdraws: account.withdraws.order('created_at desc')
 
   .col-md-6
-    h2 Deposits
+    h2= t '.deposits'
     = render 'deposits', deposits: account.deposits.order('created_at desc')
 
 -# = render 'locked', account: account
@@ -31,9 +31,9 @@ hr
 hr
 .row
   .col-md-6
-    h2 Quote orders
-    = render 'orders', orders: account.quote_orders
+    h2= t '.quote_orders'
+    = render 'table', items: account.quote_orders
 
   .col-md-6
-    h2 Base orders
-    = render 'orders', orders: account.base_orders
+    h2= t '.base_orders'
+    = render 'table', items: account.base_orders

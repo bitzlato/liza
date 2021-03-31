@@ -1,0 +1,18 @@
+- if items.empty?
+  p.text-muted= t '.empty_table'
+- else
+  - items = items.decorate unless items.respond_to?(:decorated?) && items.decorated?
+  - decorator = items.first.decorator_class
+  - columns = decorator.table_columns
+  table.table.table-striped.table-hover.table-narrow
+    thead.thead-dark
+      tr
+        - columns.each do |column|
+          th class=decorator.table_th_class(column) 
+            = t column
+    tbody
+      - items.each do |item|
+        tr is='dapi-tr' data-href=url_for(item)
+          - columns.each do |column|
+            td class=decorator.table_td_class(column)
+              = item.send column

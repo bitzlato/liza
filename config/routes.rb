@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :accounts
     resources :trades
     resources :orders
+    resources :members
     namespace :operations do
       resources :liabilities
       resources :accounts

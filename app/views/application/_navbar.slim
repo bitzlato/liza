@@ -12,6 +12,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
           = t '.user_accounts'
         = active_link_to orders_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
           = t '.orders'
+        = active_link_to trades_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+          = t '.trades'
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.operations'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]

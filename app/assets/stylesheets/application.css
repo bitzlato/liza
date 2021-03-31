@@ -25,3 +25,8 @@ code {
 .table thead th {
   vertical-align: top;
 }
+
+.text-muted {
+  opacity: 0.8;
+  color: inherit !important;
+}

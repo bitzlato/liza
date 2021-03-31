@@ -23,6 +23,7 @@ module Liza
     config.autoload_paths += Dir[
       "#{Rails.root}/app/reports",
       "#{Rails.root}/app/inputs",
+      "#{Rails.root}/app/decorators",
     ]
 
     config.generators do |generate|
