@@ -51,6 +51,14 @@ class Order < ApplicationRecord
     parent.table[:state]
   end
 
+  def price_currency
+    self.is_a?(OrderAsk) ? bid_currency  : ask_currency
+  end
+
+  def volume_currency
+    self.is_a?(OrderBid) ? bid_currency  : ask_currency
+  end
+
   def trades
     Trade.where('maker_order_id = ? OR taker_order_id = ?', id, id)
   end

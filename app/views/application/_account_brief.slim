@@ -1,0 +1,6 @@
+= format_money account.amount, account.currency
+- if account.locked.positive?
+  br
+  .text-small
+    | Including locked: 
+    = format_money account.locked, account.currency, show_currency: false

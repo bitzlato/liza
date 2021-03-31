@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     namespace :operations do
       resources :liabilities
       resources :accounts
+      resources :assets
+      resources :expenses
+      resources :revenues
     end
   end
 end

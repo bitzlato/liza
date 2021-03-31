@@ -1,5 +1,5 @@
 class ApplicationDecorator < Draper::Decorator
-  TEXT_RIGHT = %i[amount locked total price volume origin_volume origin_locked funds_received maker_fee taker_fee]
+  TEXT_RIGHT = %i[debit credit amount locked total price volume origin_volume origin_locked funds_received maker_fee taker_fee]
 
   def self.table_th_class(column)
     return 'text-right' if TEXT_RIGHT.include? column

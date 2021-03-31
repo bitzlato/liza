@@ -11,3 +11,19 @@ hr
   .col-md-6
     h2= t '.accounts'
     = render 'table', items: member.accounts
+
+hr
+.row
+  .col-md-6
+    h2= t '.withdraws'
+    = render 'withdraws', withdraws: member.withdraws.order('created_at desc')
+
+  .col-md-6
+    h2= t '.deposits'
+    = render 'deposits', deposits: member.deposits.order('created_at desc')
+
+hr
+.row
+  .col-md-12
+    h2= t '.orders'
+    = render 'table', items: member.orders

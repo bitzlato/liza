@@ -10,19 +10,19 @@ class OrderDecorator < ApplicationDecorator
   end
 
   def price
-    h.format_money object.price, object.ask
+    h.format_money object.price, object.price_currency
   end
 
   def volume
-    h.format_money object.volume, object.bid
+    h.format_money object.volume, object.volume_currency
   end
 
   def origin_volume
-    h.format_money object.origin_volume, object.bid
+    h.format_money object.origin_volume, object.volume_currency
   end
 
   def origin_locked
-    h.format_money object.origin_locked, object.bid
+    h.format_money object.origin_locked, object.volume_currency
   end
 
   def funds_received
