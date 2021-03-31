@@ -2,15 +2,18 @@
 h1= '#' + member.uid
 hr
 .row
-  .col-md-6
+  .col-md-4
     table.table.table-narrow
       tbody
         tr
           th= t '.member'
           td= render 'member_brief', member: member
-  .col-md-6
+  .col-md-4
     h2= t '.accounts'
     = render 'table', items: member.accounts
+  .col-md-4
+    h2= t '.operations_revenues'
+    = render 'table', items: member.operations_revenues.order('created_at desc')
 
 hr
 .row

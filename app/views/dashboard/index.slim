@@ -15,15 +15,19 @@ table.table.table-condensed.table-striped
   thead.thead-dark
     tr
       th Валюта
+      th.text-right Операционные активы
       th.text-right Торговые счета
-      th.text-right Введено
-      th.text-right Выведено
+      th.text-right Введено по депозитам
+      th.text-right Выведено по съёмам
       th.text-right
         div Расчётный баланс на счетах
         = column_tip 'Введено - Выведено'
       th.text-right
         div Расхождение балансов
-        = column_tip 'Расчетный - фактический'
+        = column_tip 'Расчетный - фактический - операционный доход'
+
+      th.text-right Операционный доход
+      th.text-right Операционный расход
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
@@ -33,15 +37,27 @@ table.table.table-condensed.table-striped
   tbody
     - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
       - currency_id = row[0]
+      - currency = Currency.find currency_id
+      - total_deposit = Deposit.completed.where(currency_id: currency_id).sum(:amount)
+      - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
+      - total_operations_credit = currency.operations_revenues.sum(:credit)
+      - total_operations_assets_credit = currency.operations_assets.sum(:credit)
       tr
         th= format_currency currency_id
-        - total_deposit = Deposit.completed.where(currency_id: currency_id).sum(:amount)
-        - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
+        td.text-right
+          = link_to operations_assets_path(currency_id: currency_id) do
+            = format_money total_operations_assets_credit, currency
         td.text-right= link_to row[3], accounts_path(currency_id: currency_id)
         td.text-right= format_money total_deposit, currency_id
         td.text-right= format_money total_withdraw, currency_id
         td.text-right= format_money total_deposit - total_withdraw, currency_id
-        td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]), currency_id
+        td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_credit, currency_id
+        td.text-right
+          = link_to operations_revenues_path(currency_id: currency_id) do
+            = format_money total_operations_credit, currency
+        td.text-right
+          = link_to operations_revenues_path(currency_id: currency_id) do
+            = format_money currency.operations_revenues.sum(:debit), currency
         td.text-right= format_money row[1] + row[2], currency_id
         td.text-right= format_money row[1], currency_id
         td.text-right= format_money row[2], currency_id

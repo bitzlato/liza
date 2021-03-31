@@ -17,7 +17,8 @@ class Currency < ApplicationRecord
   belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
   has_and_belongs_to_many :wallets
   has_one :parent, class_name: 'Currency', foreign_key: :id, primary_key: :parent_id
-
+  has_many :operations_revenues, class_name: 'Operations::Revenue'
+  has_many :operations_assets, class_name: 'Operations::Asset'
 
   scope :visible, -> { where(visible: true) }
   scope :deposit_enabled, -> { where(deposit_enabled: true) }

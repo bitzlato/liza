@@ -22,6 +22,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
             = link_to t('.liabilities'), operations_liabilities_path, class: 'dropdown-item'
             = link_to t('.accounts'), operations_accounts_path, class: 'dropdown-item'
             = link_to t('.assets'), operations_assets_path, class: 'dropdown-item'
+            = link_to t('.revenues'), operations_revenues_path, class: 'dropdown-item'
           /- if current_user.notifications.unread.any?
             /= link_to '#', class: 'my-lg-0 py-lg-0 nav-link', data: { toggle: 'dropdown' }, id: :notificationsDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do
               /span.nav-icon= icon 'md-notifications'
