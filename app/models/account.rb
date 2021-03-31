@@ -22,7 +22,7 @@ class Account < ApplicationRecord
   end
 
   def quote_orders
-    member.orders.where(market_id: Market.where(base_unit: currency_id))
+    member.orders.where(market_id: Market.where(quote_unit: currency_id))
   end
 
   def amount

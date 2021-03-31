@@ -2,16 +2,35 @@
   p.text-muted Orders list is empty
 - else
   table.table.table-striped.table-hover.table-narrow
-    - orders.each do |order|
+    thead.thead-dark
       tr
-        td= order.id
-        td= l order.created_at
-        td= order.market
-        td= order.type
-        td= format_money order.price, order.ask
-        td= format_money order.volume, order.bid
-        td= format_money order.origin_volume, order.bid
-        td= format_money order.origin_locked, order.bid
-        td= format_money order.funds_received, order.bid
-        td= format_money order.maker_fee, order.bid
-        td= format_money order.taker_fee, order.bid
+        th ID
+        th= t '.created_at'
+        th= t '.market'
+        th= t '.type'
+        th= t '.state'
+        th.text-right= t '.price'
+        th.text-right= t '.volume'
+        th.text-right= t '.origin_volume'
+        th.text-right= t '.origin_locked'
+        th.text-right= t '.funds_received'
+        th.text-right= t '.maker_fee'
+        th.text-right= t '.taker_fee'
+        th.text-right= t '.trades'
+
+    tbody
+      - orders.each do |order|
+        tr
+          td= order.id
+          td= l order.created_at, format: :short
+          td= order.market
+          td= order.type
+          td= order.state
+          td.text-right= format_money order.price, order.ask
+          td.text-right= format_money order.volume, order.bid
+          td.text-right= format_money order.origin_volume, order.bid
+          td.text-right= format_money order.origin_locked, order.bid
+          td.text-right= format_money order.funds_received, order.bid
+          td.text-right= format_money order.maker_fee, order.bid
+          td.text-right= format_money order.taker_fee, order.bid
+          td= present_trades order.trades
