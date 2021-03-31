@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def present_trade(trade)
-    link_to trade_path, title: "trade_id: #{trade.id}" do
+    link_to trade_path(trade), title: "trade_id: #{trade.id}" do
       (trade.taker_type + ' ' + format_money(trade.amount, trade.maker_order.bid) + ' for ' + format_money(trade.price, trade.maker_order.ask) + ' (total=' + format_money(trade.total, trade.maker_order.ask) + ')').html_safe
     end
   end

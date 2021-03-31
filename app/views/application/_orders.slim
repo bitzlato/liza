@@ -5,6 +5,7 @@
     thead.thead-dark
       tr
         th ID
+        th= t '.member'
         th= t '.created_at'
         th= t '.market'
         th= t '.type'
@@ -22,6 +23,7 @@
       - orders.each do |order|
         tr
           td= order.id
+          td= render 'member_brief', member: order.member
           td= l order.created_at, format: :short
           td= order.market
           td= order.type
