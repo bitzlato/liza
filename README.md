@@ -18,6 +18,8 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
   * `LIZA_REDIS_URL` (redis://localhost:6379/2 by default). Don't use database
     #1 since it is reserved for barong.
 
+  * `JWT_PUBLIC_KEY`, for example: export `JWT_PUBLIC_KEY=$(cat ~/peatio/config/secrets/rsa-key.pub| base64 -w0) `
+
 ## Configure and run for development
 
 Liza waits for JWT token in HTTP headers. That is why you need to user API
