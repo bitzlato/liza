@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class Trade < ApplicationRecord
@@ -24,13 +23,14 @@ class Trade < ApplicationRecord
 
   class << self
     def to_csv
-      attributes = %w[id price amount maker_order_id taker_order_id market_id maker_id taker_id total created_at updated_at]
+      attributes = %w[id price amount maker_order_id taker_order_id market_id maker_id taker_id total created_at
+                      updated_at]
       CSV.generate(headers: true) do |csv|
         csv << attributes
 
         all.each do |trade|
           data = attributes[0...-2].map { |attr| trade.send(attr) }
-          data += attributes[-2..-1].map { |attr| trade.send(attr).iso8601 }
+          data += attributes[-2..].map { |attr| trade.send(attr).iso8601 }
           csv << data
         end
       end
@@ -51,7 +51,8 @@ class Trade < ApplicationRecord
         options.merge!(limit: limit)
       end
 
-      Peatio::InfluxDB.client(keyshard: market).query trades_query.join(' '), params: options.merge(market: market) do |_name, _tags, points|
+      Peatio::InfluxDB.client(keyshard: market).query trades_query.join(' '),
+                                                      params: options.merge(market: market) do |_name, _tags, points|
         return points.map(&:deep_symbolize_keys!)
       end
     end
@@ -59,21 +60,26 @@ class Trade < ApplicationRecord
     # Low, High, First, Last, sum total (amount * price), sum 24 hours amount and average 24 hours price calculated using VWAP ratio for 24 hours trades
     def market_ticker_from_influx(market)
       tickers_query = 'SELECT MIN(price), MAX(price), FIRST(price), LAST(price), SUM(total) AS volume, SUM(amount) AS amount, SUM(total) / SUM(amount) AS vwap FROM trades WHERE market=%{market} AND time > now() - 24h'
-      Peatio::InfluxDB.client(keyshard: market).query tickers_query, params: { market: market } do |_name, _tags, points|
+      Peatio::InfluxDB.client(keyshard: market).query tickers_query,
+                                                      params: { market: market } do |_name, _tags, points|
         return points.map(&:deep_symbolize_keys!).first
       end
     end
 
     def trade_from_influx_before_date(market, date)
       trades_query = 'SELECT id, price, amount, total, taker_type, market, created_at FROM trades WHERE market=%{market} AND created_at < %{date} ORDER BY DESC LIMIT 1 '
-      Peatio::InfluxDB.client(keyshard: market).query trades_query, params: { market: market, date: date.to_i } do |_name, _tags, points|
+      Peatio::InfluxDB.client(keyshard: market).query trades_query,
+                                                      params: { market: market,
+                                                                date: date.to_i } do |_name, _tags, points|
         return points.map(&:deep_symbolize_keys!).first
       end
     end
 
     def trade_from_influx_after_date(market, date)
       trades_query = 'SELECT id, price, amount, total, taker_type, market, created_at FROM trades WHERE market=%{market} AND created_at >= %{date} ORDER BY ASC LIMIT 1 '
-      Peatio::InfluxDB.client(keyshard: market).query trades_query, params: { market: market, date: date.to_i } do |_name, _tags, points|
+      Peatio::InfluxDB.client(keyshard: market).query trades_query,
+                                                      params: { market: market,
+                                                                date: date.to_i } do |_name, _tags, points|
         return points.map(&:deep_symbolize_keys!).first
       end
     end
@@ -113,8 +119,6 @@ class Trade < ApplicationRecord
   def buy_order
     [maker_order, taker_order].find { |o| o.side == 'buy' }
   end
-
-  private
 end
 
 # == Schema Information

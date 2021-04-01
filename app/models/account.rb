@@ -14,11 +14,11 @@ class Account < ApplicationRecord
   end
 
   def sell_trades
-    trades.joins(:market).where(markets: { quote_unit: currency_id } )
+    trades.joins(:market).where(markets: { quote_unit: currency_id })
   end
 
   def buy_trades
-    trades.joins(:market).where(markets: { base_unit: currency_id } )
+    trades.joins(:market).where(markets: { base_unit: currency_id })
   end
 
   def total_sell

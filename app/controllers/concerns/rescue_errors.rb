@@ -8,9 +8,9 @@ module RescueErrors
     # rescue_from Authority::SecurityViolation,        with: :rescue_security_violation
     rescue_from ActionController::MissingFile,       with: :not_found
     rescue_from ActiveRecord::RecordNotFound,        with: :not_found
-    #rescue_from NotAuthenticated,                    with: :not_authenticated
-    #rescue_from HumanizedError,                      with: :handle_humanized_error
-    #rescue_from ActionController::InvalidAuthenticityToken, with: :rescue_invalid_authenticity_token
+    # rescue_from NotAuthenticated,                    with: :not_authenticated
+    # rescue_from HumanizedError,                      with: :handle_humanized_error
+    # rescue_from ActionController::InvalidAuthenticityToken, with: :rescue_invalid_authenticity_token
   end
 
   private

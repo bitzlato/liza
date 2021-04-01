@@ -1,5 +1,10 @@
-class LiabilityReport::Form
-  include ActiveModel::Model
+# frozen_string_literal: true
 
-  attr_accessor :time_from, :time_to
+module LiabilityReport
+  # Form for liability report form
+  class Form
+    include ActiveModel::Model
+
+    attr_accessor :time_from, :time_to
+  end
 end

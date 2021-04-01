@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -53,13 +55,16 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
-  if ENV.true?('LIZA_REDIS_CLUSTER')
-    config.cache_store = :redis_cache_store, { driver: :hiredis, cluster: [ENV.fetch('LIZA_REDIS_URL')], password: ENV.fetch('LIZA_REDIS_PASSWORD') }
-  else
-    config.cache_store = :redis_cache_store, { driver: :hiredis, url: ENV.fetch('LIZA_REDIS_URL', 'redis://localhost:6379/2') }
-  end
+  config.cache_store = if ENV.true?('LIZA_REDIS_CLUSTER')
+                         [:redis_cache_store,
+                          { driver: :hiredis, cluster: [ENV.fetch('LIZA_REDIS_URL')],
+                            password: ENV.fetch('LIZA_REDIS_PASSWORD') }]
+                       else
+                         [:redis_cache_store,
+                          { driver: :hiredis, url: ENV.fetch('LIZA_REDIS_URL', 'redis://localhost:6379/2') }]
+                       end
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
@@ -91,8 +96,8 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end

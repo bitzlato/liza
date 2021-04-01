@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class Currency < ApplicationRecord
@@ -36,7 +35,7 @@ class Currency < ApplicationRecord
   # that is valued at a fraction (usually one hundredth)
   # of the basic monetary unit
   def subunits=(n)
-    self.base_factor = 10 ** n
+    self.base_factor = 10**n
   end
 
   # This method defines that token currency need to have parent_id and coin type
@@ -46,14 +45,6 @@ class Currency < ApplicationRecord
     parent_id.present? && coin?
   end
 
-  def get_price
-    if price.blank? || price.zero?
-      raise "Price for currency #{id} is unknown"
-    else
-      price
-    end
-  end
-
   def dependent_markets
     Market.where('base_unit = ? OR quote_unit = ?', id, id)
   end
@@ -61,7 +52,6 @@ class Currency < ApplicationRecord
   def subunits
     Math.log(base_factor, 10).round
   end
-
 
   def total_completed_deposits
     Deposit.completed.where(currency_id: id).sum(:amount)

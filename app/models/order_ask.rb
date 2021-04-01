@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class OrderAsk < Order
@@ -25,6 +24,7 @@ class OrderAsk < Order
 
   def avg_price
     return ::Trade::ZERO if funds_used.zero?
+
     market.round_price(funds_received / funds_used)
   end
 
@@ -46,7 +46,7 @@ class OrderAsk < Order
     when 'limit'
       volume
     when 'market'
-      estimate_required_funds(OrderBid.get_depth(market_id)) {|_p, v| v}
+      estimate_required_funds(OrderBid.get_depth(market_id)) { |_p, v| v }
     end
   end
 end

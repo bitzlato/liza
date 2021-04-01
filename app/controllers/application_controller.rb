@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   self.default_url_options = Settings.default_url_options.symbolize_keys
 

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class OrderBid < Order
@@ -26,6 +25,7 @@ class OrderBid < Order
 
   def avg_price
     return ::Trade::ZERO if funds_received.zero?
+
     market.round_price(funds_used / funds_received)
   end
 
@@ -45,9 +45,9 @@ class OrderBid < Order
   def compute_locked
     case ord_type
     when 'limit'
-      price*volume
+      price * volume
     when 'market'
-      funds = estimate_required_funds(OrderAsk.get_depth(market_id)) {|p, v| p*v }
+      funds = estimate_required_funds(OrderAsk.get_depth(market_id)) { |p, v| p * v }
       # Maximum funds precision defined in Market::FUNDS_PRECISION.
       funds.round(Market::FUNDS_PRECISION, BigDecimal::ROUND_UP)
     end

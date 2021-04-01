@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class Deposit < ApplicationRecord
@@ -10,7 +9,7 @@ class Deposit < ApplicationRecord
   serialize :data, JSON unless Rails.configuration.database_support_json
 
   extend Enumerize
-  TRANSFER_TYPES = { fiat: 100, crypto: 200 }
+  TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 
   belongs_to :currency, required: true
   belongs_to :member, required: true

@@ -1,13 +1,18 @@
+# frozen_string_literal: true
+
 class MemberDecorator < ApplicationDecorator
   ACCOUNT_PREFIX = 'account_'
   delegate_all
 
   def self.table_columns
-    %i[uid created_at email level state role group username] + Currency.visible.order(:id).pluck(:id).map { |cur| ACCOUNT_PREFIX + cur }
+    %i[uid created_at email level state role group username] + Currency.visible.order(:id).pluck(:id).map do |cur|
+                                                                 ACCOUNT_PREFIX + cur
+                                                               end
   end
 
   def self.table_th_class(column)
     return 'text-right' if column.start_with? ACCOUNT_PREFIX
+
     super
   end
 

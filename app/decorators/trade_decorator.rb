@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TradeDecorator < ApplicationDecorator
   delegate_all
 
@@ -36,5 +38,4 @@ class TradeDecorator < ApplicationDecorator
   def maker
     h.render 'member_brief', member: object.maker
   end
-
 end

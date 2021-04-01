@@ -1,17 +1,21 @@
-class Operations::RevenuesController < ApplicationController
-  include CurrencySupport
+# frozen_string_literal: true
 
-  layout 'fluid'
+module Operations
+  class RevenuesController < ApplicationController
+    include CurrencySupport
 
-  def index
-    render locals: { revenues: revenues }
-  end
+    layout 'fluid'
 
-  private
+    def index
+      render locals: { revenues: revenues }
+    end
 
-  def revenues
-    scope = Operations::Revenue
-    scope = scope.where(currency_id: currency.id) if currency.present?
-    scope.order('created_at desc')
+    private
+
+    def revenues
+      scope = Operations::Revenue
+      scope = scope.where(currency_id: currency.id) if currency.present?
+      scope.order('created_at desc')
+    end
   end
 end

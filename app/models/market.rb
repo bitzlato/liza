@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 # People exchange commodities in markets. Each market focuses on certain
@@ -16,7 +15,6 @@
 # Bid/Quote currency/unit = USD.
 
 class Market < ApplicationRecord
-
   # == Constants ============================================================
 
   # Since we use decimal with 16 digits fractional part for storing numbers in DB

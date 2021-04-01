@@ -1,15 +1,19 @@
-class Operations::AccountsController < ApplicationController
-  include CurrencySupport
+# frozen_string_literal: true
 
-  layout 'fluid'
+module Operations
+  class AccountsController < ApplicationController
+    include CurrencySupport
 
-  def index
-    render locals: { accounts: accounts }
-  end
+    layout 'fluid'
 
-  private
+    def index
+      render locals: { accounts: accounts }
+    end
 
-  def accounts
-    Operations::Account.order(:code)
+    private
+
+    def accounts
+      Operations::Account.order(:code)
+    end
   end
 end

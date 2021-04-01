@@ -7,7 +7,7 @@ class Operation < ApplicationRecord
   belongs_to :reference, polymorphic: true
   belongs_to :currency, foreign_key: :currency_id
   belongs_to :account, class_name: 'Operations::Account',
-             foreign_key: :code, primary_key: :code
+                       foreign_key: :code, primary_key: :code
 
   self.abstract_class = true
 

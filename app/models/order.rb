@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 require 'csv'
@@ -52,11 +51,11 @@ class Order < ApplicationRecord
   end
 
   def price_currency
-    self.is_a?(OrderAsk) ? bid_currency  : ask_currency
+    is_a?(OrderAsk) ? bid_currency  : ask_currency
   end
 
   def volume_currency
-    self.is_a?(OrderBid) ? bid_currency  : ask_currency
+    is_a?(OrderBid) ? bid_currency  : ask_currency
   end
 
   def trades
@@ -91,7 +90,7 @@ class Order < ApplicationRecord
     end
   end
 
-  def is_limit_order?
+  def limit_order?
     ord_type == 'limit'
   end
 

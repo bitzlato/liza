@@ -1,19 +1,23 @@
-class Operations::RevenueDecorator < ApplicationDecorator
-  delegate_all
+# frozen_string_literal: true
 
-  def self.table_columns
-    %i[code created_at member currency reference debit credit]
-  end
+module Operations
+  class RevenueDecorator < ApplicationDecorator
+    delegate_all
 
-  def credit
-    h.format_money object.credit, object.currency
-  end
+    def self.table_columns
+      %i[code created_at member currency reference debit credit]
+    end
 
-  def debit
-    h.format_money object.debit, object.currency
-  end
+    def credit
+      h.format_money object.credit, object.currency
+    end
 
-  def reference
-    h.present_liability_reference object.reference
+    def debit
+      h.format_money object.debit, object.currency
+    end
+
+    def reference
+      h.present_liability_reference object.reference
+    end
   end
 end

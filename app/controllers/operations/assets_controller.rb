@@ -1,17 +1,21 @@
-class Operations::AssetsController < ApplicationController
-  include CurrencySupport
+# frozen_string_literal: true
 
-  layout 'fluid'
+module Operations
+  class AssetsController < ApplicationController
+    include CurrencySupport
 
-  def index
-    render locals: { assets: assets }
-  end
+    layout 'fluid'
 
-  private
+    def index
+      render locals: { assets: assets }
+    end
 
-  def assets
-    scope = Operations::Asset
-    scope = scope.where(currency_id: currency.id) if currency.present?
-    scope.order('created_at desc')
+    private
+
+    def assets
+      scope = Operations::Asset
+      scope = scope.where(currency_id: currency.id) if currency.present?
+      scope.order('created_at desc')
+    end
   end
 end

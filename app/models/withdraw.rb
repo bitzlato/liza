@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # frozen_string_literal: true
 
 class Withdraw < ApplicationRecord
@@ -12,7 +11,7 @@ class Withdraw < ApplicationRecord
   serialize :error, JSON unless Rails.configuration.database_support_json
   serialize :metadata, JSON unless Rails.configuration.database_support_json
 
-  TRANSFER_TYPES = { fiat: 100, crypto: 200 }
+  TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 
   enumerize :aasm_state, in: STATES, predicates: true
 
@@ -36,8 +35,10 @@ class Withdraw < ApplicationRecord
     end
 
     def sanitize_execute_sum_queries(member_id)
-      squery_24h = ActiveRecord::Base.sanitize_sql_for_conditions([sum_query, member_id, SUCCEED_PROCESSING_STATES, 24.hours.ago])
-      squery_1m = ActiveRecord::Base.sanitize_sql_for_conditions([sum_query, member_id, SUCCEED_PROCESSING_STATES, 1.month.ago])
+      squery_24h = ActiveRecord::Base.sanitize_sql_for_conditions([sum_query, member_id, SUCCEED_PROCESSING_STATES,
+                                                                   24.hours.ago])
+      squery_1m = ActiveRecord::Base.sanitize_sql_for_conditions([sum_query, member_id, SUCCEED_PROCESSING_STATES,
+                                                                  1.month.ago])
       sum_withdraws_24_hours = ActiveRecord::Base.connection.exec_query(squery_24h).to_hash.first['sum'].to_d
       sum_withdraws_1_month = ActiveRecord::Base.connection.exec_query(squery_1m).to_hash.first['sum'].to_d
       [sum_withdraws_24_hours, sum_withdraws_1_month]

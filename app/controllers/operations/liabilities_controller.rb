@@ -1,17 +1,21 @@
-class Operations::LiabilitiesController < ApplicationController
-  include CurrencySupport
+# frozen_string_literal: true
 
-  layout 'fluid'
+module Operations
+  class LiabilitiesController < ApplicationController
+    include CurrencySupport
 
-  def index
-    render locals: { liabilities: liabilities }
-  end
+    layout 'fluid'
 
-  private
+    def index
+      render locals: { liabilities: liabilities }
+    end
 
-  def liabilities
-    scope = Operations::Liability.includes(:member)
-    scope = scope.where(currency_id: currency.id) if currency.present?
-    scope.order('created_at desc')
+    private
+
+    def liabilities
+      scope = Operations::Liability.includes(:member)
+      scope = scope.where(currency_id: currency.id) if currency.present?
+      scope.order('created_at desc')
+    end
   end
 end

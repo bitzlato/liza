@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def app_title
     I18n.t 'titles.application'
   end
 
   def active_class(css_classes, flag)
-    flag ? css_classes + ' active' : css_classes
+    flag ? "#{css_classes} active" : css_classes
   end
 
   def column_tip(buffer)
@@ -19,14 +21,15 @@ module ApplicationHelper
     if amount.zero?
       format_money amount, currency
     else
-      format_money amount, currency, css_class: 'text-warning', tooltip: "Должно быть 0"
+      format_money amount, currency, css_class: 'text-warning', tooltip: 'Должно быть 0'
     end
   end
 
   def compare_amounts(estimated, actual)
     return [:nagative, actual - estimated] if estimated > actual
     return [:positive, actual - estimated] if actual > estimated
-    return nil
+
+    nil
   end
 
   # @param amount Decimal
@@ -35,10 +38,10 @@ module ApplicationHelper
   def format_money(amount, currency, options = {})
     options = options.symbolize_keys.reverse_merge show_currency: true
     currency = currency.is_a?(Currency) ? currency : Currency.find(currency)
-    css_classes = ['text-nowrap', 'text-monospace']
+    css_classes = %w[text-nowrap text-monospace]
     css_classes << options[:css_class]
-    buffer = amount == 0 ? '0' : "%0.#{currency.precision}f" % amount
-    buffer << format_currency(currency, css_class: 'text-muted ml-1') if options[:show_currency]
+    buffer = amount.zero? ? '0' : format("%0.#{currency.precision}f", amount)
+    buffer += format_currency(currency, css_class: 'text-muted ml-1') if options[:show_currency]
     content_tag :span, class: css_classes.join(' '), title: options[:tooltip], data: { toggle: :tooltip } do
       buffer.html_safe
     end
