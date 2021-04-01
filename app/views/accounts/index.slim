@@ -5,25 +5,25 @@ hr
 table.table.table-striped.table-hover.table-narrow
   thead.thead-dark
     tr 
-      th Владелец
-      th.text-right Валюта
-      th.text-right Введено
-      th.text-right Выведено
+      th= t '.member'
+      th.text-right= t '.currency'
+      th.text-right= t '.deposited'
+      th.text-right= t '.withdrawn'
       th.text-right 
-        div Расчетный баланс
-        = column_tip 'Введено - Выведено'
+        div= t '.estimated_amount'
+        = column_tip t('.estimated_amount_tip', default: 'Deposited - Withdrawn')
       th.text-right
-        div Расхождение балансов
-        = column_tip 'Расчетный - фактический'
+        div= t '.amounts_divergence'
+        = column_tip t('.amounts_divergence_tip', default: 'Estimated - Actual')
       th.text-right 
-        div Актуальный баланс счета
-        = column_tip 'Доступно + Заблокировано'
-      th.text-right Доступно
-      th.text-right Заблокировано
+        div= t '.actual_amount'
+        = column_tip t('.actual_amount_tip', default: 'Available + Locked')
+      th.text-right= t '.available_balance'
+      th.text-right= t '.locked'
   tbody
     - if currency.present?
       tr
-        th Итого
+        th= t '.total'
         td 
         td.text-right= format_money currency.total_completed_deposits, currency
         td.text-right= format_money currency.total_completed_withdraws, currency

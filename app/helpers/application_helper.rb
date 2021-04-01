@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def back_link(url = nil)
-    link_to '&larr; назад на глаавную'.html_safe, url || root_url
+    link_to '&larr; back'.html_safe, url || root_url
   end
 
   def format_divergence(amount, currency)
