@@ -30,3 +30,7 @@ code {
   opacity: 0.8;
   color: inherit !important;
 }
+
+.text-small {
+  font-size: 80%;
+}

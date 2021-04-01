@@ -9,6 +9,26 @@ class Account < ApplicationRecord
   scope :visible, -> { joins(:currency).merge(Currency.where(visible: true)) }
   scope :ordered, -> { joins(:currency).order(position: :asc) }
 
+  def trades
+    member.trades.where(market_id: currency.dependent_markets)
+  end
+
+  def sell_trades
+    trades.joins(:market).where(markets: { quote_unit: currency_id } )
+  end
+
+  def buy_trades
+    trades.joins(:market).where(markets: { base_unit: currency_id } )
+  end
+
+  def total_sell
+    sell_trades.sum(:total)
+  end
+
+  def total_buy
+    buy_trades.sum(:total)
+  end
+
   def withdraws
     member.withdraws.where(currency_id: currency_id)
   end
@@ -40,6 +60,6 @@ class Account < ApplicationRecord
   memoize :total_withdraw_amount
 
   def estimated_amount
-    total_deposit_amount - total_withdraw_amount
+    total_deposit_amount - total_withdraw_amount + total_sell - total_buy
   end
 end
