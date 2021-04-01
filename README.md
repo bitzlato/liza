@@ -9,8 +9,12 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
 
 ## Configure application
 
-1. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them all.
-2. Configure you gateway to map `/liza` route to Liza web-server.
+1. Configure you gateway to map `/liza` route to Liza web-server.
+2. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them.
+3. Setup other ENV's:
+
+  * `LIZA_REDIS_URL` (redis://localhost:6379/2 by default). Don't use database
+    #1 since it is reserved for barong.
 
 ## Configure and run for development
 
@@ -35,6 +39,8 @@ service: LIZA_HOST:LIZA_PORT
 > HTTP_PROTOCOL=http bundle exec rails s -b LIZA_HOST -p LIZA_PORT
 
 Open page //PEATIO_HOST:3000/liza in browser
+
+
 
 ## Contributors
 
