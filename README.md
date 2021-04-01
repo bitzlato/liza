@@ -1,5 +1,7 @@
 # LIZA is accountant reporter for Peatio
 
+[![Build Status](https://travis-ci.org/finfex/liza.svg?branch=master)](https://travis-ci.org/finfex/liza)
+
 Liza is a web server written on Ruby On Rails to monitor financial security of Peatio exchange service.
 
 ## Install
