@@ -14,12 +14,20 @@ module OpendaxHelper
   def peatio_version
     Rails.cache.fetch :peatio_version do
       JSON.parse Net::HTTP.get(URI("#{Settings.peatio_api_url}/public/version"))
+    rescue => err
+      Rails.logger.error err
+      Bugsnag.notify err
+      {}
     end
   end
 
   def barong_version
     Rails.cache.fetch :barong_version do
       JSON.parse Net::HTTP.get(URI("#{Settings.barong_api_url}/public/version"))
+    rescue => err
+      Rails.logger.error err
+      Bugsnag.notify err
+      {}
     end
   end
 end
