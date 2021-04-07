@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     root to: 'dashboard#index'
     resources :reports
     resources :withdraws
+    resources :deposits
     resources :accounts
     resources :trades
     resources :orders

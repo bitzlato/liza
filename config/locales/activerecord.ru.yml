@@ -1,6 +1,15 @@
 ru:
   activerecord:
     models:
+      member:
+        one: Участник
+        many: Участники
+      deposit:
+        one: Депозит
+        many: Депозиты
+      withdraw:
+        one: Вывод
+        many: Выводы
       account: 
         one: Счёт участника
         many: Счета участников

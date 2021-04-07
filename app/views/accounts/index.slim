@@ -20,18 +20,19 @@ table.table.table-striped.table-hover.table-narrow
         = column_tip t('.actual_amount_tip', default: 'Available + Locked')
       th.text-right= t '.available_balance'
       th.text-right= t '.locked'
-  tbody
     - if currency.present?
-      tr
-        th= t '.total'
-        td 
-        td.text-right= format_money currency.total_completed_deposits, currency
-        td.text-right= format_money currency.total_completed_withdraws, currency
-        td.text-right= format_money currency.estimated_amount, currency
-        td.text-right= format_divergence currency.estimated_amount - (total_balance + total_locked), currency
-        td.text-right= format_money total_balance + total_locked, currency
-        td.text-right= format_money total_balance, currency
-        td.text-right= format_money total_locked, currency
+      thead
+        tr
+          th= t '.total'
+          td 
+          td.text-right= format_money currency.total_completed_deposits, currency
+          td.text-right= format_money currency.total_completed_withdraws, currency
+          td.text-right= format_money currency.estimated_amount, currency
+          td.text-right= format_divergence currency.estimated_amount - (total_balance + total_locked), currency
+          td.text-right= format_money total_balance + total_locked, currency
+          td.text-right= format_money total_balance, currency
+          td.text-right= format_money total_locked, currency
+  tbody
     - accounts.each do |account|
       tr is='dapi-tr' data-href=account_path(account)
         td= render 'member_brief', member: account.member
