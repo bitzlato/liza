@@ -3,7 +3,9 @@ module MoneyHelper
 
   def format_divergence(amount, currency)
     if amount.zero?
-      format_money amount, currency
+      content_tag :span, class: 'text-success' do
+        t ('helpers.no_devergence')
+      end
     else
       format_money amount, currency, css_class: 'text-warning', tooltip: 'Должно быть 0'
     end

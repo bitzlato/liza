@@ -22,6 +22,8 @@ module Liza
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = 'Europe/Moscow'
+    config.i18n.default_locale = ENV.fetch('RAILS_LOCALE', :en)
     config.autoload_paths += Dir[
       "#{Rails.root}/app/reports",
       "#{Rails.root}/app/inputs",

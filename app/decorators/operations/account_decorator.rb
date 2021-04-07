@@ -5,7 +5,44 @@ module Operations
     delegate_all
 
     def self.table_columns
-      %i[code type kind currency_type scope description]
+      %i[code scope type kind description currency_type assets revenues expenses liabilities]
+    end
+
+    def assets
+      present_operations :assets
+    end
+
+    def revenues
+      present_operations :revenues
+    end
+
+    def expenses
+      present_operations :expenses
+    end
+
+    def liabilities
+      present_operations :liabilities
+    end
+
+    private
+
+    def present_operations(association)
+      operations = object.send association
+      grouped_operations = operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)')
+
+      grouped_operations.map do |o|
+        currency_id, credit, debit = o
+        Bugsnag.notify "Credits and debits are both presented for #{object.class}#{object.id}.#{association}" if credit.present? && debit.present?
+        if credit.present?
+          h.link_to h.url_for([:operations, association, currency_id: currency_id, account_id: object.id]) do
+            h.format_money credit, currency_id
+          end
+        elsif debit.present?
+          h.link_to h.url_for([:operations, association, currency_id: currency_id, account_id: object.id]) do
+            h.format_money -debit, currency_id
+          end
+        end
+      end.join(', ').html_safe
     end
   end
 end

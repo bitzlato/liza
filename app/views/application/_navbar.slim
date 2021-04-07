@@ -8,30 +8,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        = active_link_to accounts_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-          = t '.user_accounts'
-        = active_link_to orders_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-          = t '.orders'
-        = active_link_to trades_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-          = t '.trades'
-        = active_link_to members_url, class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-          = t '.members'
+        - [Account, Order, Trade, Member].each do |model|
+          = active_link_to url_for(model), class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+            = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.operations'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
-            = link_to t('.liabilities'), operations_liabilities_path, class: 'dropdown-item'
-            = link_to t('.accounts'), operations_accounts_path, class: 'dropdown-item'
-            = link_to t('.assets'), operations_assets_path, class: 'dropdown-item'
-            = link_to t('.revenues'), operations_revenues_path, class: 'dropdown-item'
-          /- if current_user.notifications.unread.any?
-            /= link_to '#', class: 'my-lg-0 py-lg-0 nav-link', data: { toggle: 'dropdown' }, id: :notificationsDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do
-              /span.nav-icon= icon 'md-notifications'
-            /.dropdown-menu.dropdown-menu-right[aria-labelledby="notificationsDropdown"]
-              /- current_user.notifications.ordered.unread.each do |n|
-                /= link_to n.message, '#', class: 'dropdown-item'
-          /- else
-            /span.nav-icon data-toggle=:tooltip title=t('.no_notifications')
-              /= icon 'md-notifications-outline'
+            - [Operations::Liability, Operations::Account, Operations::Asset, Operations::Revenue].each do |model|
+              = link_to url_for(model), class: 'dropdown-item' do
+                = t model.model_name.human_plural
       ul.navbar-nav.navbar-right
         li.nav-item.dropdown
           = link_to '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do

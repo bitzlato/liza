@@ -6,6 +6,10 @@ module Operations
 
     layout 'fluid'
 
+    def show
+      render locals: { record: Operations::Account.find(params[:id]) }
+    end
+
     def index
       render locals: { accounts: accounts }
     end

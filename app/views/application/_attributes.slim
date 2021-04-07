@@ -1,6 +1,6 @@
 - item = item.decorate unless item.respond_to?(:decorated?) && item.decorated?
 - decorator = item.decorator_class
-- columns = decorator.table_columns
+- columns = decorator.attributes
 table.table.table-striped.table-hover.table-narrow
   - columns.each do |column|
     tr

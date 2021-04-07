@@ -14,6 +14,10 @@ module ApplicationHelper
   end
 
   def back_link(url = nil)
-    link_to '&larr; back'.html_safe, url || root_url
+    link_to ('&larr; ' + t('.back')).html_safe, url || root_url
+  end
+
+  def middot
+    content_tag :div, '&middot;'.html_safe, class: 'text-muted'
   end
 end

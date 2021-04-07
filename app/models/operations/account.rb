@@ -9,6 +9,11 @@ module Operations
     PLATFORM_TYPES = %w[asset expense revenue].freeze
     TYPES = (MEMBER_TYPES + PLATFORM_TYPES).freeze
 
+    has_many :assets, foreign_key: :code, primary_key: :code
+    has_many :expenses, foreign_key: :code, primary_key: :code
+    has_many :revenues, foreign_key: :code, primary_key: :code
+    has_many :liabilities, foreign_key: :code, primary_key: :code
+
     def self.table_name_prefix
       'operations_'
     end

@@ -11,7 +11,7 @@ module Operations
     end
 
     def show
-      render locals: { revenue: Operations::Revenue.find(params[:id]) }
+      render locals: { record: Operations::Revenue.find(params[:id]) }
     end
 
     private

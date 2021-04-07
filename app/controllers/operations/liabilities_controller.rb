@@ -13,7 +13,7 @@ module Operations
     private
 
     def liabilities
-      scope = Operations::Liability.includes(:member)
+      scope = Operations::Liability.includes(:member, :account, :currency)
       scope = scope.where(currency_id: currency.id) if currency.present?
       scope.order('created_at desc')
     end

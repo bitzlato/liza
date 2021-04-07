@@ -1,0 +1,24 @@
+ru:
+  activerecord:
+    models:
+      account: 
+        one: Счёт участника
+        many: Счета участников
+      trade: 
+        one: Сделка
+        many: Сделки
+      order:
+        one: Заявка
+        many: Заявки
+      operations/asset:
+        one: Актив
+        many: Активы
+      operations/revenue:
+        one: Доход
+        many: Доходы
+      operations/account:
+        one: Счёт
+        many: Счета
+      operations/liability:
+        one: Обязательство
+        many: Обязательства

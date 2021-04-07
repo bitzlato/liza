@@ -12,6 +12,10 @@ class ApplicationDecorator < Draper::Decorator
     table_th_class column
   end
 
+  def self.attributes
+    table_columns
+  end
+
   def currency
     h.format_currency object.currency
   end

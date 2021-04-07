@@ -1,0 +1,11 @@
+ru:
+  titles:
+    application: Лиза
+  application:
+    navbar:
+      operations: Операционка
+
+  helpers:
+    no_devergence: Нет расхождений
+
+

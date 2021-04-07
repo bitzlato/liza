@@ -1,5 +1,12 @@
 .py-3= back_link
-h1= t '.operations_assets'
-= render 'currencies_select'
-hr
-= render 'table', items: assets
+h1= Operations::Asset.model_name.human_plural
+.mb-4= render 'currencies_select'
+- if currency.present?
+  = render 'table', items: assets do
+    tr
+      th.text-right colspan=4
+        = t '.total'
+      th= format_money assets.sum(:debit), currency
+      th= format_money assets.sum(:credit), currency
+- else
+  = render 'table', items: assets

@@ -86,3 +86,5 @@ gem 'draper', '~> 4.0'
 gem "bugsnag", "~> 6.20"
 
 gem "kaminari", "~> 1.2"
+
+gem "rails-i18n", "~> 6.0"

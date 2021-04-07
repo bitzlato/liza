@@ -10,6 +10,9 @@
         - columns.each do |column|
           th class=decorator.table_th_class(column) 
             = t column
+    - if block_given?
+      thead
+        = yield
     tbody
       - items.each do |item|
         tr is='dapi-tr' data-href=url_for(item)

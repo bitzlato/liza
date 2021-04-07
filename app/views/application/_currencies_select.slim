@@ -1,4 +1,4 @@
-ul.nav.nav-pills
+ul.nav.nav-pills.mb-3
   li.nav-item
     = link_to t('.all'), url_for(request.path_parameters.except(:currency_id)), class: active_class('nav-link', currency.nil?)
   - Currency.order(:id).each do |cur|
