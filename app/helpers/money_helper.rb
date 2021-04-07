@@ -33,6 +33,7 @@ module MoneyHelper
 
   def money_precission(amount, precision)
     return '0' if amount.zero?
+    return amount.to_i.to_s if amount.to_i == amount
     precised = format("%0.#{precision}f", amount)
     return precised if precised.to_d == amount
     format("%0.#{MAX_PRECISION}f", amount)
