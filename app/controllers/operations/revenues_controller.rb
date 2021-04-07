@@ -10,6 +10,10 @@ module Operations
       render locals: { revenues: paginate(revenues) }
     end
 
+    def show
+      render locals: { revenue: Operations::Revenue.find(params[:id]) }
+    end
+
     private
 
     def revenues
