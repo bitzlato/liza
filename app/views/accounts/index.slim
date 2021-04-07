@@ -43,3 +43,5 @@ table.table.table-striped.table-hover.table-narrow
         td.text-right= format_money account.amount, account.currency_id
         td.text-right= format_money account.balance, account.currency_id
         td.text-right= format_money account.locked, account.currency_id
+
+= paginate accounts

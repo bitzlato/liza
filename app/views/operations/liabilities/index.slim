@@ -23,3 +23,5 @@ table.table.table-striped.table-hover.table-narrow
           = present_liability_reference liability.reference
         td.text-right= format_money liability.debit, liability.currency_id
         td.text-right= format_money liability.credit, liability.currency_id
+
+= paginate liabilities

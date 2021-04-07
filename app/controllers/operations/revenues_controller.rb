@@ -7,7 +7,7 @@ module Operations
     layout 'fluid'
 
     def index
-      render locals: { revenues: revenues }
+      render locals: { revenues: paginate(revenues) }
     end
 
     private

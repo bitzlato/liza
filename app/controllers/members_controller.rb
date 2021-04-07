@@ -10,6 +10,6 @@ class MembersController < ApplicationController
   end
 
   def index
-    render locals: { members: Member.order('created_at desc') }
+    render locals: { members: paginate(Member.order('created_at desc')) }
   end
 end

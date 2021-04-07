@@ -84,3 +84,5 @@ gem 'title', '~> 0.0.8'
 gem 'draper', '~> 4.0'
 
 gem "bugsnag", "~> 6.20"
+
+gem "kaminari", "~> 1.2"

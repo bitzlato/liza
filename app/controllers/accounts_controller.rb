@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
 
   def index
     render locals: {
-      accounts: accounts,
+      accounts: paginate(accounts),
       total_balance: accounts.sum(:balance),
       total_locked: accounts.sum(:locked)
     }

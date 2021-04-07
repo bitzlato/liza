@@ -7,7 +7,7 @@ class TradesController < ApplicationController
 
   def index
     render locals: {
-      trades: trades
+      trades: paginate(trades)
     }
   end
 

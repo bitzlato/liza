@@ -7,7 +7,7 @@ module Operations
     layout 'fluid'
 
     def index
-      render locals: { liabilities: liabilities }
+      render locals: { liabilities: paginate(liabilities) }
     end
 
     private

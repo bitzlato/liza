@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def index
     render locals: {
-      orders: orders
+      orders: paginate(orders)
     }
   end
 
