@@ -45,6 +45,22 @@ service: LIZA_HOST:LIZA_PORT
 Open page //PEATIO_HOST:3000/liza in browser
 
 
+## Trades
+
+```
+> Trade.where(taker_type: 'buy', maker_id: account.member_id, market_id: account.currency.dependent_markets).group(:market_id).sum(:total)
+{"ethbtc"=>0.35e-6, "ethmcr"=>0.13705116746e4, "ethusdt"=>0.1901506667e2}
+
+> Trade.where(taker_type: 'sell', maker_id: account.member_id, market_id: account.currency.dependent_markets).group(:market_id).sum(:total)
+{"ethbtc"=>0.130648e-2, "ethmcr"=>0.421917636669e4, "ethusdt"=>0.5301857527e2}
+
+> Trade.where(taker_type: 'sell', taker_id: account.member_id, market_id: account.currency.dependent_markets).group(:market_id).sum(:total)
+{"ethbtc"=>0.270130648e1, "ethmcr"=>0.407396440347e4, "ethusdt"=>0.5112229979e2}
+
+> Trade.where(taker_type: 'buy', taker_id: account.member_id, market_id: account.currency.dependent_markets).group(:market_id).sum(:total)
+{"ethbtc"=>0.35e-6, "ethmcr"=>0.137055684973e4, "ethusdt"=>0.1901544933e2}
+
+```
 
 ## Contributors
 

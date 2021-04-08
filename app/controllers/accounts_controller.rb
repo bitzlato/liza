@@ -8,8 +8,10 @@ class AccountsController < ApplicationController
   def index
     render locals: {
       accounts: paginate(accounts),
-      total_balance: accounts.sum(:balance),
-      total_locked: accounts.sum(:locked)
+      totals: {
+        total_balance: accounts.sum(:balance),
+        total_locked: accounts.sum(:locked),
+      }
     }
   end
 

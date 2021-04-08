@@ -4,7 +4,7 @@ class TradeDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id market taker_type maker_order taker_order market amount price total maker taker]
+    %i[created_at id market taker_type maker_order taker_order market amount price total maker taker]
   end
 
   def amount

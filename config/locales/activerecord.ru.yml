@@ -31,3 +31,23 @@ ru:
       operations/liability:
         one: Обязательство
         many: Обязательства
+    attributes:
+      account:
+        amount: Фактический баланс
+        created_at: Создано
+        id: ID
+        balance: Доступно
+        locked: Заблокировано
+        currency: Валюта
+        member: Участник
+        estimated_amount: Расчётный баланс
+        total_deposit_amount: Введено средств
+        total_withdraw_amount: Выведено средств
+        divergence: Расхождение между фактическим и расчётным балансом
+        total_sell: Всего продано
+        total_buy: Всего куплено
+        total_paid: Всего уплачено
+        total_revenue: Всего получено с продажи
+        trade_income: Торговый баланс
+        trades: Сделки
+

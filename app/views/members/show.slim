@@ -1,32 +1,25 @@
 .py-3= back_link root_url
-h1= '#' + member.uid
+h1= Member.model_name.human + ' #' + member.uid
+= render 'member_brief', member: member
 hr
-.row
-  .col-md-4
-    table.table.table-narrow
-      tbody
-        tr
-          th= t '.member'
-          td= render 'member_brief', member: member
-  .col-md-4
-    h2= t '.accounts'
-    = render 'table', items: member.accounts
-  .col-md-4
-    h2= t '.operations_revenues'
-    = render 'table', items: member.operations_revenues.order('created_at desc')
+h2= t '.accounts'
+= render 'table', items: member.accounts
+/.col-md-4
+  /h2= t '.operations_revenues'
+  /= render 'table', items: member.operations_revenues.order('created_at desc').limit(10)
 
 hr
 .row
   .col-md-6
     h2= t '.withdraws'
-    = render 'withdraws', withdraws: member.withdraws.order('created_at desc')
+    = render 'withdraws', withdraws: member.withdraws.order('created_at desc').limit(10)
 
   .col-md-6
     h2= t '.deposits'
-    = render 'deposits', deposits: member.deposits.order('created_at desc')
+    = render 'deposits', deposits: member.deposits.order('created_at desc').limit(10)
 
-hr
-.row
-  .col-md-12
-    h2= t '.orders'
-    = render 'table', items: member.orders
+/hr
+/.row
+  /.col-md-12
+    /h2= t '.orders'
+    /= render 'table', items: member.orders.includes(:market, :member, :ask_currency, :bid_currency).order('created_at desc').limit(2)

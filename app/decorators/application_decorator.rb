@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationDecorator < Draper::Decorator
-  TEXT_RIGHT = %i[debit credit amount locked total price volume origin_volume origin_locked funds_received maker_fee
-                  taker_fee].freeze
+  TEXT_RIGHT = %i[debit balance credit amount locked total price volume origin_volume origin_locked funds_received maker_fee
+  total_deposit_amount total_withdraw_amount estimated_amount divergence total_sell total_buy
+  taker_fee].freeze
 
   def self.table_th_class(column)
     return 'text-right' if TEXT_RIGHT.include? column
@@ -26,7 +27,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def created_at
     h.content_tag :span, class: 'text-nowrap' do
-      I18n.l object.created_at, format: :short
+      I18n.l object.created_at
     end
   end
 end

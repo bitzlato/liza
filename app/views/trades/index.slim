@@ -1,5 +1,8 @@
 .py-3= back_link
-h1= t '.trades'
-
+h1= Trade.model_name.human_plural
+= render 'currencies_select'
+- if member.present?
+  = render 'member_brief', member: member
+  hr
 = render 'table', items: trades.decorate
 = paginate trades

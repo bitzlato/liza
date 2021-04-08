@@ -1,39 +1,23 @@
 .py-3= back_link accounts_url(currency_id: account.currency)
-h1= '#' + account.id.to_s
+h1= Account.model_name.human + ' #' + account.id.to_s
 hr
-table.table.table-narrow
-  tbody
-    tr
-      th= t '.member'
-      td= render 'member_brief', member: account.member
-      th= t '.currency'
-      td= format_currency account.currency
-
-
-.row
-  .col-md-6
-    = render 'brief', account: account
-  .col-md-6
-    = render 'estimated', account: account
-
+= render 'attributes', item: account
 hr
 .row
   .col-md-6
     h2= t '.withdraws'
-    = render 'withdraws', withdraws: account.withdraws.order('created_at desc')
+    = render 'withdraws', withdraws: account.withdraws.order('created_at desc').limit(10)
 
   .col-md-6
     h2= t '.deposits'
-    = render 'deposits', deposits: account.deposits.order('created_at desc')
+    = render 'deposits', deposits: account.deposits.order('created_at desc').limit(10)
 
--# = render 'locked', account: account
+/hr
+/.row
+  /.col-md-6
+    /h2= t '.quote_orders'
+    /= render 'table', items: account.quote_orders
 
-hr
-.row
-  .col-md-6
-    h2= t '.quote_orders'
-    = render 'table', items: account.quote_orders
-
-  .col-md-6
-    h2= t '.base_orders'
-    = render 'table', items: account.base_orders
+  /.col-md-6
+    /h2= t '.base_orders'
+    /= render 'table', items: account.base_orders

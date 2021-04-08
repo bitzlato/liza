@@ -18,6 +18,8 @@ class Currency < ApplicationRecord
   has_one :parent, class_name: 'Currency', foreign_key: :id, primary_key: :parent_id
   has_many :operations_revenues, class_name: 'Operations::Revenue'
   has_many :operations_assets, class_name: 'Operations::Asset'
+  has_many :base_markets, class_name: 'Market', foreign_key: :base_unit
+  has_many :quote_markets, class_name: 'Market', foreign_key: :quote_unit
 
   scope :visible, -> { where(visible: true) }
   scope :deposit_enabled, -> { where(deposit_enabled: true) }

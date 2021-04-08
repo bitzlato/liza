@@ -7,5 +7,11 @@ ru:
 
   helpers:
     no_divergence: Нет расхождений
+    trades: Сделки (%{count})
+    no_trades: Нет сделок
 
+  tips:
+    account:
+      estimated_amount: 'Введено - выведено'
+      amount: 'Доступные + Заблокировано'
 

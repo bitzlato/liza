@@ -18,6 +18,7 @@ class Trade < ApplicationRecord
 
   scope :h24, -> { where('created_at > ?', 24.hours.ago) }
   scope :with_market, ->(market) { where(market_id: market) }
+  scope :by_member, ->(member_id) { where 'taker_id=? or maker_id=?', member_id, member_id }
 
   # == Class Methods ========================================================
 
