@@ -4,7 +4,7 @@
 table.table.table-striped.table-hover.table-narrow
   - columns.each do |column|
     tr
-      th class='text-right'
+      th class='text-right' title=column
         - tip = I18n.t column, scope: [:tips, item.class.model_name.i18n_key], default: nil
         - if tip.present?
           div= item.class.human_attribute_name column

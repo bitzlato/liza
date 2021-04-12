@@ -8,8 +8,8 @@
     thead.thead-dark
       tr
         - columns.each do |column|
-          th class=decorator.table_th_class(column) 
-            = t column
+          th class=decorator.table_th_class(column) title=column
+            = decorator.object_class.human_attribute_name column
     - if block_given?
       thead
         = yield

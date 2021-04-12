@@ -13,7 +13,7 @@ class OrderDecorator < ApplicationDecorator
   end
 
   def price
-    h.format_money object.price, object.price_currency
+    h.order_price object
   end
 
   def volume
@@ -33,11 +33,11 @@ class OrderDecorator < ApplicationDecorator
   end
 
   def maker_fee
-    h.format_money object.maker_fee, object.bid
+    h.present_fee object.maker_fee
   end
 
   def taker_fee
-    h.format_money object.taker_fee, object.bid
+    h.present_fee object.taker_fee
   end
 
   def trades

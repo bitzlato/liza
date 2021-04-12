@@ -32,6 +32,12 @@ ru:
         one: Обязательство
         many: Обязательства
     attributes:
+      trade:
+        created_at: Создано
+        market: Рынок
+        amount: Объём сделки
+        price: Цена
+        total: Итого уплочено
       account:
         amount: Фактический баланс
         created_at: Создано
@@ -50,4 +56,10 @@ ru:
         total_revenue: Всего получено с продажи
         trade_income: Торговый баланс
         trades: Сделки
+      order:
+        member: Участник
+        funds_received: Исполнено
+        origin_volume: Объём заявки
+        volume: Оставшийся объём
+        price: Цена
 

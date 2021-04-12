@@ -1,6 +1,14 @@
 module MoneyHelper
   MAX_PRECISION = 8
 
+  def present_fee(fee, amount = nil)
+    content_tag :span, class: 'text-nowrap text-monospace' do
+      buffer = (fee*100).to_s + '%'
+      buffer << amount * fee if amount
+      buffer
+    end
+  end
+
   def format_divergence(amount, currency)
     if amount.zero?
       content_tag :span, class: 'text-success' do
@@ -34,6 +42,7 @@ module MoneyHelper
   end
 
   def money_precission(amount, precision)
+    return middot if amount.nil?
     return '0' if amount.zero?
     return amount.to_i.to_s if amount.to_i == amount
     precised = format("%0.#{precision}f", amount)

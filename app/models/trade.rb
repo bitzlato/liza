@@ -91,6 +91,14 @@ class Trade < ApplicationRecord
     end
   end
 
+  def taker_fee_amount
+    total * maker_order.taker_fee
+  end
+
+  def maker_fee_amount
+    amount * maker_order.maker_fee
+  end
+
   # == Instance Methods =====================================================
 
   def order_fee(order)

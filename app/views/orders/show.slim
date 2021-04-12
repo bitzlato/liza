@@ -1,4 +1,4 @@
 .py-3= back_link orders_url
-h1= '#' + order.id.to_s
+h1= Order.model_name.human + ' #' + order.id.to_s
 hr
 = render 'attributes', item: order

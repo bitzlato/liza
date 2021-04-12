@@ -3,7 +3,7 @@ h1= Member.model_name.human + ' #' + member.uid
 = render 'member_brief', member: member
 hr
 h2= t '.accounts'
-= render 'table', items: member.accounts
+= render 'table', items: member.accounts.order(:currency_id)
 /.col-md-4
   /h2= t '.operations_revenues'
   /= render 'table', items: member.operations_revenues.order('created_at desc').limit(10)
