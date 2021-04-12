@@ -5,15 +5,11 @@ module Operations
     delegate_all
 
     def self.table_columns
-      %i[code created_at member currency reference debit credit]
+      %i[account created_at member currency reference credit]
     end
 
     def credit
       h.format_money object.credit, object.currency
-    end
-
-    def debit
-      h.format_money object.debit, object.currency
     end
 
     def reference

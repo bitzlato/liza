@@ -28,11 +28,11 @@ class TradeDecorator < ApplicationDecorator
   end
 
   def maker_fee_amount
-    h.format_money object.maker_fee_amount, object.maker_order.bid
+    h.format_money object.maker_fee_amount, object.taker_order.bid
   end
 
   def taker_fee_amount
-    h.format_money object.taker_fee_amount, object.maker_order.ask
+    h.format_money object.taker_fee_amount, object.taker_order.ask
   end
 
   def decorated_taker_order

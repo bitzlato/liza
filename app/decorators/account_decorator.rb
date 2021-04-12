@@ -4,7 +4,7 @@ class AccountDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades estimated_amount]
+    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades taker_fees_amount maker_fees_amount estimated_amount]
   end
 
   def amount
@@ -50,8 +50,8 @@ class AccountDecorator < ApplicationDecorator
     end
   end
 
-  def total_withdraw_amoount
-    h.format_money object.total_withdraw_amoount, object.currency
+  def total_withdraw_amount
+    h.format_money object.total_withdraw_amount, object.currency
   end
 
   def total_deposit_amount

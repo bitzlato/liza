@@ -14,6 +14,8 @@ class Trade < ApplicationRecord
   belongs_to :maker, class_name: 'Member', foreign_key: :maker_id, required: true
   belongs_to :taker, class_name: 'Member', foreign_key: :taker_id, required: true
 
+  has_many :operations_revenues, as: :reference, class_name: 'Operations::Revenue'
+
   # == Scopes ===============================================================
 
   scope :h24, -> { where('created_at > ?', 24.hours.ago) }
@@ -92,11 +94,11 @@ class Trade < ApplicationRecord
   end
 
   def taker_fee_amount
-    total * maker_order.taker_fee
+    total * taker_order.taker_fee
   end
 
   def maker_fee_amount
-    amount * maker_order.maker_fee
+    amount * taker_order.maker_fee
   end
 
   # == Instance Methods =====================================================

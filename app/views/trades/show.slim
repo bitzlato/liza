@@ -1,4 +1,9 @@
 .py-3= back_link trades_url
 h1= Trade.model_name.human + ' #' + trade.id.to_s
 hr
-= render 'attributes', item: trade
+.row
+  .col-md-4
+    = render 'attributes', item: trade
+  .col-md-8
+    h2= Operations::Revenue.model_name.human_plural
+    = render 'table', items: trade.operations_revenues
