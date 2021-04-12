@@ -18,6 +18,7 @@ module Operations
       'operations_'
     end
 
+
     # Type column reserved for STI.
     self.inheritance_column = nil
 
@@ -31,6 +32,14 @@ module Operations
     #   kind.main?
     def kind
       super&.inquiry
+    end
+
+    def records_name
+      type.pluralize
+    end
+
+    def records
+      send records_name
     end
   end
 end

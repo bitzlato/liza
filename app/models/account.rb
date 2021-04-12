@@ -75,16 +75,15 @@ class Account < ApplicationRecord
   end
   memoize :total_withdraw_amount
 
-  def maker_fees_amount
-    0
+  def operations_revenues
+    member.operations_revenues.where(currency_id: currency_id)
   end
 
-  def taker_fees_amount
-    Trade.where(taker_id: member_id)
-    0
+  def trades_fee
+    operations_revenues.sum(:credit)
   end
 
   def estimated_amount
-    total_deposit_amount - total_withdraw_amount + trade_income - maker_fees_amount - taker_fees_amount
+    total_deposit_amount - total_withdraw_amount + trade_income - trades_fee
   end
 end

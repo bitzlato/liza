@@ -130,6 +130,22 @@ class Trade < ApplicationRecord
   def buy_order
     [maker_order, taker_order].find { |o| o.side == 'buy' }
   end
+
+  def seller
+    sell_order.member
+  end
+
+  def buyer
+    sell_order.member
+  end
+
+  def seller_fee
+    total * order_fee(sell_order)
+  end
+
+  def buyer_fee
+    amount * order_fee(buy_order)
+  end
 end
 
 # == Schema Information

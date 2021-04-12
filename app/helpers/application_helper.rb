@@ -20,4 +20,8 @@ module ApplicationHelper
   def middot
     content_tag :div, '&middot;'.html_safe, class: 'text-muted'
   end
+
+  def grouped_operations(operations)
+    operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)').each_with_object({}) { |i, a| a[i.first] = { credit: i[1], debit: -i[2], balance: i[1] - i[2] } }
+  end
 end

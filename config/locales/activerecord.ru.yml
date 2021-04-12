@@ -23,14 +23,14 @@ ru:
         one: Актив
         many: Активы
       operations/revenue:
-        one: Доход
-        many: Доходы
+        one: Операционный доход
+        many: Операционные доходы
       operations/account:
-        one: Счёт
-        many: Счета
+        one: Системный счёт
+        many: Системные счета
       operations/liability:
-        one: Обязательство
-        many: Обязательства
+        one: Исполненные обязательства
+        many: Исполненные обязательства
     attributes:
       trade:
         created_at: Создано

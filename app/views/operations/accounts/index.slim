@@ -1,4 +1,11 @@
 .py-3= back_link
 h1= accounts.model_name.human_plural
 hr
-= render 'table', items: accounts
+
+- [:coin, :fiat].each do |currency_type|
+  h2= t currency_type
+  .row
+    - [:platform, :member].each do |scope|
+      .col-md-6
+        h3= t scope
+        = render 'table', accounts: accounts.where(currency_type: currency_type, scope: scope)

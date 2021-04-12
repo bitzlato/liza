@@ -4,7 +4,15 @@ class AccountDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades taker_fees_amount maker_fees_amount estimated_amount]
+    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades]
+  end
+
+  def self.attributes
+    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades trades_fee estimated_amount]
+  end
+
+  def trades_fee
+    h.format_money object.trades_fee, object.currency
   end
 
   def amount

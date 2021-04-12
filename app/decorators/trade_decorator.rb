@@ -8,7 +8,7 @@ class TradeDecorator < ApplicationDecorator
   delegate :taker_fee, to: :decorated_taker_order
 
   def self.table_columns
-    %i[created_at id market taker taker_type taker_order taker_fee taker_fee_amount maker maker_order maker_fee maker_fee_amount amount price total]
+    %i[created_at id market taker_type seller sell_order seller_fee buyer buy_order buyer_fee taker_fee maker_fee amount price total]
   end
 
   def amount
@@ -41,6 +41,22 @@ class TradeDecorator < ApplicationDecorator
 
   def decorated_maker_order
     @decorated_maker_order ||= OrderDecorator.decorate(object.maker_order)
+  end
+
+  def buyer
+    h.render 'member_brief', member: object.buyer
+  end
+
+  def seller
+    h.render 'member_brief', member: object.seller
+  end
+
+  def buy_order
+    h.present_order object.buy_order
+  end
+
+  def sell_order
+    h.present_order object.sell_order
   end
 
   def taker

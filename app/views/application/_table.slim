@@ -3,7 +3,7 @@
 - else
   - items = items.decorate unless items.respond_to?(:decorated?) && items.decorated?
   - decorator = items.first.decorator_class
-  - columns = decorator.table_columns
+  - columns = decorator.table_columns unless defined? columns
   table.table.table-striped.table-hover.table-narrow
     thead.thead-dark
       tr
