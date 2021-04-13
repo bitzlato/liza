@@ -28,6 +28,10 @@ class Beneficiary < ApplicationRecord
 
   scope :available_to_member, -> { with_state(:pending, :active) }
 
+  def to_s
+    name
+  end
+
   def masked_account_number
     account_number = data.symbolize_keys[:account_number]
 

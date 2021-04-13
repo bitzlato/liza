@@ -6,7 +6,7 @@ class ApplicationDecorator < Draper::Decorator
   taker_fee].freeze
 
   def self.table_columns
-    object_class.attribute_names
+    object_class.attribute_names.map &:to_sym
   end
 
   def self.table_th_class(column)

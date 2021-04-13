@@ -18,7 +18,7 @@ tbody
           = t d
         - Currency.order(:id).each do |currency|
           - data = go[currency.id]
-          td.text-right class=(d==:balance ? '' : 'text-small')
+          td.text-right class=(d==:balance ? '' : 'text-small') width=200
             - if data.nil?
               = middot
             - else

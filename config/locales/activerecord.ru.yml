@@ -31,6 +31,9 @@ ru:
       operations/liability:
         one: Исполненные обязательства
         many: Исполненные обязательства
+      transaction:
+        one: Транзакция
+        many: Транзакции
     attributes:
       trade:
         created_at: Создано

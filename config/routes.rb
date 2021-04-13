@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :reports
     resources :withdraws
     resources :deposits
+    resources :transactions
     resources :accounts
     resources :trades
     resources :orders

@@ -7,8 +7,15 @@ class ApplicationController < ActionController::Base
   include RescueErrors
   include PaginationSupport
   include RansackSupport
+  include ShowAction
 
   skip_before_action :verify_authenticity_token if Rails.env.development?
 
   layout 'application'
+
+  private
+
+  def model_class
+    self.class.name.remove('Controller').singularize.constantize
+  end
 end

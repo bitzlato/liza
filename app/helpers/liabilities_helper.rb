@@ -21,10 +21,14 @@ module LiabilitiesHelper
   end
 
   def present_deposit(deposit)
-    "deposit<br>#{format_money(deposit.amount, deposit.currency)}".html_safe
+    link_to deposit_path(deposit) do
+      "deposit<br>#{format_money(deposit.amount, deposit.currency)}".html_safe
+    end
   end
 
   def present_withdraw(withdraw)
-    "withdraw<br>#{format_money(withdraw.amount, withdraw.currency)}".html_safe
+    link_to withdraw_path(withdraw) do
+      "withdraw<br>#{format_money(withdraw.amount, withdraw.currency)}".html_safe
+    end
   end
 end

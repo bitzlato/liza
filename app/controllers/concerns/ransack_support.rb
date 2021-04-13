@@ -11,11 +11,13 @@ module RansackSupport
   private
 
   def q
-    @q ||= model_class.ransack(params[:q])
+    @q ||= build_q
   end
 
-  def model_class
-    self.class.name.remove('Controller').singularize.constantize
+  def build_q
+    qq = model_class.ransack(params[:q])
+    qq.sorts = 'created_at desc' if qq.sorts.empty?
+    qq
   end
 
   def records
