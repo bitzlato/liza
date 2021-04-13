@@ -23,6 +23,6 @@ table.table.table-striped.table-hover.table-narrow.table-bordered
               - if data.nil?
                 = middot
               - else
-                = link_to url_for([:operations, account.records_name, account_id: account.id]) do
+                = link_to url_for([:operations, account.records_name, q: { account_id_eq: account.id, currency_id_eq: currency.id}]) do
                   = format_money data[d], currency
               = check_operations_amount(account)

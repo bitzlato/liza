@@ -10,6 +10,7 @@ module CurrencySupport
   private
 
   def currency
-    Currency.find(params[:currency_id]) if params[:currency_id].present?
+    currency_id = params.dig(:q, :currency_id_eq)
+    Currency.find(currency_id) if currency_id.present?
   end
 end

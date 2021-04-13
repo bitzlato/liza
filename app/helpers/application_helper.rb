@@ -24,4 +24,9 @@ module ApplicationHelper
   def grouped_operations(operations)
     operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)').each_with_object({}) { |i, a| a[i.first] = { credit: i[1], debit: -i[2], balance: i[1] - i[2] } }
   end
+
+  def sort_column(column, title)
+    next_order = :desc
+    sort_link q, column, title
+  end
 end

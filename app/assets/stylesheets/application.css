@@ -34,3 +34,7 @@ code {
 .text-small {
   font-size: 80%;
 }
+
+th .sort_link {
+  color: white;
+}

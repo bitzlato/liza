@@ -1,0 +1,12 @@
+.py-3= back_link
+h1= paginated_records.model_name.human_plural
+
+= render 'currencies_select' if respond_to? :currency
+- if respond_to? :account
+  - if account.is_a? Operations::Account
+    = render 'operations_account'
+  - elsif account.is_a? Account
+    = render 'account'
+= render 'member_brief', member: member if respond_to?(:member) && memger.present?
+= render 'table', items: paginated_records.decorate
+= paginate paginated_records

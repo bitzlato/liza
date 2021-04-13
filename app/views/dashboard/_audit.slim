@@ -32,28 +32,28 @@ table.table.table-condensed.table-striped
       tr
         th= format_currency currency_id
         td.text-right
-          = link_to operations_assets_path(currency_id: currency_id) do
+          = link_to operations_assets_path(currency_id_eq: currency_id) do
             = format_money total_operations_assets_credit, currency
-        td.text-right= link_to row[3], accounts_path(currency_id: currency_id)
+        td.text-right= link_to row[3], accounts_path(currency_id_eq: currency_id)
         td.text-right
-          = link_to deposits_path(currency_id: currency_id) do
+          = link_to deposits_path(currency_id_eq: currency_id) do
             = format_money total_deposit, currency_id
         td.text-right
-          = link_to withdraws_path(currency_id: currency_id) do
+          = link_to withdraws_path(currency_id_eq: currency_id) do
             = format_money total_withdraw, currency_id
         td.text-right= format_money total_deposit - total_withdraw, currency_id
         td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_credit, currency_id
         td.text-right
-          = link_to operations_revenues_path(currency_id: currency_id) do
+          = link_to operations_revenues_path(currency_id_eq: currency_id) do
             = format_money total_operations_credit, currency
         td.text-right
-          = link_to operations_revenues_path(currency_id: currency_id) do
+          = link_to operations_revenues_path(currency_id_eq: currency_id) do
             = format_money currency.operations_revenues.sum(:debit), currency
         td.text-right
-           = link_to accounts_path(currency_id: currency_id) do
+           = link_to accounts_path(currency_id_eq: currency_id) do
             = format_money row[1] + row[2], currency_id
         td.text-right
-          = link_to accounts_path(currency_id: currency_id) do
+          = link_to accounts_path(currency_id_eq: currency_id) do
             = format_money row[1], currency_id
         td.text-right
           = format_money row[2], currency_id

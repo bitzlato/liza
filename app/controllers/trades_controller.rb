@@ -5,13 +5,6 @@ class TradesController < ApplicationController
 
   layout 'fluid'
 
-  def index
-    render locals: {
-      trades: paginate(trades),
-      member: member
-    }
-  end
-
   def show
     render locals: { trade: Trade.find(params[:id]) }
   end
