@@ -5,6 +5,10 @@ class ApplicationDecorator < Draper::Decorator
   total_deposit_amount total_withdraw_amount estimated_amount divergence total_sell total_buy
   taker_fee].freeze
 
+  def self.table_columns
+    object_class.attribute_names
+  end
+
   def self.table_th_class(column)
     return 'text-right' if TEXT_RIGHT.include? column
   end
