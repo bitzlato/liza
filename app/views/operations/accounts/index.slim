@@ -2,8 +2,7 @@
 h1= accounts.model_name.human_plural
 hr
 
-- [:coin, :fiat].each do |currency_type|
-  h2= t currency_type
-  - [:platform, :member].each do |scope|
-    h3= t scope
-    = render 'table', accounts: accounts.where(currency_type: currency_type, scope: scope)
+table.table.table-striped.table-hover.table-narrow.table-bordered
+  - [:coin, :fiat].each do |currency_type|
+    - [:platform, :member].each do |scope|
+      = render 'table', accounts: accounts.where(currency_type: currency_type, scope: scope), description: [currency_type, scope].join(': ')
