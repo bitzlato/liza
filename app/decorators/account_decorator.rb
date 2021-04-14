@@ -67,7 +67,9 @@ class AccountDecorator < ApplicationDecorator
   end
 
   def locked
-    h.format_money object.locked, object.currency
+    h.link_to h.operations_liabilities_path(q: {member_id_eq: object.member_id, account_id_eq: Operations::Account.find_by(kind: :locked, scope: :member, currency_type: object.currency.type)}) do
+      h.format_money object.locked, object.currency
+    end
   end
 
   def trades

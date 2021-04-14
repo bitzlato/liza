@@ -14,13 +14,13 @@ module OrdersHelper
 
   def present_order_bid(order)
     link_to order_path(order), target: '_blank' do
-      ("order bid<br>" + order_price(order)).html_safe
+      ("order bid&nbsp;" + order_price(order)).html_safe
     end
   end
 
   def present_order_ask(order)
     link_to order_path(order), target: '_blank' do
-      ("order ask<br>" + order_price(order)).html_safe
+      ("order ask&nbsp;" + order_price(order)).html_safe
     end
   end
 
