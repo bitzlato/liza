@@ -27,11 +27,21 @@ default: &default
 
 
 development:
-  <<: *default
-  database: peatio_development
+  primary:
+    <<: *default
+    database: peatio_development
+  reports:
+    <<: *default
+    migrations_paths: db/reports_migrate
+    database: peatio_development_reports
 test:
-  <<: *default
-  database: liza_test
+  primary:
+    <<: *default
+    database: liza_test
+  reports:
+    <<: *default
+    migrations_paths: db/reports_migrate
+    database: liza_test_reports
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -54,5 +64,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: <%= ENV.fetch('DATABASE_NAME', 'peatio_production') %>
+  primary:
+    <<: *default
+    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_production') %>
+  reports:
+    <<: *default
+    migrations_paths: db/reports_migrate
+    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>

@@ -1,0 +1,4 @@
+.py-3= back_link url_for(record.class)
+h1= record.model_name.human + ' #' + record.id.to_s
+hr
+= render 'results', results: record.results, form: record.form_object

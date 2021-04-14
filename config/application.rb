@@ -26,6 +26,8 @@ module Liza
     config.i18n.default_locale = ENV.fetch('RAILS_LOCALE', :en)
     config.autoload_paths += Dir[
       "#{Rails.root}/app/reports",
+      "#{Rails.root}/app/forms",
+      "#{Rails.root}/app/services",
       "#{Rails.root}/app/inputs",
       "#{Rails.root}/app/decorators",
     ]

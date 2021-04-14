@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+
+  def present_time(time, default)
+    return default if time.blank?
+    l time, format: :short
+  end
+
   def app_title
     I18n.t 'titles.application'
   end
@@ -28,5 +34,11 @@ module ApplicationHelper
   def sort_column(column, title)
     next_order = :desc
     sort_link q, column, title
+  end
+
+  def format_liability_account(account)
+    link_to account do
+      account.description + ' [' + account.scope + ']'
+    end
   end
 end

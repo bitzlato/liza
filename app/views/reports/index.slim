@@ -1,0 +1,6 @@
+.container
+  h1= paginated_records.model_name.human_plural
+  = render 'form', liability_form: liability_form
+  hr
+  = render 'table', items: paginated_records.decorate
+  = paginate paginated_records

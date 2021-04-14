@@ -6,6 +6,7 @@ ru:
       operations: Операционка
 
   helpers:
+    disable_with: Понеслась..
     no_divergence: Нет расхождений
     trades: Сделки (%{count})
     no_trades: Нет сделок

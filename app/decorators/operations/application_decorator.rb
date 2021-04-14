@@ -7,9 +7,7 @@ module Operations
     end
 
     def account
-      h.link_to object.account do
-        object.account.description + ' [' + object.account.scope + ']'
-      end
+      h.format_liability_account object.account
     end
 
     def credit
