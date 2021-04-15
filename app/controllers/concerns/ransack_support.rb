@@ -29,7 +29,7 @@ module RansackSupport
     {
       grouped_by: meta[:grouped_by],
       aggregations: meta[:aggregations],
-      rows: records.group(*meta[:grouped_by]).reorder('').pluck((meta[:grouped_by]+meta[:aggregations]).join(', '))
+      rows: records.group(*meta[:grouped_by]).reorder('').order(meta[:grouped_by].first).pluck((meta[:grouped_by]+meta[:aggregations]).join(', '))
     }
   end
 

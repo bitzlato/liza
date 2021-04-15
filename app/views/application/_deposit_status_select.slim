@@ -1,0 +1,7 @@
+- qq = request.query_parameters.fetch(:q, {})
+ul.nav.nav-pills.mb-3
+  li.nav-item
+    = link_to t('.any_state'), url_for(q: qq.except(:completed)), class: active_class('nav-link', !qq[:completed])
+  li.nav-item
+    = link_to t('.completed_only'), 
+      url_for(q: qq.merge(completed: true)), class: active_class('nav-link', qq[:completed])

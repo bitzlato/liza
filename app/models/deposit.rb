@@ -26,4 +26,8 @@ class Deposit < ApplicationRecord
   def completed?
     aasm_state.in?(COMPLETED_STATES.map(&:to_s))
   end
+
+   def self.ransackable_scopes(auth_object = nil)
+     %i(completed) + super
+   end
 end

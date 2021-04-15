@@ -1,6 +1,10 @@
 h1= paginated_records.model_name.human_plural
 
-= render 'currencies_select' if respond_to? :currency
+- if respond_to? :currency
+  .float-left= render 'currencies_select' 
+- if q.klass.ransackable_scopes.include? :completed 
+  .float-left= render 'deposit_status_select' 
+.clearfix
 = render 'time_form'
 - if respond_to? :account
   - if account.is_a? Operations::Account
