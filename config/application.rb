@@ -27,6 +27,7 @@ module Liza
     config.autoload_paths += Dir[
       "#{Rails.root}/app/reports",
       "#{Rails.root}/app/forms",
+      "#{Rails.root}/app/errors",
       "#{Rails.root}/app/services",
       "#{Rails.root}/app/inputs",
       "#{Rails.root}/app/decorators",

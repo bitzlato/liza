@@ -16,6 +16,8 @@ module RansackSupport
   def index
     respond_to do |format|
       format.xlsx do
+
+        raise HumanizedError, "Too many records" if records.count > Settings.max_export_records_count
         render locals: {
           records: records,
         }

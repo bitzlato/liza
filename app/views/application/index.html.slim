@@ -1,7 +1,4 @@
 h1= paginated_records.model_name.human_plural
-.float-right
-  = link_to url_for(format: :xlsx) do
-    = t '.download_xlsx'
 - if respond_to? :currency
   .float-left= render 'currencies_select' 
 - if q.klass.ransackable_scopes.include? :completed 
@@ -15,5 +12,13 @@ h1= paginated_records.model_name.human_plural
     = render 'account'
 = render 'member_brief', member: member if respond_to?(:member) && memger.present?
 = render 'summary_by_currency', summary: summary if summary.present?
+div.mb-2
+  = t '.total_records', count: paginated_records.total_count
+  span.ml-2
+    - if paginated_records.total_count > Settings.max_export_records_count
+      span.text-muted= t '.too_much_records_to_export'
+    - else
+      = link_to url_for(format: :xlsx) do
+        = t '.download_xlsx'
 = render 'table', items: paginated_records.decorate
 = paginate paginated_records
