@@ -2,9 +2,9 @@
   .row
     .col-md-1 От
     .col-md-4
-      = f.input :created_at_gt, label: false, start_year: Settings.start_year, end_year: Date.today.year, as: :datetime_picker
+      = f.input :created_at_gt, label: false, start_year: Settings.start_year, end_year: Date.today.year, input_html: { class: 'datetimepicker' }
     .col-md-1 До
     .col-md-4
-      = f.input :created_at_lteq, label: false, start_year: Settings.start_year, end_year: Date.today.year, as: :datetime_picker
+      = f.input :created_at_lteq, label: false, start_year: Settings.start_year, end_year: Date.today.year, input_html: { class: 'datetimepicker' }
     .col-md-2
       = f.button :submit, class: 'btn btn-primary'

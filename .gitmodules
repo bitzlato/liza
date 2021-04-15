@@ -1,0 +1,3 @@
+[submodule "vendor/assets/bootstrap4-datetimepicker"]
+	path = vendor/assets/bootstrap4-datetimepicker
+	url = git@github.com:technovistalimited/bootstrap4-datetimepicker.git
