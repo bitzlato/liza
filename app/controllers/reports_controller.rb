@@ -19,6 +19,10 @@ class ReportsController < ApplicationController
     render locals: { liability_form: form, paginated_records: paginate(records) }, layout: 'application'
   end
 
+  # Withdraws and deposits
+  def wd
+  end
+
   private
 
   def form

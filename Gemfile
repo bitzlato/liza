@@ -88,3 +88,9 @@ gem "bugsnag", "~> 6.20"
 gem "kaminari", "~> 1.2"
 
 gem "rails-i18n", "~> 6.0"
+
+gem "axlsx", "~> 1.3"
+gem "rubyzip", "~> 2.3"
+
+gem "caxlsx", "~> 3.0"
+gem 'caxlsx_rails'

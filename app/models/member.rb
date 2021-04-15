@@ -16,6 +16,10 @@ class Member < ApplicationRecord
     Trade.where('maker_id = ? OR taker_id = ?', id, id)
   end
 
+  def to_s
+    uid
+  end
+
   def get_account(model_or_id_or_code)
     case model_or_id_or_code
     when String, Symbol

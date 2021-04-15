@@ -6,18 +6,28 @@ module RansackSupport
 
   SUMMARY_MODELS = {
     Deposit => { grouped_by: [:currency_id], aggregations: ['sum(amount)']},
-    Withdraw => { grouped_by: [:currency_id], aggregations: ['sum(amount)']},
+    Withdraw => { grouped_by: ['withdraws.currency_id'], aggregations: ['sum(amount)']},
     Account => { grouped_by: [:currency_id], aggregations: ['sum(balance)','sum(locked)']},
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(debit)','sum(credit)'] },
-    Operations::Revenue => { grouped_by: [:currency_id], aggregations: ['sum(debit)', 'sum(credit)'] }
+    Operations::Revenue => { grouped_by: [:currency_id], aggregations: ['sum(debit)', 'sum(credit)'] },
+    Operations::Asset => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(debit)', 'sum(credit)'] }
   }
 
   def index
-    render locals: {
-      records: records,
-      summary: summary,
-      paginated_records: paginate(records)
-    }
+    respond_to do |format|
+      format.xlsx do
+        render locals: {
+          records: records,
+        }
+      end
+      format.html do
+        render locals: {
+          records: records,
+          summary: summary,
+          paginated_records: paginate(records)
+        }
+      end
+    end
   end
 
   private

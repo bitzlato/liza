@@ -47,6 +47,10 @@ class Currency < ApplicationRecord
     parent_id.present? && coin?
   end
 
+  def to_s
+    id.upcase
+  end
+
   def dependent_markets
     Market.where('base_unit = ? OR quote_unit = ?', id, id)
   end

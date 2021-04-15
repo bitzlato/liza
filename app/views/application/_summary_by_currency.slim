@@ -14,7 +14,7 @@ table.table.table-bordered.table-condensed.table-narrow
         - summary[:grouped_by].each_with_index do |column, index|
           - value = record[index]
           th
-            - if column == :currency_id
+            - if column.to_s.ends_with? 'currency_id'
               = format_currency value
             - else
               = value

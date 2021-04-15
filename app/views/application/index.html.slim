@@ -1,5 +1,7 @@
 h1= paginated_records.model_name.human_plural
-
+.float-right
+  = link_to url_for(format: :xlsx) do
+    = t '.download_xlsx'
 - if respond_to? :currency
   .float-left= render 'currencies_select' 
 - if q.klass.ransackable_scopes.include? :completed 

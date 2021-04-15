@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
 
   layout 'application'
 
+  helper_method :model_class
+
   private
 
   def model_class
