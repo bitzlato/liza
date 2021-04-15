@@ -9,3 +9,4 @@ table.table.table-narrow.table-stripped.table-bordered
   tbody
     = render 'frame_result', header: present_time(form.time_from, 'С начала'), table: results[:previous], currencies: results[:currencies], codes: results[:codes]
     = render 'frame_result', header: present_time(form.time_to, 'До момента генерации отчёта'), table: results[:framed], currencies: results[:currencies], codes: results[:codes]
+    = render 'frame_result', header: present_time(form.time_to, 'До момента генерации отчёта'), table: results[:end], currencies: results[:currencies], codes: results[:codes]

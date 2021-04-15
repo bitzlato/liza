@@ -13,15 +13,18 @@ module LiabilityReport
     end
 
     def perform
-      previous = summarize(previous_scope)
-      framed = summarize(framed_scope)
-
-      {
-        previous: previous,
-        framed: framed,
-        currencies: @currencies,
-        codes: @codes
-      }
+      base_scope.transaction do
+        previous = summarize(previous_scope)
+        framed = summarize(framed_scope)
+        ended = summarize(end_scope)
+        {
+          previous: previous,
+          framed: framed,
+          end: ended,
+          currencies: @currencies,
+          codes: @codes
+        }
+      end
     end
 
     private
@@ -41,14 +44,19 @@ module LiabilityReport
     end
 
     def previous_scope
-      return base_scope.none if form.time_from.empty?
+      return base_scope.none if form.time_from.nil?
       base_scope.where('created_at<?', form.time_from)
     end
 
     def framed_scope
-      bs = form.time_from.empty? ? base_scope : base_scope.where('created_at>=?', form.time_from)
-      bs = bs.where('created_at<?', form.time_to) unless form.time_to.empty?
+      bs = form.time_from.nil? ? base_scope : base_scope.where('created_at>=?', form.time_from)
+      bs = bs.where('created_at<?', form.time_to) unless form.time_to.nil?
       bs
+    end
+
+    def end_scope
+      return base_scope if form.time_to.nil?
+      base_scope.where('created_at<?', form.time_to)
     end
 
     def base_scope

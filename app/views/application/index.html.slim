@@ -1,6 +1,7 @@
 h1= paginated_records.model_name.human_plural
 
 = render 'currencies_select' if respond_to? :currency
+= render 'time_form'
 - if respond_to? :account
   - if account.is_a? Operations::Account
     = render 'operations_account'
