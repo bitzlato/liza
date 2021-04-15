@@ -1,5 +1,23 @@
 table.table.table-bordered.table-condensed.table-narrow
-  - summary.each do |record|
+  thead.thead-dark
     tr
-      th= format_currency record.first
-      td.text-right= format_money record.second, record.first
+      - summary[:grouped_by].each do |column|
+        th= column
+
+      - summary[:aggregations].each do |column|
+        th.text-right= column
+
+  tbody
+    - summary[:rows].each do |record|
+      - currency_id = record.first
+      tr
+        - summary[:grouped_by].each_with_index do |column, index|
+          - value = record[index]
+          th
+            - if column == :currency_id
+              = format_currency value
+            - else
+              = value
+        - summary[:aggregations].each_with_index do |column, index|
+          - value = record[index + summary[:grouped_by].length]
+          td.text-right= format_money value, currency_id

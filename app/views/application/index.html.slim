@@ -8,6 +8,6 @@ h1= paginated_records.model_name.human_plural
   - elsif account.is_a? Account
     = render 'account'
 = render 'member_brief', member: member if respond_to?(:member) && memger.present?
-= render 'summary_by_currency', summary: summary if respond_to? :currency
+= render 'summary_by_currency', summary: summary if summary.present?
 = render 'table', items: paginated_records.decorate
 = paginate paginated_records
