@@ -5,10 +5,18 @@ module RansackSupport
   end
 
   def index
-    render locals: { records: records, paginated_records: paginate(records) }
+    render locals: {
+      records: records,
+      summary: summary,
+      paginated_records: paginate(records)
+    }
   end
 
   private
+
+  def summary
+     records.group(:currency_id).reorder('').pluck('currency_id, sum(amount)')
+  end
 
   def q
     @q ||= build_q

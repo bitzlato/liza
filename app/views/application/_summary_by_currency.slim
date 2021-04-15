@@ -1,0 +1,5 @@
+table.table.table-bordered.table-condensed.table-narrow
+  - summary.each do |record|
+    tr
+      th= format_currency record.first
+      td.text-right= format_money record.second, record.first
