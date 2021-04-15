@@ -1,13 +1,11 @@
-
 # frozen_string_literal: true
 
 # Liability report namespace
-module LiabilityReport
-  class Generator
-    attr_reader :form
+class LiabilityReport < Report
+  class Generator < BaseGenerator
 
     def initialize(form)
-      @form = form
+      super form
       @currencies = Set.new
       @codes = Set.new
     end
@@ -28,8 +26,6 @@ module LiabilityReport
     end
 
     private
-
-    attr_reader :form
 
     def summarize(scope)
       scope.group(:currency_id, :code).pluck('currency_id, code, sum(credit), sum(debit)').each_with_object({}) do |record, a|

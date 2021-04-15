@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_130618) do
   enable_extension "plpgsql"
 
   create_table "reports", force: :cascade do |t|
+    t.string "type", null: false
     t.integer "member_id", null: false
     t.jsonb "form", default: {}, null: false
     t.jsonb "results", default: {}, null: false

@@ -5,11 +5,8 @@ Rails.application.routes.draw do
 
   scope Settings.root_prefix do
     root to: 'dashboard#index'
-    resources :reports do
-      collection do
-        get :wd # withdraw and deposits
-      end
-    end
+    resources :reports
+    resources :wd_reports
     resources :withdraws
     resources :deposits
     resources :transactions

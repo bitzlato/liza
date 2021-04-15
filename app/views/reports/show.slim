@@ -1,4 +1,7 @@
-.py-3= back_link url_for(record.class)
-h1= record.model_name.human + ' #' + record.id.to_s
-hr
-= render 'results', results: record.results, form: record.form_object
+.py-3= back_link url_for(report.class)
+.container
+  h1= report.model_name.human + ' #' + report.id.to_s
+  hr
+  = render 'present_form', form: report.form_object
+  hr
+  = render report.type.underscore, results: report.results, form: report.form_object

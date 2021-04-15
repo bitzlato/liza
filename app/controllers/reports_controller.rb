@@ -2,12 +2,13 @@
 
 class ReportsController < ApplicationController
   layout 'fluid'
+
   def new
-    render locals: { liability_form: LiabilityReport::Form.new }
+    render locals: { form: form_class.new }
   end
 
   def create
-    report = Report.create!(
+    report = report_class.create!(
       member_id: current_user.id,
       form: form,
       results: reporter.perform
@@ -16,20 +17,25 @@ class ReportsController < ApplicationController
   end
 
   def index
-    render locals: { liability_form: form, paginated_records: paginate(records) }, layout: 'application'
+    render locals: { paginated_records: paginate(records) }, layout: 'application'
   end
 
-  # Withdraws and deposits
-  def wd
+  def show
+    report = Report.find params[:id]
+    render locals: { report: report }
   end
 
   private
 
+  def report_class
+    controller_name.singularize.camelcase.constantize
+  end
+
   def form
-    @form ||= LiabilityReport::Form.new params.fetch(:liability_report_form, {}).permit!
+    @form ||= form_class.new params.fetch(:form, {}).permit!
   end
 
   def reporter
-    @reporter ||= LiabilityReport::Generator.new(form)
+    @reporter ||= report_generator.new(form)
   end
 end

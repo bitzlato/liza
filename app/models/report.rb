@@ -9,6 +9,6 @@ class Report < ReportsRecord
   end
 
   def form_object
-    LiabilityReport::Form.new(form.symbolize_keys)
+    TimeRangeForm.new(form.symbolize_keys)
   end
 end

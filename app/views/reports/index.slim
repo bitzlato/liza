@@ -1,8 +1,7 @@
 .container
-  /ul
-    /li= link_to 'Ввыод и вывод', wd_reports_url
+  ul
+    li= link_to 'Ввыод и вывод', new_wd_report_url
   h1= paginated_records.model_name.human_plural
-  = render 'form', liability_form: liability_form
   hr
   = render 'table', items: paginated_records.decorate
   = paginate paginated_records

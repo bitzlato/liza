@@ -1,6 +1,9 @@
 ru:
   titles:
     application: Лиза
+  wd_reports:
+    new:
+      build_report: Сформировать отчёт по вводу-выводу
   application:
     index:
       total_records: Всего записей %{count}

@@ -35,7 +35,7 @@ module MoneyHelper
     css_classes = %w[text-nowrap text-monospace]
     css_classes << options[:css_class]
     buffer = money_precission(amount, currency.precision)
-    buffer += format_currency(currency, css_class: 'text-muted ml-1') if options[:show_currency]
+    buffer += format_currency(currency, css_class: 'text-muted ml-1') if options[:show_currency] && !amount.nil?
     content_tag :span, class: css_classes.join(' '), title: options[:tooltip], data: { toggle: :tooltip } do
       buffer.html_safe
     end
