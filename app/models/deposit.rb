@@ -14,6 +14,7 @@ class Deposit < ApplicationRecord
   belongs_to :currency, required: true
   belongs_to :member, required: true
   scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
+  scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
 
   enumerize :aasm_state, in: STATES, predicates: true
 
@@ -28,6 +29,6 @@ class Deposit < ApplicationRecord
   end
 
    def self.ransackable_scopes(auth_object = nil)
-     %i(completed) + super
+     %i(uncompleted completed) + super
    end
 end

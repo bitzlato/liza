@@ -23,6 +23,7 @@ class Withdraw < ApplicationRecord
   belongs_to :beneficiary, optional: true
 
   scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
+  scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
   scope :succeed_processing, -> { where(aasm_state: SUCCEED_PROCESSING_STATES) }
   scope :last_24_hours, -> { where('created_at > ?', 24.hour.ago) }
   scope :last_1_month, -> { where('created_at > ?', 1.month.ago) }
@@ -54,6 +55,6 @@ class Withdraw < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    %i(completed) + super
+    %i(uncompleted completed) + super
   end
 end

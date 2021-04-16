@@ -1,7 +1,11 @@
 - qq = request.query_parameters.fetch(:q, {})
+- clean_q = qq.except(:completed, :uncompleted)
 ul.nav.nav-pills.mb-3
   li.nav-item
-    = link_to t('.any_state'), url_for(q: qq.except(:completed)), class: active_class('nav-link', !qq[:completed])
+    = link_to t('.any_state'), url_for(q: clean_q), class: active_class('nav-link', !qq[:completed] && !qq[:uncompleted])
+  li.nav-item
+    = link_to t('.uncompleted_only'), 
+      url_for(q: clean_q.merge(uncompleted: true)), class: active_class('nav-link', qq[:uncompleted])
   li.nav-item
     = link_to t('.completed_only'), 
-      url_for(q: qq.merge(completed: true)), class: active_class('nav-link', qq[:completed])
+      url_for(q: clean_q.merge(completed: true)), class: active_class('nav-link', qq[:completed])
