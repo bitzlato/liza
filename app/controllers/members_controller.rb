@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MembersController < ApplicationController
+class MembersController < ResourcesController
   layout 'fluid'
 
   def show

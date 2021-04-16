@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TradesController < ApplicationController
+class TradesController < ResourcesController
   layout 'fluid'
 
   def show

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Operations
-  class LiabilitiesController < ApplicationController
+  class LiabilitiesController < ResourcesController
     layout 'fluid'
   end
 end

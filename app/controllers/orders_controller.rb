@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OrdersController < ApplicationController
+class OrdersController < ResourcesController
   include CurrencySupport
   layout 'fluid'
 

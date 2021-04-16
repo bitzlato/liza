@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WithdrawsController < ApplicationController
+class WithdrawsController < ResourcesController
   include CurrencySupport
   layout 'fluid'
 end

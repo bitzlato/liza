@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Operations
-  class AssetsController < ApplicationController
+  class AssetsController < ResourcesController
     include CurrencySupport
 
     layout 'fluid'

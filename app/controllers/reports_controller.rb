@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReportsController < ApplicationController
+class ReportsController < ResourcesController
   layout 'fluid'
 
   def new
@@ -17,7 +17,11 @@ class ReportsController < ApplicationController
   end
 
   def index
-    render locals: { paginated_records: paginate(records) }, layout: 'application'
+    if controller_name == 'reports'
+      render locals: { paginated_records: paginate(records) }, layout: 'application'
+    else
+      redirect_to reports_path
+    end
   end
 
   def show
@@ -26,6 +30,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def model_class
+    Report
+  end
 
   def report_class
     controller_name.singularize.camelcase.constantize
