@@ -16,7 +16,7 @@ module RansackSupport
       format.html do
         render locals: {
           records: records,
-          summary: SummaryQuery.new.summary(records.result),
+          summary: SummaryQuery.new.summary(records),
           paginated_records: paginate(records)
         }
       end
