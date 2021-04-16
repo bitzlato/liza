@@ -1,6 +1,7 @@
 .container
   ul
-    li= link_to 'Ввыод и вывод', new_wd_report_url
+    li= link_to t('.deposits_and_withdrawals'), new_wd_report_url
+    
   h1= paginated_records.model_name.human_plural
   hr
   = render 'table', items: paginated_records.decorate
