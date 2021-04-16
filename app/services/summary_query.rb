@@ -1,10 +1,10 @@
 class SummaryQuery
   SUMMARY_MODELS = {
-    Deposit               => { grouped_by: [:currency_id], aggregations: ['sum(amount)']},
-    Withdraw              => { grouped_by: [:currency_id], aggregations: ['sum(amount)']},
+    Deposit               => { grouped_by: [:currency_id, :aasm_state], aggregations: ['sum(amount)']},
+    Withdraw              => { grouped_by: [:currency_id, :aasm_state], aggregations: ['sum(amount)']},
     Account               => { grouped_by: [:currency_id], aggregations: ['sum(balance)','sum(locked)', :total]},
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)','sum(debit)', :total] },
-    Operations::Revenue   => { grouped_by: [:currency_id], aggregations: ['sum(debit)', 'sum(credit)', :total] },
+    Operations::Revenue   => { grouped_by: [:currency_id], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Asset     => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Transaction           => { grouped_by: [:currency_id, :status], aggregations: ['sum(amount)'] },
   }

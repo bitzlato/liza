@@ -10,16 +10,17 @@ h1= paginated_records.model_name.human_plural
     = render 'operations_account'
   - elsif account.is_a? Account
     = render 'account'
-= render 'member_brief', member: member if respond_to?(:member) && memger.present?
-= render 'summary_by_currency', summary: summary if summary.present?
+.mt-3= render 'member_brief', member: member if respond_to?(:member) && memger.present?
+= render 'summary_by_currency', summary: summary if summary.present? && summary[:rows].present?
+hr
 div.mb-2
   = t '.total_records', count: paginated_records.total_count
   span.ml-4
     - if paginated_records.total_count > Settings.max_export_records_count
       span.text-muted= t '.too_much_records_to_export'
-    - else
+    - elsif paginated_records.total_count.positive?
       = link_to url_for(format: :xlsx) do
         span.mr-1= '⬇'
         = t 'helpers.download_xlsx'
-= render 'table', items: paginated_records.decorate
+= render 'table', items: paginated_records.decorate if paginated_records.count.positive?
 = paginate paginated_records
