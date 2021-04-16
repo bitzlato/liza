@@ -1,6 +1,20 @@
 class ReportDecorator < ApplicationDecorator
   delegate_all
 
+  def self.table_columns
+    %i[id type member created_at processed_at form status]
+  end
+
+  def type
+    self.object.class.model_name.human
+  end
+
+  def processed_at
+    h.content_tag :span, class: 'text-nowrap' do
+      I18n.l object.processed_at
+    end
+  end
+
   def form
     h.render 'reports/present_form', form: object.form_object
   end

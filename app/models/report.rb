@@ -1,6 +1,8 @@
 class Report < ReportsRecord
   extend Enumerize
 
+  belongs_to :member
+
   STATES = %[pending processing failed success]
   enumerize :state, in: STATES
 
