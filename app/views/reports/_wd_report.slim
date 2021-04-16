@@ -1,14 +1,15 @@
 .container
   h1= t '.deposits_and_withdraws'
+  hr
   table.table.table-narrow.table-border
     thead.thead-dart
       tr
         th= t '.currency'
-        th= t '.deposited'
-        th= t '.withdrawn'
+        th.text-right= t '.deposited'
+        th.text-right= t '.withdrawn'
     tbody
       - results['currencies'].each do |currency|
         tr
           th= format_currency currency
-          td= format_money results['rows'][currency][:deposited].to_d, currency
-          td= format_money results['rows'][currency][:withdrawn].to_d, currency
+          td.text-right= format_money results['rows'][currency][:deposited].to_d, currency
+          td.text-right= format_money results['rows'][currency][:withdrawn].to_d, currency

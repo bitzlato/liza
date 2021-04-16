@@ -14,11 +14,12 @@ h1= paginated_records.model_name.human_plural
 = render 'summary_by_currency', summary: summary if summary.present?
 div.mb-2
   = t '.total_records', count: paginated_records.total_count
-  span.ml-2
+  span.ml-4
     - if paginated_records.total_count > Settings.max_export_records_count
       span.text-muted= t '.too_much_records_to_export'
     - else
       = link_to url_for(format: :xlsx) do
-        = t '.download_xlsx'
+        span.mr-1= '⬇'
+        = t 'helpers.download_xlsx'
 = render 'table', items: paginated_records.decorate
 = paginate paginated_records

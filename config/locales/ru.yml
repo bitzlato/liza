@@ -11,6 +11,7 @@ ru:
       operations: Операционка
 
   helpers:
+    download_xlsx: Скачать (xlsx)
     disable_with: Понеслась..
     no_divergence: Нет расхождений
     trades: Сделки (%{count})
