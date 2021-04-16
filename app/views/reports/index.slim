@@ -1,6 +1,7 @@
 .container
   ul
-    li= link_to t('.deposits_and_withdrawals'), new_wd_report_url
+    li= link_to t('.deposits_and_withdrawals'), new_wd_report_path
+    li= link_to t('.liabilities'), new_liability_report_path
     
   h1= paginated_records.model_name.human_plural
   hr

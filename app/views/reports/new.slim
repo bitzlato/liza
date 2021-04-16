@@ -1,1 +1,5 @@
-h1= t '.reports_generator'
+.container
+  h1= t '.build_report'
+  = t report_class.model_name.human
+  hr
+  = render 'time_form', form: form

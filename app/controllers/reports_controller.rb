@@ -3,16 +3,18 @@
 class ReportsController < ResourcesController
   layout 'fluid'
 
+  helper_method :report_class
+
   def new
     render locals: { form: form_class.new }
   end
 
   def create
     report = report_class.create!(
-      member_id: current_user.id,
-      form: form,
-      results: reporter.perform
+     member_id: current_user.id,
+     form: form
     )
+    # report.async_perform
     redirect_to report_path(report)
   end
 
@@ -39,11 +41,11 @@ class ReportsController < ResourcesController
     controller_name.singularize.camelcase.constantize
   end
 
-  def form
-    @form ||= form_class.new params.fetch(:form, {}).permit!
+  def form_class
+    TimeRangeForm
   end
 
-  def reporter
-    @reporter ||= report_generator.new(form)
+  def form
+    @form ||= form_class.new params.fetch(:form, {}).permit!
   end
 end

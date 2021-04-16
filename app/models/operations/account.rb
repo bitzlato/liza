@@ -34,6 +34,10 @@ module Operations
       super&.inquiry
     end
 
+    def records_class
+      ('Operations::' + records_name.singularize.camelcase).constantize
+    end
+
     def records_name
       type.pluralize
     end

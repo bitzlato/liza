@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_130618) do
     t.jsonb "form", default: {}, null: false
     t.jsonb "results", default: {}, null: false
     t.string "status", default: "pending", null: false
+    t.datetime "processed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

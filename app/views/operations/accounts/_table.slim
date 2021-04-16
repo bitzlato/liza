@@ -14,6 +14,7 @@ tbody
         - if d==:balance
           th rowspan=3
             div= account.description
+            .text-muted.text-small= '#' + account.code.to_s
         th.text-right class=(d==:balance ? '' : 'text-small')
           = t d
         - Currency.order(:id).each do |currency|

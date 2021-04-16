@@ -1,11 +1,8 @@
-- codes.each do |account|
-  tr
-    th= header
-    th= format_liability_account Operations::Account.find_by(code: account)
-    - data = table[account.to_s]
-    - currencies.each do |currency|
-      td.text-right
-        - if data.nil? || data[currency].nil?
-          = middot
-        - else
-          = format_money data[currency][:balance].to_d, currency
+tr
+  th= header
+  - currencies.each do |currency|
+    td.text-right
+      - if table.nil? || table[currency].nil?
+        = middot
+      - else
+        = format_money table[currency].to_d, currency

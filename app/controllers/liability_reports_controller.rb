@@ -1,0 +1,2 @@
+class LiabilityReportsController < ReportsController
+end

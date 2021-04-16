@@ -7,56 +7,80 @@ class LiabilityReport < Report
     def initialize(form)
       super form
       @currencies = Set.new
-      @codes = Set.new
+      @currency_type = :coin
     end
 
     def perform
-      base_scope.transaction do
-        previous = summarize(previous_scope)
-        framed = summarize(framed_scope)
-        ended = summarize(end_scope)
-        {
-          previous: previous,
-          framed: framed,
-          end: ended,
-          currencies: @currencies,
-          codes: @codes
-        }
+      Operations::Asset.transaction do
+        Operations::Liability.transaction do
+          Operations::Revenue.transaction do
+            Operations::Expense.transaction do
+              platform_assets = fetch_records(:platform, :asset)
+              platform_revenues = fetch_records(:platform, :revenue)
+              member_liabilities = fetch_records(:member, :liability)
+              {
+                summary: {
+                  platform_assets: platform_assets,
+                  platform_revenues: platform_revenues,
+                  member_liabilities: member_liabilities,
+                  total_delta: { delta: delta(platform_assets[:delta], member_liabilities[:delta]) }
+                },
+                currencies: @currencies.sort
+              }
+            end
+          end
+        end
       end
     end
 
     private
 
-    def summarize(scope)
-      scope.group(:currency_id, :code).pluck('currency_id, code, sum(credit), sum(debit)').each_with_object({}) do |record, a|
-        currency_id, code, credit, debit = record
-        code = code.to_s
-        a[code] ||= {}
-        raise 'wtf' if a[code][currency_id].present?
-        a[code][currency_id] = {credit: credit, debit: debit, balance: credit + debit}
-        @currencies << currency_id
-        @codes << code
+    attr_reader :currency_type
+
+    def delta(after, before)
+      @currencies.each_with_object({}) do |currency, a|
+        a[currency] = after[currency].to_d - before[currency].to_d
       end
     end
 
-    def previous_scope
-      return base_scope.none if form.time_from.nil?
-      base_scope.where('created_at<?', form.time_from)
+    def fetch_records(scope, record_type)
+      accounts = Operations::Account.where(scope: scope, type: record_type)
+      records_classes = accounts.map(&:records_class).uniq
+      raise :wtf if records_classes.many?
+      records_class = records_classes.first
+      base_scope = records_class.where(account: accounts)
+      before = summarize(previous_scope(base_scope))
+      after = summarize(end_scope(base_scope))
+      {
+        before: before,
+        after: after,
+        delta: delta(after, before)
+      }
     end
 
-    def framed_scope
-      bs = form.time_from.nil? ? base_scope : base_scope.where('created_at>=?', form.time_from)
+    def summarize(scope)
+      scope.group(:currency_id).pluck('currency_id', Arel.sql('sum(credit) - sum(debit)')).each_with_object({}) do |record, a|
+        currency_id, balance = record
+        raise 'wtf' if a[currency_id].present?
+        a[currency_id] = balance
+        @currencies << currency_id
+      end
+    end
+
+    def previous_scope(scope)
+      return scope.none if form.time_from.nil?
+      scope.where('created_at<?', form.time_from)
+    end
+
+    def framed_scope(scope)
+      bs = form.time_from.nil? ? scope : scope.where('created_at>=?', form.time_from)
       bs = bs.where('created_at<?', form.time_to) unless form.time_to.nil?
       bs
     end
 
-    def end_scope
-      return base_scope if form.time_to.nil?
-      base_scope.where('created_at<?', form.time_to)
-    end
-
-    def base_scope
-      Operations::Liability
+    def end_scope(scope)
+      return scope if form.time_to.nil?
+      scope.where('created_at<?', form.time_to)
     end
   end
 end

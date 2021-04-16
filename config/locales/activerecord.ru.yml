@@ -1,6 +1,9 @@
 ru:
   activerecord:
     models:
+      wd_report: Ввод-вывод
+      liability_report: Изменения обязательств
+
       report:
         one: Отчёт
         many: Отчёты

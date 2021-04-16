@@ -1,7 +1,10 @@
 .py-3= back_link url_for(report.class)
-.container
-  h1= report.model_name.human + ' #' + report.id.to_s
+h1= report.model_name.human + ' #' + report.id.to_s
+hr
+= render 'present_form', form: report.form_object
+
+- if report.status == 'success'
   hr
-  = render 'present_form', form: report.form_object
-  hr
-  = render report.type.underscore, results: report.results, form: report.form_object
+  = render report.type.underscore, results: report.results, form: report.form_object, report: report
+- else
+  .badge.badge-info= report.status

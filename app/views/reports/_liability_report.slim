@@ -1,0 +1,26 @@
+table.table.table-narrow.table-stripped.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.date'
+      - results[:currencies].each do |currency|
+        th.text-right width=200
+          = format_currency currency
+  - results[:summary].each_pair do |scope, data|
+    - unless scope == 'total_delta'
+      thead.thead-light
+        tr
+          th colspan=(results[:currencies].length+1)
+            = t scope, scope: :helpers
+      tbody
+        = render 'frame_result', header: present_time(form.time_from, 'С начала'), table: data[:before], currencies: results[:currencies]
+        = render 'frame_result', header: present_time(form.time_to, l(report.processed_at, format: :short)), table: data[:after], currencies: results[:currencies]
+        = render 'frame_result', header: t('.delta'), table: data[:delta], currencies: results[:currencies]
+
+  - data = results[:summary][:total_delta]
+  thead.thead-light
+    tr
+      th colspan=(results[:currencies].length+1)
+        = t :total_delta, scope: :helpers
+  tbody
+    = render 'frame_result', header: t('.delta'), table: data[:delta], currencies: results[:currencies]
+

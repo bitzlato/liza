@@ -1,10 +1,10 @@
 = search_form_for q do |f|
   .row style='width: 700px'
-    .col-md-2= t '.from'
+    .col-md-2= t '.from_including'
     .col-md-3
-      = f.input :created_at_gt, label: false, input_html: { class: 'datetimepicker' }
-    .col-md-2= t '.to_including'
+      = f.input :created_at_gteq, label: false, input_html: { class: 'datetimepicker' }
+    .col-md-2= t '.to'
     .col-md-3
-      = f.input :created_at_lteq, label: false, input_html: { class: 'datetimepicker' }
+      = f.input :created_at_lt, label: false, input_html: { class: 'datetimepicker' }
     .col-md-1
       = f.button :submit, class: 'btn btn-primary'

@@ -13,7 +13,7 @@ class SummaryQuery
     model_class = scope.model
     return unless SUMMARY_MODELS[model_class].present?
     meta = SUMMARY_MODELS[model_class]
-    plucks = ((meta[:grouped_by]+meta[:aggregations]) - [:total]).map { |p| p.to_s.include?('(') ? p : [model_class.table_name,p].join('.') }
+    plucks = ((meta[:grouped_by]+meta[:aggregations]) - [:total]).map { |p| (p.to_s.include?('(') || p.to_s.include?('.')) ? p : [model_class.table_name,p].join('.') }
     rows = scope
       .group(*meta[:grouped_by])
       .reorder('')
