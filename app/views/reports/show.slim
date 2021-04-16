@@ -4,6 +4,7 @@ hr
 = render 'present_form', form: report.form_object
 
 - if report.status == 'success'
+  = download_link
   hr
   = render report.type.underscore, results: report.results, form: report.form_object, report: report
 - else

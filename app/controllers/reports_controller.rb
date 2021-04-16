@@ -28,7 +28,15 @@ class ReportsController < ResourcesController
 
   def show
     report = Report.find params[:id]
-    render locals: { report: report }
+    respond_to do |format|
+      format.xlsx do
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{report.type}-#{report.id}.xlsx\""
+        render report.type.underscore, locals: { report: report }
+      end
+      format.html do
+        render locals: { report: report }
+      end
+    end
   end
 
   private

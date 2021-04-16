@@ -41,4 +41,10 @@ module ApplicationHelper
       account.description + ' [' + account.scope + ']'
     end
   end
+
+  def download_link
+    link_to url_for(format: :xlsx) do
+      content_tag(:span, '⬇', class: 'mr-1') + t('helpers.download_xlsx')
+    end
+  end
 end

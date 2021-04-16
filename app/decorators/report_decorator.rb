@@ -6,7 +6,7 @@ class ReportDecorator < ApplicationDecorator
   end
 
   def type
-    self.object.class.model_name.human
+    self.object.name
   end
 
   def processed_at

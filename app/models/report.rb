@@ -19,6 +19,10 @@ class Report < ReportsRecord
     update results: reporter.perform, status: :success, processed_at: Time.zone.now
   end
 
+  def name
+    self.class.model_name.human
+  end
+
   def reporter_class
     [self.class.name, 'Generator'].join('::').constantize
   end
