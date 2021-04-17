@@ -1,4 +1,5 @@
 xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object
   sheet.add_row [t('.currency', default: 'currency')] + report.results[:keys].map { |key| I18n.t key, scope: :helpers, default: key }
   report.results[:currencies].each do |currency|
     sheet.add_row [currency] + report.results[:keys].map { |key| report.results[:rows][currency][key].to_d }

@@ -1,0 +1,1 @@
+sheet.add_row [I18n.t('from_including', scope: :helpers), present_time(form.time_from, 'С начала'), I18n.t('to', scope: :helpers), present_time(form.time_to, 'До момента формирования отчёта')]

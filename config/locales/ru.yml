@@ -19,6 +19,9 @@ ru:
     platform_assets: Активы платформы
     platform_revenues: Доходы платформы
     member_liabilities: Обязательства
+    total_delta: Разница общаяя
+    from_including: Начиная с (включительно)
+    to: До
 
   tips:
     account:
