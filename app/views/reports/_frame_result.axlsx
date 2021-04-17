@@ -1,0 +1,1 @@
+sheet.add_row [header] + currencies.map { |currency| (table.nil? || table[currency].nil?) ? middot : format_money(table[currency].to_d, currency) }
