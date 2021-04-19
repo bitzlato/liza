@@ -4,6 +4,7 @@
     li= link_to t('.deposits_and_withdrawals'), new_report_path(report_type: WdReport)
     li= link_to t('.liabilities'), new_report_path(report_type: LiabilityReport)
     li= link_to t('.order_book'), new_report_path(report_type: OrderBookReport)
+    li= link_to t('.fees'), new_report_path(report_type: RevenuesReport)
     
   h1= paginated_records.model_name.human_plural
   hr

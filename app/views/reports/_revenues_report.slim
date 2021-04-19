@@ -1,0 +1,33 @@
+h1= t '.fees_by_market'
+hr
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.currency'
+      th.text-right= t '.base_turnover'
+      th.text-right= t '.quote_turnover'
+      th.text-right= t '.makers_fee'
+      th.text-right= t '.takers_fee'
+  tbody
+    - results[:markets].each_pair do |market, data|
+      - market = Market.find(market)
+      tr
+        td= market.to_s
+        td.text-right= format_money data[:base_turnover], market.base_unit
+        td.text-right= format_money data[:quote_turnover], market.quote_unit
+        td.text-right= format_money data[market.base_unit], market.base_unit
+        td.text-right= format_money data[market.quote_unit], market.quote_unit
+
+
+h2= t '.fees_by_currency'
+
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.currency'
+      th.text-right= t '.fee'
+  tbody
+    - results[:currency_fees].each_pair do |currency, amount|
+      tr
+        td= format_currency currency
+        td.text-right= format_money amount, currency
