@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   default_url_options Settings.default_url_options.symbolize_keys
 
+  mount Sidekiq::Web => Settings.root_prefix + '/sidekiq'
   scope Settings.root_prefix do
     root to: 'dashboard#index'
     resources :reports
