@@ -2,6 +2,7 @@ class OrderBookLimitsReport < Report
   def self.form_class
     OrderBookLimitsForm
   end
+
   class Generator < BaseGenerator
     LIMIT = 20
 
@@ -11,7 +12,8 @@ class OrderBookLimitsReport < Report
         limit: LIMIT,
         sellers: sales_trades,
         buyers: buys_trades,
-        orders: orders.map(&:as_json)
+        orders: orders.map(&:as_json),
+        top_orders: top_orders
       }
     end
 
@@ -53,6 +55,12 @@ class OrderBookLimitsReport < Report
 
     def orders
       Order.ransack(q).result.group(:member_id).order('count_all desc').limit(LIMIT).count
+    end
+
+    def top_orders
+      Currency.pluck(:id).each_with_object({}) do |currency_id, object|
+        object[currency_id] = Order.where(ask: currency_id).group(:member_id).order('sum_volume desc').sum(:volume).to_a
+      end
     end
   end
 end

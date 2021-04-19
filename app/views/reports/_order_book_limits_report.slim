@@ -1,21 +1,42 @@
 h1= Market.find(results[:market][:id]).to_s
-h2= t '.top_orders_count'
-table.table.table-striped.table-narrow.table-bordered
-  thead.thead-dark
-    tr
-      th= t '.rank'
-      th= t '.member'
-      th.text-right= t '.orders_count'
-  tbody
-    - results[:orders].each_with_index do |row, index|
-      tr
-        th= index + 1
-        td= render 'member_brief', member: Member.find(row.first)
-        td.text-right= row.second
-hr
+.row
+  .col-md-4
+    h2= t '.top_orders_count'
+    table.table.table-striped.table-narrow.table-bordered
+      thead.thead-dark
+        tr
+          th= t '.rank'
+          th= t '.member'
+          th.text-right= t '.orders_count'
+      tbody
+        - results[:orders].each_with_index do |row, index|
+          tr
+            th= index + 1
+            td= render 'member_brief', member: Member.find(row.first)
+            td.text-right= row.second
+  .col-md-4
+    h2= t '.top_sellers'
+    = render 'top_trades', trades: results[:sellers]
+  .col-md-4
+    h2= t '.top_buyers'
+    = render 'top_trades', trades: results[:buyers]
 
-h2= t '.top_sellers'
-= render 'top_trades', trades: results[:sellers]
+h2= t '.top_volumed_orders'
 
-h2= t '.top_buyers'
-= render 'top_trades', trades: results[:buyers]
+.row
+  - results[:top_orders].each_pair do |currency_id, data|
+    - if data.present?
+      .col-md-4
+        h4= format_currency currency_id
+        table.table.table-striped.table-narrow.table-bordered
+          thead.thead-dark
+            tr
+              th= t '.rank'
+              th= t '.member'
+              th.text-right= t '.total_volume'
+          tbody
+            - data.each_with_index do |row, index|
+              tr
+                th= index + 1
+                td= render 'member_brief', member: Member.find(row.first)
+                td.text-right= format_money row.second, currency_id
