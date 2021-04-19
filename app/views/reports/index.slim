@@ -5,7 +5,7 @@
       li
         - title = report_class.model_name.human
         - if report_class.form_class.present?
-          = link_to title, reports_path(report_type: report_class.name)
+          = link_to title, new_report_path(report_type: report_class.name)
         - else
           = link_to title, reports_path(form: { report_type: report_class.name }), method: :create
     
