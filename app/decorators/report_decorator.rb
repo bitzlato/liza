@@ -17,6 +17,7 @@ class ReportDecorator < ApplicationDecorator
   end
 
   def form
+    return h.middot if object.form_object.nil?
     h.render 'reports/present_form', form: object.form_object
   end
 

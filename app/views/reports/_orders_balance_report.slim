@@ -1,0 +1,27 @@
+h1= t '.orders_balance'
+hr
+h2= t '.markets'
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.market'
+      th= t '.base'
+      th= t '.quote'
+  tbody
+    - results[:markets].each_pair do |market_id, data|
+      - market = Market.find(market_id)
+      tr
+        th= market.to_s
+        td= format_money data[:volume], market.base_unit
+        td= format_money data[:volume_price], market.quote_unit
+h2= t '.currencies'
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.currency'
+      th= t '.amount'
+  tbody
+    - results[:currencies].each_pair do |currency_id, amount|
+      tr
+        th= format_currency currency_id
+        td= format_money amount, currency_id

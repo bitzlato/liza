@@ -1,7 +1,7 @@
 .py-3= back_link report_path
 h1= report.model_name.human + ' #' + report.id.to_s
 hr
-= render 'present_form', form: report.form_object
+= render 'present_form', form: report.form_object if report.form_object.present?
 
 - if report.status == 'success'
   = download_link

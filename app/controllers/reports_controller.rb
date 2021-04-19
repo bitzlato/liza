@@ -5,15 +5,13 @@ class ReportsController < ResourcesController
 
   def new
     report_class = params[:report_type].constantize
-    render locals: { form: form_class.new, report_class: report_class, report_type: params[:report_type] }
+    render locals: { form: report_class.form_class.new, report_class: report_class, report_type: params[:report_type] }
   end
 
   def create
     report_class = params.dig(:form, :report_type).constantize
-    report = report_class.create!(
-     member_id: current_user.id,
-     form: form
-    )
+    form = report_class.form_class.new params.fetch(:form, {}).permit! if report_class.form_class.present?
+    report = report_class.create! member_id: current_user.id, form: form
     redirect_to report_path(report)
   end
 
@@ -42,13 +40,5 @@ class ReportsController < ResourcesController
 
   def model_class
     Report
-  end
-
-  def form_class
-    TimeRangeForm
-  end
-
-  def form
-    @form ||= form_class.new params.fetch(:form, {}).permit!
   end
 end

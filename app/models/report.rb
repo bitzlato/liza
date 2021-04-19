@@ -6,8 +6,16 @@ class Report < ReportsRecord
   STATES = %[pending processing failed success]
   enumerize :state, in: STATES
 
+  before_create do
+    self.form ||= {}
+  end
+
   after_commit on: :create do
     ReporterWorker.perform_async id
+  end
+
+  def self.form_class
+    TimeRangeForm
   end
 
   def results
@@ -15,7 +23,7 @@ class Report < ReportsRecord
   end
 
   def form_object
-    TimeRangeForm.new(form.symbolize_keys)
+    self.class.form_class.try :new, form.symbolize_keys
   end
 
   def perform!

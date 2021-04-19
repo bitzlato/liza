@@ -1,4 +1,7 @@
 class OrderBookReport < Report
+  def self.form_class
+    nil
+  end
   class Generator < BaseGenerator
     LIMIT = 200
     def perform
