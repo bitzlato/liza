@@ -63,7 +63,7 @@ Rails.application.configure do
                             password: ENV.fetch('LIZA_REDIS_PASSWORD') }]
                        else
                          [:redis_cache_store,
-                          { driver: :hiredis, url: ENV.fetch('LIZA_REDIS_URL', 'redis://localhost:6379/2') }]
+                          { driver: :hiredis, url: Settings.cache_store.url }]
                        end
 
   # Use a real queuing backend for Active Job (and separate queues per environment).

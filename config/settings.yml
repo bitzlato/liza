@@ -10,7 +10,9 @@ defaults: &defaults
   peatio_api_url: https://dev.bitzlato.bz/api/v2/peatio
   barong_api_url: https://dev.bitzlato.bz/api/v2/barong
   sidekiq_redis: 
-    url: redis://localhost:6379/1
+    url: redis://localhost:6379/3
+  cache_store:
+    url: redis://localhost:6379/2
 development:
   <<: *defaults
 production:

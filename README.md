@@ -15,8 +15,9 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
 2. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them.
 3. Setup other ENV's:
 
-  * `LIZA_REDIS_URL` (redis://localhost:6379/2 by default). Don't use database
-    #1 since it is reserved for barong.
+  * `LIZA_CACHE_REDIS_URL` (redis://localhost:6379/2 by default). WARNING: Don't use database
+    `1` since it is reserved for barong.
+  * `LIZA_SIDEKIQ_REDIS_URL` (redis://localhost:6379/3 by default)
   * `JWT_PUBLIC_KEY`, for example: export `JWT_PUBLIC_KEY=$(cat ~/peatio/config/secrets/rsa-key.pub| base64 -w0) `
   * `LIZA_HOST`, hostname of service, for example: `dev.bitzlato.bz'
 
