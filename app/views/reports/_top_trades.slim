@@ -1,0 +1,12 @@
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.rank'
+      th= t '.member'
+      th.text-right= t '.trades_count'
+  tbody
+    - trades.each_with_index do |row, index|
+      tr
+        th= index + 1
+        td= render 'member_brief', member: Member.find(row.first)
+        td.text-right= row.second

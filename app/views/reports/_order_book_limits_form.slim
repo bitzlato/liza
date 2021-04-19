@@ -1,0 +1,8 @@
+= render 'time_range_form', form: form, report_type: report_type do |f|
+  .row
+    .col-md-4
+      = f.input :market_id, collection: Market.ordered, require: true, include_blank: false
+    .col-md-4
+      = f.input :min_order_amount, as: :numeric
+    .col-md-4
+      = f.input :min_trade_amount, as: :numeric

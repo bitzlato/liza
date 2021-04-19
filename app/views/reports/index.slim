@@ -1,7 +1,7 @@
 .container-fluid
   h2= t '.build_report'
   ul
-    - [WdReport, LiabilityReport, OrdersBalanceReport, RevenuesReport, OrderBookReport].each do |report_class|
+    - [WdReport, LiabilityReport, OrdersBalanceReport, RevenuesReport, OrderBookReport, OrderBookLimitsReport].each do |report_class|
       li
         - title = report_class.model_name.human
         - if report_class.form_class.present?

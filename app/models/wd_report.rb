@@ -1,12 +1,9 @@
 class WdReport < Report
   class Generator < BaseGenerator
-    def initialize(form)
-      super form
+    def perform
       @currencies = Set.new
       @rows = {}
       @keys = Set.new
-    end
-    def perform
       add_rows build_query(Deposit), :deposits
       add_rows build_query(Withdraw), :withdraws
       add_rows operations(Deposit, Operations::Asset), :deposit_to_operations_assets

@@ -5,6 +5,7 @@ ru:
       liability_report: Изменения обязательств
       order_book_report: Стакан
       orders_balance_report: Баланс валют в ордерах
+      order_book_limits_report: Изменения стакана
       revenues_report: Комиссии по валютным парам
       report:
         one: Отчёт
