@@ -1,7 +1,7 @@
 class TimeRangeForm
   include ActiveModel::Model
 
-  attr_accessor :time_from, :time_to
+  attr_accessor :time_from, :time_to, :report_type
 
   def time_from=(value)
     value = parse_time value if value.is_a? String

@@ -1,4 +1,5 @@
-= simple_form_for form, as: :form, url: url_for(report_class) do |f|
+= simple_form_for form, as: :form, url: reports_path do |f|
+  = f.input :report_type, as: :hidden, input_html: { value: report_type }
   .row style='width: 700px'
     .col-md-2= t '.from'
     .col-md-3

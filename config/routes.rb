@@ -9,8 +9,6 @@ Rails.application.routes.draw do
   scope Settings.root_prefix do
     root to: 'dashboard#index'
     resources :reports
-    resources :wd_reports
-    resources :liability_reports
     resources :withdraws
     resources :deposits
     resources :transactions

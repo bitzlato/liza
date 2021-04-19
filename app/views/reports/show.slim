@@ -1,4 +1,4 @@
-.py-3= back_link url_for(report.class)
+.py-3= back_link report_path
 h1= report.model_name.human + ' #' + report.id.to_s
 hr
 = render 'present_form', form: report.form_object

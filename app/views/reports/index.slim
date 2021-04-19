@@ -1,8 +1,9 @@
 .container-fluid
   h2= t '.build_report'
   ul
-    li= link_to t('.deposits_and_withdrawals'), new_wd_report_path
-    li= link_to t('.liabilities'), new_liability_report_path
+    li= link_to t('.deposits_and_withdrawals'), new_report_path(report_type: WdReport)
+    li= link_to t('.liabilities'), new_report_path(report_type: LiabilityReport)
+    li= link_to t('.order_book'), new_report_path(report_type: OrderBookReport)
     
   h1= paginated_records.model_name.human_plural
   hr

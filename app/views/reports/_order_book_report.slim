@@ -1,0 +1,7 @@
+h1= t '.order_book', for: results[:time]
+hr
+- results[:markets].each do |market_data|
+  -  if market_data[:order_ask].present? || market_data[:order_bid].present?
+    h2= market_data[:market][:id].upcase
+    = render 'orders', orders: market_data[:order_ask], type: :order_ask if market_data[:order_ask].present?
+    = render 'orders', orders: market_data[:order_bid], type: :order_bid if market_data[:order_bid].present?

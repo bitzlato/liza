@@ -1,0 +1,22 @@
+h3= t type, scope: :helpers
+- if orders.empty?
+  p= t '.no_orders'
+- else
+  table.table.table-striped.table-narrow.table-bordered
+    thead class=(type==:order_ask ? 'bg-danger' : 'bg-success')
+      tr
+        th= t '.price'
+        th= t '.volume'
+        th= t '.amount'
+        th= t '.member'
+    tbody
+      - orders.each do |order_data|
+        - order = Order.new(order_data.except(:member)).freeze
+        tr class=(type==:order_ask ? 'table-danger' : 'table-success')    
+          td= format_money order.price, order.price_currency
+          td= format_money order.origin_volume, order.volume_currency
+          td= format_money (order.origin_volume * order.price), order.price_currency
+          td
+            = link_to order_path(order) do
+              = order_data.dig(:member, :uid)
+hr
