@@ -45,6 +45,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'settingslogic'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,6 +57,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.

@@ -14,7 +14,6 @@ class ReportsController < ResourcesController
      member_id: current_user.id,
      form: form
     )
-    # report.async_perform
     redirect_to report_path(report)
   end
 

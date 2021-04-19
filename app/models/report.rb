@@ -6,6 +6,10 @@ class Report < ReportsRecord
   STATES = %[pending processing failed success]
   enumerize :state, in: STATES
 
+  after_commit on: :create do
+    ReporterWorker.perform_async id
+  end
+
   def results
      ActiveSupport::HashWithIndifferentAccess.new super
   end
