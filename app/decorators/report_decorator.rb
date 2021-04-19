@@ -10,6 +10,7 @@ class ReportDecorator < ApplicationDecorator
   end
 
   def processed_at
+    return h.middot if object.processed_at.nil?
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.processed_at
     end
