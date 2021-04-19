@@ -29,6 +29,10 @@ class ApplicationDecorator < Draper::Decorator
     h.render 'member_brief', member: object.member
   end
 
+  def data
+    h.content_tag :code, object.data.as_json, class: 'text-small'
+  end
+
   def created_at
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.created_at

@@ -17,6 +17,5 @@ h3= t type, scope: :helpers
           td= format_money order.origin_volume, order.volume_currency
           td= format_money (order.origin_volume * order.price), order.price_currency
           td
-            = link_to order_path(order) do
-              = order_data.dig(:member, :uid)
+            = render 'member_brief', member: Member.find(order.member_id)
 hr
