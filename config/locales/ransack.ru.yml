@@ -1,0 +1,6 @@
+ru:
+  ransack:
+    attributes:
+      member: 
+        email_or_uid_cont: Email или UID содержит
+

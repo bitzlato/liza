@@ -1,7 +1,8 @@
 module RansackSupport
   extend ActiveSupport::Concern
   included do
-    helper_method :q
+    helper_method :q, :index_form
+
   end
 
   def index
@@ -23,6 +24,10 @@ module RansackSupport
   end
 
   private
+
+  def index_form
+    'time_form'
+  end
 
   def q
     @q ||= build_q

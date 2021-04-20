@@ -6,4 +6,10 @@ class MembersController < ResourcesController
   def show
     render locals: { member: Member.find(params[:id]) }
   end
+
+  private
+
+  def index_form
+    'members_form'
+  end
 end

@@ -4,7 +4,7 @@ h1= paginated_records.model_name.human_plural
 - if q.klass.ransackable_scopes.include? :completed 
   .float-left= render 'deposit_status_select' 
 .clearfix
-= render 'time_form'
+= render index_form
 - if respond_to? :account
   - if account.is_a? Operations::Account
     = render 'operations_account'
