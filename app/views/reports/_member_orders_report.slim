@@ -1,10 +1,1 @@
-- paginated_records = results[:orders].page(params[:page]).per(params[:per])
-- member = results[:member]
-= render 'member_brief', member: member
-div.mb-2
-  = t '.total_records', count: paginated_records.total_count
-  span.ml-4
-    - if paginated_records.total_count > Settings.max_export_records_count
-      span.text-muted= t '.too_much_records_to_export'
-= render 'table', items: paginated_records.decorate if paginated_records.count.positive?
-= paginate paginated_records
+= render 'member_records', member: results[:member], paginated_records: results[:orders].page(params[:page]).per(params[:per])

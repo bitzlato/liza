@@ -1,4 +1,4 @@
-class MemberOrdersForm < TimeRangeForm
+class MemberRecordsForm < TimeRangeForm
   attr_accessor :member_id
 
   def member

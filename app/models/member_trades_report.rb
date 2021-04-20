@@ -1,11 +1,11 @@
-class MemberOrdersReport < Report
+class MemberTradesReport < Report
   def self.form_class
     MemberRecordsForm
   end
 
   def results
     {
-      orders: Order.ransack(q).result,
+      trades: Trade.ransack(q).result,
       member: form_object.member_id.present? ? Member.find(form_object.member_id) : nil
     }
   end
@@ -17,7 +17,7 @@ class MemberOrdersReport < Report
   private
 
   def q
-    { member_id_eq: form_object.member_id, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
+    { by_member: form_object.member_id, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
   end
 
 

@@ -10,6 +10,7 @@
       li= link_to title_with_count(Deposit.model_name.human_plural, member.deposits.count), deposits_path(q: { member_id_eq: member })
       li= link_to title_with_count(Withdraw.model_name.human_plural, member.withdraws.count), withdraws_path(q: { member_id_eq: member })
       li= link_to MemberOrdersReport.model_name.human, new_report_path(report_type: MemberOrdersReport, form: { member_id: member.id })
+      li= link_to MemberTradesReport.model_name.human, new_report_path(report_type: MemberTradesReport, form: { member_id: member.id })
   .col-md-4
     h3= Beneficiary.model_name.human_plural
     ul
