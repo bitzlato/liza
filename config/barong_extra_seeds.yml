@@ -1,0 +1,4 @@
+permissions:
+ - { role: superadmin, verb: all, path: liza, action: accept }
+ - { role: admin, verb: all, path: liza, action: accept }
+ - { role: accountant, verb: all, path: liza, action: accept }

@@ -45,6 +45,9 @@ service: LIZA_HOST:LIZA_PORT
 
 Open page //PEATIO_HOST:3000/liza in browser
 
+## Configure barong
+
+> BARONG_SEEDS_FILE=~/liza/config/barong_extra_seeds.yml bundle exec rails c "require_dependency 'barong/seed'; Barong::Seed.new.seed_permissions"
 
 ## Trades
 
