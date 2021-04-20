@@ -12,4 +12,8 @@ class WdDecorator < ApplicationDecorator
   def self.table_tr_class(record)
     record.is_a?(Deposit) ? 'bg-success' : 'bg-danger'
   end
+
+  def amount
+    h.format_money object.amount, object.currency_id
+  end
 end
