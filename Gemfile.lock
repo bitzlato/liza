@@ -8,6 +8,14 @@ GIT
       i18n
 
 GIT
+  remote: https://github.com/glyph-fr/redactor-rails.git
+  revision: 6f6655fd71199700f2e5d7bc1f7f3c19f37dde50
+  specs:
+    redactor-rails (0.6.0)
+      mime-types
+      orm_adapter
+
+GIT
   remote: https://github.com/jwt/ruby-jwt.git
   revision: 2cea14fdae439773fafc59640178e5cf7a0af8a4
   specs:
@@ -123,6 +131,13 @@ GEM
       caxlsx (>= 3.0)
     childprocess (3.0.0)
     coderay (1.1.3)
+    coffee-rails (5.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 5.2.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.8)
     connection_pool (2.2.3)
@@ -140,6 +155,7 @@ GEM
     env-tweaks (1.0.1)
       activesupport (>= 3.0, < 7.0)
     erubi (1.10.0)
+    execjs (2.7.0)
     ffi (1.15.0)
     foreman (0.87.2)
     globalid (0.4.2)
@@ -181,6 +197,9 @@ GEM
       mimemagic (~> 0.3.2)
     memoist (0.16.2)
     method_source (1.0.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0225)
     mimemagic (0.3.10)
       nokogiri (~> 1)
       rake
@@ -190,6 +209,7 @@ GEM
     nio4r (2.5.7)
     nokogiri (1.11.2-x86_64-linux)
       racc (~> 1.4)
+    orm_adapter (0.5.0)
     pagy (4.1.0)
     parallel (1.20.1)
     parser (3.0.0.0)
@@ -287,6 +307,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    selectize-rails (0.12.6)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -300,6 +321,11 @@ GEM
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    simple_form_extension (1.4.18)
+      rails (>= 3.1)
+      redactor-rails
+      selectize-rails
+      simple_form
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -362,6 +388,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   caxlsx (~> 3.0)
   caxlsx_rails
+  coffee-rails (~> 5.0)
   draper (~> 4.0)
   enumerize
   env-tweaks (~> 1.0.0)
@@ -386,6 +413,7 @@ DEPENDENCIES
   rails (~> 6.1.3)
   rails-i18n (~> 6.0)
   ransack!
+  redactor-rails!
   redis (~> 4.0)
   rubocop-rails
   rubyzip (~> 2.3)
@@ -395,6 +423,7 @@ DEPENDENCIES
   settingslogic
   sidekiq
   simple_form
+  simple_form_extension (~> 1.4)
   slim-rails
   spring
   title (~> 0.0.8)

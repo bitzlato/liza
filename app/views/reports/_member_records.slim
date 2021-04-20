@@ -1,8 +1,11 @@
 = render 'member_brief', member: member
-div.mb-2
-  = t '.total_records', count: paginated_records.total_count
-  span.ml-4
-    - if paginated_records.total_count > Settings.max_export_records_count
-      span.text-muted= t '.too_much_records_to_export'
-= render 'table', items: paginated_records.decorate if paginated_records.count.positive?
-= paginate paginated_records
+- if paginated_records.total_count > 0
+  div.mb-2
+    = t '.total_records', count: paginated_records.total_count
+    span.ml-4
+      - if paginated_records.total_count > Settings.max_export_records_count
+        span.text-muted= t '.too_much_records_to_export'
+  = render 'table', items: paginated_records.decorate if paginated_records.count.positive?
+  = paginate paginated_records
+- else
+  div= t '.no_records'

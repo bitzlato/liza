@@ -2,8 +2,4 @@
   .row
     .col-md-4
       .mb-2
-        - if form.member.present?
-          p= t '.member'
-          = render 'member_brief', member: form.member
-        - else
-          = link_to t('.select_member'), members_path
+        = f.input :member, as: :selectize, input_html: { data: { 'search-url' => members_path, preload: 10, value: form.member_id.try(:email) } }, required: true, multi: false

@@ -96,3 +96,8 @@ gem "rubyzip", "~> 2.3"
 
 gem "caxlsx", "~> 3.0"
 gem 'caxlsx_rails'
+
+gem "simple_form_extension", "~> 1.4"
+gem 'redactor-rails', github: 'glyph-fr/redactor-rails'
+
+gem "coffee-rails", "~> 5.0"

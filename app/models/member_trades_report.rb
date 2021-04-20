@@ -17,7 +17,7 @@ class MemberTradesReport < Report
   private
 
   def q
-    { by_member: form_object.member_id, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
+    { by_member: form_object.member_id.to_i, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
   end
 
 

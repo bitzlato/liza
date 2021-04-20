@@ -20,6 +20,10 @@ class Member < ApplicationRecord
     uid
   end
 
+  def title
+    email
+  end
+
   def get_account(model_or_id_or_code)
     case model_or_id_or_code
     when String, Symbol

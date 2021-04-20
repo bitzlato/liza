@@ -56,7 +56,7 @@ class Trade < ApplicationRecord
 
 
   def self.ransackable_scopes(auth_object = nil)
-    %[by_member]
+    %i[by_member]
   end
 
   def taker_fee_amount
