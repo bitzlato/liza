@@ -14,7 +14,7 @@ if Rails.env.development? || Rails.env.production? || Rails.env.staging? || ENV[
   end
 
   Sidekiq.configure_client do |config|
-    config.redis = Settings.sidekiq_redis.symbolize_keys
+    config.redis = { url: ENV.fetch('LIZA_SIDEKIQ_REDIS_URL', 'redis://localhost:6379/3') }
   end
 
 elsif Rails.env.test?
