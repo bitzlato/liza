@@ -10,6 +10,10 @@ ru:
     navbar:
       operations: Операционка
 
+  reports:
+    time_range_form:
+      select_member: 'Выберите участника >>'
+
   helpers:
     download_xlsx: Скачать (xlsx)
     disable_with: Понеслась..

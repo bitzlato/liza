@@ -1,4 +1,9 @@
 = render 'time_range_form', form: form, report_type: report_type do |f|
   .row
     .col-md-4
-      = f.input :member_id
+      .mb-2
+        - if form.member.present?
+          p= t '.member'
+          = render 'member_brief', member: form.member
+        - else
+          = link_to t('.select_member'), members_path
