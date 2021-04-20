@@ -5,7 +5,7 @@ Sidekiq.default_worker_options = { 'backtrace' => true }
 
 if Rails.env.development? || Rails.env.production? || Rails.env.staging? || ENV['SIDEKIQ_ASYNC']
   Sidekiq.configure_server do |config|
-    config.redis = Settings.sidekiq_redis.symbolize_keys
+    config.redis =  { url: ENV.fetch('LIZA_SIDEKIQ_REDIS_URL', 'redis://localhost:6379/3') }
     config.error_handlers << proc do |ex, context|
       Bugsnag.notify ex do |b|
         b.meta_data = context
