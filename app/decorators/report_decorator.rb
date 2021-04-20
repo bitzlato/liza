@@ -2,7 +2,7 @@ class ReportDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id type member created_at processed_at form status]
+    %i[id type member created_at processed_at form status download_link]
   end
 
   def type
@@ -25,6 +25,10 @@ class ReportDecorator < ApplicationDecorator
     h.link_to h.report_path(object) do
       I18n.t '.results'
     end
+  end
+
+  def download_link
+    h.download_link h.report_path(object, format: :xlsx)
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

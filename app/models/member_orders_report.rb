@@ -5,7 +5,7 @@ class MemberOrdersReport < Report
 
   def results
     {
-      orders: Order.ransack(q).result,
+      orders: Order.ransack(q).result.includes(:bid_currency, :ask_currency, :market, :member),
       member: form_object.member_id.present? ? Member.find(form_object.member_id) : nil
     }
   end

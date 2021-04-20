@@ -5,7 +5,7 @@ class OrderDecorator < ApplicationDecorator
 
   def self.table_columns
     %i[id created_at member market type state ord_type price volume origin_volume origin_locked funds_received
-       maker_fee taker_fee trades]
+       maker_fee taker_fee]
   end
 
   def member

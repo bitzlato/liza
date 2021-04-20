@@ -1,0 +1,17 @@
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
+
+  sheet.add_row ['markets'.upcase]
+  sheet.add_row ['market', 'base', 'quote']
+  report.results[:markets].each_pair do |market, data|
+    sheet.add_row [market.to_s, data[:volume], data[:volume_price]]
+  end
+
+  sheet.add_row []
+  sheet.add_row ['currencies'.upcase]
+  sheet.add_row ['currency', 'amount']
+
+  report.results[:currencies].each_pair do |currency_id, amount|
+    sheet.add_row [currency_id, amount]
+  end
+end

@@ -8,8 +8,8 @@ class ReportsController < ResourcesController
   end
 
   def create
-    if form.valid?
-      report = report_class.create! member_id: current_user.id, form: form.as_json.except(*%w[validation_context errors])
+    if report_class.form_class.nil? || form.valid?
+      report = report_class.create! member_id: current_user.id, form: form.nil? ? {} : form.as_json.except(*%w[validation_context errors])
       redirect_to report_path(report)
     else
       new

@@ -1,0 +1,10 @@
+records= report.results[:orders]
+columns = %i[id created_at member market type state ord_type price volume origin_volume origin_locked funds_received maker_fee taker_fee]
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object
+
+  sheet.add_row columns
+  records.each do |record|
+    sheet.add_row columns.map { |c| record.send c }
+  end
+end
