@@ -1,21 +1,25 @@
 - if items.empty?
   p.text-muted= t '.empty_table'
 - else
-  - items = items.decorate unless items.respond_to?(:decorated?) && items.decorated?
-  - decorator = items.first.decorator_class
+  - if items.respond_to?(:decorate)
+    - items = items.decorate unless items.respond_to?(:decorated?) && items.decorated?
+    - decorator = items.first.decorator_class
+  - else
+    - decorator = nil
   - columns = decorator.table_columns unless defined?(columns) && columns.present?
   table.table.table-striped.table-hover.table-narrow
     thead.thead-dark
       tr
         - columns.each do |column|
-          th class=decorator.table_th_class(column) title=column
-            = sort_column column, decorator.object_class.human_attribute_name(column)
+          th class=(decorator.present? ? decorator.table_th_class(column) : '') title=column
+            = decorator.present? ? sort_column(column, decorator.object_class.human_attribute_name(column)) : column
     - if block_given?
       thead
         = yield
     tbody
       - items.each do |item|
+        - item = item.decorate if decorator.nil?
         tr is='dapi-tr' data-href=url_for(item)
           - columns.each do |column|
-            td class=decorator.table_td_class(column)
+            td class=item.class.table_td_class(column)
               = item.send column

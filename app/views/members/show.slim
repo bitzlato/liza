@@ -1,17 +1,20 @@
 .py-3= back_link root_url
 .row
-  .col-md-4
+  .col-md-3
     h1= Member.model_name.human + ' #' + member.uid
     = render 'member_brief', member: member
-  .col-md-4
+  .col-md-3
     ul
       li= link_to title_with_count(Order.model_name.human_plural, member.orders.count), orders_path(q: { member_id_eq: member })
       li= link_to title_with_count(Trade.model_name.human_plural, member.trades.count), trades_path(q: { by_member: member })
       li= link_to title_with_count(Deposit.model_name.human_plural, member.deposits.count), deposits_path(q: { member_id_eq: member })
       li= link_to title_with_count(Withdraw.model_name.human_plural, member.withdraws.count), withdraws_path(q: { member_id_eq: member })
-      li= link_to MemberOrdersReport.model_name.human, new_report_path(report_type: MemberOrdersReport, form: { member_id: member.id })
-      li= link_to MemberTradesReport.model_name.human, new_report_path(report_type: MemberTradesReport, form: { member_id: member.id })
-  .col-md-4
+  .col-md-3
+    h3= t '.reports'
+    ul
+      - [MemberOrdersReport, MemberTradesReport, MemberWdReport, MemberHistoryReport].each do |report_class|
+        li= link_to report_class.model_name.human, new_report_path(report_type: report_class, form: { member_id: member.id })
+  .col-md-3
     h3= Beneficiary.model_name.human_plural
     ul
       - member.beneficiaries.each do |beneficiary|
