@@ -39,45 +39,6 @@ class Trade < ApplicationRecord
       end
     end
 
-    def public_from_influx(market, limit = 100, options = {})
-      trades_query = ['SELECT id, price, amount, total, taker_type, market, created_at FROM trades WHERE market=%{market}']
-      trades_query << 'AND taker_type=%{type}' if options[:type].present?
-      trades_query << 'AND created_at>=%{start_time}' if options[:start_time].present?
-      trades_query << 'AND created_at<=%{end_time}' if options[:end_time].present?
-      trades_query << 'AND price=%{price_eq}' if options[:price_eq].present?
-      trades_query << 'AND price>=%{price_gt}' if options[:price_gt].present?
-      trades_query << 'AND price=%{price_lt}' if options[:price_lt].present?
-      trades_query << 'ORDER BY desc'
-
-      unless limit.to_i.zero?
-        trades_query << 'LIMIT %{limit}'
-        options.merge!(limit: limit)
-      end
-
-      Peatio::InfluxDB.client(keyshard: market).query trades_query.join(' '),
-                                                      params: options.merge(market: market) do |_name, _tags, points|
-        return points.map(&:deep_symbolize_keys!)
-      end
-    end
-
-    # Low, High, First, Last, sum total (amount * price), sum 24 hours amount and average 24 hours price calculated using VWAP ratio for 24 hours trades
-    def market_ticker_from_influx(market)
-      tickers_query = 'SELECT MIN(price), MAX(price), FIRST(price), LAST(price), SUM(total) AS volume, SUM(amount) AS amount, SUM(total) / SUM(amount) AS vwap FROM trades WHERE market=%{market} AND time > now() - 24h'
-      Peatio::InfluxDB.client(keyshard: market).query tickers_query,
-                                                      params: { market: market } do |_name, _tags, points|
-        return points.map(&:deep_symbolize_keys!).first
-      end
-    end
-
-    def trade_from_influx_before_date(market, date)
-      trades_query = 'SELECT id, price, amount, total, taker_type, market, created_at FROM trades WHERE market=%{market} AND created_at < %{date} ORDER BY DESC LIMIT 1 '
-      Peatio::InfluxDB.client(keyshard: market).query trades_query,
-                                                      params: { market: market,
-                                                                date: date.to_i } do |_name, _tags, points|
-        return points.map(&:deep_symbolize_keys!).first
-      end
-    end
-
     def trade_from_influx_after_date(market, date)
       trades_query = 'SELECT id, price, amount, total, taker_type, market, created_at FROM trades WHERE market=%{market} AND created_at >= %{date} ORDER BY ASC LIMIT 1 '
       Peatio::InfluxDB.client(keyshard: market).query trades_query,
@@ -91,6 +52,11 @@ class Trade < ApplicationRecord
       res = trade_from_influx_before_date(market, date)
       res.blank? ? trade_from_influx_after_date(market, date) : res
     end
+  end
+
+
+  def self.ransackable_scopes(auth_object = nil)
+    %[by_member]
   end
 
   def taker_fee_amount

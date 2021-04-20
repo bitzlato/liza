@@ -2,6 +2,11 @@
 
 module ApplicationHelper
 
+  def title_with_count(title, count)
+    return title if count.to_i.zero?
+    return "#{title} (#{count})"
+  end
+
   def present_time(time, default)
     return default if time.blank?
     l time, format: :short

@@ -10,9 +10,7 @@ class Report < ReportsRecord
     self.form ||= {}
   end
 
-  after_commit on: :create do
-    ReporterWorker.perform_async id
-  end
+  after_commit :perform_async, on: :create
 
   def self.form_class
     TimeRangeForm
@@ -24,6 +22,10 @@ class Report < ReportsRecord
 
   def form_object
     self.class.form_class.try :new, form.symbolize_keys
+  end
+
+  def perform_async
+    ReporterWorker.perform_async id
   end
 
   def perform!

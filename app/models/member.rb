@@ -13,7 +13,7 @@ class Member < ApplicationRecord
   scope :enabled, -> { where(state: 'active') }
 
   def trades
-    Trade.where('maker_id = ? OR taker_id = ?', id, id)
+    Trade.by_member(id)
   end
 
   def to_s

@@ -7,6 +7,11 @@ ru:
       orders_balance_report: Баланс валют в ордерах
       order_book_limits_report: Изменения стакана
       revenues_report: Комиссии по валютным парам
+      member_orders_report: Заявки пользователя
+      member_history_report: История ввода-вывода и изменение баланса пользователя
+      beneficiary:
+        one: Бенефициар
+        many: Бенефициары
       report:
         one: Отчёт
         many: Отчёты

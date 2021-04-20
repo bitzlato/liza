@@ -1,25 +1,22 @@
 .py-3= back_link root_url
-h1= Member.model_name.human + ' #' + member.uid
-= render 'member_brief', member: member
+.row
+  .col-md-4
+    h1= Member.model_name.human + ' #' + member.uid
+    = render 'member_brief', member: member
+  .col-md-4
+    ul
+      li= link_to title_with_count(Order.model_name.human_plural, member.orders.count), orders_path(q: { member_id_eq: member })
+      li= link_to title_with_count(Trade.model_name.human_plural, member.trades.count), trades_path(q: { by_member: member })
+      li= link_to title_with_count(Deposit.model_name.human_plural, member.deposits.count), deposits_path(q: { member_id_eq: member })
+      li= link_to title_with_count(Withdraw.model_name.human_plural, member.withdraws.count), withdraws_path(q: { member_id_eq: member })
+      li= link_to MemberOrdersReport.model_name.human, new_report_path(report_type: MemberOrdersReport, form: { member_id: member.id })
+  .col-md-4
+    h3= Beneficiary.model_name.human_plural
+    ul
+      - member.beneficiaries.each do |beneficiary|
+        li= beneficiary.to_s
+
 hr
 h2= t '.accounts'
 = render 'table', items: member.accounts.order(:currency_id), columns: AccountDecorator.table_columns + [:estimated_amount]
-/.col-md-4
-  /h2= t '.operations_revenues'
-  /= render 'table', items: member.operations_revenues.order('created_at desc').limit(10)
-
 hr
-.row
-  .col-md-6
-    h2= t '.withdraws'
-    = render 'withdraws', withdraws: member.withdraws.order('created_at desc').limit(10)
-
-  .col-md-6
-    h2= t '.deposits'
-    = render 'deposits', deposits: member.deposits.order('created_at desc').limit(10)
-
-/hr
-/.row
-  /.col-md-12
-    /h2= t '.orders'
-    /= render 'table', items: member.orders.includes(:market, :member, :ask_currency, :bid_currency).order('created_at desc').limit(2)
