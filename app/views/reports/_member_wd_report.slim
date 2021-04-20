@@ -2,6 +2,6 @@
 - if results[:records].count > 0
   div.mb-2
     = t '.total_records', count: results[:records].count
-  = render 'table', items: results[:records], columns: %i[created_at id type amount] if results[:records].count.positive?
+  = render 'table', items: results[:records], decorator: WdDecorator if results[:records].count.positive?
 - else
   div= t '.no_records'
