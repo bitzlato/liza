@@ -1,0 +1,2 @@
+require 'unprefixed_static_middleware'
+Rails.application.config.middleware.insert_before 0, UnprefixedStaticMiddleware

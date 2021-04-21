@@ -1,3 +1,5 @@
+require 'active_storage/blob'
+require 'active_storage/blob/analyzable'
 class ReportDecorator < ApplicationDecorator
   delegate_all
 
@@ -36,7 +38,11 @@ class ReportDecorator < ApplicationDecorator
   end
 
   def download_link
-    h.download_link h.report_path(object, format: :xlsx)
+    if object.file.present?
+      h.download_link object.file.url, h.number_to_human_size(object.file.size)
+    else
+      h.download_link h.report_path(object, format: :xlsx)
+    end
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

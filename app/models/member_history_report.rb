@@ -16,6 +16,9 @@ class MemberHistoryReport < Report
 
   private
 
+  def file
+  end
+
   def q
     { member_id_eq: form_object.member_id, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
   end

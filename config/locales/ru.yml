@@ -15,7 +15,8 @@ ru:
       select_member: 'Выберите участника >>'
 
   helpers:
-    download_xlsx: Скачать (xlsx)
+    download_without_size: Скачать %{ext}
+    download_with_size: Скачать %{ext} (%{size})
     disable_with: Понеслась..
     no_divergence: Нет расхождений
     trades: Сделки (%{count})

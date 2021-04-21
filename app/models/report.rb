@@ -4,6 +4,8 @@ class Report < ReportsRecord
   belongs_to :author, class_name: 'Member'
   belongs_to :member, optional: true
 
+  mount_uploader :file, ReportFileUploader
+
   STATES = %[pending processing failed success]
   enumerize :state, in: STATES
 
@@ -39,7 +41,7 @@ class Report < ReportsRecord
 
   def perform!
     update status: :processing
-    update results: reporter.perform, status: :success, processed_at: Time.zone.now
+    update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now
   end
 
   def name
@@ -51,6 +53,6 @@ class Report < ReportsRecord
   end
 
   def reporter
-    reporter_class.new(form_object)
+    @reporter ||= reporter_class.new(form_object, [self.class.name, id].join('-'))
   end
 end

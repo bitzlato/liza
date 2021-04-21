@@ -1,5 +1,6 @@
 .DS_Store
 storage
+/public/uploads
 .travis/id_rsa
 /public/packs*
 /public/assets

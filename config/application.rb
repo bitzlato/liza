@@ -30,6 +30,7 @@ module Liza
       "#{Rails.root}/app/errors",
       "#{Rails.root}/app/services",
       "#{Rails.root}/app/inputs",
+      "#{Rails.root}/app/uploaders",
       "#{Rails.root}/app/decorators",
     ]
 

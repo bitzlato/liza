@@ -47,9 +47,10 @@ module ApplicationHelper
     end
   end
 
-  def download_link(url = nil)
+  def download_link(url = nil, size = nil)
+    title =  size.present? ? t('helpers.download_with_size', ext: 'xlsx', size: size) : t('helpers.download_without_size', ext: 'xlsx')
     link_to url || url_for(format: :xlsx) do
-      content_tag(:span, '⬇', class: 'mr-1') + t('helpers.download_xlsx')
+      content_tag(:span, '⬇', class: 'mr-1') + title
     end
   end
 end

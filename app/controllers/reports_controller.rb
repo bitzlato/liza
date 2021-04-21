@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_storage/blob'
+require 'active_storage/blob/analyzable'
 class ReportsController < ResourcesController
   layout 'fluid'
 
@@ -28,8 +30,12 @@ class ReportsController < ResourcesController
     report = Report.find params[:id]
     respond_to do |format|
       format.xlsx do
-        response.headers['Content-Disposition'] = "attachment; filename=\"#{report.type}-#{report.id}.xlsx\""
-        render report.type.underscore, locals: { report: report }
+        if report.file.attached?
+          redirect_to url_for(report.file)
+        else
+          response.headers['Content-Disposition'] = "attachment; filename=\"#{report.type}-#{report.id}.xlsx\""
+          render report.type.underscore, locals: { report: report }
+        end
       end
       format.html do
         render locals: { report: report }
