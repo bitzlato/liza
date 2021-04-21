@@ -21,7 +21,7 @@ class RevenuesReport < Report
         currency_fees[currency] += amount
       end
 
-      { markets: markets, currency_fees: currency_fees }
+      { records_count: markets.count + currency_fees.count, markets: markets, currency_fees: currency_fees }
     end
 
     private

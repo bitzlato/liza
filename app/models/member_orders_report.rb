@@ -4,26 +4,27 @@ class MemberOrdersReport < Report
   end
 
   def results
-    {
-      orders: Order.ransack(q).result.includes(:bid_currency, :ask_currency, :market, :member),
+    super.merge(
+      records: reporter.records,
       member: form_object.member_id.present? ? Member.find(form_object.member_id) : nil
-    }
-  end
-
-  def perform_async
-    update results: {}, status: :success, processed_at: Time.zone.now
+    )
   end
 
   private
 
-  def q
-    { member_id_eq: form_object.member_id, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
-  end
-
-
   class Generator < BaseGenerator
     def perform
-      { }
+      { records_count: records.count }
+    end
+
+    def records
+      Order.ransack(q).result.includes(:currency)
+    end
+
+    private
+
+    def q
+      { member_id_eq: form.member_id, created_at_gt: form.time_from, created_at_lteq: form.time_to }
     end
   end
 end

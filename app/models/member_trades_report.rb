@@ -4,26 +4,27 @@ class MemberTradesReport < Report
   end
 
   def results
-    {
-      trades: Trade.ransack(q).result,
+    super.merge(
+      records: reporter.records,
       member: form_object.member_id.present? ? Member.find(form_object.member_id) : nil
-    }
-  end
-
-  def perform_async
-    update results: {}, status: :success, processed_at: Time.zone.now
+    )
   end
 
   private
 
-  def q
-    { by_member: form_object.member_id.to_i, created_at_gt: form_object.time_from, created_at_lteq: form_object.time_to }
-  end
-
-
   class Generator < BaseGenerator
     def perform
-      { }
+      { records_count: records.count }
+    end
+
+    def records
+      Trade.ransack(q).result
+    end
+
+    private
+
+    def q
+      { by_member: form.member_id, created_at_gt: form.time_from, created_at_lteq: form.time_to }
     end
   end
 end

@@ -2,11 +2,11 @@ class ReportDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id type member created_at processed_at form status download_link]
+    %i[id type member created_at processed_at form status records_count download_link]
   end
 
   def type
-    self.object.name
+    h.content_tag :span, self.object.name, title: self.object.type
   end
 
   def processed_at

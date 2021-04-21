@@ -20,6 +20,10 @@ class Report < ReportsRecord
      ActiveSupport::HashWithIndifferentAccess.new super
   end
 
+  def records_count
+    results[:records_count]
+  end
+
   def form_object
     self.class.form_class.try :new, form.symbolize_keys
   end
