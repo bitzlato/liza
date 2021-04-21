@@ -2,7 +2,11 @@ class ReportDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id type member created_at processed_at form status records_count download_link]
+    %i[id type author created_at processed_at form member status records_count download_link]
+  end
+
+  def author
+    h.render 'member_brief', member: object.author
   end
 
   def type
@@ -19,6 +23,10 @@ class ReportDecorator < ApplicationDecorator
   def form
     return h.middot if object.form_object.nil?
     h.render 'reports/present_form', form: object.form_object
+  end
+
+  def records_count
+    object.records_count || :summary_report
   end
 
   def results

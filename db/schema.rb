@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_141836) do
+ActiveRecord::Schema.define(version: 2021_04_16_125059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_141836) do
     t.text "from_addresses"
     t.integer "transfer_type"
     t.json "data"
-    t.bigint "intention_id"
+    t.string "intention_id"
     t.index ["aasm_state", "member_id", "currency_id"], name: "index_deposits_on_aasm_state_and_member_id_and_currency_id"
     t.index ["currency_id", "intention_id"], name: "index_deposits_on_currency_id_and_intention_id", unique: true, where: "(intention_id IS NOT NULL)"
     t.index ["currency_id", "txid", "txout"], name: "index_deposits_on_currency_id_and_txid_and_txout", unique: true

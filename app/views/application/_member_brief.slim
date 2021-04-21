@@ -1,1 +1,4 @@
-= link_to member.email, member_path(member)
+- if member.present?
+  = link_to member.email, member_path(member)
+- else
+  = middot

@@ -1,13 +1,18 @@
 class Report < ReportsRecord
   extend Enumerize
 
-  belongs_to :member
+  belongs_to :author, class_name: 'Member'
+  belongs_to :member, optional: true
 
   STATES = %[pending processing failed success]
   enumerize :state, in: STATES
 
   before_create do
     self.form ||= {}
+  end
+
+  before_save do
+    self.member_id = form_object.try(:member_id)
   end
 
   after_commit :perform_async, on: :create

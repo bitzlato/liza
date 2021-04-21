@@ -10,20 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_130618) do
+ActiveRecord::Schema.define(version: 2021_04_21_063922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "reports", force: :cascade do |t|
     t.string "type", null: false
-    t.integer "member_id", null: false
+    t.integer "author_id", null: false
     t.jsonb "form", default: {}, null: false
     t.jsonb "results", default: {}, null: false
     t.string "status", default: "pending", null: false
     t.datetime "processed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "member_id"
   end
 
 end
