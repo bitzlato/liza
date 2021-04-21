@@ -4,10 +4,12 @@ require 'net/http'
 
 module OpendaxHelper
   def present_peatio_version
+    return
     "Peatio: #{peatio_version['build_date']}##{peatio_version['git_sha']}"
   end
 
   def present_barong_version
+    return
     "Barong: #{barong_version['build_date']}##{barong_version['git_sha']}"
   end
 

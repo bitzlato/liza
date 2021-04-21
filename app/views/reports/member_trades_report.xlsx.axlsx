@@ -1,9 +1,0 @@
-columns = %i[created_at id market taker_type seller buyer amount price total]
-xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
-  render 'present_form', sheet: sheet, form: report.form_object
-
-  sheet.add_row columns
-  report.results[:records].each do |record|
-    sheet.add_row columns.map { |c| record.send c }
-  end
-end

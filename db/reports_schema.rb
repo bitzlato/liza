@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_082258) do
+ActiveRecord::Schema.define(version: 2021_04_21_122306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_04_21_082258) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "member_id"
     t.string "file"
+    t.string "error_message"
   end
 
 end

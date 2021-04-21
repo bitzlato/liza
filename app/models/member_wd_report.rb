@@ -26,6 +26,11 @@ class MemberWdReport < Report
 
     private
 
+    def generate_file
+      validate!
+      dump_records %i[id created_at type amount currency]
+    end
+
     def withdraws
       Withdraw.ransack(q).result
     end

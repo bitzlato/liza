@@ -1,4 +1,5 @@
-- if member.present?
-  = link_to member.email, member_path(member)
-- else
-  = middot
+= cache member do
+  - if member.present?
+    = link_to member.email, member_path(member)
+  - else
+    = middot

@@ -17,6 +17,6 @@ class ReportFileUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    [model.class.name, model.id].join('-') +  File.extname(super)
+    [model.class.name, model.id].join('-') + '.xlsx' #  File.extname(super)
   end
 end

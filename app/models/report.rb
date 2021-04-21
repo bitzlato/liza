@@ -41,7 +41,9 @@ class Report < ReportsRecord
 
   def perform!
     update status: :processing
-    update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now
+    update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now, error_message: nil
+  rescue => err
+    update status: :failed, error_message: [err.class.to_s, err.message].join('->')
   end
 
   def name

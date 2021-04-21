@@ -4,7 +4,7 @@ class ReportDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id type author created_at processed_at form member status records_count download_link]
+    %i[id type author created_at processed_at form member records_count download_link status error_message]
   end
 
   def author
