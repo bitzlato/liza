@@ -29,6 +29,11 @@ class Report < ReportsRecord
 
   def records_count
     results[:records_count]
+  rescue => err
+    Bugsnag.notify err do |b|
+      b.meta_data = { report_id: id }
+    end
+    err
   end
 
   def form_object
@@ -43,6 +48,9 @@ class Report < ReportsRecord
     update status: :processing
     update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now, error_message: nil
   rescue => err
+    Bugsnag.notify err do |b|
+      b.meta_data = { report_id: id }
+    end
     update status: :failed, error_message: [err.class.to_s, err.message].join('->')
   end
 

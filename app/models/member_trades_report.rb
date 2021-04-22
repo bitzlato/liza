@@ -33,7 +33,7 @@ class MemberTradesReport < Report
     end
 
     def q
-      { by_member: form.member_id, created_at_gt: form.time_from, created_at_lteq: form.time_to }
+      { maker_id_or_taker_id_eq: form.member_id, created_at_gt: form.time_from, created_at_lteq: form.time_to }
     end
   end
 end

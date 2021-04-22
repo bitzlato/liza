@@ -4,13 +4,9 @@
 class LiabilityReport < Report
   class Generator < BaseGenerator
 
-    def initialize(form)
-      super form
+    def perform
       @currencies = Set.new
       @currency_type = :coin
-    end
-
-    def perform
       Operations::Asset.transaction do
         Operations::Liability.transaction do
           Operations::Revenue.transaction do

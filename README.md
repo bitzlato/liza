@@ -20,6 +20,7 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
   * `LIZA_SIDEKIQ_REDIS_URL` (redis://localhost:6379/3 by default)
   * `JWT_PUBLIC_KEY`, for example: export `JWT_PUBLIC_KEY=$(cat ~/peatio/config/secrets/rsa-key.pub| base64 -w0) `
   * `LIZA_HOST`, hostname of service, for example: `dev.bitzlato.bz'
+  * `BUGSNAG_API_KEY` bugsnag api key (optional)
 
 ## Configure and run for development
 
