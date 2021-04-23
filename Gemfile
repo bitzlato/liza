@@ -104,6 +104,8 @@ gem "coffee-rails", "~> 5.0"
 
 gem "carrierwave", "~> 2.2"
 
+gem 'sd_notify'
+
 group :deploy do
   gem 'capistrano-dotenv-tasks'
   gem 'capistrano3-puma'
