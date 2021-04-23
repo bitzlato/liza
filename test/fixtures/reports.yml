@@ -4,10 +4,12 @@ one:
   member_id: 1
   form: 
   results: 
-  status: MyString
+  status: pending
+  type: MemberTradesReport
 
 two:
   member_id: 1
   form: 
   results: 
-  status: MyString
+  status: pending
+  type: WdReport

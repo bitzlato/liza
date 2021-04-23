@@ -7,8 +7,8 @@ defaults: &defaults
     protocol: <%= ENV.fetch('HTTP_PROTOCOL', 'https') %>
     host: <%= ENV.fetch('LIZA_HOST', 'localhost') %>
 
-  peatio_api_url: https://dev.bitzlato.bz/api/v2/peatio
-  barong_api_url: https://dev.bitzlato.bz/api/v2/barong
+  peatio_api_url: https://dapi.bitzlato.bz/api/v2/peatio
+  barong_api_url: https://dapi.bitzlato.bz/api/v2/barong
 development:
   <<: *defaults
 production:

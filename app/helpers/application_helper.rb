@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-
   def title_with_count(title, count)
     return title if count.to_i.zero?
     return "#{title} (#{count})"
