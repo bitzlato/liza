@@ -15,12 +15,13 @@ Liza is a web server written on Ruby On Rails to monitor financial security of P
 2. Use ENV variables to configure application. Look into `config/database.yml` and `config/settings.yml` to view them.
 3. Setup other ENV's:
 
+  * `JWT_PUBLIC_KEY`, for example: export `JWT_PUBLIC_KEY=$(cat ~/peatio/config/secrets/rsa-key.pub| base64 -w0) `
   * `LIZA_CACHE_REDIS_URL` (redis://localhost:6379/2 by default). WARNING: Don't use database
     `1` since it is reserved for barong.
   * `LIZA_SIDEKIQ_REDIS_URL` (redis://localhost:6379/3 by default)
-  * `JWT_PUBLIC_KEY`, for example: export `JWT_PUBLIC_KEY=$(cat ~/peatio/config/secrets/rsa-key.pub| base64 -w0) `
   * `LIZA_HOST`, hostname of service, for example: `dev.bitzlato.bz'
   * `BUGSNAG_API_KEY` bugsnag api key (optional)
+  * `REPORTS_DATABASE_NAME`
 
 ## Configure and run for development
 
@@ -69,6 +70,20 @@ Open page //PEATIO_HOST:3000/liza in browser
 {"ethbtc"=>0.35e-6, "ethmcr"=>0.137055684973e4, "ethusdt"=>0.1901544933e2}
 
 ```
+
+## Deploy with capistrano
+
+Initialize directory and configs structure on the server
+
+> bundle exec cap production systemd:puma:setup systemd:sidekiq:setup 
+> bundle exec cap staging master_key:setup
+
+# Setup ENV varilables
+> bundle exec cap production config:set ENV1=VALUE1 
+
+Deploy application
+
+> bundle exec cap production deploy
 
 ## Contributors
 
