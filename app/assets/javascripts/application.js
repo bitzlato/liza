@@ -9,6 +9,7 @@
 //= require ./simple_form_extension
 //= require simple_form_extension/selectize
 //= require_tree ./elements
+//= require_tree ./extra
 
 document.addEventListener("turbolinks:load", function() {
   $('[data-toggle="tooltip"]').tooltip()

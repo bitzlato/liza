@@ -5,13 +5,11 @@ require 'net/http'
 module OpendaxHelper
 
   def present_peatio_version
-    return link_to 'peatio version', peatio_version_url, target: '_blank'
-    "Peatio: #{peatio_version['build_date']}##{peatio_version['git_sha']}"
+    content_tag :span, '', class: 'mr-2 text-small', data: { 'api-version' => true, prefix: 'peatio: ', url: peatio_version_url }
   end
 
   def present_barong_version
-    return link_to 'barong version', barong_version_url, target: '_blank'
-    "Barong: #{barong_version['build_date']}##{barong_version['git_sha']}"
+    content_tag :span, '', class: 'mr-2 text-small', data: { 'api-version' => true, prefix: 'barong: ', url: barong_version_url }
   end
 
   def peatio_version_url
