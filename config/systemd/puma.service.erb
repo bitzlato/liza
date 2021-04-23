@@ -3,7 +3,7 @@ Description = <%= fetch(:application) %> (<%= fetch(:stage) %>) application serv
 After=syslog.target network.target
 
 [Service]
-WatchdogSec=30
+WatchdogSec=20
 Type=notify
 Environment=RACK_ENV=<%= fetch(:rails_env) %>
 Environment=RAILS_ENV=<%= fetch(:rails_env) %>
@@ -30,8 +30,8 @@ Restart=always
 RestartSec=1
 SyslogIdentifier=puma
 
-StandardOutput=append:<%= fetch(:puma_access_log) %>
-StandardError=append:<%= fetch(:puma_error_log) %>
+#StandardOutput=append:<%= fetch(:puma_access_log) %>
+#StandardError=append:<%= fetch(:puma_error_log) %>
 
 [Install]
 # Use default.target to autoboot user service

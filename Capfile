@@ -4,6 +4,8 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup(:deploy)
 
+require 'semver'
+
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
@@ -16,6 +18,7 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/scm/git-with-submodules'
 install_plugin Capistrano::SCM::Git::WithSubmodules
 
+require 'bugsnag-capistrano'
 require 'capistrano/rbenv'
 require 'capistrano/nvm'
 require 'capistrano/yarn'

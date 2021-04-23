@@ -64,7 +64,10 @@ set :puma_start_task, 'systemd:puma:start'
 set :init_system, :systemd
 set :systemd_sidekiq_role, :sidekiq
 
+set :bugsnag_api_key, ENV['BUGSNAG_API_KEY']
+set :app_version, SemVer.find.to_s
+
 after 'deploy:check', 'master_key:check'
 after 'deploy:publishing', 'systemd:puma:reload-or-restart'
 after 'deploy:publishing', 'systemd:sidekiq:reload-or-restart'
-after 'deploy:published', 'bugsnag:deploy'
+after 'deploy:published', 'bugsnag:release'

@@ -107,6 +107,7 @@ gem "carrierwave", "~> 2.2"
 gem 'sd_notify'
 
 group :deploy do
+  gem 'semver2', '~> 3.4'
   gem 'capistrano-dotenv-tasks'
   gem 'capistrano3-puma'
   gem 'capistrano', require: false
@@ -121,5 +122,6 @@ group :deploy do
   gem 'capistrano-master-key', require: false, github: 'virgoproz/capistrano-master-key'
   gem 'capistrano-faster-assets', require: false
   gem 'capistrano-git-with-submodules'
+  gem 'bugsnag-capistrano', require: false
 end
 
