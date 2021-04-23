@@ -24,6 +24,8 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 set :nvm_node, File.read('.nvmrc').strip
 set :nvm_map_bins, %w[node npm yarn rake]
 
+set :conditionally_migrate, true # Only attempt migration if db/migrate changed - not related to Webpacker, but a nice thing
+
 set :assets_roles, %i[webpack] # Give the webpack role to a single server
 set :assets_prefix, 'packs' # Assets are located in /packs/
 set :assets_dependencies,
@@ -54,17 +56,10 @@ set :puma_tag, fetch(:application)
 set :puma_daemonize, false
 set :puma_preload_app, false
 set :puma_prune_bundler, true
-# set :puma_plugins, [:systemd]
 set :puma_init_active_record, true
 set :puma_workers, 1
+set :puma_bind, %w(tcp://0.0.0.0:9292)
 set :puma_start_task, 'systemd:puma:start'
-set :puma_extra_settings, %{
-extra_runtime_dependencies 'puma-plugin-systemd'
-lowlevel_error_handler do |e|
-  Bugsnag.notify(e)
-  [500, {}, ["An error has occurred"]]
-end
-}
 
 set :init_system, :systemd
 set :systemd_sidekiq_role, :sidekiq
