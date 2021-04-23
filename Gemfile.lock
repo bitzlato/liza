@@ -196,6 +196,10 @@ GEM
     crass (1.0.6)
     css_parser (1.9.0)
       addressable
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     draper (4.0.1)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -468,6 +472,7 @@ DEPENDENCIES
   caxlsx (~> 3.0)
   caxlsx_rails
   coffee-rails (~> 5.0)
+  dotenv-rails
   draper (~> 4.0)
   enumerize
   env-tweaks (~> 1.0.0)
