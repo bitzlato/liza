@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
+gem 'dotenv-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3'
 # Use postgresql as the database for Active Record
@@ -13,8 +15,9 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
+# gem 'webpacker', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -46,7 +49,6 @@ gem 'settingslogic'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sidekiq'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -102,3 +104,25 @@ gem 'redactor-rails', github: 'glyph-fr/redactor-rails'
 gem "coffee-rails", "~> 5.0"
 
 gem "carrierwave", "~> 2.2"
+
+gem 'sd_notify'
+
+group :deploy do
+  gem 'semver2', '~> 3.4'
+  gem 'capistrano-dotenv-tasks'
+  gem 'capistrano3-puma'
+  gem 'capistrano', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-nvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-yarn', require: false
+  gem 'capistrano-shell', require: false
+  gem 'capistrano-db-tasks', require: false
+  gem 'capistrano-systemd-multiservice', github: 'groovenauts/capistrano-systemd-multiservice', require: false
+  gem 'capistrano-master-key', require: false, github: 'virgoproz/capistrano-master-key'
+  gem 'capistrano-faster-assets', require: false
+  gem 'capistrano-git-with-submodules'
+  gem 'bugsnag-capistrano', require: false
+end
+

@@ -25,7 +25,14 @@ default: &default
   username: <%= ENV.fetch('DATABASE_USER', 'root') %>
   password: <%= ENV['DATABASE_PASS'] %>
 
-
+staging:
+  primary:
+    <<: *default
+    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_production') %>
+  reports:
+    <<: *default
+    migrations_paths: db/reports_migrate
+    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>
 development:
   primary:
     <<: *default

@@ -6,6 +6,8 @@ storage
 /public/assets
 /public/test
 /public/development
+/public/liza/packs*
+/public/liza/assets
 yarn-error.log
 config/master.key
 .vscode

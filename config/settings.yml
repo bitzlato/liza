@@ -11,6 +11,9 @@ defaults: &defaults
   barong_api_url: https://dapi.bitzlato.bz/api/v2/barong
 development:
   <<: *defaults
+staging:
+  max_export_records_count: 1000
+  <<: *defaults
 production:
   max_export_records_count: 1000
   <<: *defaults
