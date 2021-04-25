@@ -15,7 +15,7 @@ set :config_files, fetch(:linked_files)
 
 set :deploy_to, -> { "/home/#{fetch(:user)}/#{fetch(:application)}" }
 
-set :branch, ENV.fetch('BRANCH', 'main')
+set :branch, ENV.fetch('BRANCH', 'master')
 #  ask(:branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp })
 
 set :rbenv_type, :user
