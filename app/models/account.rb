@@ -14,31 +14,31 @@ class Account < ApplicationRecord
   end
 
   def trades
-    member.trades.where(market_id: currency.dependent_markets)
+    member.trades.where(market_id: currency.dependent_markets.pluck(:symbol))
   end
 
   def sell_trades
-    Trade.where(market_id: currency.dependent_markets).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'sell', member_id, 'buy', member_id)
+    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'sell', member_id, 'buy', member_id)
   end
 
   def buy_trades
-    Trade.where(market_id: currency.dependent_markets).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'buy', member_id, 'sell', member_id)
+    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'buy', member_id, 'sell', member_id)
   end
 
   def total_paid
-    buy_trades.where(market_id: currency.quote_markets).sum(:total)
+    buy_trades.where(market_id: currency.quote_markets.pluck(:symbol)).sum(:total)
   end
 
   def total_revenue
-    sell_trades.where(market_id: currency.quote_markets).sum(:total)
+    sell_trades.where(market_id: currency.quote_markets.pluck(:symbol)).sum(:total)
   end
 
   def total_sell
-    sell_trades.where(market_id: currency.base_markets).sum(:amount)
+    sell_trades.where(market_id: currency.base_markets.pluck(:symbol)).sum(:amount)
   end
 
   def total_buy
-    buy_trades.where(market_id: currency.base_markets).sum(:amount)
+    buy_trades.where(market_id: currency.base_markets.pluck(:symbol)).sum(:amount)
   end
 
   def withdraws
@@ -50,11 +50,11 @@ class Account < ApplicationRecord
   end
 
   def base_orders
-    member.orders.where(market_id: Market.where(base_unit: currency_id))
+    member.orders.where(market_id: Market.where(base_unit: currency_id).pluck(:symbol))
   end
 
   def quote_orders
-    member.orders.where(market_id: Market.where(quote_unit: currency_id))
+    member.orders.where(market_id: Market.where(quote_unit: currency_id).pluck(:symbol))
   end
 
   def amount

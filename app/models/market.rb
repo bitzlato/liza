@@ -15,6 +15,7 @@
 # Bid/Quote currency/unit = USD.
 
 class Market < ApplicationRecord
+  self.inheritance_column = nil
   # == Constants ============================================================
 
   # Since we use decimal with 16 digits fractional part for storing numbers in DB
