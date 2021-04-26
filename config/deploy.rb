@@ -9,7 +9,7 @@ set :repo_url, 'git@github.com:finfex/liza.git' if ENV['USE_LOCAL_REPO'].nil?
 set :keep_releases, 10
 
 set :linked_files, %w[.env config/master.key]
-set :linked_dirs, %w[log node_modules tmp/pids tmp/cache tmp/sockets public/assets public/packs]
+set :linked_dirs, %w[log node_modules tmp/pids tmp/cache tmp/sockets public/liza/assets public/packs]
 
 set :config_files, fetch(:linked_files)
 
