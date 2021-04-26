@@ -8,10 +8,7 @@ hr
   = report.decorate.download_link
   hr
   = render report.type.underscore, results: report.results, form: report.form_object, report: report
-- else
-  .badge.badge-info= report.status
-
-- if report.status == 'pending'
+- elsif report.status == 'pending'
   div.mt-2
     = t '.the_page_will_be_reloaded_automaticaly'
   div.mt-2
@@ -22,4 +19,10 @@ hr
     setTimeout(function(){
      window.location.reload(1);
     }, 5000);
+
+- elsif report.status == 'failed'
+  code.mt-2= report.error_message
+
+- else
+  .badge.badge-info= report.status
 
