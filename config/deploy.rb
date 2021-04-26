@@ -47,8 +47,8 @@ set :puma_init_active_record, true
 set :db_local_clean, false
 set :db_remote_clean, true
 
-set :sidekiq_processes, 1
-set :sidekiq_options_per_process, ['--queue default']
+set :sidekiq_processes, 2
+set :sidekiq_options_per_process, ['--queue default', '-queue reports']
 
 set :puma_control_app, true
 set :puma_threads, [2, 4]
@@ -63,6 +63,7 @@ set :puma_start_task, 'systemd:puma:start'
 
 set :init_system, :systemd
 set :systemd_sidekiq_role, :sidekiq
+set :systemd_sidekiq_instances, -> { 2.times.to_a }
 
 set :bugsnag_api_key, ENV['BUGSNAG_API_KEY']
 set :app_version, SemVer.find.to_s

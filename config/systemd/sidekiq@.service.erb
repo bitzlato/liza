@@ -7,7 +7,7 @@ Type=simple
 Environment=RAILS_ENV=<%= fetch(:rails_env) %>
 EnvironmentFile=<%= current_path %>/.env
 WorkingDirectory=<%= current_path %>
-ExecStart=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec sidekiq -e <%= fetch(:stage) %>
+ExecStart=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec sidekiq -e <%= fetch(:stage) %> -i %i -C <%= current_path %>/config/sidekiq-<%= fetch(:stage) %>-%i.yml
 ExecStop=/bin/kill -TERM $MAINPID
 RestartSec=5
 Restart=on-failure
