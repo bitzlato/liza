@@ -30,7 +30,7 @@ class ReportsController < ResourcesController
     report = Report.find params[:id]
     respond_to do |format|
       format.xlsx do
-        if report.file.attached?
+        if report.file.present?
           redirect_to url_for(report.file)
         else
           response.headers['Content-Disposition'] = "attachment; filename=\"#{report.type}-#{report.id}.xlsx\""
