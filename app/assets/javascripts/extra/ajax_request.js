@@ -6,13 +6,13 @@ const getVersion = (url, el) => {
   try {
     xhr.send();
     if (xhr.status != 200) {
-      alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      console.error(`Ошибка ${xhr.status}: ${xhr.statusText}`);
     } else {
       data = JSON.parse(xhr.response);
       el.html(el.data('prefix') + data['build_date'] + ' ' + data['git_sha']);
     }
   } catch(err) { // для отлова ошибок используем конструкцию try...catch вместо onerror
-    alert("Запрос не удался");
+    console.error(`Запрос (${url}) не удался, с ошибкой`, err);
   }
 }
 
