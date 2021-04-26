@@ -10,3 +10,16 @@ hr
   = render report.type.underscore, results: report.results, form: report.form_object, report: report
 - else
   .badge.badge-info= report.status
+
+- if report.status == 'pending'
+  div.mt-2
+    = t '.the_page_will_be_reloaded_automaticaly'
+  div.mt-2
+    = t '.last_reload_time'
+    span.ml-2= l Time.zone.now
+
+  javascript:
+    setTimeout(function(){
+     window.location.reload(1);
+    }, 5000);
+
