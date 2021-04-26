@@ -8,7 +8,7 @@ class UnprefixedStaticMiddleware
       next if env[key].blank?
       env[key] = env[key]
         .gsub(Settings.root_prefix + '/uploads/', '/uploads/')
-        .gsub(Settings.root_prefix + '/assets/', '/assets/')
+        # .gsub(Settings.root_prefix + '/assets/', '/assets/')
     end
     @app.call(env)
   end
