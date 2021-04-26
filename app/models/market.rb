@@ -35,6 +35,11 @@ class Market < ApplicationRecord
   # sale - user can't view but can trade with market orders.
   # presale - user can't view and trade. Admin can trade.
 
+  TYPES = %w[spot qe].freeze
+  # spot - regular spot market
+  # qe - market used by Finex for quick exchange
+  DEFAULT_TYPE = 'spot'
+
   # == Attributes ===========================================================
 
   attr_readonly :base_unit, :quote_unit
