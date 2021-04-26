@@ -109,6 +109,9 @@ gem "carrierwave", "~> 2.2"
 gem 'sd_notify'
 
 group :deploy do
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'semver2', '~> 3.4'
   gem 'capistrano-dotenv-tasks'
   gem 'capistrano3-puma'
