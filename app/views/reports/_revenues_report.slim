@@ -10,7 +10,7 @@ table.table.table-striped.table-narrow.table-bordered
       th.text-right= t '.takers_fee'
   tbody
     - results[:markets].each_pair do |market, data|
-      - market = Market.find(market)
+      - market = Market.find_by(symbol: market)
       tr
         td= market.to_s
         td.text-right= format_money data[:base_turnover], market.base_unit

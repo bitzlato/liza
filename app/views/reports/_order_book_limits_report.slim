@@ -1,4 +1,4 @@
-h1= Market.find(results[:market][:id]).to_s
+h1= Market.find_by(symbol: results[:market][:id]).to_s
 .row
   .col-md-4
     h2= t '.top_orders_count'

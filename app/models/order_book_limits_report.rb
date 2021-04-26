@@ -8,7 +8,7 @@ class OrderBookLimitsReport < Report
 
     def perform
       {
-        market: Market.find(form.market_id).as_json,
+        market: Market.find_by(symbol: form.market_id).as_json,
         limit: LIMIT,
         sellers: sales_trades,
         buyers: buys_trades,

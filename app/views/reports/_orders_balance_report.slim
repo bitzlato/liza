@@ -9,7 +9,7 @@ table.table.table-striped.table-narrow.table-bordered
       th= t '.quote'
   tbody
     - results[:markets].each_pair do |market_id, data|
-      - market = Market.find(market_id)
+      - market = Market.find_by(symbol: market_id)
       tr
         th= market.to_s
         td= format_money data[:volume], market.base_unit
