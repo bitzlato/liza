@@ -1,4 +1,4 @@
 ---
-:concurrency: 
+:concurrency: 3
 :queues:
   - reports
