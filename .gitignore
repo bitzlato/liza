@@ -8,6 +8,7 @@ storage
 /public/development
 /public/liza/packs*
 /public/liza/assets
+/stage_release
 yarn-error.log
 config/master.key
 .vscode
