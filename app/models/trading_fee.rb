@@ -52,7 +52,7 @@ class TradingFee < ApplicationRecord
 
   # == Relationships ========================================================
 
-  belongs_to :market, optional: true
+  belongs_to :market, optional: true, primary_key: :symbol
 
   class << self
 

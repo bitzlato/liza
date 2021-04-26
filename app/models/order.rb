@@ -20,7 +20,7 @@ class Order < ApplicationRecord
     'cancel_bulk' => 4
   }.freeze
 
-  belongs_to :market, required: true
+  belongs_to :market, required: true, primary_key: :symbol
   belongs_to :member, required: true
   belongs_to :ask_currency, class_name: 'Currency', foreign_key: :ask
   belongs_to :bid_currency, class_name: 'Currency', foreign_key: :bid
