@@ -11,7 +11,6 @@ class WdReport < Report
       add_rows operations(Deposit, Operations::Liability), :deposit_to_operations_liabilities
       add_rows operations(Withdraw, Operations::Liability), :withdraws_to_operations_liabilities
       return { rows: @rows, currencies: @currencies, keys: @keys }
-      return { rows: @rows, currencies: @currencies, keys: @keys }
     end
 
     private
@@ -27,15 +26,24 @@ class WdReport < Report
     end
 
     def q
-      { completed: true, created_at_gt: form.time_from, created_at_lteq: form.time_to }
+      { created_at_gt: form.time_from, created_at_lteq: form.time_to }
     end
 
     def operations(reference_type, klass)
-      klass.ransack(q).result.where(reference_type: reference_type.name).group(:currency_id).pluck(:currency_id, Arel.sql('sum(credit)-sum(debit)'))
+      klass
+        .ransack(q)
+        .result
+        .where(reference_type: reference_type.name)
+        .group(:currency_id)
+        .pluck(:currency_id, Arel.sql('sum(credit)-sum(debit)'))
     end
 
     def build_query(scope)
-      scope.ransack(q).result.group(:currency_id).sum(:amount)
+      scope
+        .ransack(q.merge completed: true)
+        .result
+        .group(:currency_id)
+        .sum(:amount)
     end
   end
 end

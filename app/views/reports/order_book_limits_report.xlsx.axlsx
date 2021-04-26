@@ -8,7 +8,7 @@ begin
 
   xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
     render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
-    sheet.add_row [Market.find_by(symbol: report.results[:market][:id]).to_s]
+    sheet.add_row [Market.find_by(symbol: report.results[:market][:symbol]).to_s]
     sheet.add_row []
     sheet.add_row ['Top Orders Count']
     sheet.add_row %w(rank member orders_count)
