@@ -17,7 +17,7 @@ class BaseGenerator
   end
 
   def validate!
-    raise TooManyRecords, records.count if records.count > Settings.max_export_records_count
+    raise TooManyRecords, "#{records.count} > #{Settings.max_export_records_count}" if records.count > Settings.max_export_records_count
   end
 
   private

@@ -12,10 +12,10 @@ defaults: &defaults
 development:
   <<: *defaults
 staging:
-  max_export_records_count: 1000
+  max_export_records_count: 2000
   <<: *defaults
 production:
-  max_export_records_count: 1000
+  max_export_records_count: 2000
   <<: *defaults
 test:
   <<: *defaults
