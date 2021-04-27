@@ -2,7 +2,7 @@ class RevenuesReport < Report
   class Generator < BaseGenerator
     def perform
       currency_fees = {}
-      markets = Market.enabled.ordered.each_with_object({}) { |m,a| a[m.id] = m.as_json }
+      markets = Market.enabled.ordered.each_with_object({}) { |m,a| a[m.symbol] = m.as_json }
       trades.each do |g|
         market_id, amount, volume = g
         markets[market_id][:base_turnover] = amount
