@@ -14,16 +14,6 @@ if Rails.env.development? || Rails.env.production? || Rails.env.staging? || ENV[
       end
     end
     Sidekiq.logger.info "Configure server for application #{AppVersion}"
-
-    config.client_middleware do |chain|
-      chain.add SidekiqUniqueJobs::Middleware::Client
-    end
-
-    config.server_middleware do |chain|
-      chain.add SidekiqUniqueJobs::Middleware::Server
-    end
-
-    SidekiqUniqueJobs::Server.configure(config)
   end
 
   Sidekiq.configure_client do |config|
