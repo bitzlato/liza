@@ -14,6 +14,8 @@ development:
 staging:
   max_export_records_count: 2000
   <<: *defaults
+  peatio_api_url: https://dev.bitzlato.bz/api/v2/peatio
+  barong_api_url: https://dev.bitzlato.bz/api/v2/barong
 production:
   max_export_records_count: 2000
   <<: *defaults
