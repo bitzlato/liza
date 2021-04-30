@@ -13,10 +13,18 @@ module LiabilitiesHelper
       present_withdraw(reference)
     when Trade
       present_trade(reference)
+    when Adjustment
+      present_adjustment(reference)
     when nil
       '-'
     else
       raise "Unknown liability reference #{reference.class}"
+    end
+  end
+
+  def present_adjustment(adjustment)
+    link_to adjustment_path(adjustment) do
+      ('adjustment: ' + format_money(adjustment.amount, adjustment.currency) + ' -> ' + adjustment.receiving_account_number).html_safe
     end
   end
 
