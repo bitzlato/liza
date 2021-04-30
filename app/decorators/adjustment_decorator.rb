@@ -1,13 +1,23 @@
 class AdjustmentDecorator < ApplicationDecorator
   delegate_all
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def self.table_columns
+    %i[id created_at updated_at creator validator amount receiving_account_number asset_account asset_account_code category state reason description]
+  end
 
+  def creator
+    h.render 'member_brief', member: object.creator
+  end
+
+  def validator
+    h.render 'member_brief', member: object.validator
+  end
+
+  def amount
+    h.format_money object.amount, object.currency
+  end
+
+  def asset_account
+    h.format_liability_account object.asset_account
+  end
 end

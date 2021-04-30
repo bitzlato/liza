@@ -15,6 +15,11 @@ set :config_files, fetch(:linked_files)
 
 set :deploy_to, -> { "/home/#{fetch(:user)}/#{fetch(:application)}" }
 
+set :disallow_pushing, true
+
+# set :db_dump_dir, "./db"
+set :db_dump_extra_opts, '--force'
+
 set :branch, ENV.fetch('BRANCH', 'master')
 #  ask(:branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp })
 
