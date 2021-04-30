@@ -9,6 +9,7 @@ hr
   hr
   = render report.type.underscore, results: report.results, form: report.form_object, report: report
 - elsif report.status == 'pending'
+  .badge.badge-info= report.status
   div.mt-2
     = t '.the_page_will_be_reloaded_automaticaly'
   div.mt-2

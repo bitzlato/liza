@@ -12,6 +12,7 @@ ru:
       member_history_report: История ввода-вывода и изменение баланса пользователя
       member_wd_report: Вводы-выводы пользователя
       member_history_report: История изменения баланса пользователя
+      adjustments_report: Отчет по корректировкам
       adjustment:
         one: Корректировка
         many: Корректировки

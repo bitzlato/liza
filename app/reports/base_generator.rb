@@ -34,6 +34,7 @@ class BaseGenerator
   def dump_records(columns)
     xlsx_package = Axlsx::Package.new
     xlsx_package.workbook.add_worksheet(name: report_name) do |sheet|
+      sheet.add_row columns
       records.each do |record|
         sheet.add_row columns.map { |c| record.send c }
       end
