@@ -11,10 +11,11 @@ table.table.table-condensed.table-striped
         = column_tip 'Введено - Выведено'
       th.text-right
         div Расхождение балансов
-        = column_tip 'Расчетный - фактический - операционный доход'
+        = column_tip 'Расчетный - фактический - операционный доход + корректировки'
 
       th.text-right Операционный доход
       th.text-right Операционный расход
+      th.text-right Корректировки
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
@@ -29,6 +30,7 @@ table.table.table-condensed.table-striped
       - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
       - total_operations_credit = currency.operations_revenues.sum(:credit)
       - total_operations_assets_credit = currency.operations_assets.sum(:credit)
+      - adjustments_amount = currency.adjustments.sum(:amount)
       tr
         th= format_currency currency_id
         td.text-right
@@ -42,13 +44,16 @@ table.table.table-condensed.table-striped
           = link_to withdraws_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_withdraw, currency_id
         td.text-right= format_money total_deposit - total_withdraw, currency_id
-        td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_credit, currency_id
+        td.text-right= format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_credit + adjustments_amount, currency_id
         td.text-right
           = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_credit, currency
         td.text-right
           = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
             = format_money currency.operations_revenues.sum(:debit), currency
+        td.text-right
+          = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
+            = format_money adjustments_amount, currency
         td.text-right
            = link_to accounts_path(q: { currency_id_eq: currency_id} ) do
             = format_money row[1] + row[2], currency_id
