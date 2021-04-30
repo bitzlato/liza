@@ -20,4 +20,4 @@ auth_args = {
   on_error: on_error
 }
 
-Rails.application.config.middleware.use JWT::Rack::Auth, auth_args
+Rails.application.config.middleware.use JWT::Rack::Auth, auth_args unless ENV.true? 'DISABLE_JWT'

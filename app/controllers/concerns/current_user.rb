@@ -19,8 +19,8 @@ module CurrentUser
   end
 
   def load_current_user
-    # jwt.payload provided by rack-jwt
-    unless request.env.key?('jwt.payload')
+    return Member.find_by(uid: ENV['FORCED_MEMBER_UID']) if ENV.true? 'FORCED_MEMBER_UID'
+    unless request.env.key?('jwt.payload') # jwt.payload provided by rack-jwt
       Rails.logger.error 'No JWT payload to authenticate'
       return
     end
