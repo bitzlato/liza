@@ -29,8 +29,12 @@ module MoneyHelper
   # @param amount Decimal
   # @param currency [Currency, String]
   # @param options [Hash] :tooltip, :css_class, :show_currency
-  def format_money(amount, currency, options = {})
+  def format_money(amount, currency = nil, options = {})
     amount = amount.to_d if amount.is_a? String
+    if amount.is_a? Money
+      currency = amount.currency
+      amount = amount.to_d
+    end
     options = options.symbolize_keys.reverse_merge show_currency: true
     currency = currency.is_a?(Currency) ? currency : Currency.find(currency)
     css_classes = %w[text-nowrap text-monospace]
