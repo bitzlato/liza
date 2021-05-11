@@ -111,7 +111,6 @@ gem "carrierwave", "~> 2.2"
 gem 'sd_notify'
 
 group :deploy do
-  gem 'semver2', '~> 3.4'
   gem 'capistrano-dotenv-tasks'
   gem 'capistrano3-puma'
   gem 'capistrano', require: false
@@ -129,3 +128,5 @@ group :deploy do
   gem 'bugsnag-capistrano', require: false
 end
 
+
+gem "money", "~> 6.16"
