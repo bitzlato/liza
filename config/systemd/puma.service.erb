@@ -14,11 +14,11 @@ WorkingDirectory=<%= current_path %>
 ExecStart=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec puma -C <%= shared_path %>/puma.rb -e <%= fetch(:rails_env) %>
 
 # Может быть имеет смысл перезагружать так:
-# pumactl -S /home/master/polina/shared/tmp/pids/puma.state -F /home/master/polina/shared/puma.rb phased-restart
+# pumactl -S /home/master/polina/shared/tmp/pids/puma.state -F /home/master/polina/shared/puma.rb restart
 #
 # USR1 restart workers in phases, a rolling restart. This will not reload configuration file.
 # ExecReload=/bin/kill -USR1 $MAINPID
-ExecReload=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec pumactl -S <%= shared_path %>/tmp/pids/puma.state -F <%= shared_path %>/puma.rb phased-restart
+ExecReload=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec pumactl -S <%= shared_path %>/tmp/pids/puma.state -F <%= shared_path %>/puma.rb restart
 ExecStop=/home/<%= fetch(:user) %>/.rbenv/bin/rbenv exec bundle exec pumactl -S <%= shared_path %>/tmp/pids/puma.state stop
 
 # Если запускается от пользователя, то нужно убрать
