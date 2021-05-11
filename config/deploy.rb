@@ -5,6 +5,8 @@ lock '3.16'
 set :user, 'app'
 set :application, 'liza'
 
+set :roles, %w[sidekiq web app db bugsnag].freeze
+
 set :repo_url, 'git@github.com:finfex/liza.git' if ENV['USE_LOCAL_REPO'].nil?
 set :keep_releases, 10
 
