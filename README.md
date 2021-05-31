@@ -75,11 +75,10 @@ Open page //PEATIO_HOST:3000/liza in browser
 
 Initialize directory and configs structure on the server
 
-> bundle exec cap production systemd:puma:setup systemd:sidekiq:setup 
-> bundle exec cap staging master_key:setup
+> bundle exec cap production systemd:puma:setup systemd:sidekiq:setup master_key:setup
 
 # Setup ENV varilables
-> bundle exec cap production config:set ENV1=VALUE1 
+> bundle exec cap production config:set LIZA_HOST=liza.com
 
 Deploy application
 
