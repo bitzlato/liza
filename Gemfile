@@ -130,3 +130,5 @@ end
 
 
 gem "money", "~> 6.16"
+
+gem "mini_racer", "~> 0.4.0"
