@@ -78,7 +78,8 @@ Initialize directory and configs structure on the server
 > bundle exec cap production systemd:puma:setup systemd:sidekiq:setup master_key:setup
 
 # Setup ENV varilables
-> bundle exec cap production config:set LIZA_HOST=liza.com
+
+> bundle exec cap production config:set RAILS_ENV=production LIZA_HOST=<YOUR_HOST>
 
 Deploy application
 
