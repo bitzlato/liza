@@ -30,7 +30,7 @@ table.table.table-condensed.table-striped
       - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
       - total_operations_credit = currency.operations_revenues.sum(:credit)
       - total_operations_assets_credit = currency.operations_assets.sum(:credit)
-      - adjustments_amount = currency.adjustments.sum(:amount)
+      - adjustments_amount = currency.adjustments.accepted.sum(:amount)
       tr
         th= format_currency currency_id
         td.text-right
