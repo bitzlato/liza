@@ -7,7 +7,7 @@ set :application, 'liza'
 
 set :roles, %w[sidekiq web app db bugsnag].freeze
 
-set :repo_url, 'git@github.com:finfex/liza.git' if ENV['USE_LOCAL_REPO'].nil?
+set :repo_url, ENV['DEPLOY_REPO'] if ENV['USE_LOCAL_REPO'].nil?
 set :keep_releases, 10
 
 set :linked_files, %w[.env config/master.key]
