@@ -9,6 +9,12 @@ defaults: &defaults
 
   peatio_api_url: https://dapi.bitzlato.bz/api/v2/peatio
   barong_api_url: https://dapi.bitzlato.bz/api/v2/barong
+  dropdown_links:
+    liza: /liza
+    valera: /valera
+    rabbitmq: /rabbitmq
+    grafana: /grafana
+    tower: /tower
 development:
   <<: *defaults
 staging:
