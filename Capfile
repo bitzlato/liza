@@ -25,7 +25,7 @@ require 'capistrano/yarn'
 require 'capistrano/bundler'
 require 'capistrano-db-tasks'
 require 'capistrano/shell'
-
+require 'capistrano/rails/console'
 require 'capistrano/rails/assets'
 # require 'capistrano/faster_assets'
 require 'capistrano/rails/migrations'

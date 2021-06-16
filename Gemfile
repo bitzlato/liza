@@ -120,6 +120,7 @@ group :deploy do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-yarn', require: false
   gem 'capistrano-shell', require: false
+  gem 'capistrano-rails-console', require: false
   gem 'capistrano-db-tasks', require: false
   gem 'capistrano-systemd-multiservice', github: 'groovenauts/capistrano-systemd-multiservice', require: false
   gem 'capistrano-master-key', require: false, github: 'virgoproz/capistrano-master-key'
