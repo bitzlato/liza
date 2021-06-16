@@ -101,7 +101,7 @@ class Trade < ApplicationRecord
   end
 
   def buyer
-    sell_order.member
+    buy_order.member
   end
 
   def seller_fee
