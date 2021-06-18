@@ -10,7 +10,7 @@ set :roles, %w[sidekiq web app db bugsnag].freeze
 set :repo_url, ENV['DEPLOY_REPO'] if ENV['USE_LOCAL_REPO'].nil?
 set :keep_releases, 10
 
-set :linked_files, %w[.env config/master.key]
+set :linked_files, %w[.env config/master.key config/settings.yml]
 set :linked_dirs, %w[log node_modules tmp/pids tmp/cache tmp/sockets public/liza/assets public/uploads public/liza/uploads public/packs]
 
 set :config_files, fetch(:linked_files)
