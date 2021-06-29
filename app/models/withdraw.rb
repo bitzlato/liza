@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class Withdraw < ApplicationRecord
@@ -55,6 +57,6 @@ class Withdraw < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    %i(uncompleted completed) + super
+    %i[uncompleted completed] + super
   end
 end

@@ -1,16 +1,20 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 module RansackSupport
   extend ActiveSupport::Concern
   included do
     helper_method :q, :index_form
-
   end
 
   def index
     respond_to do |format|
       format.xlsx do
-        raise HumanizedError, "Too many records" if records.count > Settings.max_export_records_count
+        raise HumanizedError, 'Too many records' if records.count > Settings.max_export_records_count
+
         render locals: {
-          records: records,
+          records: records
         }
       end
       format.html do
@@ -40,6 +44,6 @@ module RansackSupport
   end
 
   def records
-    q.result.includes(model_class.reflections.select { |k, r| r.is_a?(ActiveRecord::Reflection::BelongsToReflection) && !r.options[:polymorphic] }.keys)
+    q.result.includes(model_class.reflections.select { |_k, r| r.is_a?(ActiveRecord::Reflection::BelongsToReflection) && !r.options[:polymorphic] }.keys)
   end
 end

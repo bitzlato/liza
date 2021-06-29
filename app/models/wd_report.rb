@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class WdReport < Report
   class Generator < BaseGenerator
     def perform
@@ -10,7 +14,7 @@ class WdReport < Report
       add_rows operations(Withdraw, Operations::Asset), :withdraws_to_operations_assets
       add_rows operations(Deposit, Operations::Liability), :deposit_to_operations_liabilities
       add_rows operations(Withdraw, Operations::Liability), :withdraws_to_operations_liabilities
-      return { rows: @rows, currencies: @currencies, keys: @keys }
+      { rows: @rows, currencies: @currencies, keys: @keys }
     end
 
     private
@@ -40,7 +44,7 @@ class WdReport < Report
 
     def build_query(scope)
       scope
-        .ransack(q.merge completed: true)
+        .ransack(q.merge(completed: true))
         .result
         .group(:currency_id)
         .sum(:amount)

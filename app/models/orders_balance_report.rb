@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class OrdersBalanceReport < Report
   def self.form_class
     nil
   end
+
   class Generator < BaseGenerator
     def perform
       markets = {}
@@ -13,7 +18,7 @@ class OrdersBalanceReport < Report
         markets[market_id][:volume_price] += volume_price
         currencies[ask] ||= 0
         currencies[ask] += volume
-        currencies[bid] ||=0
+        currencies[bid] ||= 0
         currencies[bid] += volume_price
       end
       {

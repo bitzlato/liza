@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 # People exchange commodities in markets. Each market focuses on certain

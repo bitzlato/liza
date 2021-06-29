@@ -1,9 +1,10 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 # Liability report namespace
 class LiabilityReport < Report
   class Generator < BaseGenerator
-
     def perform
       @currencies = Set.new
       @currency_type = :coin
@@ -43,6 +44,7 @@ class LiabilityReport < Report
       accounts = Operations::Account.where(scope: scope, type: record_type)
       records_classes = accounts.map(&:records_class).uniq
       raise :wtf if records_classes.many?
+
       records_class = records_classes.first
       base_scope = records_class.where(account: accounts)
       before = summarize(previous_scope(base_scope))
@@ -58,6 +60,7 @@ class LiabilityReport < Report
       scope.group(:currency_id).pluck('currency_id', Arel.sql('sum(credit) - sum(debit)')).each_with_object({}) do |record, a|
         currency_id, balance = record
         raise 'wtf' if a[currency_id].present?
+
         a[currency_id] = balance
         @currencies << currency_id
       end
@@ -65,6 +68,7 @@ class LiabilityReport < Report
 
     def previous_scope(scope)
       return scope.none if form.time_from.nil?
+
       scope.where('created_at<?', form.time_from)
     end
 
@@ -76,6 +80,7 @@ class LiabilityReport < Report
 
     def end_scope(scope)
       return scope if form.time_to.nil?
+
       scope.where('created_at<?', form.time_to)
     end
   end

@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 module FileDetails
@@ -18,11 +20,9 @@ module FileDetails
 
   private
 
-  # rubocop:disable Metrics/AbcSize
   def save_details(file)
     model.original_filename = original_filename if model.respond_to? :original_filename=
     model.file_size = file.present? ? file.size : nil if model.respond_to? :file_size=
     model.content_type = file.present? ? file.content_type : '' if model.respond_to? :content_type=
   end
-  # rubocop:enable Metrics/AbcSize
 end

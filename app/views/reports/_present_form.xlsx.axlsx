@@ -1,2 +1,7 @@
-sheet.add_row [I18n.t('from_including', scope: :helpers), present_time(form.time_from, 'С начала'), I18n.t('to', scope: :helpers), present_time(form.time_to, 'До момента формирования отчёта')]
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
+sheet.add_row [I18n.t('from_including', scope: :helpers), present_time(form.time_from, 'С начала'), I18n.t('to', scope: :helpers),
+               present_time(form.time_to, 'До момента формирования отчёта')]
 sheet.add_row [Member.model_name.human, form.member] if form.respond_to? :member

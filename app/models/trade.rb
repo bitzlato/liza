@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class Trade < ApplicationRecord
@@ -53,7 +55,7 @@ class Trade < ApplicationRecord
       res.blank? ? trade_from_influx_after_date(market, date) : res
     end
 
-    def self.ransackable_scopes(auth_object = nil)
+    def self.ransackable_scopes(_auth_object = nil)
       %i[by_member]
     end
   end

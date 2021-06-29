@@ -1,4 +1,5 @@
-# encoding: UTF-8
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class Wallet < ApplicationRecord
@@ -11,19 +12,19 @@ class Wallet < ApplicationRecord
   ENUMERIZED_KINDS = { deposit: 100, fee: 200, hot: 310, warm: 320, cold: 330 }.freeze
   enumerize :kind, in: ENUMERIZED_KINDS, scope: true
 
-  SETTING_ATTRIBUTES = %i[ uri secret ].freeze
+  SETTING_ATTRIBUTES = %i[uri secret].freeze
 
   SETTING_ATTRIBUTES.each do |attribute|
     define_method attribute do
-      self.settings[attribute.to_s]
+      settings[attribute.to_s]
     end
 
     define_method "#{attribute}=".to_sym do |value|
-      self.settings = self.settings.merge(attribute.to_s => value)
+      self.settings = settings.merge(attribute.to_s => value)
     end
   end
 
-  NOT_AVAILABLE = 'N/A'.freeze
+  NOT_AVAILABLE = 'N/A'
 
   belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
   has_and_belongs_to_many :currencies
@@ -36,25 +37,23 @@ class Wallet < ApplicationRecord
   scope :ordered, -> { order(kind: :asc) }
 
   class << self
-    def kinds(options={})
+    def kinds(options = {})
       ENUMERIZED_KINDS
         .yield_self do |kinds|
-          case
-          when options.fetch(:deposit, false)
+          if options.fetch(:deposit, false)
             kinds.select { |_k, v| v / 100 == 1 }
-          when options.fetch(:fee, false)
+          elsif options.fetch(:fee, false)
             kinds.select { |_k, v| v / 100 == 2 }
-          when options.fetch(:withdraw, false)
+          elsif options.fetch(:withdraw, false)
             kinds.select { |_k, v| v / 100 == 3 }
           else
             kinds
           end
         end
         .yield_self do |kinds|
-          case
-          when options.fetch(:keys, false)
+          if options.fetch(:keys, false)
             kinds.keys
-          when options.fetch(:values, false)
+          elsif options.fetch(:values, false)
             kinds.values
           else
             kinds

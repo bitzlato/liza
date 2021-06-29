@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 module MoneyHelper
   MAX_PRECISION = 8
 
   def present_fee(fee, amount = nil)
     content_tag :span, class: 'text-nowrap text-monospace' do
-      buffer = (fee*100).to_s + '%'
+      buffer = (fee * 100).to_s + '%'
       buffer << amount * fee if amount
       buffer
     end
@@ -12,7 +16,7 @@ module MoneyHelper
   def format_divergence(amount, currency)
     if amount.zero?
       content_tag :span, class: 'text-success' do
-        t ('helpers.no_divergence')
+        t('helpers.no_divergence')
       end
     else
       format_money amount, currency, css_class: 'text-warning', tooltip: 'Должно быть 0'
@@ -50,8 +54,10 @@ module MoneyHelper
     return middot if amount.nil?
     return '0' if amount.zero?
     return amount.to_i.to_s if amount.to_i == amount
+
     precised = format("%0.#{precision}f", amount)
     return precised if precised.to_d == amount
+
     format("%0.#{MAX_PRECISION}f", amount)
   end
 

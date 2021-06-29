@@ -1,13 +1,17 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 module ApplicationHelper
   def title_with_count(title, count)
     return title if count.to_i.zero?
-    return "#{title} (#{count})"
+
+    "#{title} (#{count})"
   end
 
   def present_time(time, default)
     return default if time.blank?
+
     l time, format: :short
   end
 
@@ -32,7 +36,9 @@ module ApplicationHelper
   end
 
   def grouped_operations(operations)
-    operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)').each_with_object({}) { |i, a| a[i.first] = { credit: i[1], debit: -i[2], balance: i[1] - i[2] } }
+    operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)').each_with_object({}) do |i, a|
+      a[i.first] = { credit: i[1], debit: -i[2], balance: i[1] - i[2] }
+    end
   end
 
   def sort_column(column, title)
@@ -47,7 +53,7 @@ module ApplicationHelper
   end
 
   def download_link(url = nil, size = nil)
-    title =  size.present? ? t('helpers.download_with_size', ext: 'xlsx', size: size) : t('helpers.download_without_size', ext: 'xlsx')
+    title = size.present? ? t('helpers.download_with_size', ext: 'xlsx', size: size) : t('helpers.download_without_size', ext: 'xlsx')
     link_to url || url_for(format: :xlsx), class: 'text-nowrap' do
       content_tag(:span, '⬇', class: 'mr-1') + title
     end

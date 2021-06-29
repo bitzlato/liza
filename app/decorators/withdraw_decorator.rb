@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class WithdrawDecorator < ApplicationDecorator
   delegate_all
 
@@ -21,5 +25,4 @@ class WithdrawDecorator < ApplicationDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end

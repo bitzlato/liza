@@ -1,5 +1,9 @@
-def frame_result(sheet:, header:, table:, currencies: )
-  sheet.add_row [header] + currencies.map { |currency| (table.nil? || table[currency].nil?) ? '' : table[currency].to_d }
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
+def frame_result(sheet:, header:, table:, currencies:)
+  sheet.add_row [header] + currencies.map { |currency| table.nil? || table[currency].nil? ? '' : table[currency].to_d }
 end
 
 xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
@@ -7,9 +11,11 @@ xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
   sheet.add_row [t('.date', default: 'date')] + report.results[:currencies]
   report.results[:summary].each_pair do |scope, data|
     next if scope == 'total_delta'
+
     sheet.add_row [I18n.t(scope, scope: :helpers, default: scope)]
     frame_result sheet: sheet, header: present_time(report.form_object.time_from, 'С начала'), table: data[:before], currencies: report.results[:currencies]
-    frame_result sheet: sheet, header: present_time(report.form_object.time_to, l(report.processed_at, format: :short)), table: data[:after], currencies: report.results[:currencies]
+    frame_result sheet: sheet, header: present_time(report.form_object.time_to, l(report.processed_at, format: :short)), table: data[:after],
+                 currencies: report.results[:currencies]
     frame_result sheet: sheet, header: t('.delta', scope: :helpers, default: 'delta'), table: data[:delta], currencies: report.results[:currencies]
   end
   sheet.add_row [I18n.t(:total_delta, scope: :helpers, default: 'total_delta')]

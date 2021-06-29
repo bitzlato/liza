@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 require 'active_support/core_ext/integer/time'
@@ -63,7 +65,7 @@ Rails.application.configure do
                             password: ENV.fetch('LIZA_REDIS_PASSWORD') }]
                        else
                          [:redis_cache_store,
-                          { driver: :hiredis, url: ENV.fetch('LIZA_CACHE_REDIS_URL', 'redis://localhost:6379/2')}]
+                          { driver: :hiredis, url: ENV.fetch('LIZA_CACHE_REDIS_URL', 'redis://localhost:6379/2') }]
                        end
 
   # Use a real queuing backend for Active Job (and separate queues per environment).

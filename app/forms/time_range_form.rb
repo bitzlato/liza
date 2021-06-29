@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class TimeRangeForm
   include ActiveModel::Model
 
@@ -18,6 +22,7 @@ class TimeRangeForm
   def parse_time(value)
     return value if value.is_a?(Time) || value.is_a?(Date)
     return nil if value.blank?
+
     Time.parse value
   end
 end

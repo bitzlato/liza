@@ -1,14 +1,18 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class AccountDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income]
+    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue
+       trade_income]
   end
 
   def self.attributes
-    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue trade_income trades trades_fee estimated_amount]
+    %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue
+       trade_income trades trades_fee estimated_amount]
   end
 
   def trades_fee
@@ -53,8 +57,8 @@ class AccountDecorator < ApplicationDecorator
     else
       h.format_money(object.estimated_amount, object.currency) +
         h.content_tag(:div, class: 'text-small') do
-        ('Расхождение: ' + h.format_money(object.divergence, object.currency, css_class: 'text-warning', tooltip: 'Должно быть 0')).html_safe
-      end
+          ('Расхождение: ' + h.format_money(object.divergence, object.currency, css_class: 'text-warning', tooltip: 'Должно быть 0')).html_safe
+        end
     end
   end
 
@@ -67,7 +71,9 @@ class AccountDecorator < ApplicationDecorator
   end
 
   def locked
-    h.link_to h.operations_liabilities_path(q: {member_id_eq: object.member_id, account_id_eq: Operations::Account.find_by(kind: :locked, scope: :member, currency_type: object.currency.type)}) do
+    h.link_to h.operations_liabilities_path(q: { member_id_eq: object.member_id,
+                                                 account_id_eq: Operations::Account.find_by(kind: :locked, scope: :member,
+                                                                                            currency_type: object.currency.type) }) do
       h.format_money object.locked, object.currency
     end
   end

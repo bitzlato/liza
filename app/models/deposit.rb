@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class Deposit < ApplicationRecord
@@ -28,7 +30,7 @@ class Deposit < ApplicationRecord
     aasm_state.in?(COMPLETED_STATES.map(&:to_s))
   end
 
-   def self.ransackable_scopes(auth_object = nil)
-     %i(uncompleted completed) + super
-   end
+  def self.ransackable_scopes(auth_object = nil)
+    %i[uncompleted completed] + super
+  end
 end

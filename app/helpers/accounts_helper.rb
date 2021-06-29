@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 module AccountsHelper
   def account_table_head_column(column, currency, totals)
     content_tag :td, class: AccountDecorator.table_th_class(column) do
@@ -19,7 +23,7 @@ module AccountsHelper
       when 'locked'
         format_money(totals[:total_locked], currency)
       else
-        if totals.has_key? column.to_sym
+        if totals.key? column.to_sym
           format_money totals[column.to_sym], currency
         else
           middot

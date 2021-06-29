@@ -1,8 +1,9 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class TradeDecorator < ApplicationDecorator
   delegate_all
-
 
   delegate :maker_fee, to: :decorated_maker_order
   delegate :taker_fee, to: :decorated_taker_order

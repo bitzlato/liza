@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class RevenuesReport < Report
   class Generator < BaseGenerator
     def perform
       currency_fees = {}
-      markets = Market.enabled.ordered.each_with_object({}) { |m,a| a[m.symbol] = m.as_json }
+      markets = Market.enabled.ordered.each_with_object({}) { |m, a| a[m.symbol] = m.as_json }
       trades.each do |g|
         market_id, amount, volume = g
         markets[market_id][:base_turnover] = amount

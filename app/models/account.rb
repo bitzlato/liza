@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
@@ -18,11 +20,13 @@ class Account < ApplicationRecord
   end
 
   def sell_trades
-    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'sell', member_id, 'buy', member_id)
+    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'sell',
+                                                                            member_id, 'buy', member_id)
   end
 
   def buy_trades
-    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'buy', member_id, 'sell', member_id)
+    Trade.where(market_id: currency.dependent_markets.pluck(:symbol)).where('((taker_type = ? and taker_id = ?) or (taker_type=? and maker_id=?))', 'buy',
+                                                                            member_id, 'sell', member_id)
   end
 
   def total_paid

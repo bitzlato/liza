@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class DepositDecorator < ApplicationDecorator
   delegate_all
 
@@ -13,5 +17,4 @@ class DepositDecorator < ApplicationDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end

@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class BaseGenerator
   Error = Class.new StandardError
   TooManyRecords = Class.new Error
@@ -13,8 +17,7 @@ class BaseGenerator
     raise 'implement'
   end
 
-  def file
-  end
+  def file; end
 
   def validate!
     raise TooManyRecords, "#{records.count} > #{Settings.max_export_records_count}" if records.count > Settings.max_export_records_count
@@ -41,7 +44,7 @@ class BaseGenerator
     end
     xlsx_package.use_shared_strings = true
     stream = xlsx_package.to_stream
-    def stream.original_filename; "report.xlsx"; end
+    def original_filename() = 'report.xlsx'
     stream
   end
 end

@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
   render 'present_form', sheet: sheet, form: report.form_object
   sheet.add_row [t('.currency', default: 'currency')] + report.results[:keys].map { |key| I18n.t key, scope: :helpers, default: key }

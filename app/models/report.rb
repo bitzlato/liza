@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class Report < ReportsRecord
   extend Enumerize
 
@@ -6,7 +10,7 @@ class Report < ReportsRecord
 
   mount_uploader :file, ReportFileUploader
 
-  STATES = %[pending processing failed success]
+  STATES = %(pending processing failed success)
   enumerize :state, in: STATES
 
   before_create do
@@ -24,16 +28,16 @@ class Report < ReportsRecord
   end
 
   def results
-     ActiveSupport::HashWithIndifferentAccess.new super
+    ActiveSupport::HashWithIndifferentAccess.new super
   end
 
   def records_count
     results[:records_count]
-  rescue => err
-    Bugsnag.notify err do |b|
+  rescue StandardError => e
+    Bugsnag.notify e do |b|
       b.meta_data = { report_id: id }
     end
-    err
+    e
   end
 
   def form_object
@@ -48,11 +52,11 @@ class Report < ReportsRecord
     with_lock do
       update status: :processing
       update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now, error_message: nil
-    rescue => err
-      Bugsnag.notify err do |b|
+    rescue StandardError => e
+      Bugsnag.notify e do |b|
         b.meta_data = { report_id: id }
       end
-      update status: :failed, error_message: [err.class.to_s, err.message].join('->')
+      update status: :failed, error_message: [e.class.to_s, e.message].join('->')
     end
   end
 

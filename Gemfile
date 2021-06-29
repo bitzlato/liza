@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
@@ -15,7 +17,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
-gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'sprockets-rails', require: 'sprockets/railtie'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 # gem 'webpacker', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -46,19 +48,19 @@ gem 'pagy'
 gem 'premailer-rails'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'settingslogic'
+gem 'sidekiq'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'sidekiq'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'guard-rubocop'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop-rails'
-  gem 'guard'
-  gem 'guard-minitest'
-  gem 'guard-rubocop'
 end
 
 group :development do
@@ -90,46 +92,45 @@ gem 'title', '~> 0.0.8'
 
 gem 'draper', '~> 4.0'
 
-gem "bugsnag", "~> 6.20"
+gem 'bugsnag', '~> 6.20'
 
-gem "kaminari", "~> 1.2"
+gem 'kaminari', '~> 1.2'
 
-gem "rails-i18n", "~> 6.0"
+gem 'rails-i18n', '~> 6.0'
 
-gem "rubyzip", "~> 2.3"
+gem 'rubyzip', '~> 2.3'
 
-gem "caxlsx", "~> 3.0"
+gem 'caxlsx', '~> 3.0'
 gem 'caxlsx_rails'
 
-gem "simple_form_extension", "~> 1.4"
 gem 'redactor-rails', github: 'glyph-fr/redactor-rails'
+gem 'simple_form_extension', '~> 1.4'
 
-gem "coffee-rails", "~> 5.0"
+gem 'coffee-rails', '~> 5.0'
 
-gem "carrierwave", "~> 2.2"
+gem 'carrierwave', '~> 2.2'
 
 gem 'sd_notify'
 
 group :deploy do
-  gem 'capistrano-dotenv-tasks'
-  gem 'capistrano3-puma'
+  gem 'bugsnag-capistrano', require: false
   gem 'capistrano', require: false
-  gem 'capistrano-rbenv', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-nvm', require: false
+  gem 'capistrano3-puma'
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-yarn', require: false
-  gem 'capistrano-shell', require: false
-  gem 'capistrano-rails-console', require: false
   gem 'capistrano-db-tasks', require: false
-  gem 'capistrano-systemd-multiservice', github: 'groovenauts/capistrano-systemd-multiservice', require: false
-  gem 'capistrano-master-key', require: false, github: 'virgoproz/capistrano-master-key'
+  gem 'capistrano-dotenv-tasks'
   gem 'capistrano-faster-assets', require: false
   gem 'capistrano-git-with-submodules'
-  gem 'bugsnag-capistrano', require: false
+  gem 'capistrano-master-key', require: false, github: 'virgoproz/capistrano-master-key'
+  gem 'capistrano-nvm', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rails-console', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'capistrano-shell', require: false
+  gem 'capistrano-systemd-multiservice', github: 'groovenauts/capistrano-systemd-multiservice', require: false
+  gem 'capistrano-yarn', require: false
 end
 
+gem 'money', '~> 6.16'
 
-gem "money", "~> 6.16"
-
-gem "mini_racer", "~> 0.4.0"
+gem 'mini_racer', '~> 0.4.0'

@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class MemberWdReport < Report
   def self.form_class
     MemberRecordsForm
@@ -10,8 +14,6 @@ class MemberWdReport < Report
     )
   end
 
-  private
-
   class Generator < BaseGenerator
     def perform
       {
@@ -19,7 +21,7 @@ class MemberWdReport < Report
       }
     end
 
-    # TODO Use batch loading
+    # TODO: Use batch loading
     def records
       (deposits + withdraws).sort_by { |r| -r.created_at.to_i }
     end

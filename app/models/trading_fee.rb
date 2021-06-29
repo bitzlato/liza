@@ -1,4 +1,5 @@
-# encoding: UTF-8
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 # A trading fee schedule is a complete listing of maker and taker fees.
@@ -55,7 +56,6 @@ class TradingFee < ApplicationRecord
   belongs_to :market, optional: true, primary_key: :symbol
 
   class << self
-
     # Get trading fee for specific order that based on member group and market_id.
     # TradingFee record selected with the next priorities:
     #  1. both group and market_id match
@@ -66,7 +66,7 @@ class TradingFee < ApplicationRecord
     def for(group:, market_id:)
       TradingFee
         .where(market_id: [market_id, ANY], group: [group, ANY])
-        .max_by { |fs| fs.weight } || TradingFee.new
+        .max_by(&:weight) || TradingFee.new
     end
   end
 

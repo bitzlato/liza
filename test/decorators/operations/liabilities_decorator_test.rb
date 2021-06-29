@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 require 'test_helper'
 
-class Operations::LiabilitiesDecoratorTest < Draper::TestCase
+module Operations
+  class LiabilitiesDecoratorTest < Draper::TestCase
+  end
 end

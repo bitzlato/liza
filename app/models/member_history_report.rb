@@ -1,4 +1,8 @@
-# TODO Complete )
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
+# TODO: Complete )
 #
 class MemberHistoryReport < Report
   def self.form_class
@@ -23,14 +27,12 @@ class MemberHistoryReport < Report
   end
 
   def records
-    (Deposit.ransack(q).result + Withdraw.ransack(q).result).sort_by { |r| r.created_at }
+    (Deposit.ransack(q).result + Withdraw.ransack(q).result).sort_by(&:created_at)
   end
 
   class Generator < BaseGenerator
     def perform
-      { }
+      {}
     end
-
-    private
   end
 end

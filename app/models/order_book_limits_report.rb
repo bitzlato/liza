@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class OrderBookLimitsReport < Report
   def self.form_class
     OrderBookLimitsForm
@@ -31,7 +35,7 @@ class OrderBookLimitsReport < Report
       ar = ar1.dup
       ar2.each do |row|
         if ar[row.first].present?
-          ar[row.first] +=row.second
+          ar[row.first] += row.second
         else
           ar[row.first] = row.second
         end

@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class MemberOrdersReport < Report
   def self.form_class
     MemberRecordsForm
@@ -9,8 +13,6 @@ class MemberOrdersReport < Report
       member: form_object.member_id.present? ? Member.find(form_object.member_id) : nil
     )
   end
-
-  private
 
   class Generator < BaseGenerator
     def perform

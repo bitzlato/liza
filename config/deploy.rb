@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 lock '3.16'
@@ -42,9 +44,9 @@ set :assets_dependencies,
       .semver
     ]
 
-#set :assets_manifests, lambda { # Tell Capistrano-Rails how to find the Webpacker manifests
-  #[release_path.join('public', fetch(:assets_prefix), 'manifest.json*')]
-#}
+# set :assets_manifests, lambda { # Tell Capistrano-Rails how to find the Webpacker manifests
+# [release_path.join('public', fetch(:assets_prefix), 'manifest.json*')]
+# }
 
 set :keep_assets, 2
 set :local_assets_dir, 'public'
@@ -62,13 +64,13 @@ set :puma_preload_app, false
 set :puma_prune_bundler, true
 set :puma_init_active_record, true
 set :puma_workers, 0
-set :puma_bind, %w(tcp://0.0.0.0:9292)
+set :puma_bind, %w[tcp://0.0.0.0:9292]
 set :puma_start_task, 'systemd:puma:start'
 
 set :init_system, :systemd
 
 set :systemd_sidekiq_role, :sidekiq
-set :systemd_sidekiq_instances, -> { [:default, :reports] }
+set :systemd_sidekiq_instances, -> { %i[default reports] }
 
 set :bugsnag_api_key, ENV['BUGSNAG_API_KEY']
 set :app_version, SemVer.find.to_s
@@ -78,4 +80,4 @@ after 'deploy:publishing', 'systemd:puma:reload-or-restart'
 after 'deploy:publishing', 'systemd:sidekiq:reload-or-restart'
 after 'deploy:published', 'bugsnag:release'
 
-Rake::Task["deploy:assets:backup_manifest"].clear_actions
+Rake::Task['deploy:assets:backup_manifest'].clear_actions

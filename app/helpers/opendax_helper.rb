@@ -1,9 +1,10 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 require 'net/http'
 
 module OpendaxHelper
-
   def present_peatio_version
     content_tag :span, '', class: 'mr-2 text-small', data: { 'api-version' => true, prefix: 'peatio: ', url: peatio_version_url }
   end
@@ -23,9 +24,9 @@ module OpendaxHelper
   def peatio_version
     Rails.cache.fetch :peatio_version do
       JSON.parse Net::HTTP.get(URI(peatio_version_url))
-    rescue => err
-      Rails.logger.error err
-      Bugsnag.notify err
+    rescue StandardError => e
+      Rails.logger.error e
+      Bugsnag.notify e
       {}
     end
   end
@@ -33,9 +34,9 @@ module OpendaxHelper
   def barong_version
     Rails.cache.fetch :barong_version do
       JSON.parse Net::HTTP.get(URI(barong_version_url))
-    rescue => err
-      Rails.logger.error err
-      Bugsnag.notify err
+    rescue StandardError => e
+      Rails.logger.error e
+      Bugsnag.notify e
       {}
     end
   end

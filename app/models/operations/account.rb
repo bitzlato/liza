@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 # TODO: Add admin rubric for Account.
@@ -17,7 +19,6 @@ module Operations
     def self.table_name_prefix
       'operations_'
     end
-
 
     # Type column reserved for STI.
     self.inheritance_column = nil

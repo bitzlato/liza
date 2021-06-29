@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 require 'active_storage/blob'
 require 'active_storage/blob/analyzable'
 class ReportDecorator < ApplicationDecorator
@@ -12,11 +16,12 @@ class ReportDecorator < ApplicationDecorator
   end
 
   def type
-    h.content_tag :span, self.object.name, title: self.object.type
+    h.content_tag :span, object.name, title: object.type
   end
 
   def processed_at
     return h.middot if object.processed_at.nil?
+
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.processed_at
     end
@@ -24,6 +29,7 @@ class ReportDecorator < ApplicationDecorator
 
   def form
     return h.middot if object.form_object.nil?
+
     h.render 'reports/present_form', form: object.form_object
   end
 
@@ -53,5 +59,4 @@ class ReportDecorator < ApplicationDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end
