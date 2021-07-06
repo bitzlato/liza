@@ -7,7 +7,7 @@ lock '3.16'
 set :user, 'app'
 set :application, 'liza'
 
-set :roles, %w[sidekiq web app db bugsnag].freeze
+set :roles, %w[sidekiq web app db].freeze
 
 set :repo_url, ENV['DEPLOY_REPO'] if ENV['USE_LOCAL_REPO'].nil?
 set :keep_releases, 10
@@ -72,12 +72,16 @@ set :init_system, :systemd
 set :systemd_sidekiq_role, :sidekiq
 set :systemd_sidekiq_instances, -> { %i[default reports transactions_fetcher] }
 
-set :bugsnag_api_key, ENV['BUGSNAG_API_KEY']
 set :app_version, SemVer.find.to_s
 
 after 'deploy:check', 'master_key:check'
 after 'deploy:publishing', 'systemd:puma:reload-or-restart'
 after 'deploy:publishing', 'systemd:sidekiq:reload-or-restart'
-after 'deploy:published', 'bugsnag:release'
 
 Rake::Task['deploy:assets:backup_manifest'].clear_actions
+
+set :current_version, `git rev-parse HEAD`.strip
+set :sentry_organization, ENV['SENTRY_ORGANIZATION']
+set :sentry_release_version, -> { [fetch(:app_version), fetch(:current_version)].compact.join('-') }
+before 'deploy:starting', 'sentry:validate_config'
+after 'deploy:published', 'sentry:notice_deployment'

@@ -20,7 +20,6 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/scm/git-with-submodules'
 install_plugin Capistrano::SCM::Git::WithSubmodules
 
-require 'bugsnag-capistrano'
 require 'capistrano/rbenv'
 require 'capistrano/nvm'
 require 'capistrano/yarn'
@@ -33,6 +32,7 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/dotenv/tasks'
 require 'capistrano/puma'
+require 'capistrano/sentry'
 install_plugin Capistrano::Puma
 
 # require 'capistrano/rails/console'
