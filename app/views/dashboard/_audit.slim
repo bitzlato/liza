@@ -2,6 +2,7 @@ table.table.table-condensed.table-striped
   thead.thead-dark
     tr
       th Валюта
+      th.text-right Баланс на системных счетах
       th.text-right Операционные активы
       th.text-right Торговые счета
       th.text-right Введено по депозитам
@@ -33,6 +34,9 @@ table.table.table-condensed.table-striped
       - adjustments_amount = currency.adjustments.accepted.sum(:amount)
       tr
         th= format_currency currency_id
+        td.text-right
+          = link_to wallets_path do
+            = format_money system_balances.fetch(currency_id, nil), currency
         td.text-right
           = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_assets_credit, currency
