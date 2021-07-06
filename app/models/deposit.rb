@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 class Deposit < ApplicationRecord
-  STATES = %i[submitted canceled rejected accepted collected skipped processing fee_processing].freeze
+  STATES = %i[submitted canceled rejected accepted collected skipped processing invoiced fee_processing].freeze
   COMPLETED_STATES = (STATES - %i[submitted]).freeze
 
   serialize :spread, Array
