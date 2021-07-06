@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :orders
     resources :members
     resources :adjustments
+    resources :wallets, only: %i[index show]
     namespace :operations do
       resources :liabilities
       resources :accounts

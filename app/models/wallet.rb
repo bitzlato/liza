@@ -9,7 +9,7 @@ class Wallet < ApplicationRecord
   # 1** - for deposit wallets.
   # 2** - for fee wallets.
   # 3** - for withdraw wallets (sorted by security hot < warm < cold).
-  ENUMERIZED_KINDS = { deposit: 100, fee: 200, hot: 310, warm: 320, cold: 330 }.freeze
+  ENUMERIZED_KINDS = { deposit: 100, fee: 200, hot: 310, warm: 320, cold: 330, standalone: 400 }.freeze
   enumerize :kind, in: ENUMERIZED_KINDS, scope: true
 
   SETTING_ATTRIBUTES = %i[uri secret].freeze
@@ -26,7 +26,7 @@ class Wallet < ApplicationRecord
 
   NOT_AVAILABLE = 'N/A'
 
-  belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
+  # belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
   has_and_belongs_to_many :currencies
 
   scope :active,   -> { where(status: :active) }
@@ -41,11 +41,11 @@ class Wallet < ApplicationRecord
       ENUMERIZED_KINDS
         .yield_self do |kinds|
           if options.fetch(:deposit, false)
-            kinds.select { |_k, v| v / 100 == 1 }
+            kinds.select { |_k, v| [1, 4].include? v / 100 }
           elsif options.fetch(:fee, false)
             kinds.select { |_k, v| v / 100 == 2 }
           elsif options.fetch(:withdraw, false)
-            kinds.select { |_k, v| v / 100 == 3 }
+            kinds.select { |_k, v| [3, 4].include? v / 100 }
           else
             kinds
           end
@@ -62,7 +62,11 @@ class Wallet < ApplicationRecord
     end
 
     def deposit_wallet(currency_id)
-      Wallet.active.deposit.joins(:currencies).find_by(currencies: { id: currency_id })
+      Wallet.active.deposit.with_currency(currency_id).take
+    end
+
+    def withdraw_wallet(currency_id)
+      Wallet.active.withdraw.with_currency(currency_id).take
     end
   end
 

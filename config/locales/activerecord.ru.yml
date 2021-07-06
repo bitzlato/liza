@@ -13,6 +13,7 @@ ru:
       member_wd_report: Вводы-выводы пользователя
       member_history_report: История изменения баланса пользователя
       adjustments_report: Отчет по корректировкам
+      wallet: Системный кошелёк
       adjustment:
         one: Корректировка
         many: Корректировки
