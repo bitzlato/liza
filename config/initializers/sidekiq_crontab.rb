@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-CRONTAB_FILE = "./config/crontab_#{Rails.env}.yml"
+CRONTAB_FILE = './config/sidekiq_crontab.yml'
 
 if Rails.env.staging? || Rails.env.production? || ENV.true?('LOAD_SIDEKIQ_CRONTAB')
   Sidekiq::Cron::Job.destroy_all!
