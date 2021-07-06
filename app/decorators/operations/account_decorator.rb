@@ -28,6 +28,7 @@ module Operations
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def present_operations(association)
       operations = object.send association
       grouped_operations = operations.group(:currency_id).pluck(:currency_id, 'sum(credit), sum(debit)')
@@ -46,5 +47,6 @@ module Operations
         end
       end.join(', ').html_safe
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

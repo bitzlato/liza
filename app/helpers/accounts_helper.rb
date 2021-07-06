@@ -3,6 +3,7 @@
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
 module AccountsHelper
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
   def account_table_head_column(column, currency, totals)
     content_tag :td, class: AccountDecorator.table_th_class(column) do
       case column.to_s
@@ -31,4 +32,5 @@ module AccountsHelper
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
 end

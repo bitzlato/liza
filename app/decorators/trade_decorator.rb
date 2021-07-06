@@ -60,14 +60,6 @@ class TradeDecorator < ApplicationDecorator
     h.present_order object.sell_order
   end
 
-  def taker
-    decorated_taker_order.member
-  end
-
-  def maker
-    decorated_maker_order.member
-  end
-
   def taker_order
     h.present_order object.taker_order
   end

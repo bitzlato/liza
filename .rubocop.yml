@@ -53,6 +53,7 @@ Style/Documentation:
     - 'app/controllers/**/*'
     - 'app/decorators/**/*'
     - 'test/**/*'
+    - 'db/reports_migrate/*'
 
 Naming/PredicateName:
   Exclude:

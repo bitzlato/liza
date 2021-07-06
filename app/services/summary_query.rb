@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Summary query for different models
+#
 class SummaryQuery
   SUMMARY_MODELS = {
     Deposit => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)'] },
@@ -13,6 +15,7 @@ class SummaryQuery
     Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] }
   }.freeze
 
+  # rubocop:disable Metrics/MethodLength
   def summary(scope)
     model_class = scope.model
     return unless SUMMARY_MODELS[model_class].present?
@@ -34,6 +37,7 @@ class SummaryQuery
       rows: rows
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 

@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Worker to maker async reports
+#
 class ReporterWorker
   include Sidekiq::Worker
 

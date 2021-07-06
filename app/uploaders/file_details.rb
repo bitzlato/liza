@@ -2,6 +2,8 @@
 
 # frozen_string_literal: true
 
+# Concern saves file details to model attributes
+#
 module FileDetails
   extend ActiveSupport::Concern
   included do

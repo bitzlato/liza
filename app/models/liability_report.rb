@@ -5,6 +5,7 @@
 # Liability report namespace
 class LiabilityReport < Report
   class Generator < BaseGenerator
+    # rubocop:disable Metrics/MethodLength
     def perform
       @currencies = Set.new
       @currency_type = :coin
@@ -29,6 +30,7 @@ class LiabilityReport < Report
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

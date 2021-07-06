@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Base report generator
+#
 class BaseGenerator
   Error = Class.new StandardError
   TooManyRecords = Class.new Error
@@ -25,8 +27,6 @@ class BaseGenerator
 
   private
 
-  attr_reader :report_name
-
   def add_form_to_sheet(sheet)
     sheet.add_row [(form.time_from ? I18n.t(form.time_from, format: :short) : 'С начала'),
                    (form.time_from ? I18n.t(form.time_from, format: :short) : 'До момента формирования отчёта')]
@@ -39,12 +39,10 @@ class BaseGenerator
     xlsx_package.workbook.add_worksheet(name: report_name) do |sheet|
       sheet.add_row columns
       records.each do |record|
-        sheet.add_row columns.map { |c| record.send c }
+        sheet.add_row(columns.map { |c| record.send c })
       end
     end
     xlsx_package.use_shared_strings = true
-    stream = xlsx_package.to_stream
-    def original_filename() = 'report.xlsx'
-    stream
+    xlsx_package.to_stream
   end
 end

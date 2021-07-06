@@ -2,10 +2,13 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Form for time ranged fields
+#
 class TimeRangeForm
   include ActiveModel::Model
 
-  attr_accessor :time_from, :time_to, :report_type
+  attr_reader :time_from, :time_to
+  attr_accessor :report_type
 
   def time_from=(value)
     value = parse_time value if value.is_a? String

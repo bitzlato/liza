@@ -4,6 +4,8 @@
 
 class RevenuesReport < Report
   class Generator < BaseGenerator
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def perform
       currency_fees = {}
       markets = Market.enabled.ordered.each_with_object({}) { |m, a| a[m.symbol] = m.as_json }
@@ -27,6 +29,8 @@ class RevenuesReport < Report
 
       { records_count: markets.count + currency_fees.count, markets: markets, currency_fees: currency_fees }
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     private
 

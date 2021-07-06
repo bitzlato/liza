@@ -37,6 +37,9 @@ class Wallet < ApplicationRecord
   scope :ordered, -> { order(kind: :asc) }
 
   class << self
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Style/MultilineBlockChain
     def kinds(options = {})
       ENUMERIZED_KINDS
         .yield_self do |kinds|
@@ -60,6 +63,9 @@ class Wallet < ApplicationRecord
           end
         end
     end
+    # rubocop:enable Style/MultilineBlockChain
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/MethodLength
 
     def deposit_wallet(currency_id)
       Wallet.active.deposit.with_currency(currency_id).take

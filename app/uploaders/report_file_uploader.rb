@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Uploader for report file
+#
 class ReportFileUploader < CarrierWave::Uploader::Base
   include FileDetails
 

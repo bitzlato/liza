@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Form for memberd reports
+#
 class MemberRecordsForm < TimeRangeForm
   attr_accessor :member_id
 

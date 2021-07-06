@@ -2,6 +2,8 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
+# Middleware helps to remove appliaction prefix from path from assets
+#
 class UnprefixedStaticMiddleware
   def initialize(app)
     @app = app

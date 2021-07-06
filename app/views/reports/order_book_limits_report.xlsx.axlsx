@@ -2,44 +2,40 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
-begin
-  def top_trades(sheet, trades)
-    sheet.add_row %w[rank member trades_count]
-    trades.each_with_index do |row, index|
+def top_trades(sheet, trades)
+  sheet.add_row %w[rank member trades_count]
+  trades.each_with_index do |row, index|
+    sheet.add_row [index + 1, Member.find_by(id: row.first).try(:email), row.second]
+  end
+end
+
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
+  sheet.add_row [Market.find_by(symbol: report.results[:market][:symbol]).to_s]
+  sheet.add_row []
+  sheet.add_row ['Top Orders Count']
+  sheet.add_row %w[rank member orders_count]
+  report.results[:orders].each_with_index do |row, index|
+    sheet.add_row [index + 1, Member.find_by(id: row.first).try(:email), row.second]
+  end
+
+  sheet.add_row []
+  sheet.add_row ['Top Sellers']
+  top_trades(sheet, report.results[:sellers])
+
+  sheet.add_row []
+  sheet.add_row ['Top Buyers']
+  top_trades(sheet, report.results[:buyers])
+
+  sheet.add_row []
+  sheet.add_row ['Top Volumed Orders']
+  report.results[:top_orders].each_pair do |currency_id, data|
+    next if data.blank?
+
+    sheet.add_row [currency_id.upcase]
+    sheet.add_row %w[rank mamber total_volume]
+    data.each_with_index do |row, index|
       sheet.add_row [index + 1, Member.find_by(id: row.first).try(:email), row.second]
     end
   end
-
-  xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
-    render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
-    sheet.add_row [Market.find_by(symbol: report.results[:market][:symbol]).to_s]
-    sheet.add_row []
-    sheet.add_row ['Top Orders Count']
-    sheet.add_row %w[rank member orders_count]
-    report.results[:orders].each_with_index do |row, index|
-      sheet.add_row [index + 1, Member.find_by(id: row.first).try(:email), row.second]
-    end
-
-    sheet.add_row []
-    sheet.add_row ['Top Sellers']
-    top_trades(sheet, report.results[:sellers])
-
-    sheet.add_row []
-    sheet.add_row ['Top Buyers']
-    top_trades(sheet, report.results[:buyers])
-
-    sheet.add_row []
-    sheet.add_row ['Top Volumed Orders']
-    report.results[:top_orders].each_pair do |currency_id, data|
-      next if data.blank?
-
-      sheet.add_row [currency_id.upcase]
-      sheet.add_row %w[rank mamber total_volume]
-      data.each_with_index do |row, index|
-        sheet.add_row [index + 1, Member.find_by(id: row.first).try(:email), row.second]
-      end
-    end
-  end
-rescue StandardError => e
-  binding.pry
 end

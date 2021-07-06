@@ -3,6 +3,7 @@
 # frozen_string_literal: true
 
 module LiabilitiesHelper
+  # rubocop:disable Metrics/MethodLength
   def present_liability_reference(reference)
     case reference
     when OrderBid
@@ -23,6 +24,7 @@ module LiabilitiesHelper
       raise "Unknown liability reference #{reference.class}"
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def present_adjustment(adjustment)
     link_to adjustment_path(adjustment) do
