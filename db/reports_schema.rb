@@ -14,7 +14,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_210_421_122_306) do
+ActiveRecord::Schema.define(version: 20_210_706_113_406) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -30,5 +30,34 @@ ActiveRecord::Schema.define(version: 20_210_421_122_306) do
     t.integer 'member_id'
     t.string 'file'
     t.string 'error_message'
+  end
+
+  create_table 'service_invoices', force: :cascade do |t|
+    t.integer 'wallet_id', null: false
+    t.decimal 'amount', null: false
+    t.string 'currency', null: false
+    t.datetime 'completed_at'
+    t.datetime 'invoice_created_at', null: false
+    t.datetime 'expiry_at', null: false
+    t.integer 'invoice_id', null: false
+    t.string 'comment', null: false
+    t.string 'status', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[wallet_id invoice_id], name: 'index_service_invoices_on_wallet_id_and_invoice_id', unique: true
+  end
+
+  create_table 'service_withdraws', force: :cascade do |t|
+    t.integer 'wallet_id', null: false
+    t.string 'public_name', null: false
+    t.decimal 'amount', null: false
+    t.string 'currency', null: false
+    t.string 'withdraw_type', null: false
+    t.string 'status', null: false
+    t.datetime 'date', null: false
+    t.integer 'withdraw_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[wallet_id withdraw_id], name: 'index_service_withdraws_on_wallet_id_and_withdraw_id', unique: true
   end
 end

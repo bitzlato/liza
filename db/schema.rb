@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_125059) do
+ActiveRecord::Schema.define(version: 2021_06_04_053235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.decimal "locked", precision: 32, scale: 16, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "remote_usernames", default: [], null: false
     t.index ["currency_id", "member_id"], name: "index_accounts_on_currency_id_and_member_id", unique: true
     t.index ["member_id"], name: "index_accounts_on_member_id"
   end
@@ -218,25 +217,28 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.index ["reference_type", "reference_id"], name: "index_liabilities_on_reference_type_and_reference_id"
   end
 
-  create_table "markets", id: { type: :serial, limit: 20 }, force: :cascade do |t|
+  create_table "markets", force: :cascade do |t|
+    t.string "symbol", limit: 20, null: false
+    t.string "type", default: "spot", null: false
     t.string "base_unit", limit: 10, null: false
     t.string "quote_unit", limit: 10, null: false
+    t.bigint "engine_id", null: false
     t.integer "amount_precision", limit: 2, default: 4, null: false
     t.integer "price_precision", limit: 2, default: 4, null: false
+    t.decimal "min_price", precision: 32, scale: 16, default: "0.0", null: false
+    t.decimal "max_price", precision: 32, scale: 16, default: "0.0", null: false
+    t.decimal "min_amount", precision: 32, scale: 16, default: "0.0", null: false
     t.integer "position", null: false
+    t.json "data"
+    t.string "state", limit: 32, default: "enabled", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "max_price", precision: 32, scale: 16, default: "0.0", null: false
-    t.decimal "min_price", precision: 32, scale: 16, default: "0.0", null: false
-    t.decimal "min_amount", precision: 32, scale: 16, default: "0.0", null: false
-    t.string "state", limit: 32, default: "enabled", null: false
-    t.bigint "engine_id", null: false
-    t.json "data"
-    t.index ["base_unit", "quote_unit"], name: "index_markets_on_base_unit_and_quote_unit", unique: true
+    t.index ["base_unit", "quote_unit", "type"], name: "index_markets_on_base_unit_and_quote_unit_and_type", unique: true
     t.index ["base_unit"], name: "index_markets_on_base_unit"
     t.index ["engine_id"], name: "index_markets_on_engine_id"
     t.index ["position"], name: "index_markets_on_position"
     t.index ["quote_unit"], name: "index_markets_on_quote_unit"
+    t.index ["symbol", "type"], name: "index_markets_on_symbol_and_type", unique: true
   end
 
   create_table "members", id: :serial, force: :cascade do |t|
@@ -291,11 +293,12 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.decimal "taker_fee", precision: 17, scale: 16, default: "0.0", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.string "remote_id"
+    t.string "market_type", default: "spot", null: false
     t.index ["member_id"], name: "index_orders_on_member_id"
     t.index ["state"], name: "index_orders_on_state"
-    t.index ["type", "market_id"], name: "index_orders_on_type_and_market_id"
+    t.index ["type", "market_id", "market_type"], name: "index_orders_on_type_and_market_id_and_market_type"
     t.index ["type", "member_id"], name: "index_orders_on_type_and_member_id"
-    t.index ["type", "state", "market_id"], name: "index_orders_on_type_and_state_and_market_id"
+    t.index ["type", "state", "market_id", "market_type"], name: "index_orders_on_type_and_state_and_market_id_and_market_type"
     t.index ["type", "state", "member_id"], name: "index_orders_on_type_and_state_and_member_id"
     t.index ["updated_at"], name: "index_orders_on_updated_at"
     t.index ["uuid"], name: "index_orders_on_uuid", unique: true
@@ -378,11 +381,13 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.integer "taker_id", null: false
     t.decimal "total", precision: 32, scale: 16, default: "0.0", null: false
     t.string "taker_type", limit: 20, default: "", null: false
+    t.string "market_type", default: "spot", null: false
     t.index ["created_at"], name: "index_trades_on_created_at"
+    t.index ["maker_id", "market_type", "created_at"], name: "index_trades_on_maker_id_and_market_type_and_created_at"
+    t.index ["maker_id", "market_type"], name: "index_trades_on_maker_id_and_market_type"
     t.index ["maker_id"], name: "index_trades_on_maker_id"
     t.index ["maker_order_id"], name: "index_trades_on_maker_order_id"
-    t.index ["market_id", "created_at"], name: "index_trades_on_market_id_and_created_at"
-    t.index ["taker_id"], name: "index_trades_on_taker_id"
+    t.index ["taker_id", "market_type"], name: "index_trades_on_taker_id_and_market_type"
     t.index ["taker_order_id"], name: "index_trades_on_taker_order_id"
     t.index ["taker_type"], name: "index_trades_on_taker_type"
   end
@@ -394,9 +399,10 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.decimal "taker", precision: 7, scale: 6, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "market_type", default: "spot", null: false
     t.index ["group"], name: "index_trading_fees_on_group"
-    t.index ["market_id", "group"], name: "index_trading_fees_on_market_id_and_group", unique: true
-    t.index ["market_id"], name: "index_trading_fees_on_market_id"
+    t.index ["market_id", "market_type", "group"], name: "index_trading_fees_on_market_id_and_market_type_and_group", unique: true
+    t.index ["market_id", "market_type"], name: "index_trading_fees_on_market_id_and_market_type"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -452,6 +458,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_125059) do
     t.integer "kind", null: false
     t.string "settings_encrypted", limit: 1024
     t.jsonb "balance"
+    t.boolean "enable_invoice", default: false, null: false
     t.index ["kind"], name: "index_wallets_on_kind"
     t.index ["status"], name: "index_wallets_on_status"
   end

@@ -110,6 +110,7 @@ gem 'coffee-rails', '~> 5.0'
 
 gem 'carrierwave', '~> 2.2'
 
+gem 'bitzlato', github: 'finfex/bitzlato', branch: 'main'
 gem 'sd_notify'
 
 group :deploy do

@@ -35,6 +35,7 @@ class Wallet < ApplicationRecord
   scope :withdraw, -> { where(kind: kinds(withdraw: true, values: true)) }
   scope :with_currency, ->(currency) { joins(:currencies).where(currencies: { id: currency }) }
   scope :ordered, -> { order(kind: :asc) }
+  scope :standalone, -> { where kind: :standalone }
 
   class << self
     # rubocop:disable Metrics/PerceivedComplexity
@@ -74,6 +75,10 @@ class Wallet < ApplicationRecord
     def withdraw_wallet(currency_id)
       Wallet.active.withdraw.with_currency(currency_id).take
     end
+  end
+
+  def fetch(_key)
+    # not implemented
   end
 
   def current_balance(currency = nil)
