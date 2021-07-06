@@ -49,6 +49,7 @@ gem 'premailer-rails'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'settingslogic'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 gem 'simple_form'
 gem 'slim-rails'
 group :development, :test do

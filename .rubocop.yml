@@ -9,7 +9,7 @@ AllCops:
     - 'tmp/**/*'
     - '.git/**/*'
     - 'storage/**/*'
-    - db/schema.rb
+    - 'db/*schema.rb'
 
 # Offense count: 4
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.

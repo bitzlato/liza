@@ -1,0 +1,147 @@
+                                  Prefix Verb   URI Pattern                                                                                       Controller#Action
+                             sidekiq_web        /liza/sidekiq                                                                                     Sidekiq::Web
+                                    root GET    /liza(.:format)                                                                                   dashboard#index
+                                 reports GET    /liza/reports(.:format)                                                                           reports#index
+                                         POST   /liza/reports(.:format)                                                                           reports#create
+                              new_report GET    /liza/reports/new(.:format)                                                                       reports#new
+                             edit_report GET    /liza/reports/:id/edit(.:format)                                                                  reports#edit
+                                  report GET    /liza/reports/:id(.:format)                                                                       reports#show
+                                         PATCH  /liza/reports/:id(.:format)                                                                       reports#update
+                                         PUT    /liza/reports/:id(.:format)                                                                       reports#update
+                                         DELETE /liza/reports/:id(.:format)                                                                       reports#destroy
+                               withdraws GET    /liza/withdraws(.:format)                                                                         withdraws#index
+                                         POST   /liza/withdraws(.:format)                                                                         withdraws#create
+                            new_withdraw GET    /liza/withdraws/new(.:format)                                                                     withdraws#new
+                           edit_withdraw GET    /liza/withdraws/:id/edit(.:format)                                                                withdraws#edit
+                                withdraw GET    /liza/withdraws/:id(.:format)                                                                     withdraws#show
+                                         PATCH  /liza/withdraws/:id(.:format)                                                                     withdraws#update
+                                         PUT    /liza/withdraws/:id(.:format)                                                                     withdraws#update
+                                         DELETE /liza/withdraws/:id(.:format)                                                                     withdraws#destroy
+                                deposits GET    /liza/deposits(.:format)                                                                          deposits#index
+                                         POST   /liza/deposits(.:format)                                                                          deposits#create
+                             new_deposit GET    /liza/deposits/new(.:format)                                                                      deposits#new
+                            edit_deposit GET    /liza/deposits/:id/edit(.:format)                                                                 deposits#edit
+                                 deposit GET    /liza/deposits/:id(.:format)                                                                      deposits#show
+                                         PATCH  /liza/deposits/:id(.:format)                                                                      deposits#update
+                                         PUT    /liza/deposits/:id(.:format)                                                                      deposits#update
+                                         DELETE /liza/deposits/:id(.:format)                                                                      deposits#destroy
+                            transactions GET    /liza/transactions(.:format)                                                                      transactions#index
+                                         POST   /liza/transactions(.:format)                                                                      transactions#create
+                         new_transaction GET    /liza/transactions/new(.:format)                                                                  transactions#new
+                        edit_transaction GET    /liza/transactions/:id/edit(.:format)                                                             transactions#edit
+                             transaction GET    /liza/transactions/:id(.:format)                                                                  transactions#show
+                                         PATCH  /liza/transactions/:id(.:format)                                                                  transactions#update
+                                         PUT    /liza/transactions/:id(.:format)                                                                  transactions#update
+                                         DELETE /liza/transactions/:id(.:format)                                                                  transactions#destroy
+                                accounts GET    /liza/accounts(.:format)                                                                          accounts#index
+                                         POST   /liza/accounts(.:format)                                                                          accounts#create
+                             new_account GET    /liza/accounts/new(.:format)                                                                      accounts#new
+                            edit_account GET    /liza/accounts/:id/edit(.:format)                                                                 accounts#edit
+                                 account GET    /liza/accounts/:id(.:format)                                                                      accounts#show
+                                         PATCH  /liza/accounts/:id(.:format)                                                                      accounts#update
+                                         PUT    /liza/accounts/:id(.:format)                                                                      accounts#update
+                                         DELETE /liza/accounts/:id(.:format)                                                                      accounts#destroy
+                                  trades GET    /liza/trades(.:format)                                                                            trades#index
+                                         POST   /liza/trades(.:format)                                                                            trades#create
+                               new_trade GET    /liza/trades/new(.:format)                                                                        trades#new
+                              edit_trade GET    /liza/trades/:id/edit(.:format)                                                                   trades#edit
+                                   trade GET    /liza/trades/:id(.:format)                                                                        trades#show
+                                         PATCH  /liza/trades/:id(.:format)                                                                        trades#update
+                                         PUT    /liza/trades/:id(.:format)                                                                        trades#update
+                                         DELETE /liza/trades/:id(.:format)                                                                        trades#destroy
+                                  orders GET    /liza/orders(.:format)                                                                            orders#index
+                                         POST   /liza/orders(.:format)                                                                            orders#create
+                               new_order GET    /liza/orders/new(.:format)                                                                        orders#new
+                              edit_order GET    /liza/orders/:id/edit(.:format)                                                                   orders#edit
+                                   order GET    /liza/orders/:id(.:format)                                                                        orders#show
+                                         PATCH  /liza/orders/:id(.:format)                                                                        orders#update
+                                         PUT    /liza/orders/:id(.:format)                                                                        orders#update
+                                         DELETE /liza/orders/:id(.:format)                                                                        orders#destroy
+                                 members GET    /liza/members(.:format)                                                                           members#index
+                                         POST   /liza/members(.:format)                                                                           members#create
+                              new_member GET    /liza/members/new(.:format)                                                                       members#new
+                             edit_member GET    /liza/members/:id/edit(.:format)                                                                  members#edit
+                                  member GET    /liza/members/:id(.:format)                                                                       members#show
+                                         PATCH  /liza/members/:id(.:format)                                                                       members#update
+                                         PUT    /liza/members/:id(.:format)                                                                       members#update
+                                         DELETE /liza/members/:id(.:format)                                                                       members#destroy
+                             adjustments GET    /liza/adjustments(.:format)                                                                       adjustments#index
+                                         POST   /liza/adjustments(.:format)                                                                       adjustments#create
+                          new_adjustment GET    /liza/adjustments/new(.:format)                                                                   adjustments#new
+                         edit_adjustment GET    /liza/adjustments/:id/edit(.:format)                                                              adjustments#edit
+                              adjustment GET    /liza/adjustments/:id(.:format)                                                                   adjustments#show
+                                         PATCH  /liza/adjustments/:id(.:format)                                                                   adjustments#update
+                                         PUT    /liza/adjustments/:id(.:format)                                                                   adjustments#update
+                                         DELETE /liza/adjustments/:id(.:format)                                                                   adjustments#destroy
+                       service_withdraws GET    /liza/service_withdraws(.:format)                                                                 service_withdraws#index
+                        service_withdraw GET    /liza/service_withdraws/:id(.:format)                                                             service_withdraws#show
+                        service_invoices GET    /liza/service_invoices(.:format)                                                                  service_invoices#index
+                         service_invoice GET    /liza/service_invoices/:id(.:format)                                                              service_invoices#show
+                                 wallets GET    /liza/wallets(.:format)                                                                           wallets#index
+                                  wallet GET    /liza/wallets/:id(.:format)                                                                       wallets#show
+                  operations_liabilities GET    /liza/operations/liabilities(.:format)                                                            operations/liabilities#index
+                                         POST   /liza/operations/liabilities(.:format)                                                            operations/liabilities#create
+                new_operations_liability GET    /liza/operations/liabilities/new(.:format)                                                        operations/liabilities#new
+               edit_operations_liability GET    /liza/operations/liabilities/:id/edit(.:format)                                                   operations/liabilities#edit
+                    operations_liability GET    /liza/operations/liabilities/:id(.:format)                                                        operations/liabilities#show
+                                         PATCH  /liza/operations/liabilities/:id(.:format)                                                        operations/liabilities#update
+                                         PUT    /liza/operations/liabilities/:id(.:format)                                                        operations/liabilities#update
+                                         DELETE /liza/operations/liabilities/:id(.:format)                                                        operations/liabilities#destroy
+                     operations_accounts GET    /liza/operations/accounts(.:format)                                                               operations/accounts#index
+                                         POST   /liza/operations/accounts(.:format)                                                               operations/accounts#create
+                  new_operations_account GET    /liza/operations/accounts/new(.:format)                                                           operations/accounts#new
+                 edit_operations_account GET    /liza/operations/accounts/:id/edit(.:format)                                                      operations/accounts#edit
+                      operations_account GET    /liza/operations/accounts/:id(.:format)                                                           operations/accounts#show
+                                         PATCH  /liza/operations/accounts/:id(.:format)                                                           operations/accounts#update
+                                         PUT    /liza/operations/accounts/:id(.:format)                                                           operations/accounts#update
+                                         DELETE /liza/operations/accounts/:id(.:format)                                                           operations/accounts#destroy
+                       operations_assets GET    /liza/operations/assets(.:format)                                                                 operations/assets#index
+                                         POST   /liza/operations/assets(.:format)                                                                 operations/assets#create
+                    new_operations_asset GET    /liza/operations/assets/new(.:format)                                                             operations/assets#new
+                   edit_operations_asset GET    /liza/operations/assets/:id/edit(.:format)                                                        operations/assets#edit
+                        operations_asset GET    /liza/operations/assets/:id(.:format)                                                             operations/assets#show
+                                         PATCH  /liza/operations/assets/:id(.:format)                                                             operations/assets#update
+                                         PUT    /liza/operations/assets/:id(.:format)                                                             operations/assets#update
+                                         DELETE /liza/operations/assets/:id(.:format)                                                             operations/assets#destroy
+                     operations_expenses GET    /liza/operations/expenses(.:format)                                                               operations/expenses#index
+                                         POST   /liza/operations/expenses(.:format)                                                               operations/expenses#create
+                  new_operations_expense GET    /liza/operations/expenses/new(.:format)                                                           operations/expenses#new
+                 edit_operations_expense GET    /liza/operations/expenses/:id/edit(.:format)                                                      operations/expenses#edit
+                      operations_expense GET    /liza/operations/expenses/:id(.:format)                                                           operations/expenses#show
+                                         PATCH  /liza/operations/expenses/:id(.:format)                                                           operations/expenses#update
+                                         PUT    /liza/operations/expenses/:id(.:format)                                                           operations/expenses#update
+                                         DELETE /liza/operations/expenses/:id(.:format)                                                           operations/expenses#destroy
+                     operations_revenues GET    /liza/operations/revenues(.:format)                                                               operations/revenues#index
+                                         POST   /liza/operations/revenues(.:format)                                                               operations/revenues#create
+                  new_operations_revenue GET    /liza/operations/revenues/new(.:format)                                                           operations/revenues#new
+                 edit_operations_revenue GET    /liza/operations/revenues/:id/edit(.:format)                                                      operations/revenues#edit
+                      operations_revenue GET    /liza/operations/revenues/:id(.:format)                                                           operations/revenues#show
+                                         PATCH  /liza/operations/revenues/:id(.:format)                                                           operations/revenues#update
+                                         PUT    /liza/operations/revenues/:id(.:format)                                                           operations/revenues#update
+                                         DELETE /liza/operations/revenues/:id(.:format)                                                           operations/revenues#destroy
+           rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
+              rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
+           rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
+     rails_mandrill_inbound_health_check GET    /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#health_check
+           rails_mandrill_inbound_emails POST   /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#create
+            rails_mailgun_inbound_emails POST   /rails/action_mailbox/mailgun/inbound_emails/mime(.:format)                                       action_mailbox/ingresses/mailgun/inbound_emails#create
+          rails_conductor_inbound_emails GET    /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#index
+                                         POST   /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#create
+       new_rails_conductor_inbound_email GET    /rails/conductor/action_mailbox/inbound_emails/new(.:format)                                      rails/conductor/action_mailbox/inbound_emails#new
+      edit_rails_conductor_inbound_email GET    /rails/conductor/action_mailbox/inbound_emails/:id/edit(.:format)                                 rails/conductor/action_mailbox/inbound_emails#edit
+           rails_conductor_inbound_email GET    /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#show
+                                         PATCH  /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#update
+                                         PUT    /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#update
+                                         DELETE /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#destroy
+new_rails_conductor_inbound_email_source GET    /rails/conductor/action_mailbox/inbound_emails/sources/new(.:format)                              rails/conductor/action_mailbox/inbound_emails/sources#new
+   rails_conductor_inbound_email_sources POST   /rails/conductor/action_mailbox/inbound_emails/sources(.:format)                                  rails/conductor/action_mailbox/inbound_emails/sources#create
+   rails_conductor_inbound_email_reroute POST   /rails/conductor/action_mailbox/:inbound_email_id/reroute(.:format)                               rails/conductor/action_mailbox/reroutes#create
+                      rails_service_blob GET    /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+                rails_service_blob_proxy GET    /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                                         GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
+               rails_blob_representation GET    /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+         rails_blob_representation_proxy GET    /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+                                         GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
+                      rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+               update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
+                    rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create

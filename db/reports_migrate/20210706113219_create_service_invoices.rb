@@ -7,7 +7,7 @@ class CreateServiceInvoices < ActiveRecord::Migration[6.1]
     create_table :service_invoices do |t|
       t.integer :wallet_id, null: false
       t.decimal :amount, null: false
-      t.string :currency, null: false
+      t.string :currency_id, null: false
       t.timestamp :completed_at
       t.timestamp :invoice_created_at, null: false
       t.timestamp :expiry_at, null: false

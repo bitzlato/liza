@@ -6,9 +6,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        - [Account, Order, Trade, Member, Deposit, Withdraw, Report, Wallet].each do |model|
+        - [Account, Order, Trade, Member, Deposit, Withdraw, Report].each do |model|
           = active_link_to url_for(model), class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
             = t model.model_name.human_plural
+        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+          = link_to t('.service'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
+          .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
+            - [Wallet, ServiceWithdraw, ServiceInvoice].each do |model|
+              = link_to url_for(model), class: 'dropdown-item' do
+                = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.operations'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]

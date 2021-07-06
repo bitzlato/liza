@@ -9,6 +9,7 @@ ru:
       total_records: Всего записей %{count}
     navbar:
       operations: Операционка
+      service: Данные сервиса
 
   reports:
     time_range_form:

@@ -1,0 +1,3 @@
+TransactionsFetcher:
+  cron: '*/10 * * * *'
+  class: TransactionsFetcher

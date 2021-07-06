@@ -70,7 +70,7 @@ set :puma_start_task, 'systemd:puma:start'
 set :init_system, :systemd
 
 set :systemd_sidekiq_role, :sidekiq
-set :systemd_sidekiq_instances, -> { %i[default reports] }
+set :systemd_sidekiq_instances, -> { %i[default reports transactions_fetcher] }
 
 set :bugsnag_api_key, ENV['BUGSNAG_API_KEY']
 set :app_version, SemVer.find.to_s

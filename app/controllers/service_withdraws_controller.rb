@@ -2,6 +2,7 @@
 
 # frozen_string_literal: true
 
-class WalletsController < ResourcesController
+class ServiceWithdrawsController < ResourcesController
+  include CurrencySupport
   layout 'fluid'
 end

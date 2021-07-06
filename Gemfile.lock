@@ -225,6 +225,8 @@ GEM
     env-tweaks (1.0.1)
       activesupport (>= 3.0, < 7.0)
     erubi (1.10.0)
+    et-orbi (1.2.4)
+      tzinfo
     execjs (2.7.0)
     faraday (1.5.0)
       faraday-em_http (~> 1.0)
@@ -246,6 +248,9 @@ GEM
     ffi (1.15.0)
     foreman (0.87.2)
     formatador (0.2.5)
+    fugit (1.4.5)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     gravatarify (3.1.1)
@@ -352,6 +357,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.2.2)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-mini-profiler (2.3.1)
@@ -439,6 +445,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-cron (1.2.0)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -568,6 +577,7 @@ DEPENDENCIES
   semver2 (~> 3.4)
   settingslogic
   sidekiq
+  sidekiq-cron
   simple_form
   simple_form_extension (~> 1.4)
   slim-rails

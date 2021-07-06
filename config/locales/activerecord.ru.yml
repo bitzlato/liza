@@ -14,6 +14,8 @@ ru:
       member_history_report: История изменения баланса пользователя
       adjustments_report: Отчет по корректировкам
       wallet: Системный кошелёк
+      service_withdraw: Списания системы
+      service_invoice: Зачисления системы
       adjustment:
         one: Корректировка
         many: Корректировки

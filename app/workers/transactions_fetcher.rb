@@ -7,6 +7,8 @@
 class TransactionsFetcher
   include Sidekiq::Worker
 
+  sidekiq_options queue: :transactions_fetcher
+
   def perform
     Wallet.active.standalone.find_each do |wallet|
       perform_wallet wallet
@@ -39,7 +41,7 @@ class TransactionsFetcher
         status: payment['status'],
         date: parse_time(payment['date']),
         public_name: payment['publicName'],
-        currency: payment['cryptocurrency'],
+        currency_id: payment['cryptocurrency'].downcase,
         withdraw_type: payment['type'],
         amount: payment['amount']
       }
@@ -53,8 +55,9 @@ class TransactionsFetcher
   # Withdraws by vouchers
   #
   def fetch_vouchers
-    raise 'not implemented'
-    # client.get('/api/p2p/vouchers/')['data']
+    client.get('/api/p2p/vouchers/')['data'].each do |voucher|
+      raise 'not implmented' if voucher.present?
+    end
     # w.withdraw_id = voucher['deepLinkCode']
     # w.is_done = voucher['status'] == 'cashed'
     # w.amount = voucher.dig('cryptocurrency', 'amount').to_d
@@ -76,7 +79,7 @@ class TransactionsFetcher
       # }
       ServiceInvoice
         .create_with(
-          currency: transaction['cryptocurrency'],
+          currency_id: transaction['cryptocurrency'].downcase,
           username: transaction['username'],
           amount: transaction['amount'].to_d
         ).find_or_create_by!(wallet_id: @wallet.id, invoice_id: transaction['invoiceId'])
@@ -94,7 +97,7 @@ class TransactionsFetcher
       .get('/api/gate/v1/invoices/')['data']
       .each do |invoice|
       attrs = {
-        currency: invoice['cryptocurrency'],
+        currency_id: invoice['cryptocurrency'].downcase,
         amount: invoice['amount'].to_d,
         comment: invoice['comment'],
         status: invoice['status'],

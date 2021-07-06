@@ -8,7 +8,7 @@ class CreateServiceWithdraws < ActiveRecord::Migration[6.1]
       t.integer :wallet_id, null: false
       t.string :public_name, null: false
       t.decimal :amount, null: false
-      t.string :currency, null: false
+      t.string :currency_id, null: false
       t.string :withdraw_type, null: false
       t.string :status, null: false
       t.timestamp :date, null: false
