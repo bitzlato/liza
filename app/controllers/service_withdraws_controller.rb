@@ -5,4 +5,10 @@
 class ServiceWithdrawsController < ResourcesController
   include CurrencySupport
   layout 'fluid'
+
+  private
+
+  def default_sort
+    'date desc'
+  end
 end

@@ -39,8 +39,12 @@ module RansackSupport
 
   def build_q
     qq = model_class.ransack(params[:q])
-    qq.sorts = 'created_at desc' if qq.sorts.empty?
+    qq.sorts = default_sort if qq.sorts.empty?
     qq
+  end
+
+  def default_sort
+    'created_at desc'
   end
 
   def records
