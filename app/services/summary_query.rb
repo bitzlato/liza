@@ -12,7 +12,10 @@ class SummaryQuery
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Revenue => { grouped_by: [:currency_id], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Asset => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
-    Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] }
+    Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
+    ServiceWithdraw => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
+    ServiceInvoice => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
+    ServiceTransaction => { grouped_by: %i[currency_id], aggregations: ['sum(amount)'] }
   }.freeze
 
   # rubocop:disable Metrics/MethodLength

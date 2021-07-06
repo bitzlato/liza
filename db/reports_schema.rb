@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_113406) do
+ActiveRecord::Schema.define(version: 2021_07_06_132304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,20 @@ ActiveRecord::Schema.define(version: 2021_07_06_113406) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["wallet_id", "invoice_id"], name: "index_service_invoices_on_wallet_id_and_invoice_id", unique: true
+  end
+
+  create_table "service_transactions", force: :cascade do |t|
+    t.integer "wallet_id", null: false
+    t.decimal "amount", null: false
+    t.bigint "telegram_id"
+    t.string "username", null: false
+    t.string "currency_id", null: false
+    t.datetime "transaction_created_at", null: false
+    t.integer "invoice_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["currency_id"], name: "index_service_transactions_on_currency_id"
+    t.index ["wallet_id", "invoice_id"], name: "index_service_transactions_on_wallet_id_and_invoice_id", unique: true
   end
 
   create_table "service_withdraws", force: :cascade do |t|

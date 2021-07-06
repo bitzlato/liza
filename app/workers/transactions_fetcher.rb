@@ -21,6 +21,7 @@ class TransactionsFetcher
     fetch_payments
     fetch_vouchers
     fetch_invoices
+    fetch_transactions
   end
 
   private
@@ -64,34 +65,6 @@ class TransactionsFetcher
     # w.currency = voucher.dig('cryptocurrency', 'code').downcase
   end
 
-  # Invoices
-  def fetch_transactions
-    client
-      .get('/api/gate/v1/invoices/transactions/')['data']
-      .each do |transaction|
-      # {
-      # "telegramId": null,
-      # "username": "danil_brandy",
-      # "amount": "0.01",
-      # "cryptocurrency": "BTC",
-      # "createdAt": 1622456228298,
-      # "invoiceId": 21442
-      # }
-      ServiceInvoice
-        .create_with(
-          currency_id: transaction['cryptocurrency'].downcase,
-          username: transaction['username'],
-          amount: transaction['amount'].to_d
-        ).find_or_create_by!(wallet_id: @wallet.id, invoice_id: transaction['invoiceId'])
-      # {
-      # address: transaction['username'],
-      # id: generate_id(transaction['invoiceId']),
-      # amount: transaction['amount'].to_d,
-      # currency: transaction['cryptocurrency']
-      # }
-    end
-  end
-
   def fetch_invoices
     client
       .get('/api/gate/v1/invoices/')['data']
@@ -109,6 +82,21 @@ class TransactionsFetcher
       si = ServiceInvoice.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, invoice_id: invoice['id'])
       si.assign_attributes attrs
       si.save! if si.changed?
+    end
+  end
+
+  def fetch_transactions
+    client
+      .get('/api/gate/v1/invoices/transactions/')['data']
+      .each do |transaction|
+      attrs = {
+        currency_id: transaction['cryptocurrency'].downcase,
+        amount: transaction['amount'].to_d,
+        username: transaction['username'],
+        telegram_id: transaction['telegramId'],
+        transaction_created_at: parse_time(transaction['createdAt'])
+      }
+      ServiceTransaction.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, invoice_id: transaction['invoiceId'])
     end
   end
 

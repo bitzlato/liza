@@ -13,10 +13,6 @@ class ResourcesController < ApplicationController
 
   helper_method :model_class
 
-  def show
-    redirect_to url_for(model_class, id: params[:id])
-  end
-
   private
 
   def model_class
