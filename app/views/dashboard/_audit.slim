@@ -29,8 +29,8 @@ table.table.table-condensed.table-striped
       - currency = Currency.find currency_id
       - total_deposit = Deposit.completed.where(currency_id: currency_id).sum(:amount)
       - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
-      - total_operations_credit = currency.operations_revenues.sum(:credit)
-      - total_operations_assets_credit = currency.operations_assets.sum(:credit)
+      - total_operations_credit = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
+      - total_operations_assets_credit = currency.operations_assets.sum(:credit) - currency.operations_assets.sum(:debit)
       - adjustments_amount = currency.adjustments.accepted.sum(:amount)
       tr
         th= format_currency currency_id
