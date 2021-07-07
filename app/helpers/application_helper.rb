@@ -24,7 +24,7 @@ module ApplicationHelper
   end
 
   def column_tip(buffer)
-    content_tag :small, buffer, class: 'text-small text-monospace text-nowrap'
+    content_tag :small, buffer, class: 'text-small text-monospace'
   end
 
   def back_link(url = nil)
