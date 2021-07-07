@@ -1,0 +1,47 @@
+// Source https://css-tricks.com/simple-css-row-column-highlighting/
+
+$table-cross-color: #ffd;
+
+table.table-cross {
+  overflow: hidden;
+}
+
+table.table-cross tbody tr:hover {
+  background-color: $table-cross-color !important;
+}
+
+table.table-cross tbody td, 
+table.table-cross tbody th {
+  position: relative;
+}
+
+table.table-cross tbody td:hover::after,
+table.table-cross tbody th:hover::after {
+  content: "";
+  position: absolute;
+  background-color: $table-cross-color !important;
+  left: 0;
+  top: -5000px;
+  height: 10000px;
+  width: 100%;
+  z-index: -1;
+
+  &.cell-highlight {
+    background-color: $table-cross-color !important;
+  }
+}
+
+// table cross row
+$table-cross-row-color: #ddd;
+
+table.table-cross-row {
+  overflow: hidden;
+}
+
+table.table-cross-row tbody tr:hover {
+  background-color: $table-cross-row-color !important;
+  td, th {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+  }
+}
