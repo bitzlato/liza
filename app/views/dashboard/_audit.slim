@@ -8,25 +8,24 @@ table.table.table-condensed.table-striped.table-cross-row
       th.text-right  Операционные активы
       th.text-right 
         div Расчётный баланс на счетах
-        = column_tip 'Введено по депозитам - Выведено по съёмам'
-      th.text-right 
-        div Расхождение балансов
-        = column_tip 'Расчетный - фактический - операционный_доход + корректировки'
-
-      th.text-right  Операционный доход
-      th.text-right  Операционный расход
-      th.text-right  Корректировки
+        = column_tip 'Введено по депозитам - Выведено по съёмам - Комиссии'
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
         
+      th.text-right 
+        div Расхождение балансов
+        = column_tip 'Расчетный - Фактический - Операционная_прибыль + Корректировки'
+
+      th.text-right  Операционная прибыль (комиссии)
+      th.text-right  Корректировки
   tbody
     - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
       - currency_id = row[0]
       - currency = Currency.find currency_id
       - total_deposit = Deposit.completed.where(currency_id: currency_id).sum(:amount)
       - total_withdraw = Withdraw.completed.where(currency_id: currency_id).sum(:amount)
-      - total_operations_credit = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
+      - total_operations_amount = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
       - total_operations_assets_credit = currency.operations_assets.sum(:credit) - currency.operations_assets.sum(:debit)
       - adjustments_amount = currency.adjustments.accepted.sum(:amount)
       tr
@@ -39,24 +38,17 @@ table.table.table-condensed.table-striped.table-cross-row
           = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_assets_credit, currency
         td.text-right 
-          = format_money total_deposit - total_withdraw, currency_id
+          = format_money total_deposit - total_withdraw - total_operations_amount, currency_id
           div.text-small.mt-2
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
               = format_money total_deposit, currency_id
             span.ml-2.mr-2= '-'
             = link_to withdraws_path(q: { currency_id_eq: currency_id} ), title: 'Списания' do
               = format_money total_withdraw, currency_id
-        td.text-right 
-          = format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_credit + adjustments_amount, currency_id
-        td.text-right 
-          = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
-            = format_money total_operations_credit, currency
-        td.text-right 
-          = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
-            = format_money currency.operations_revenues.sum(:debit), currency
-        td.text-right 
-          = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
-            = format_money adjustments_amount, currency
+            span.ml-2.mr-2= '-'
+            = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ), title: 'Комиссии' do
+              = format_money total_operations_amount, currency_id
+
         td.text-right 
           = link_to accounts_path(q: { currency_id_eq: currency_id} ) do
             = format_money row[1] + row[2], currency_id
@@ -66,3 +58,12 @@ table.table.table-condensed.table-striped.table-cross-row
             span.mr-2.ml-2= '-'
             span title='Заблокировано'
               = format_money row[2], currency_id
+        td.text-right 
+          = format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_amount + adjustments_amount, currency_id
+          .text-small.text-muted.mt-2
+        td.text-right 
+          = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
+            = format_money total_operations_amount, currency
+        td.text-right 
+          = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
+            = format_money adjustments_amount, currency
