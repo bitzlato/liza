@@ -17,9 +17,9 @@ class HumanizedError < StandardError
       @message ||= I18n.t key, opts2
     else
       @options = options
-      @message = I18n.t [:errors, class_key].join('.'), @options
+      @message = I18n.t [:errors, class_key].join('.'), **@options
     end
-    super
+    super()
   end
 
   def title
