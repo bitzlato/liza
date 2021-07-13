@@ -1,6 +1,8 @@
 h1= paginated_records.model_name.human_plural
 - if respond_to? :currency
   .float-left= render 'currencies_select' 
+- if respond_to? :market
+  .float-left= render 'markets_select' 
 - if q.klass.ransackable_scopes.include? :completed 
   .float-left= render 'deposit_status_select' 
 .clearfix

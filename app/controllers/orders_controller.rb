@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 class OrdersController < ResourcesController
-  include CurrencySupport
+  include MarketSupport
   layout 'fluid'
 
   def show
