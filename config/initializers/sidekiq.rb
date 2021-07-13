@@ -10,11 +10,6 @@ if Rails.env.development? || Rails.env.production? || Rails.env.staging? || ENV[
   Sidekiq.logger = ActiveSupport::Logger.new Rails.root.join './log/sidekiq.log'
   Sidekiq.configure_server do |config|
     config.redis = { url: ENV.fetch('LIZA_SIDEKIQ_REDIS_URL', 'redis://localhost:6379/3') }
-    config.error_handlers << proc do |ex, context|
-      Bugsnag.notify ex do |b|
-        b.meta_data = context
-      end
-    end
     Sidekiq.logger.info "Configure server for application #{AppVersion}"
   end
 

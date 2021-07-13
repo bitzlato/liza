@@ -448,6 +448,8 @@ GEM
     sentry-ruby-core (4.6.0)
       concurrent-ruby
       faraday
+    sentry-sidekiq (4.6.1)
+      sentry-ruby-core (~> 4.6.0)
     settingslogic (2.0.9)
     shellany (0.0.1)
     sidekiq (6.2.1)
@@ -585,6 +587,7 @@ DEPENDENCIES
   semver2 (~> 3.4)
   sentry-rails
   sentry-ruby
+  sentry-sidekiq
   settingslogic
   sidekiq
   sidekiq-cron

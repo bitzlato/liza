@@ -35,7 +35,7 @@ module Operations
 
       grouped_operations.map do |o|
         currency_id, credit, debit = o
-        Bugsnag.notify "Credits and debits are both presented for #{object.class}#{object.id}.#{association}" if credit.present? && debit.present?
+        Sentry.capture_message "Credits and debits are both presented for #{object.class}#{object.id}.#{association}" if credit.present? && debit.present?
         if credit.present?
           h.link_to h.url_for([:operations, association, { q: { currency_id_eq: currency_id, account_id_eq: object.id } }]) do
             h.format_money credit, currency_id

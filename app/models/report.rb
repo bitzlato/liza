@@ -34,8 +34,9 @@ class Report < ReportsRecord
   def records_count
     results[:records_count]
   rescue StandardError => e
-    Bugsnag.notify e do |b|
-      b.meta_data = { report_id: id }
+    Sentry.with_scope do |scope|
+      scope.set_tags(report_id: id )
+      Sentry.capture_exception e
     end
     e
   end
@@ -53,8 +54,9 @@ class Report < ReportsRecord
       update status: :processing
       update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now, error_message: nil
     rescue StandardError => e
-      Bugsnag.notify e do |b|
-        b.meta_data = { report_id: id }
+      Sentry.with_scope do |scope|
+        scope.set_tags(report_id: id )
+        Sentry.capture_exception e
       end
       update status: :failed, error_message: [e.class.to_s, e.message].join('->')
     end

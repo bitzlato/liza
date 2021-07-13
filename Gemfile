@@ -113,6 +113,7 @@ gem 'bitzlato', github: 'finfex/bitzlato', branch: 'main'
 gem 'sd_notify'
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'sentry-sidekiq'
 
 group :deploy do
   gem 'capistrano', require: false
