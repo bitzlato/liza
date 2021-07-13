@@ -5,6 +5,8 @@
 class TradesController < ResourcesController
   layout 'fluid'
 
+  include MarketSupport
+
   def show
     render locals: { trade: Trade.find(params[:id]) }
   end
