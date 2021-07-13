@@ -43,6 +43,10 @@ class BaseGenerator
       end
     end
     xlsx_package.use_shared_strings = true
-    xlsx_package.to_stream
+    stream = xlsx_package.to_stream
+    stream.define_singleton_method :original_filename do
+      'report.xlsx'
+    end
+    stream
   end
 end

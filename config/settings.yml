@@ -1,5 +1,5 @@
 defaults: &defaults
-  max_export_records_count: 100
+  max_export_records_count: 1000
   signin_url: /signin
   root_prefix: /liza
   start_year: 2021
