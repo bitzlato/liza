@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/finfex/bitzlato.git
-  revision: 5ff62d1464529f539fa9a1cec6ba8f92711d46d5
+  revision: 76760712d4e91654214191d9a1cb652d47c1e03f
   branch: main
   specs:
     bitzlato (0.1.9)
@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: https://github.com/jwt/ruby-jwt.git
-  revision: aae07c5fcd94876e7722d3c3f2c937d6ea20e745
+  revision: 3b4a1abf9f26a01de81fa8b81d4e62cc540212cd
   specs:
     jwt (2.3.0.dev)
 
@@ -227,7 +227,7 @@ GEM
     et-orbi (1.2.4)
       tzinfo
     execjs (2.7.0)
-    faraday (1.5.0)
+    faraday (1.5.1)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -242,7 +242,7 @@ GEM
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
     faraday-net_http (1.0.1)
-    faraday-net_http_persistent (1.1.0)
+    faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     ffi (1.15.0)
     foreman (0.87.2)
@@ -420,7 +420,7 @@ GEM
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.0)
       ffi (~> 1.12)
-    ruby2_keywords (0.0.4)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
