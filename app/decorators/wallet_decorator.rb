@@ -6,6 +6,6 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[updated_at name status kind balance enable_invoice]
+    %i[id updated_at name status kind available_balances enable_invoice]
   end
 end

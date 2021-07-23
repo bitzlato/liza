@@ -28,6 +28,7 @@ class Wallet < ApplicationRecord
 
   # belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
   has_and_belongs_to_many :currencies
+  has_many :currency_wallets
 
   scope :active,   -> { where(status: :active) }
   scope :deposit,  -> { where(kind: kinds(deposit: true, values: true)) }
@@ -77,23 +78,11 @@ class Wallet < ApplicationRecord
     end
   end
 
-  def fetch(_key)
-    # not implemented
+  def available_balances
+    balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end
 
-  def current_balance(currency = nil)
-    if currency.present?
-      WalletService.new(self).load_balance!(currency)
-    else
-      currencies.each_with_object({}) do |c, balances|
-        balances[c.id] = WalletService.new(self).load_balance!(c)
-      rescue StandardError => e
-        report_exception(e)
-        balances[c.id] = NOT_AVAILABLE
-      end
-    end
-  rescue StandardError => e
-    report_exception(e)
-    NOT_AVAILABLE
+  def fetch(_key)
+    # not implemented
   end
 end
