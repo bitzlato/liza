@@ -5,6 +5,7 @@
 class Deposit < ApplicationRecord
   STATES = %i[submitted canceled rejected accepted collected skipped processing invoiced fee_processing].freeze
   COMPLETED_STATES = (STATES - %i[submitted]).freeze
+  SUCCESS_STATES = %i[accepted collected].freeze
 
   self.inheritance_column = :fake_type
 
@@ -18,6 +19,7 @@ class Deposit < ApplicationRecord
   has_one :blockchain, through: :currency
   belongs_to :currency, required: true
   belongs_to :member, required: true
+  scope :success, -> { where aasm_state: SUCCESS_STATES }
   scope :completed, -> { where aasm_state: :accepted }
   scope :uncompleted, -> { where.not(aasm_state: :accepted) }
 
