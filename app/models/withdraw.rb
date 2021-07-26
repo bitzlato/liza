@@ -7,6 +7,7 @@ class Withdraw < ApplicationRecord
   STATES = %i[prepared rejected accepted skipped processing succeed canceled failed errored confirming].freeze
   COMPLETED_STATES = %i[succeed rejected canceled failed].freeze
   SUCCEED_PROCESSING_STATES = %i[prepared accepted skipped processing errored confirming succeed].freeze
+  SUCCESS_STATES = %[succeed].freeze
 
   self.inheritance_column = :fake_type
 
@@ -26,6 +27,7 @@ class Withdraw < ApplicationRecord
   # beneficiaries and managed by third party application.
   belongs_to :beneficiary, optional: true
 
+  scope :success, -> { where aasm_state: SUCCESS_STATES }
   scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
   scope :succeed_processing, -> { where(aasm_state: SUCCEED_PROCESSING_STATES) }
