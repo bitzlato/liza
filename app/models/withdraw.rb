@@ -7,7 +7,7 @@ class Withdraw < ApplicationRecord
   STATES = %i[prepared rejected accepted skipped processing succeed canceled failed errored confirming].freeze
   COMPLETED_STATES = %i[succeed rejected canceled failed].freeze
   SUCCEED_PROCESSING_STATES = %i[prepared accepted skipped processing errored confirming succeed].freeze
-  SUCCESS_STATES = %[succeed].freeze
+  SUCCESS_STATES = %i[succeed].freeze
 
   self.inheritance_column = :fake_type
 
