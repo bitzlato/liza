@@ -6,6 +6,8 @@ class Deposit < ApplicationRecord
   STATES = %i[submitted canceled rejected accepted collected skipped processing invoiced fee_processing].freeze
   COMPLETED_STATES = (STATES - %i[submitted]).freeze
 
+  self.inheritance_column = :fake_type
+
   serialize :spread, Array
   serialize :from_addresses, Array
   serialize :data, JSON unless Rails.configuration.database_support_json
@@ -13,6 +15,7 @@ class Deposit < ApplicationRecord
   extend Enumerize
   TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 
+  has_one :blockchain, through: :currency
   belongs_to :currency, required: true
   belongs_to :member, required: true
   scope :completed, -> { where aasm_state: :accepted }

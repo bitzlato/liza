@@ -8,6 +8,8 @@ class Withdraw < ApplicationRecord
   COMPLETED_STATES = %i[succeed rejected canceled failed].freeze
   SUCCEED_PROCESSING_STATES = %i[prepared accepted skipped processing errored confirming succeed].freeze
 
+  self.inheritance_column = :fake_type
+
   extend Enumerize
 
   serialize :error, JSON unless Rails.configuration.database_support_json
