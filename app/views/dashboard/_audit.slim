@@ -4,17 +4,18 @@ table.table.table-condensed.table-striped.table-cross-row
       th  Валюта
       th.text-right 
         div Баланс на системных счетах
-        = column_tip 'По данным P2P на кошельках P2P'
-      th.text-right  Операционные активы
+        = column_tip 'На кошельках P2P и горячих нодах'
+      th.text-right
+        div Операционные активы
+        = column_tip 'Разница с системными счетами'
       th.text-right 
         div Расчётный баланс на счетах
         = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии'
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
-        
       th.text-right 
-        div Расхождение балансов
+        div Расхождение балансов (внутренний аудит)
         = column_tip 'Расчетный - Фактический - Операционная_прибыль + Корректировки'
 
       th.text-right  Операционная прибыль (комиссии)
@@ -32,11 +33,14 @@ table.table.table-condensed.table-striped.table-cross-row
         th 
           = format_currency currency_id
         td.text-right 
+          - system_balance = system_balances.fetch(currency_id, nil)
           = link_to wallets_path do
-            = format_money system_balances.fetch(currency_id, nil), currency
+            = format_money system_balance, currency
         td.text-right 
           = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_assets_credit, currency
+          .text-small.mt-2
+            = format_divergence system_balance - total_operations_assets_credit, currency if system_balance.present?
         td.text-right 
           = format_money total_deposit - total_withdraw - total_operations_amount, currency_id
           div.text-small.mt-2
