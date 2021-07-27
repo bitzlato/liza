@@ -13,6 +13,6 @@ module CurrencySupport
 
   def currency
     currency_id = params.dig(:q, :currency_id_eq)
-    Currency.find(currency_id) if currency_id.present?
+    Currency.find_by(id: currency_id) || raise(HumanizedError, "No such currency #{currency_id}") if currency_id.present?
   end
 end

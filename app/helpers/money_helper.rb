@@ -40,7 +40,7 @@ module MoneyHelper
       amount = amount.to_d
     end
     options = options.symbolize_keys.reverse_merge show_currency: true
-    currency = currency.is_a?(Currency) ? currency : Currency.find(currency)
+    currency = currency.is_a?(Currency) ? currency : Currency.find_by(id: currency)
     css_classes = %w[text-nowrap text-monospace]
     css_classes << options[:css_class]
     buffer = money_precission(amount, currency.precision)

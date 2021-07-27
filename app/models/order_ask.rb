@@ -32,7 +32,7 @@ class OrderAsk < Order
 
   # @deprecated Please use {income/outcome_currency} in Order model
   def currency
-    Currency.find(ask)
+    Currency.find_by(id: ask)
   end
 
   def income_currency

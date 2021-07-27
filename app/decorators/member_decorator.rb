@@ -19,7 +19,7 @@ class MemberDecorator < ApplicationDecorator
   end
 
   def account(currency)
-    currency = Currency.find(currency)
+    currency = Currency.find_by(id: currency)
     h.render 'account_brief', account: member.get_account(currency)
   end
 
