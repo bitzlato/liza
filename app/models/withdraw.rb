@@ -52,6 +52,10 @@ class Withdraw < ApplicationRecord
     end
   end
 
+  def to_s
+    ['withdraw#',id.to_s,' ',amount.to_s,' ',currency_id].join
+  end
+
   def account
     member&.get_account(currency)
   end

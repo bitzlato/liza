@@ -47,6 +47,10 @@ class Adjustment < ApplicationRecord
     end
   end
 
+  def to_s
+    [id,' ', reason, ' ', description].join
+  end
+
   def load_operations
     operations = %i[asset liability revenue expense].map do |op_type|
       "Operations::#{op_type.capitalize}".constantize.find_by(reference: self)

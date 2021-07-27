@@ -35,6 +35,10 @@ module Operations
       super&.inquiry
     end
 
+    def to_s
+      description + ' [' + scope + ']'
+    end
+
     def records_class
       ('Operations::' + records_name.singularize.camelcase).constantize
     end
