@@ -6,7 +6,15 @@ class DepositDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member created_at updated_at currency aasm_state amount fee type txid txout tid transfer_type address intention_id data]
+    %i[id member created_at updated_at currency aasm_state amount fee txid txout tid transfer_type address intention_id data]
+  end
+
+  def id
+    h.content_tag :span, object.id, title: object.type
+  end
+
+  def data
+    h.content_tag :span, 'data', title: object.data
   end
 
   # Define presentation-specific methods here. Helpers are accessed through
