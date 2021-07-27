@@ -23,6 +23,7 @@ module RescueErrors
   end
 
   def rescue_error(exception)
+    Sentry.capture_exception(exception) if defined?(Sentry)
     render 'exception', locals: { exception: exception }, layout: 'simple', formats: [:html]
   end
 
