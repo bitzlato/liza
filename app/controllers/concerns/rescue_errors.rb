@@ -19,7 +19,7 @@ module RescueErrors
   private
 
   def handle_humanized_error(exception)
-    render 'exception', locals: { exception: exception }, layout: 'simple', formats: [:html]
+    render 'exception', locals: { exception: exception }, layout: 'simple', formats: [:html], disposition: :inline
   end
 
   def rescue_error(exception)
