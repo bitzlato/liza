@@ -26,6 +26,16 @@ module LiabilitiesHelper
   end
   # rubocop:enable Metrics/MethodLength
 
+  def present_wallet(wallet)
+    link_to wallet_path(wallet) do
+      ("wallet[#{wallet.id}:#{wallet.kind}]").html_safe
+    end
+  end
+
+  def present_payment_address(payment_address)
+    "payment_addresss[member:#{link_to payment_address.member.uid, member_path(payment_address.member)},#{present_wallet(payment_address.wallet)}]"
+  end
+
   def present_adjustment(adjustment)
     link_to adjustment_path(adjustment) do
       ('adjustment: ' + format_money(adjustment.amount, adjustment.currency) + ' -> ' + adjustment.receiving_account_number).html_safe
