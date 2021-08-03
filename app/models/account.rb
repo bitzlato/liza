@@ -5,6 +5,8 @@
 class Account < ApplicationRecord
   extend Memoist
 
+  self.primary_keys = :currency_id, :member_id
+
   belongs_to :currency, required: true
   belongs_to :member, required: true
 

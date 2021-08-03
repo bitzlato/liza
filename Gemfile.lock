@@ -207,6 +207,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     colorize (0.8.1)
+    composite_primary_keys (13.0.0)
+      activerecord (~> 6.1.0)
     concurrent-ruby (1.1.8)
     connection_pool (2.2.5)
     crass (1.0.6)
@@ -551,6 +553,7 @@ DEPENDENCIES
   caxlsx (~> 3.0)
   caxlsx_rails
   coffee-rails (~> 5.0)
+  composite_primary_keys
   dotenv-rails
   draper (~> 4.0)
   enumerize

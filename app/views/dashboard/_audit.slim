@@ -21,7 +21,7 @@ table.table.table-condensed.table-striped.table-cross-row
       th.text-right  Операционная прибыль (комиссии)
       th.text-right  Корректировки
   tbody
-    - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(id)').each do |row|
+    - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(member_id)').each do |row|
       - currency_id = row[0]
       - currency = Currency.find_by(id: currency_id)
       - total_deposit = Deposit.success.where(currency_id: currency_id).sum(:amount)
