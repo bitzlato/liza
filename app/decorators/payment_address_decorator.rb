@@ -6,7 +6,7 @@ class PaymentAddressDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id address member currencies native_currency wallet balances]
+    %i[id address member currencies native_currency wallet balances balances_updated_at]
   end
 
   def member
@@ -19,5 +19,11 @@ class PaymentAddressDecorator < ApplicationDecorator
 
   def currencies
     object.currencies.map(&:to_s).join(', ')
+  end
+
+  def balanced_updated_at
+    h.content_tag :span, class: 'text-nowrap' do
+      I18n.l object.balanced_updated_at
+    end
   end
 end

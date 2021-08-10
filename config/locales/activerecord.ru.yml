@@ -17,6 +17,7 @@ ru:
       service_withdraw: Списания системы
       service_invoice: Счета система
       service_transaction: Зачисление системы
+      payment_address: Адреса депонирования
       adjustment:
         one: Корректировка
         many: Корректировки
