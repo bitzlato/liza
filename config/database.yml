@@ -76,4 +76,4 @@ production:
   reports:
     <<: *default
     migrations_paths: db/reports_migrate
-    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>
+    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'liza_reports_production') %>
