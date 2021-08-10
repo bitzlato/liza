@@ -35,7 +35,7 @@ staging:
 development:
   primary:
     <<: *default
-    database: peatio_development
+    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_development') %>
   reports:
     <<: *default
     migrations_paths: db/reports_migrate

@@ -11,6 +11,7 @@ module RansackSupport
   def index
     # We can't raise it from format.xlsx because it will be downloaded
     raise HumanizedError, 'Too many records' if request.format.xlsx? && records.count > Settings.max_export_records_count
+
     respond_to do |format|
       format.xlsx do
         render locals: {

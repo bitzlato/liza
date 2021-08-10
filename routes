@@ -77,8 +77,12 @@
                         service_withdraw GET    /liza/service_withdraws/:id(.:format)                                                             service_withdraws#show
                         service_invoices GET    /liza/service_invoices(.:format)                                                                  service_invoices#index
                          service_invoice GET    /liza/service_invoices/:id(.:format)                                                              service_invoices#show
+                    service_transactions GET    /liza/service_transactions(.:format)                                                              service_transactions#index
+                     service_transaction GET    /liza/service_transactions/:id(.:format)                                                          service_transactions#show
                                  wallets GET    /liza/wallets(.:format)                                                                           wallets#index
                                   wallet GET    /liza/wallets/:id(.:format)                                                                       wallets#show
+                       payment_addresses GET    /liza/payment_addresses(.:format)                                                                 payment_addresses#index
+                         payment_address GET    /liza/payment_addresses/:id(.:format)                                                             payment_addresses#show
                   operations_liabilities GET    /liza/operations/liabilities(.:format)                                                            operations/liabilities#index
                                          POST   /liza/operations/liabilities(.:format)                                                            operations/liabilities#create
                 new_operations_liability GET    /liza/operations/liabilities/new(.:format)                                                        operations/liabilities#new

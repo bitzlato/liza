@@ -6,7 +6,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        - [Account, Order, Trade, Member, Deposit, Withdraw, Report].each do |model|
+        - [Account, Order, Trade, Member, Deposit, Withdraw, Report, PaymentAddress].each do |model|
           = active_link_to url_for(model), class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
             = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center

@@ -48,7 +48,7 @@ class Adjustment < ApplicationRecord
   end
 
   def to_s
-    [id,' ', reason, ' ', description].join
+    [id, ' ', reason, ' ', description].join
   end
 
   def load_operations

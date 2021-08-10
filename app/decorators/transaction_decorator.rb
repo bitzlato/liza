@@ -20,12 +20,13 @@ class TransactionDecorator < ApplicationDecorator
   end
 
   def present_owner(address_owner)
-    if address_owner.is_a? PaymentAddress
+    case address_owner
+    when PaymentAddress
       h.present_payment_address(address_owner)
-    elsif address_owner.is_a? Wallet
+    when Wallet
       h.present_wallet(address_owner)
     else
-      "Unknown address_owner"
+      'Unknown address_owner'
     end
   end
 

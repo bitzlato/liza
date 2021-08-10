@@ -82,6 +82,10 @@ class Wallet < ApplicationRecord
     balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end
 
+  def native_currency
+    currencies.find { |c| c.parent_id.nil? } || raise("No native currency for wallet id #{id}")
+  end
+
   def fetch(_key)
     # not implemented
   end

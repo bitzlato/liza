@@ -28,7 +28,7 @@ module LiabilitiesHelper
 
   def present_wallet(wallet)
     link_to wallet_path(wallet) do
-      ("wallet[#{wallet.id}:#{wallet.kind}]").html_safe
+      "wallet[#{wallet.id}:#{wallet.kind}]".html_safe
     end
   end
 

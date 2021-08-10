@@ -53,7 +53,7 @@ class Withdraw < ApplicationRecord
   end
 
   def to_s
-    ['withdraw#',id.to_s,' ',amount.to_s,' ',currency_id].join
+    ['withdraw#', id.to_s, ' ', amount.to_s, ' ', currency_id].join
   end
 
   def account

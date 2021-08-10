@@ -28,7 +28,7 @@ class Deposit < ApplicationRecord
   scope :recent, -> { order(id: :desc) }
 
   def to_s
-    ['deposit#',id.to_s,' ',amount.to_s,' ',currency_id].join
+    ['deposit#', id.to_s, ' ', amount.to_s, ' ', currency_id].join
   end
 
   def account
