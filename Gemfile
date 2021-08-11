@@ -113,11 +113,11 @@ gem 'carrierwave', '~> 2.2'
 
 gem 'bitzlato', github: 'finfex/bitzlato', branch: 'main'
 gem 'sd_notify'
-gem 'sentry-rails'
-gem 'sentry-ruby'
-gem 'sentry-sidekiq'
+
+gem 'bugsnag'
 
 group :deploy do
+  gem 'bugsnag-capistrano', require: false
   gem 'capistrano', require: false
   gem 'capistrano3-puma'
   gem 'capistrano-bundler', require: false
@@ -130,7 +130,6 @@ group :deploy do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rails-console', require: false
   gem 'capistrano-rbenv', require: false
-  gem 'capistrano-sentry', require: false
   gem 'capistrano-shell', require: false
   gem 'capistrano-systemd-multiservice', github: 'groovenauts/capistrano-systemd-multiservice', require: false
   gem 'capistrano-yarn', require: false

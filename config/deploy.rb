@@ -75,6 +75,12 @@ set :puma_init_active_record, true
 set :puma_workers, 0
 set :puma_bind, %w[tcp://0.0.0.0:9292]
 set :puma_start_task, 'systemd:puma:start'
+set :puma_extra_settings, %{
+ lowlevel_error_handler do |e|
+   Bugsnag.notify(e) if defined? Bugsnag
+   [500, {}, ["An error has occurred"]]
+ end
+}
 
 set :init_system, :systemd
 
@@ -90,7 +96,9 @@ after 'deploy:publishing', 'systemd:sidekiq:reload-or-restart'
 Rake::Task['deploy:assets:backup_manifest'].clear_actions
 
 set :current_version, `git rev-parse HEAD`.strip
-set :sentry_organization, ENV['SENTRY_ORGANIZATION']
-set :sentry_release_version, -> { [fetch(:app_version), fetch(:current_version)].compact.join('-') }
-before 'deploy:starting', 'sentry:validate_config'
-after 'deploy:published', 'sentry:notice_deployment'
+if Gem.loaded_specs.key?('capistrano-sentry')
+  set :sentry_organization, ENV['SENTRY_ORGANIZATION']
+  set :sentry_release_version, -> { [fetch(:app_version), fetch(:current_version)].compact.join('-') }
+  before 'deploy:starting', 'sentry:validate_config'
+  after 'deploy:published', 'sentry:notice_deployment'
+end
