@@ -4,6 +4,7 @@
 
 class Deposit < ApplicationRecord
   COMPLETED_STATES = %i[dispatched].freeze
+  TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 
   self.inheritance_column = :fake_type
 
@@ -12,11 +13,12 @@ class Deposit < ApplicationRecord
   serialize :data, JSON unless Rails.configuration.database_support_json
 
   extend Enumerize
-  TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
+  include OperationsReferences
 
-  has_one :blockchain, through: :currency
   belongs_to :currency, required: true
   belongs_to :member, required: true
+
+  belongs_to :blockchain
   scope :success, -> { completed }
   scope :completed, -> { where aasm_state: COMPLETED_STATES }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }

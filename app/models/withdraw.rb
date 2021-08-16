@@ -12,6 +12,7 @@ class Withdraw < ApplicationRecord
   self.inheritance_column = :fake_type
 
   extend Enumerize
+  include OperationsReferences
 
   serialize :error, JSON unless Rails.configuration.database_support_json
   serialize :metadata, JSON unless Rails.configuration.database_support_json
@@ -26,6 +27,8 @@ class Withdraw < ApplicationRecord
   # Optional beneficiary association gives ability to support both in-peatio
   # beneficiaries and managed by third party application.
   belongs_to :beneficiary, optional: true
+
+  has_many :operations_assets, as: :reference, class_name: 'Operations::Asset'
 
   scope :success, -> { where aasm_state: SUCCESS_STATES }
   scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
