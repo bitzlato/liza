@@ -9,6 +9,7 @@
       li= link_to title_with_count(Trade.model_name.human_plural, member.trades.count), trades_path(q: { maker_id_or_taker_id_eq: member })
       li= link_to title_with_count(Deposit.model_name.human_plural, member.deposits.count), deposits_path(q: { member_id_eq: member })
       li= link_to title_with_count(Withdraw.model_name.human_plural, member.withdraws.count), withdraws_path(q: { member_id_eq: member })
+      li= link_to title_with_count(PaymentAddress.model_name.human_plural, member.payment_addresses.count), payment_addresses_path(q: { member_id_eq: member })
   .col-md-3
     h3= t '.reports'
     ul
