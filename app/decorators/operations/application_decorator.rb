@@ -5,7 +5,7 @@
 module Operations
   class ApplicationDecorator < ::ApplicationDecorator
     def self.table_columns
-      %i[created_at account currency reference debit credit]
+      %i[id created_at account currency reference debit credit]
     end
 
     def account
