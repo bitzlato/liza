@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :service_transactions, only: %i[index show]
     resources :wallets, only: %i[index show]
     resources :payment_addresses, only: %i[index show]
+    resources :currencies, only: %i[index show]
     namespace :operations do
       resources :liabilities
       resources :accounts
