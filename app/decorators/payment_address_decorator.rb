@@ -6,7 +6,7 @@ class PaymentAddressDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id address member currencies native_currency wallet balances balances_updated_at]
+    %i[id address member currencies native_currency blockchain balances balances_updated_at]
   end
 
   def member

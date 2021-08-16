@@ -4,10 +4,10 @@
 
 # TODO: Rename to DepositAddress
 class PaymentAddress < ApplicationRecord
-  belongs_to :wallet
   belongs_to :member
+  belongs_to :blockchain
 
-  delegate :currencies, :native_currency, to: :wallet
+  delegate :currencies, :native_currency, to: :blockchain
 
   def format_address(format)
     format == 'legacy' ? to_legacy_address : to_cash_address
