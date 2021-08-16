@@ -26,8 +26,8 @@ class Currency < ApplicationRecord
 
   serialize :options, JSON unless Rails.configuration.database_support_json
 
-  belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
-  has_and_belongs_to_many :wallets
+  belongs_to :blockchain
+  has_many :wallets, through: :blockchain
   has_one :parent, class_name: 'Currency', foreign_key: :id, primary_key: :parent_id
   has_many :operations_revenues, class_name: 'Operations::Revenue'
   has_many :operations_assets, class_name: 'Operations::Asset'
