@@ -6,7 +6,7 @@ class DepositDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member created_at updated_at currency aasm_state amount fee txid txout tid transfer_type address intention_id data]
+    %i[id member created_at updated_at currency aasm_state amount fee txid txout tid transfer_type address invoice_id data]
   end
 
   def id

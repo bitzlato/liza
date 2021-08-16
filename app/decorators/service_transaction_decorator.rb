@@ -6,7 +6,7 @@ class ServiceTransactionDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    super + %i[intention_id]
+    super + %i[invoice_id]
   end
 
   def transaction_created_at
@@ -19,11 +19,11 @@ class ServiceTransactionDecorator < ApplicationDecorator
     h.link_to object.invoice_id, h.service_invoices_path(q: { invoice_id_eq: object.invoice_id })
   end
 
-  def intention_id
+  def invoice_id
     if object.deposit.present?
-      h.link_to object.intention_id, h.deposit_path(object.deposit.id)
+      h.link_to object.invoice_id, h.deposit_path(object.deposit.id)
     else
-      object.intention_id
+      object.invoice_id
     end
   end
 end
