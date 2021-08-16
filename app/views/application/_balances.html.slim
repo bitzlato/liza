@@ -1,0 +1,6 @@
+h3 Balances
+
+table.table.table-narrow
+  - balances.each_pair do |currency_id, amount|
+    tr
+      td.text-nowrap.text-right= format_money amount, currency_id

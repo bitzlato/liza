@@ -17,6 +17,7 @@ class Deposit < ApplicationRecord
   has_one :blockchain, through: :currency
   belongs_to :currency, required: true
   belongs_to :member, required: true
+  scope :success, -> { completed }
   scope :completed, -> { where aasm_state: COMPLETED_STATES }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
 
