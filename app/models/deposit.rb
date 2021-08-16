@@ -23,8 +23,6 @@ class Deposit < ApplicationRecord
   scope :completed, -> { where aasm_state: :accepted }
   scope :uncompleted, -> { where.not(aasm_state: :accepted) }
 
-  enumerize :aasm_state, in: STATES, predicates: true
-
   scope :recent, -> { order(id: :desc) }
 
   def to_s
