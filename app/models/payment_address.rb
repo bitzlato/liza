@@ -9,10 +9,16 @@ class PaymentAddress < ApplicationRecord
 
   delegate :currencies, :native_currency, to: :blockchain
 
+  # TODO migrate to
+  # SELECT "key", sum("val"::decimal)
+  # FROM payment_addresses,
+  # LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"
+
   def self.total_balances
-    total_currencies.each_with_object({}) do |currency, agg|
-      agg[currency] = total_balance(currency)
-    end
+    PaymentAddress.
+      connection.
+      execute('SELECT "key", sum("val"::decimal) FROM payment_addresses,  LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"').
+      each_with_object({}) { |r,a| a[r['key']]=r['sum'] }
   end
 
   def self.total_currencies
