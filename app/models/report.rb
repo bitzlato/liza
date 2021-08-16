@@ -34,10 +34,7 @@ class Report < ReportsRecord
   def records_count
     results[:records_count]
   rescue StandardError => e
-    Sentry.with_scope do |scope|
-      scope.set_tags(report_id: id)
-      Sentry.capture_exception e
-    end
+    report_exception(e, context: { report_id: id })
     e
   end
 
@@ -54,10 +51,7 @@ class Report < ReportsRecord
       update status: :processing
       update results: reporter.perform, file: reporter.file, status: :success, processed_at: Time.zone.now, error_message: nil
     rescue StandardError => e
-      Sentry.with_scope do |scope|
-        scope.set_tags(report_id: id)
-        Sentry.capture_exception e
-      end
+      report_exception(e, context: { report_id: id })
       update status: :failed, error_message: [e.class.to_s, e.message].join('->')
     end
   end

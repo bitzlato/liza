@@ -25,8 +25,7 @@ module OpendaxHelper
     Rails.cache.fetch :peatio_version do
       JSON.parse Net::HTTP.get(URI(peatio_version_url))
     rescue StandardError => e
-      Rails.logger.error e
-      Sentry.capture_exception e
+      report_exception(e)
       {}
     end
   end
@@ -35,8 +34,7 @@ module OpendaxHelper
     Rails.cache.fetch :barong_version do
       JSON.parse Net::HTTP.get(URI(barong_version_url))
     rescue StandardError => e
-      Rails.logger.error e
-      Sentry.capture_exception e
+      report_exception(e)
       {}
     end
   end

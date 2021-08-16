@@ -133,6 +133,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.7.4)
       msgpack (~> 1.0)
+    bugsnag (6.22.1)
+      concurrent-ruby (~> 1.0)
+    bugsnag-capistrano (2.1.0)
     builder (3.2.4)
     byebug (11.1.3)
     capistrano (3.16.0)
@@ -161,8 +164,6 @@ GEM
     capistrano-rbenv (2.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
-    capistrano-sentry (0.4.2)
-      capistrano (~> 3.1)
     capistrano-shell (0.2.0)
       capistrano (~> 3.1)
     capistrano-yarn (2.0.2)
@@ -302,6 +303,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
+    libv8-node (15.14.0.1-x86_64-darwin-20)
     libv8-node (15.14.0.1-x86_64-linux)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -332,6 +334,8 @@ GEM
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
     nio4r (2.5.7)
+    nokogiri (1.11.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.11.3-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
@@ -443,18 +447,6 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semver2 (3.4.2)
-    sentry-rails (4.6.0)
-      railties (>= 5.0)
-      sentry-ruby-core (~> 4.6.0)
-    sentry-ruby (4.6.0)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      faraday (>= 1.0)
-      sentry-ruby-core (= 4.6.0)
-    sentry-ruby-core (4.6.0)
-      concurrent-ruby
-      faraday
-    sentry-sidekiq (4.6.1)
-      sentry-ruby-core (~> 4.6.0)
     settingslogic (2.0.9)
     shellany (0.0.1)
     sidekiq (6.2.1)
@@ -522,6 +514,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
@@ -530,6 +523,8 @@ DEPENDENCIES
   auto_logger
   bitzlato!
   bootsnap (>= 1.4.4)
+  bugsnag
+  bugsnag-capistrano
   byebug
   capistrano
   capistrano-bundler
@@ -542,7 +537,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rails-console
   capistrano-rbenv
-  capistrano-sentry
   capistrano-shell
   capistrano-systemd-multiservice!
   capistrano-yarn
@@ -592,9 +586,6 @@ DEPENDENCIES
   sd_notify
   selenium-webdriver
   semver2 (~> 3.4)
-  sentry-rails
-  sentry-ruby
-  sentry-sidekiq
   settingslogic
   sidekiq
   sidekiq-cron
