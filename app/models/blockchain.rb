@@ -20,7 +20,7 @@ class Blockchain < ApplicationRecord
   end
 
   def explore_transaction_url(txid)
-    return if address.txid?
+    return if txid.txid?
     explorer_transaction.to_s.gsub('#{txid}', txid)
   end
 end
