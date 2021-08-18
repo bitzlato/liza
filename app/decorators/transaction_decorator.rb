@@ -10,7 +10,7 @@ class TransactionDecorator < ApplicationDecorator
   end
 
   def from_address
-    [h.link_to(object.from_address, object.blockchain.explore_address_url(object.to_address), target: '_blank'), present_owner(address_owner(object.from_address))].join('<br>').html_safe
+    [h.link_to(object.from_address, object.blockchain.explore_address_url(object.from_address), target: '_blank'), present_owner(address_owner(object.from_address))].join('<br>').html_safe
   end
 
   def to_address
