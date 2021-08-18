@@ -6,7 +6,7 @@ class PaymentAddressDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id address member currencies native_currency blockchain balances balances_updated_at address_url]
+    %i[id address member currencies native_currency blockchain balances balances_updated_at]
   end
 
   def member
@@ -15,6 +15,11 @@ class PaymentAddressDecorator < ApplicationDecorator
 
   def wallet
     h.link_to object.wallet.name, h.wallet_path(object.wallet)
+  end
+
+  def address
+    return h.middot if object.address.nil?
+    h.link_to object.address, object.address_url, target: '_blank'
   end
 
   def currencies
