@@ -11,4 +11,9 @@ class Transaction < ApplicationRecord
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency, foreign_key: :currency_id
+  has_one :blockchain, through: :currency
+
+  def transaction_url
+    blockchain.explore_transaction_url txid if blockchain
+  end
 end

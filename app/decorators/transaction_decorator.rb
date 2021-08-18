@@ -5,12 +5,20 @@
 class TransactionDecorator < ApplicationDecorator
   delegate_all
 
+  def self.table_columns
+    %i[id currency reference txid from_address to_address amount block_number txout status options]
+  end
+
   def from_address
-    [object.from_address, present_owner(address_owner(object.from_address))].join('<br>').html_safe
+    [h.link_to(object.from_address, object.blockchain.explore_address_url(object.to_address), target: '_blank'), present_owner(address_owner(object.from_address))].join('<br>').html_safe
   end
 
   def to_address
-    [object.to_address, present_owner(address_owner(object.to_address))].join('<br>').html_safe
+    [h.link_to(object.to_address, object.blockchain.explore_address_url(object.to_address), target: '_blank'), present_owner(address_owner(object.to_address))].join('<br>').html_safe
+  end
+
+  def txid
+    h.link_to object.txid, object.transaction_url, target: '_blank'
   end
 
   private

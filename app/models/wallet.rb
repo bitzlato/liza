@@ -26,7 +26,7 @@ class Wallet < ApplicationRecord
 
   NOT_AVAILABLE = 'N/A'
 
-  # belongs_to :blockchain, foreign_key: :blockchain_key, primary_key: :key
+  belongs_to :blockchain
   has_and_belongs_to_many :currencies
   has_many :currency_wallets
 
@@ -89,4 +89,9 @@ class Wallet < ApplicationRecord
   def fetch(_key)
     # not implemented
   end
+
+  def address_url
+    blockchain.explore_address_url address if blockchain
+  end
+
 end

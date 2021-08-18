@@ -40,4 +40,8 @@ class PaymentAddress < ApplicationRecord
   def to_cash_address
     CashAddr::Converter.to_cash_address(address)
   end
+
+  def address_url
+    blockchain.explore_address_url address if blockchain
+  end
 end

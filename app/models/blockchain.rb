@@ -13,4 +13,12 @@ class Blockchain < ApplicationRecord
   def to_s
     key
   end
+
+  def explore_address_url(address)
+    explorer_address.gsub('#{address}', address)
+  end
+
+  def explore_transaction_url(txid)
+    explorer_transaction.gsub('#{txid}', txid)
+  end
 end
