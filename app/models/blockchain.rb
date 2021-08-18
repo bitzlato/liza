@@ -15,10 +15,12 @@ class Blockchain < ApplicationRecord
   end
 
   def explore_address_url(address)
-    explorer_address.gsub('#{address}', address)
+    return if address.nil?
+    explorer_address.to_s.gsub('#{address}', address)
   end
 
   def explore_transaction_url(txid)
-    explorer_transaction.gsub('#{txid}', txid)
+    return if address.txid?
+    explorer_transaction.to_s.gsub('#{txid}', txid)
   end
 end
