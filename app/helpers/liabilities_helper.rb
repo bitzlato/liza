@@ -33,7 +33,13 @@ module LiabilitiesHelper
   end
 
   def present_payment_address(payment_address)
-    "payment_addresss[member:#{link_to payment_address.member.uid, member_path(payment_address.member)},#{present_wallet(payment_address.wallet)}]"
+    "payment_addresss[member:#{link_to payment_address.member.uid, member_path(payment_address.member)},#{present_blockchain(payment_address.blockchain)}]"
+  end
+
+  def present_blockchain(blockchain)
+    link_to blockchain_path(blockchain) do
+      "blockchain[#{blockchain.id}:#{blockchain.key}]".html_safe
+    end
   end
 
   def present_adjustment(adjustment)
