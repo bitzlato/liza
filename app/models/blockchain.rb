@@ -21,18 +21,18 @@ class Blockchain < ApplicationRecord
   def explore_contract_address_url(contract_address)
     return if contract_address.nil?
 
-    explorer_contract_address.gsub(contract_address.to_s, contract_address)
+    explorer_contract_address.to_s.gsub(contract_address.to_s, contract_address)
   end
 
   def explore_address_url(address)
     return if address.nil?
 
-    explorer_address.gsub(address.to_s, address)
+    explorer_address.to_s.gsub(address.to_s, address)
   end
 
   def explore_transaction_url(txid)
     return if txid.nil?
 
-    explorer_transaction.gsub(txid.to_s, txid)
+    explorer_transaction.to_s.gsub(txid.to_s, txid)
   end
 end
