@@ -15,6 +15,7 @@ class TransactionDecorator < ApplicationDecorator
   end
 
   def to_address
+    return h.middot if object.to_address.nil?
     [h.link_to(object.to_address, object.blockchain.explore_address_url(object.to_address), target: '_blank'),
      present_owner(address_owner(object.to_address))].join('<br>').html_safe
   end
