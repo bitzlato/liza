@@ -62,6 +62,6 @@ module MoneyHelper
   end
 
   def format_currency(currency_id, css_class: '')
-    content_tag :span, currency_id.to_param, class: "text-uppercase text-monospace #{css_class}"
+    content_tag :span, currency_id.to_param, class: "text-nowrap text-uppercase text-monospace #{css_class}"
   end
 end
