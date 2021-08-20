@@ -12,4 +12,11 @@ class CurrencyDecorator < ApplicationDecorator
 ]
   end
 
+  def id
+    h.format_currency object
+  end
+
+  def blockchain
+    h.content_tag :span, object.blockchain.key, class: 'text-nowrap'
+  end
 end
