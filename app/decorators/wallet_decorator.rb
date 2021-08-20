@@ -10,6 +10,6 @@ class WalletDecorator < ApplicationDecorator
   end
 
   def address
-    h.link_to(object.address, object.address_url, target: '_blank'
+    h.link_to object.address, object.address_url, target: '_blank'
   end
 end
