@@ -2,7 +2,7 @@
 h1= record.model_name.human + ' #' + record.id.to_s
 hr
 .row
-  .col-md-3
+  .col-md-4
     = render 'attributes', item: record
-  .col-md-9
+  .col-md-8
     = render 'operations', operations: record.operations
