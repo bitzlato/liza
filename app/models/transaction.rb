@@ -14,6 +14,6 @@ class Transaction < ApplicationRecord
   has_one :blockchain, through: :currency
 
   def transaction_url
-    blockchain.explore_transaction_url txid if blockchain
+    blockchain&.explore_transaction_url txid
   end
 end

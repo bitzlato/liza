@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 # frozen_string_literal: true
 
 def report_exception(exception, report_to_ets: true, context: {})
@@ -10,6 +12,7 @@ def report_exception_to_screen(exception)
   Rails.logger.unknown Array(exception.backtrace).join("\n") if exception.respond_to?(:backtrace)
 end
 
+# rubocop:disable Metrics/MethodLength
 def report_exception_to_ets(exception, context: {})
   if defined?(Bugsnag)
     Bugsnag.notify exception do |report|
@@ -26,6 +29,7 @@ def report_exception_to_ets(exception, context: {})
       end
     end
   end
-rescue => e
+rescue StandardError => e
   report_exception(e, report_to_ets: false)
 end
+# rubocop:enable Metrics/MethodLength

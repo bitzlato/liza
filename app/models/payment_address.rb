@@ -9,16 +9,16 @@ class PaymentAddress < ApplicationRecord
 
   delegate :currencies, :native_currency, to: :blockchain
 
-  # TODO migrate to
+  # TODO: migrate to
   # SELECT "key", sum("val"::decimal)
   # FROM payment_addresses,
   # LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"
 
   def self.total_balances
-    PaymentAddress.
-      connection.
-      execute('SELECT "key", sum("val"::decimal) FROM payment_addresses,  LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"').
-      each_with_object({}) { |r,a| a[r['key']]=r['sum'] }
+    PaymentAddress
+      .connection
+      .execute('SELECT "key", sum("val"::decimal) FROM payment_addresses,  LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"')
+      .each_with_object({}) { |r, a| a[r['key']] = r['sum'] }
   end
 
   def self.total_currencies
@@ -42,6 +42,6 @@ class PaymentAddress < ApplicationRecord
   end
 
   def address_url
-    blockchain.explore_address_url address if blockchain
+    blockchain&.explore_address_url address
   end
 end

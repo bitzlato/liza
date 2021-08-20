@@ -22,6 +22,7 @@ class MemberDecorator < ApplicationDecorator
     currency = Currency.find_by(id: currency)
     account = member.get_account(currency)
     return h.middot if account.nil?
+
     h.render 'account_brief', account: account
   end
 

@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class Blockchain < ApplicationRecord
   has_many :wallets
   has_many :withdraws
@@ -16,11 +20,13 @@ class Blockchain < ApplicationRecord
 
   def explore_address_url(address)
     return if address.nil?
-    explorer_address.to_s.gsub('#{address}', address)
+
+    explorer_address.to_s.gsub(address.to_s, address)
   end
 
   def explore_transaction_url(txid)
     return if txid.nil?
-    explorer_transaction.to_s.gsub('#{txid}', txid)
+
+    explorer_transaction.to_s.gsub(txid.to_s, txid)
   end
 end

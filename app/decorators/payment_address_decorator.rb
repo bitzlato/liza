@@ -19,6 +19,7 @@ class PaymentAddressDecorator < ApplicationDecorator
 
   def address
     return h.middot if object.address.nil?
+
     h.link_to object.address, object.address_url, target: '_blank'
   end
 

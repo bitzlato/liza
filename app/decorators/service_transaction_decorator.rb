@@ -16,14 +16,10 @@ class ServiceTransactionDecorator < ApplicationDecorator
   end
 
   def invoice_id
-    h.link_to object.invoice_id, h.service_invoices_path(q: { invoice_id_eq: object.invoice_id })
-  end
-
-  def invoice_id
     if object.deposit.present?
       h.link_to object.invoice_id, h.deposit_path(object.deposit.id)
     else
-      object.invoice_id
+      h.link_to object.invoice_id, h.service_invoices_path(q: { invoice_id_eq: object.invoice_id })
     end
   end
 end

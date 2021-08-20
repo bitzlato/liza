@@ -19,11 +19,13 @@ class WithdrawDecorator < ApplicationDecorator
 
   def rid
     return h.middot unless object.rid?
+
     h.link_to object.rid, object.blockchain.explore_address_url(object.rid), target: '_blank'
   end
 
   def txid
     return h.middot unless object.txid?
+
     h.link_to object.txid, object.blockchain.explore_transaction_url(object.txid), target: '_blank'
   end
 

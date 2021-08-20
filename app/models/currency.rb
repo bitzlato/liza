@@ -7,14 +7,13 @@ class Currency < ApplicationRecord
   OPTIONS_ATTRIBUTES = %i[erc20_contract_address gas_limit gas_price].freeze
   OPTIONS_ATTRIBUTES.each do |attribute|
     define_method attribute do
-      self.options[attribute.to_s]
+      options[attribute.to_s]
     end
 
     define_method "#{attribute}=".to_sym do |value|
       self.options = options.merge(attribute.to_s => value)
     end
   end
-
 
   attr_readonly :id,
                 :type,
