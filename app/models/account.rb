@@ -72,12 +72,12 @@ class Account < ApplicationRecord
   end
 
   def total_deposit_amount
-    deposits.completed.where(currency_id: currency_id).sum(:amount)
+    deposits.success.where(currency_id: currency_id).sum(:amount)
   end
   memoize :total_deposit_amount
 
   def total_withdraw_amount
-    withdraws.completed.where(currency_id: currency_id).sum(:amount)
+    withdraws.success.where(currency_id: currency_id).sum(:amount)
   end
   memoize :total_withdraw_amount
 
