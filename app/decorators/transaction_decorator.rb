@@ -26,7 +26,7 @@ class TransactionDecorator < ApplicationDecorator
   private
 
   def address_owner(address)
-    PaymentAddress.find_by(address: address) || Wallet.find_by(address: address)
+    PaymentAddress.find_by_address(address) || Wallet.find_by_address(address)
   end
 
   def present_owner(address_owner)

@@ -76,6 +76,10 @@ class Wallet < ApplicationRecord
     def withdraw_wallet(currency_id)
       Wallet.active.withdraw.with_currency(currency_id).take
     end
+
+    def find_by_address(address)
+      where("lower(address)=?", address).take
+    end
   end
 
   def available_balances
