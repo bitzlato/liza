@@ -7,7 +7,9 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'На кошельках P2P и горячих нодах'
       th.text-right
         div Операционные активы
-        = column_tip 'Разница с системными счетами'
+        = column_tip 'Разница с системными счетами (кошельки + депозиты)'
+      th.text-right
+        div На депозитных счетах
       th.text-right 
         div Расчётный баланс на счетах
         = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии'
@@ -40,7 +42,10 @@ table.table.table-condensed.table-striped.table-cross-row
           = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_assets_credit, currency
           .text-small.mt-2
-            = format_divergence system_balance - total_operations_assets_credit, currency if system_balance.present?
+            = format_divergence system_balance - total_operations_assets_credit + PaymentAddress.total_balances[currency_id.downcase].to_d, currency if system_balance.present?
+        td.text-right
+          = link_to payment_addresses_path(q: { currency_id_eq: currency_id }) do
+            = format_money PaymentAddress.total_balances[currency_id.downcase] || 0, currency_id
         td.text-right 
           = format_money total_deposit - total_withdraw - total_operations_amount, currency_id
           div.text-small.mt-2

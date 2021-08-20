@@ -15,10 +15,11 @@ class PaymentAddress < ApplicationRecord
   # LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"
 
   def self.total_balances
-    PaymentAddress
+    RequestStore.store[:total_payment_addresses_balances] ||=
+      PaymentAddress
       .connection
       .execute('SELECT "key", sum("val"::decimal) FROM payment_addresses,  LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"')
-      .each_with_object({}) { |r, a| a[r['key']] = r['sum'] }
+      .each_with_object({}) { |r, a| a[r['key'].downcase] = r['sum'] }
   end
 
   def self.total_currencies
