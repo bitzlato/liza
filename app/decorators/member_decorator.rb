@@ -20,7 +20,9 @@ class MemberDecorator < ApplicationDecorator
 
   def account(currency)
     currency = Currency.find_by(id: currency)
-    h.render 'account_brief', account: member.get_account(currency)
+    account = member.get_account(currency)
+    return h.middot if account.nil?
+    h.render 'account_brief', account: account
   end
 
   def method_missing(meth, *args, &block)
