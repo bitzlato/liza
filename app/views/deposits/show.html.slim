@@ -1,8 +1,6 @@
 .py-3= back_link url_for(record.class)
 h1= record.model_name.human + ' #' + record.id.to_s
 hr
-.row
-  .col-md-3
-    = render 'attributes', item: record
-  .col-md-9
-    = render 'operations', operations: record.operations
+= render 'attributes', item: record
+hr
+= render 'operations', operations: record.operations
