@@ -10,6 +10,6 @@ class WalletDecorator < ApplicationDecorator
   end
 
   def address
-    [h.link_to(object.address, object.address_url, target: '_blank'), present_owner(address_owner(object.address))].join('<br>').html_safe
+    h.link_to(object.address, object.address_url, target: '_blank'
   end
 end
