@@ -5,9 +5,14 @@
 class Transaction < ApplicationRecord
   # == Constants ============================================================
 
-  STATUSES = %w[pending succeed].freeze
+  PENDING_STATUS = 'pending'
+  SUCCESS_STATUS = 'success'
+  FAIL_STATUS = 'failed'
+  STATUSES = [PENDING_STATUS, SUCCESS_STATUS, FAIL_STATUS].freeze
 
-  # == Relationships ========================================================
+  STATUSES.each do |status|
+    scope status, -> { where status: status }
+  end
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency, foreign_key: :currency_id
