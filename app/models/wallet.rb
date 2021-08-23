@@ -78,7 +78,7 @@ class Wallet < ApplicationRecord
     end
 
     def find_by_address(address)
-      where('lower(address)=?', address).take
+      where('lower(address)=?', address.downcase).take
     end
   end
 
