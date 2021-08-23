@@ -6,12 +6,18 @@ class TransactionDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id currency reference txid from_address to_address amount block_number txout status options fee]
+    %i[id blockchain currency reference txid txout from_address to_address amount block_number status options fee accountable_fee]
   end
 
   def from_address
     [h.link_to(object.from_address, object.blockchain.explore_address_url(object.from_address), target: '_blank'),
      present_owner(address_owner(object.from_address))].join('<br>').html_safe
+  end
+
+  def blockchain
+    h.link_to h.blockchain_url(object.blockchain) do
+      h.content_tag :span, object.blockchain.key, class: 'text-nowrap'
+    end
   end
 
   def to_address
@@ -22,6 +28,10 @@ class TransactionDecorator < ApplicationDecorator
 
   def txid
     h.link_to object.txid, object.transaction_url, target: '_blank'
+  end
+
+  def reference
+    h.link_to object.reference, h.url_for(object.reference)
   end
 
   def status

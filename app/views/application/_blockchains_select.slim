@@ -1,0 +1,7 @@
+ul.nav.nav-pills.mb-3
+  li.nav-item
+    = link_to t('.all'), url_for(q: request.query_parameters.fetch(:q, {}).except(:blockchain_id_eq)), class: active_class('nav-link', blockchain.nil?)
+  - Blockchain.order(:key).each do |cur|
+    li.nav-item
+      = link_to cur.key.upcase, 
+        url_for(q: request.query_parameters.fetch(:q, {}).merge(blockchain_id_eq: cur.id)), class: active_class('nav-link', blockchain == cur)

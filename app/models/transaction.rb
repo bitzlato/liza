@@ -15,11 +15,11 @@ class Transaction < ApplicationRecord
   end
 
   # TODO fee payed by us
-  scope :payed_fee, -> { all }
+  scope :accountable_fee, -> { where accountable_fee: true }
 
   belongs_to :reference, polymorphic: true
-  belongs_to :currency, foreign_key: :currency_id
-  has_one :blockchain, through: :currency
+  belongs_to :currency
+  belongs_to :blockchain
 
   def transaction_url
     blockchain&.explore_transaction_url txid

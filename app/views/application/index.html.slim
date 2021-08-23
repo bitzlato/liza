@@ -1,10 +1,12 @@
 h1= paginated_records.model_name.human_plural
+- if respond_to? :blockchain
+  = render 'blockchains_select' 
 - if respond_to? :currency
-  .float-left= render 'currencies_select' 
+  = render 'currencies_select' 
 - if respond_to? :market
-  .float-left= render 'markets_select' 
+  = render 'markets_select' 
 - if q.klass.ransackable_scopes.include? :completed 
-  .float-left= render 'deposit_status_select' 
+  = render 'deposit_status_select' 
 .clearfix
 = render index_form
 - if respond_to? :account

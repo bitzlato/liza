@@ -4,5 +4,6 @@
 
 class TransactionsController < ResourcesController
   include CurrencySupport
+  include BlockchainSupport
   layout 'fluid'
 end
