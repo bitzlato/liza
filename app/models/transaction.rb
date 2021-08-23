@@ -14,6 +14,9 @@ class Transaction < ApplicationRecord
     scope status, -> { where status: status }
   end
 
+  # TODO fee payed by us
+  scope :payed_fee, -> { all }
+
   belongs_to :reference, polymorphic: true
   belongs_to :currency, foreign_key: :currency_id
   has_one :blockchain, through: :currency

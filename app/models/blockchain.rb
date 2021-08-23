@@ -3,6 +3,8 @@
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
 class Blockchain < ApplicationRecord
+  include BlockchainExploring
+
   has_many :wallets
   has_many :withdraws
   has_many :currencies
@@ -16,23 +18,5 @@ class Blockchain < ApplicationRecord
 
   def to_s
     key
-  end
-
-  def explore_contract_address_url(contract_address)
-    return if contract_address.nil?
-
-    explorer_contract_address.to_s.gsub(contract_address.to_s, contract_address)
-  end
-
-  def explore_address_url(address)
-    return if address.nil?
-
-    explorer_address.to_s.gsub(address.to_s, address)
-  end
-
-  def explore_transaction_url(txid)
-    return if txid.nil?
-
-    explorer_transaction.to_s.gsub(txid.to_s, txid)
   end
 end
