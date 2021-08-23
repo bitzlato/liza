@@ -7,10 +7,8 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'На кошельках P2P и горячих нодах'
       th.text-right
         div Операционные активы
-        = column_tip 'Разница с системными счетами (кошельки + депозиты)'
-      th.text-right
-        div Комиссия блокчейну
-        = column_tip 'Вся комиссия уплаченная с системных и депозитных кошельков'
+        = column_tip 'Разница с системными счетами'
+        div= column_tip '(кошельки + на_депозитных_счетах - блокчейн_комиссии = системные активы)'
       th.text-right
         div На депозитных счетах
       th.text-right 
@@ -42,12 +40,22 @@ table.table.table-condensed.table-striped.table-cross-row
           = link_to wallets_path do
             = format_money system_balance, currency
         td.text-right 
+          - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
           = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_assets_credit, currency
+          div.text-small.mt-2
+            = link_to wallets_path do
+              = format_money system_balance, currency
+            span.ml-2.mr-2= '+'
+            = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id }) do
+              = format_money paymand_address_amounts, currency
+            span.ml-2.mr-2= '-'
+            = link_to transactions_path(q: { accountable_fee_eq: true, blockchain_id_eq: currency.blockchain_id }) do
+              = format_money accountable_fee[currency_id].to_d, currency_id
+            span.ml-2.mr-2= '='
+            = format_money (system_balance + paymand_address_amounts - accountable_fee[currency_id].to_d), currency if system_balance.present?
           .text-small.mt-2
-            = format_divergence system_balance - total_operations_assets_credit + PaymentAddress.total_balances[currency_id.downcase].to_d, currency if system_balance.present?
-        td.text-right
-          = format_money accountable_fee[currency_id], currency_id
+            = format_divergence system_balance - total_operations_assets_credit + paymand_address_amounts - accountable_fee[currency_id].to_d, currency if system_balance.present?
         td.text-right
           = link_to payment_addresses_path(q: { currency_id_eq: currency_id }) do
             = format_money PaymentAddress.total_balances[currency_id.downcase] || 0, currency_id
