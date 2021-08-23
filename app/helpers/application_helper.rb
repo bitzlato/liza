@@ -51,6 +51,15 @@ module ApplicationHelper
     end
   end
 
+  def transaction_status(status)
+    css_class = {
+      'success' => 'badge badge-success',
+      'failure' => 'badge badge-warning',
+      'pending' => 'badge badge-secondary',
+    }
+    content_tag :span, status, class: css_class[status] || "badge badge-danger"
+  end
+
   def download_link(url = nil, size = nil)
     title = size.present? ? t('helpers.download_with_size', ext: 'xlsx', size: size) : t('helpers.download_without_size', ext: 'xlsx')
     link_to url || url_for(q: params.fetch(:q, {}).permit!.to_hash, format: :xlsx), class: 'text-nowrap' do

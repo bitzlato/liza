@@ -24,6 +24,10 @@ class TransactionDecorator < ApplicationDecorator
     h.link_to object.txid, object.transaction_url, target: '_blank'
   end
 
+  def status
+    h.transaction_status object.status
+  end
+
   private
 
   def address_owner(address)
