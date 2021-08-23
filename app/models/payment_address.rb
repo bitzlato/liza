@@ -4,6 +4,8 @@
 
 # TODO: Rename to DepositAddress
 class PaymentAddress < ApplicationRecord
+  extend PaymentAddressTotals
+
   belongs_to :member
   belongs_to :blockchain
 
@@ -13,22 +15,6 @@ class PaymentAddress < ApplicationRecord
   # SELECT "key", sum("val"::decimal)
   # FROM payment_addresses,
   # LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"
-
-  def self.total_balances
-    RequestStore.store[:total_payment_addresses_balances] ||=
-      PaymentAddress
-      .connection
-      .execute('SELECT "key", sum("val"::decimal) FROM payment_addresses,  LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"')
-      .each_with_object({}) { |r, a| a[r['key'].downcase] = r['sum'] }
-  end
-
-  def self.total_currencies
-    PaymentAddress.group(:currency_id).pluck('jsonb_object_keys(balances) as currency_id')
-  end
-
-  def self.total_balance(currency_id)
-    PaymentAddress.select("sum((balances ->> '#{currency_id.downcase}') :: decimal) as balance").take.attributes['balance']
-  end
 
   def format_address(format)
     format == 'legacy' ? to_legacy_address : to_cash_address
