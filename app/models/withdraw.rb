@@ -54,6 +54,10 @@ class Withdraw < ApplicationRecord
       sum_withdraws_1_month = ActiveRecord::Base.connection.exec_query(squery_1m).to_hash.first['sum'].to_d
       [sum_withdraws_24_hours, sum_withdraws_1_month]
     end
+
+    def find_by_address(address)
+      where('lower(rid)=?', address.downcase).take
+    end
   end
 
   def to_s

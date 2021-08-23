@@ -82,6 +82,10 @@ class Wallet < ApplicationRecord
     end
   end
 
+  def to_s
+    'wallet#' + id.to_s
+  end
+
   def available_balances
     balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end

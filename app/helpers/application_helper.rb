@@ -51,6 +51,27 @@ module ApplicationHelper
     end
   end
 
+  def present_address(address)
+    owner = PaymentAddress.find_by_address(address) || Wallet.find_by_address(address) || Withdraw.find_by_address(address)
+    details = case owner
+             when Wallet
+               link_to wallet_path(owner) do
+                 content_tag(:span, 'wallet', class: 'badge badge-success')
+               end
+             when PaymentAddress
+               link_to payment_address_path(owner) do
+                 content_tag(:span, 'deposit_address', class: 'badge badge-primary')
+               end
+            when Withdraw
+              link_to withdraw_path(owner) do
+                content_tag(:span, 'withdraw', class: 'badge badge-warning')
+              end
+             else
+               content_tag(:span, '???', class: 'badge badge-secondary')
+             end
+    content_tag(:div, address, class: 'text-monospace') + details
+  end
+
   def transaction_status(status)
     css_class = {
       'success' => 'badge badge-success',

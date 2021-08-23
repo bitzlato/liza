@@ -12,8 +12,9 @@ class TransactionDecorator < ApplicationDecorator
   end
 
   def from_address
-    [h.link_to(object.from_address, object.blockchain.explore_address_url(object.from_address), target: '_blank'),
-     present_owner(address_owner(object.from_address))].join('<br>').html_safe
+    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank' do
+      h.present_address object.from_address
+    end
   end
 
   def blockchain
@@ -24,15 +25,17 @@ class TransactionDecorator < ApplicationDecorator
 
   def to_address
     return h.middot if object.to_address.nil?
-    [h.link_to(object.to_address, object.blockchain.explore_address_url(object.to_address), target: '_blank'),
-     present_owner(address_owner(object.to_address))].join('<br>').html_safe
+    h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank' do
+      h.present_address object.to_address
+    end
   end
 
   def txid
-    h.link_to object.txid, object.transaction_url, target: '_blank'
+    h.link_to object.txid, object.transaction_url, target: '_blank', class: 'text-monospace'
   end
 
   def reference
+    return h.middot if object.reference_id.nil?
     h.link_to object.reference, h.url_for(object.reference)
   end
 

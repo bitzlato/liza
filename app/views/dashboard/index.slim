@@ -4,11 +4,10 @@ table.table.table-condensed.table-striped.table-cross-row
       th  Валюта
       th.text-right 
         div Баланс на системных счетах
-        = column_tip 'На кошельках P2P и горячих нодах'
+        = column_tip 'На системных кошельках + на депозитных счетах'
       th.text-right
         div Операционные активы
-        = column_tip 'Разница с системными счетами'
-        div= column_tip '(кошельки + на_депозитных_счетах - блокчейн_комиссии = системные активы)'
+        = column_tip 'Активы - блокчейн_комиссии'
       th.text-right
         div На депозитных счетах
       th.text-right 
@@ -32,30 +31,29 @@ table.table.table-condensed.table-striped.table-cross-row
       - total_operations_amount = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
       - total_operations_assets_credit = currency.operations_assets.sum(:credit) - currency.operations_assets.sum(:debit)
       - adjustments_amount = currency.adjustments.accepted.sum(:amount)
+      - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
+      - system_balance = system_balances.fetch(currency_id, 0)
       tr
         th 
           = format_currency currency_id
         td.text-right 
-          - system_balance = system_balances.fetch(currency_id, nil)
-          = link_to wallets_path do
-            = format_money system_balance, currency
-        td.text-right 
-          - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
-          = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
-            = format_money total_operations_assets_credit, currency
+          = format_money total_balance = (system_balance + paymand_address_amounts), currency
           div.text-small.mt-2
             = link_to wallets_path do
               = format_money system_balance, currency
             span.ml-2.mr-2= '+'
             = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id }) do
               = format_money paymand_address_amounts, currency
+        td.text-right 
+          = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d), currency_id
+          div.text-small.mt-2
+            = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
+              = format_money total_operations_assets_credit, currency
             span.ml-2.mr-2= '-'
             = link_to transactions_path(q: { accountable_fee_eq: true, blockchain_id_eq: currency.blockchain_id }) do
               = format_money accountable_fee[currency_id].to_d, currency_id
-            span.ml-2.mr-2= '='
-            = format_money (system_balance + paymand_address_amounts - accountable_fee[currency_id].to_d), currency if system_balance.present?
           .text-small.mt-2
-            = format_divergence system_balance - total_operations_assets_credit + paymand_address_amounts - accountable_fee[currency_id].to_d, currency if system_balance.present?
+            = format_divergence total_balance - assets_amount, currency 
         td.text-right
           = link_to payment_addresses_path(q: { currency_id_eq: currency_id }) do
             = format_money PaymentAddress.total_balances[currency_id.downcase] || 0, currency_id
