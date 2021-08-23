@@ -6,7 +6,7 @@ class DashboardController < ResourcesController
   layout 'fluid'
   def index
     render locals: {
-      payed_fee: Transaction.payed_fee.group(:fee_currency_id).sum(:fee)
+      accountable_fee: Transaction.accountable_fee.group(:fee_currency_id).sum(:fee)
     }
   end
 end

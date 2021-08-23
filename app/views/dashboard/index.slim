@@ -47,7 +47,7 @@ table.table.table-condensed.table-striped.table-cross-row
           .text-small.mt-2
             = format_divergence system_balance - total_operations_assets_credit + PaymentAddress.total_balances[currency_id.downcase].to_d, currency if system_balance.present?
         td.text-right
-          = format_money payed_fee[currency_id], currency_id
+          = format_money accountable_fee[currency_id], currency_id
         td.text-right
           = link_to payment_addresses_path(q: { currency_id_eq: currency_id }) do
             = format_money PaymentAddress.total_balances[currency_id.downcase] || 0, currency_id
