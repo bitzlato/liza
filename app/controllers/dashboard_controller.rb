@@ -4,5 +4,9 @@
 
 class DashboardController < ResourcesController
   layout 'fluid'
-  def index; end
+  def index
+    render locals: {
+      payed_fee: Transaction.payed_fee.group(:fee_currency_id).sum(:fee)
+    }
+  end
 end
