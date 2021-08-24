@@ -8,13 +8,15 @@ class PaymentAddress < ApplicationRecord
 
   belongs_to :member
   belongs_to :blockchain
+  has_many :currencies, through: :blockchain
 
-  delegate :currencies, :native_currency, to: :blockchain
+  delegate :native_currency, to: :blockchain
 
-  # TODO: migrate to
-  # SELECT "key", sum("val"::decimal)
-  # FROM payment_addresses,
-  # LATERAL jsonb_each_text(balances) AS each(KEY,val) GROUP BY "key"
+  scope :currency_id_eq, ->(currency_id) { joins(:currencies).where(currencies: { id: currency_id } ) }
+
+  def self.ransackable_scopes(auth_object = nil)
+    %w(currency_id_eq)
+  end
 
   def format_address(format)
     format == 'legacy' ? to_legacy_address : to_cash_address
