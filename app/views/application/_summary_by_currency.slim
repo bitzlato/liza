@@ -1,4 +1,4 @@
-table.table.table-bordered.table-condensed.table-narrow
+table.table.table-bordered.table-condensed.table-narrow.table-sm.text-small
   thead.thead-dark
     tr
       - summary[:grouped_by].each do |column|
@@ -24,4 +24,4 @@ table.table.table-bordered.table-condensed.table-narrow
           - value = record[index + summary[:grouped_by].length]
           td.text-right
             = link_to url_for(q: q) do
-              = format_money value, currency_id
+              = format_money value, column == 'sum(fee)' ? find_fee_currency(currency_id) : currency_id
