@@ -1,10 +1,9 @@
 h1= paginated_records.model_name.human_plural
-- if respond_to? :blockchain
-  = render 'blockchains_select' 
-- if respond_to? :currency
-  = render 'currencies_select' 
+= render 'blockchains_select' 
+= render 'currencies_select', currencies: Currency.where(id: Transaction.group(:currency_id).count.keys)
+= render 'state_select', states: model_class.group(:kind).count.keys, key: :kind_eq, value: kind
 .clearfix
-.mb-3= render index_form
+.mb-3= render partial: 'form'
 = render 'summary_by_currency', summary: summary if summary.present? && summary[:rows].present?
 = render 'balances', balances: PaymentAddress.total_balances if paginated_records.model == PaymentAddress
 hr

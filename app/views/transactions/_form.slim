@@ -1,0 +1,12 @@
+= search_form_for q do |f|
+  .float-left.mr-2
+    = f.input :created_at_gteq, input_html: { class: 'datetimepicker' }
+  .float-left.mr-2
+    = f.input :created_at_lt, input_html: { class: 'datetimepicker' }
+  .float-left.mr-2
+    = f.input :block_number_eq, input_html: { class: 'datetimepicker' }
+  = f.input :by_address, as: :string, input_html: { style: 'max-width: 500px' }
+  - if block_given? 
+    = yield f
+  = f.button :submit, class: 'btn btn-primary'
+  = link_to t('reset'), transactions_path, class: 'btn btn-secondary ml-2' if params[:q].present?
