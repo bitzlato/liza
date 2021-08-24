@@ -17,7 +17,7 @@ class Transaction < ApplicationRecord
   # TODO fee payed by us
   scope :accountable_fee, -> { where accountable_fee: true }
   # TODO blockchain normalize
-  scope :by_address, -> (address) { where 'lower(from_address) = ? or lower(to_address) = ?', address, address }
+  scope :by_address, -> (address) { where 'lower(from_address) = ? or lower(to_address) = ?', address.downcase, address.downcase }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
