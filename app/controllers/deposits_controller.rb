@@ -4,5 +4,6 @@
 
 class DepositsController < ResourcesController
   include CurrencySupport
+  include AasmStateSupport
   layout 'fluid'
 end

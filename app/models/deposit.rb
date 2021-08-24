@@ -29,6 +29,11 @@ class Deposit < ApplicationRecord
     ['deposit#', id.to_s, ' ', amount.to_s, ' ', currency_id].join
   end
 
+  def transaction_url
+    return if txid.nil?
+    blockchain&.explore_transaction_url txid
+  end
+
   def account
     member&.get_account(currency)
   end

@@ -61,6 +61,13 @@ class ApplicationDecorator < Draper::Decorator
     end
   end
 
+  def address
+    return h.middot if object.address.nil?
+    h.link_to object.blockchain.explore_address_url(object.address), target: '_blank' do
+      h.present_address object.address
+    end
+  end
+
   def to_address
     return h.middot if object.to_address.nil?
     h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank' do
@@ -69,6 +76,7 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def txid
+    return h.middot if object.txid.nil?
     h.link_to object.txid, object.transaction_url, target: '_blank', class: 'text-monospace'
   end
 

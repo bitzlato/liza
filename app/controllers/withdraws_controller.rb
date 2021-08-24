@@ -4,5 +4,6 @@
 
 class WithdrawsController < ResourcesController
   include CurrencySupport
+  include AasmStateSupport
   layout 'fluid'
 end

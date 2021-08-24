@@ -5,6 +5,8 @@ h1= paginated_records.model_name.human_plural
   = render 'currencies_select' 
 - if respond_to? :market
   = render 'markets_select' 
+- if respond_to? :aasm_state
+  = render 'state_select', states: model_class.group(:aasm_state).count.keys
 - if q.klass.ransackable_scopes.include? :completed 
   = render 'deposit_status_select' 
 .clearfix
