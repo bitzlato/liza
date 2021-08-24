@@ -25,6 +25,8 @@ class Withdraw < ApplicationRecord
   belongs_to :member, required: true
   belongs_to :blockchain, required: true, touch: false
 
+  has_one :recorded_transaction, through: :blockchain, source: :transactions, class_name: 'Transaction', primary_key: :txid
+
   # Optional beneficiary association gives ability to support both in-peatio
   # beneficiaries and managed by third party application.
   belongs_to :beneficiary, optional: true

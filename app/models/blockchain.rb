@@ -9,7 +9,7 @@ class Blockchain < ApplicationRecord
   has_many :withdraws
   has_many :currencies
   has_many :payment_addresses
-  has_many :transactions, through: :currencies
+  has_many :transactions
   has_many :deposits, through: :currencies
 
   def native_currency

@@ -50,39 +50,63 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def from_address
-    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank' do
+    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank', cass: 'text-monospace' do
       h.present_address object.from_address
     end
   end
 
   def blockchain
     h.link_to h.blockchain_url(object.blockchain) do
-      h.content_tag :span, object.blockchain.key, class: 'text-nowrap'
+      h.content_tag :span, object.blockchain.key, class: 'text-nowrap text-monospace'
     end
   end
 
   def address
     return h.middot if object.address.nil?
-    h.link_to object.blockchain.explore_address_url(object.address), target: '_blank' do
+    h.link_to object.blockchain.explore_address_url(object.address), target: '_blank', class: 'text-monospace' do
       h.present_address object.address
     end
   end
 
   def to_address
     return h.middot if object.to_address.nil?
-    h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank' do
+    h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank', class: 'text-monospace' do
       h.present_address object.to_address
     end
   end
 
+  def rid
+    return h.middot unless object.rid?
+
+    h.link_to object.rid, object.blockchain.explore_address_url(object.rid), target: '_blank', class: 'text-monospace'
+  end
+
   def txid
-    return h.middot if object.txid.nil?
-    h.link_to object.txid, object.transaction_url, target: '_blank', class: 'text-monospace'
+    present_txid object.txid
+  end
+
+  def txid_with_recorded_transaction(txid)
+    return h.middot unless txid?
+    link = present_txid(txid)
+    buffer = if object.recorded_transaction.present?
+      h.link_to('tx in db #'+object.recorded_transaction.id.to_s, h.transaction_path(object.recorded_transaction.id), class: 'badge badge-primary')
+    else
+      h.content_tag :span, 'not found in db', class: 'badge badge-warning'
+    end
+    link << h.content_tag( :div, buffer )
+    link
   end
 
   def reference
     return h.middot if object.reference_id.nil?
     h.link_to object.reference, h.url_for(object.reference)
+  end
+
+  private
+
+  def present_txid(txid)
+    return h.middot if txid.nil?
+    h.link_to txid, object.transaction_url, target: '_blank', class: 'text-monospace'
   end
 
 end
