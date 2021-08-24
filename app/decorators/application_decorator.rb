@@ -37,6 +37,10 @@ class ApplicationDecorator < Draper::Decorator
     h.content_tag :code, object.data.as_json, class: 'text-small'
   end
 
+  def options
+    h.content_tag :span, object.options.as_json, class: 'text-small text-muted text-monospace'
+  end
+
   def updated_at
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.updated_at

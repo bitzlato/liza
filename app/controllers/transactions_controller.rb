@@ -6,4 +6,10 @@ class TransactionsController < ResourcesController
   include CurrencySupport
   include BlockchainSupport
   layout 'fluid'
+
+  private
+
+  def default_sort
+    'block_number desc'
+  end
 end

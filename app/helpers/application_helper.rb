@@ -55,6 +55,21 @@ module ApplicationHelper
     end
   end
 
+  def present_kind(kind)
+    css_class = {
+      'withdraw' => 'badge badge-primary',
+      'gas_refuel' => 'badge badge-info',
+      'refill' => 'badge badge-info',
+      'deposit' => 'badge badge-success',
+      'collect' => 'badge badge-success',
+      'unknown' => 'badge badge-warning',
+      'internal' => 'badge badge-secondary',
+      'unauthorized_withdraw' => 'badge badge-warning',
+      'none' => 'badge badge-secondary',
+    }
+    content_tag :span, kind, class: css_class[kind] || "badge badge-danger"
+  end
+
   def present_address(address)
     owner = PaymentAddress.find_by_address(address) || Wallet.find_by_address(address) || Withdraw.find_by_address(address)
     details = case owner
@@ -64,14 +79,14 @@ module ApplicationHelper
                end
              when PaymentAddress
                link_to payment_address_path(owner) do
-                 content_tag(:span, 'deposit_address', class: 'badge badge-primary')
+                 content_tag(:span, 'our deposit address', class: 'badge badge-primary')
                end
             when Withdraw
               link_to withdraw_path(owner) do
-                content_tag(:span, 'withdraw', class: 'badge badge-warning')
+                content_tag(:span, 'external withdraw address', class: 'badge badge-secondary')
               end
              else
-               content_tag(:span, '???', class: 'badge badge-secondary')
+               content_tag(:span, 'unknown external address', class: 'badge badge-secondary')
              end
     content_tag(:div, address, class: 'text-monospace') + details
   end
