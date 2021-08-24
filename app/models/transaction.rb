@@ -16,10 +16,16 @@ class Transaction < ApplicationRecord
 
   # TODO fee payed by us
   scope :accountable_fee, -> { where accountable_fee: true }
+  # TODO blockchain normalize
+  scope :by_address, -> (address) { where 'lower(from_address) = ? or lower(to_address) = ?', address, address }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
   belongs_to :blockchain
+
+  def self.ransackable_scopes(auth_object = nil)
+    %w(by_address)
+  end
 
   def transaction_url
     blockchain&.explore_transaction_url txid

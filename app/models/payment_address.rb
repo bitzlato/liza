@@ -31,4 +31,13 @@ class PaymentAddress < ApplicationRecord
   def address_url
     blockchain&.explore_address_url address
   end
+
+  def transactions
+    if address.nil?
+      []
+    else
+      # TODO blockchain normalize
+      blockchain&.transactions.by_address(address.downcase)
+    end
+  end
 end

@@ -53,6 +53,11 @@ class ApplicationDecorator < Draper::Decorator
     end
   end
 
+  def transactions_count
+    # TODO normalize address
+    h.link_to object.transactions.count, h.transactions_path(q: { by_address: object.address} )
+  end
+
   def from_address
     h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank', cass: 'text-monospace' do
       h.present_address object.from_address
