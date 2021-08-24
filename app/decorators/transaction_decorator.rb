@@ -11,34 +11,6 @@ class TransactionDecorator < ApplicationDecorator
     is_followed]
   end
 
-  def from_address
-    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank' do
-      h.present_address object.from_address
-    end
-  end
-
-  def blockchain
-    h.link_to h.blockchain_url(object.blockchain) do
-      h.content_tag :span, object.blockchain.key, class: 'text-nowrap'
-    end
-  end
-
-  def to_address
-    return h.middot if object.to_address.nil?
-    h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank' do
-      h.present_address object.to_address
-    end
-  end
-
-  def txid
-    h.link_to object.txid, object.transaction_url, target: '_blank', class: 'text-monospace'
-  end
-
-  def reference
-    return h.middot if object.reference_id.nil?
-    h.link_to object.reference, h.url_for(object.reference)
-  end
-
   def status
     h.transaction_status object.status
   end
