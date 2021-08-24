@@ -12,6 +12,6 @@ module AasmStateSupport
   private
 
   def aasm_state
-    params.dig(:q, :aasm_state_id_eq)
+    params.dig(:q, :aasm_state_eq)
   end
 end
