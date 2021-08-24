@@ -2,7 +2,7 @@ h1= paginated_records.model_name.human_plural
 - if respond_to? :blockchain
   = render 'blockchains_select' 
 - if respond_to? :currency
-  = render 'currencies_select', currencies: Currency.order(:id)
+  = render 'currencies_select', currencies: Currency.where(id: model_class.group(:currency_id).count.keys)
 - if respond_to? :market
   = render 'markets_select' 
 - if respond_to? :aasm_state

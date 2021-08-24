@@ -4,6 +4,7 @@
 
 module Operations
   class LiabilitiesController < ResourcesController
+    include CurrencySupport
     layout 'fluid'
   end
 end
