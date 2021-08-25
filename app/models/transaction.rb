@@ -18,6 +18,8 @@ class Transaction < ApplicationRecord
   scope :accountable_fee, -> { where from: %i[wallet deposit] }
   # TODO: blockchain normalize
   scope :by_address, ->(address) { where 'lower(from_address) = ? or lower(to_address) = ?', address.downcase, address.downcase }
+  scope :by_to, ->(value) { where to: value }
+  scope :by_from, ->(value) { where from: value }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
@@ -31,7 +33,7 @@ class Transaction < ApplicationRecord
   enum from: ADDRESS_KINDS, _prefix: true
 
   def self.ransackable_scopes(_auth_object = nil)
-    %w[by_address accountable_fee]
+    %w[by_address accountable_fee by_to by_from]
   end
 
   def transaction_url

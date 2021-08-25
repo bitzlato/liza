@@ -1,7 +1,9 @@
+h4= key
+- value = params.dig(:q, key)
 ul.nav.nav-pills.mb-3
   li.nav-item
     = link_to t('.all'), url_for(q: request.query_parameters.fetch(:q, {}).except(key)), class: active_class('nav-link', value.nil?)
   - states.each do |state|
     li.nav-item
-      = link_to state || ':nil', 
+      = link_to state || 'NULL', 
         url_for(q: request.query_parameters.fetch(:q, {}).merge( key => state)), class: active_class('nav-link', value == state)
