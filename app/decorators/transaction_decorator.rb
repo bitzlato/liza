@@ -7,7 +7,7 @@ class TransactionDecorator < ApplicationDecorator
 
   def self.table_columns
     %i[id blockchain currency reference kind txid txout from_address from to_address to
-    kind amount block_number status options fee accountable_fee created_at updated_at
+    kind amount block_number status options fee created_at updated_at
     is_followed]
   end
 
