@@ -3,5 +3,5 @@ ul.nav.nav-pills.mb-3
     = link_to t('.all'), url_for(q: request.query_parameters.fetch(:q, {}).except(key)), class: active_class('nav-link', value.nil?)
   - states.each do |state|
     li.nav-item
-      = link_to state, 
+      = link_to state || ':nil', 
         url_for(q: request.query_parameters.fetch(:q, {}).merge( key => state)), class: active_class('nav-link', value == state)
