@@ -20,6 +20,8 @@ class Transaction < ApplicationRecord
   scope :by_address, ->(address) { where 'lower(from_address) = ? or lower(to_address) = ?', address.downcase, address.downcase }
   scope :by_to, ->(value) { where to: value }
   scope :by_from, ->(value) { where from: value }
+  scope :by_txid, ->(value) { where txid: value }
+  scope :by_txout, ->(value) { where txout: value }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
@@ -33,7 +35,7 @@ class Transaction < ApplicationRecord
   enum from: ADDRESS_KINDS, _prefix: true
 
   def self.ransackable_scopes(_auth_object = nil)
-    %w[by_address accountable_fee by_to by_from]
+    %w[by_address accountable_fee by_to by_from by_txid by_txout]
   end
 
   def transaction_url

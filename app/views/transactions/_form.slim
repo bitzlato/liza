@@ -6,6 +6,8 @@
   .float-left.mr-2
     = f.input :block_number_eq, input_html: { class: 'datetimepicker' }
   = f.input :by_address, as: :string, input_html: { style: 'max-width: 500px' }
+  = f.input :by_txid, as: :string, input_html: { style: 'max-width: 800px' }
+  = f.input :by_txout, as: :numeric, input_html: { style: 'max-width: 100px' }
   - if block_given? 
     = yield f
   = f.button :submit, class: 'btn btn-primary'
