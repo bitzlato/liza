@@ -8,6 +8,7 @@
   = f.input :by_address, as: :string, input_html: { style: 'max-width: 500px' }
   = f.input :by_txid, as: :string, input_html: { style: 'max-width: 800px' }
   = f.input :by_txout, as: :numeric, input_html: { style: 'max-width: 100px' }
+  = f.input :reference_type_eq, collection: Transacstion.group(:reference_type).count.keys
   - if block_given? 
     = yield f
   = f.button :submit, class: 'btn btn-primary'

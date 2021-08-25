@@ -10,14 +10,14 @@ module BlockchainExploring
   end
 
   def explore_contract_address_url(contract_address)
-    explorer_contract_address.gsub('#{contract_address}', contract_address)
+    explorer_contract_address.to_s.gsub('#{contract_address}', contract_address)
   end
 
   def explore_address_url(address)
-    explorer_address.gsub('#{address}', address)
+    explorer_address.to_s.gsub('#{address}', address)
   end
 
   def explore_transaction_url(txid)
-    explorer_transaction.gsub('#{txid}', txid)
+    explorer_transaction.to_s.gsub('#{txid}', txid)
   end
 end
