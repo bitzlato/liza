@@ -91,7 +91,7 @@ class Wallet < ApplicationRecord
   end
 
   def transactions
-    # TODO blockchain normalize
+    # TODO: blockchain normalize
     blockchain.transactions.by_address(address.downcase)
   end
 

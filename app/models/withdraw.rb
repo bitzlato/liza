@@ -68,6 +68,7 @@ class Withdraw < ApplicationRecord
 
   def transaction_url
     return if txid.nil?
+
     blockchain&.explore_transaction_url txid
   end
 

@@ -61,9 +61,9 @@ module ApplicationHelper
       'unknown' => 'badge badge-secondary',
       'wallet' => 'badge badge-warning',
       'absence' => 'badge badge-secondary',
-      nil => 'badge badge-warning',
+      nil => 'badge badge-warning'
     }
-    content_tag :span, kind || :null, class: css_class[kind] || "badge badge-danger"
+    content_tag :span, kind || :null, class: css_class[kind] || 'badge badge-danger'
   end
 
   def present_kind(kind)
@@ -77,39 +77,41 @@ module ApplicationHelper
       'internal' => 'badge badge-secondary',
       'unauthorized_withdraw' => 'badge badge-warning',
       'none' => 'badge badge-secondary',
-      nil => 'badge badge-warning',
+      nil => 'badge badge-warning'
     }
-    content_tag :span, kind || :null, class: css_class[kind] || "badge badge-danger"
+    content_tag :span, kind || :null, class: css_class[kind] || 'badge badge-danger'
   end
 
+  # rubocop:disable Metrics/MethodLength
   def present_address(address)
     owner = PaymentAddress.find_by_address(address) || Wallet.find_by_address(address) || Withdraw.find_by_address(address)
     details = case owner
-             when Wallet
-               link_to wallet_path(owner) do
-                 content_tag(:span, 'wallet', class: 'badge badge-success')
-               end
-             when PaymentAddress
-               link_to payment_address_path(owner) do
-                 content_tag(:span, 'our deposit address', class: 'badge badge-primary')
-               end
-            when Withdraw
-              link_to withdraw_path(owner) do
-                content_tag(:span, 'external withdraw address', class: 'badge badge-secondary')
+              when Wallet
+                link_to wallet_path(owner) do
+                  content_tag(:span, 'wallet', class: 'badge badge-success')
+                end
+              when PaymentAddress
+                link_to payment_address_path(owner) do
+                  content_tag(:span, 'our deposit address', class: 'badge badge-primary')
+                end
+              when Withdraw
+                link_to withdraw_path(owner) do
+                  content_tag(:span, 'external withdraw address', class: 'badge badge-secondary')
+                end
+              else
+                content_tag(:span, 'unknown external address', class: 'badge badge-secondary')
               end
-             else
-               content_tag(:span, 'unknown external address', class: 'badge badge-secondary')
-             end
     content_tag(:div, address, class: 'text-monospace') + details
   end
+  # rubocop:enable Metrics/MethodLength
 
   def transaction_status(status)
     css_class = {
       'success' => 'badge badge-success',
       'failure' => 'badge badge-warning',
-      'pending' => 'badge badge-secondary',
+      'pending' => 'badge badge-secondary'
     }
-    content_tag :span, status, class: css_class[status] || "badge badge-danger"
+    content_tag :span, status, class: css_class[status] || 'badge badge-danger'
   end
 
   def download_link(url = nil, size = nil)

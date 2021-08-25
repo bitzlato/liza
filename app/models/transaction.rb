@@ -14,24 +14,24 @@ class Transaction < ApplicationRecord
     scope status, -> { where status: status }
   end
 
-  # TODO fee payed by us
+  # TODO: fee payed by us
   scope :accountable_fee, -> { where from: %i[wallet deposit] }
-  # TODO blockchain normalize
-  scope :by_address, -> (address) { where 'lower(from_address) = ? or lower(to_address) = ?', address.downcase, address.downcase }
+  # TODO: blockchain normalize
+  scope :by_address, ->(address) { where 'lower(from_address) = ? or lower(to_address) = ?', address.downcase, address.downcase }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
   belongs_to :blockchain
 
-  KINDS = %w(refill internal gas_refuel withdraw unauthorized_withdraw deposit collection unknown)
+  KINDS = %w[refill internal gas_refuel withdraw unauthorized_withdraw deposit collection unknown].freeze
   enum kind: KINDS
 
-  ADDRESS_KINDS = { unknown: 1, wallet: 2, deposit: 3, absence: 4 }
+  ADDRESS_KINDS = { unknown: 1, wallet: 2, deposit: 3, absence: 4 }.freeze
   enum to: ADDRESS_KINDS, _prefix: true
   enum from: ADDRESS_KINDS, _prefix: true
 
-  def self.ransackable_scopes(auth_object = nil)
-    %w(by_address accountable_fee)
+  def self.ransackable_scopes(_auth_object = nil)
+    %w[by_address accountable_fee]
   end
 
   def transaction_url

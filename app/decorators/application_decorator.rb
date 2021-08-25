@@ -54,8 +54,8 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def transactions_count
-    # TODO normalize address
-    h.link_to object.transactions.count, h.transactions_path(q: { by_address: object.address} )
+    # TODO: normalize address
+    h.link_to object.transactions.count, h.transactions_path(q: { by_address: object.address })
   end
 
   def from_address
@@ -72,6 +72,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def address
     return h.middot if object.address.nil?
+
     h.link_to object.blockchain.explore_address_url(object.address), target: '_blank', class: 'text-monospace' do
       h.present_address object.address
     end
@@ -79,6 +80,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def to_address
     return h.middot if object.to_address.nil?
+
     h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank', class: 'text-monospace' do
       h.present_address object.to_address
     end
@@ -96,18 +98,20 @@ class ApplicationDecorator < Draper::Decorator
 
   def txid_with_recorded_transaction(txid)
     return h.middot unless txid?
+
     link = present_txid(txid)
     buffer = if object.recorded_transaction.present?
-      h.link_to('tx in db #'+object.recorded_transaction.id.to_s, h.transaction_path(object.recorded_transaction.id), class: 'badge badge-primary')
-    else
-      h.content_tag :span, 'not found in db', class: 'badge badge-warning'
-    end
-    link << h.content_tag( :div, buffer )
+               h.link_to('tx in db #' + object.recorded_transaction.id.to_s, h.transaction_path(object.recorded_transaction.id), class: 'badge badge-primary')
+             else
+               h.content_tag :span, 'not found in db', class: 'badge badge-warning'
+             end
+    link << h.content_tag(:div, buffer)
     link
   end
 
   def reference
     return h.middot if object.reference_id.nil?
+
     h.link_to object.reference, h.url_for(object.reference)
   end
 
@@ -115,7 +119,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def present_txid(txid)
     return h.middot if txid.nil?
+
     h.link_to txid, object.transaction_url, target: '_blank', class: 'text-monospace'
   end
-
 end

@@ -12,10 +12,10 @@ class PaymentAddress < ApplicationRecord
 
   delegate :native_currency, to: :blockchain
 
-  scope :currency_id_eq, ->(currency_id) { joins(:currencies).where(currencies: { id: currency_id } ) }
+  scope :currency_id_eq, ->(currency_id) { joins(:currencies).where(currencies: { id: currency_id }) }
 
-  def self.ransackable_scopes(auth_object = nil)
-    %w(currency_id_eq)
+  def self.ransackable_scopes(_auth_object = nil)
+    %w[currency_id_eq]
   end
 
   def format_address(format)
@@ -38,8 +38,10 @@ class PaymentAddress < ApplicationRecord
     if address.nil?
       []
     else
-      # TODO blockchain normalize
-      blockchain&.transactions.by_address(address.downcase)
+      return if blockchain.nil?
+
+      # TODO: blockchain normalize
+      blockchain.transactions.by_address(address.downcase)
     end
   end
 end

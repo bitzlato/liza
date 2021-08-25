@@ -16,4 +16,3 @@ module BlockchainSupport
     Blockchain.find_by(id: blockchain_id) || raise(HumanizedError, "No such blockchain #{blockchain_id}") if blockchain_id.present?
   end
 end
-
