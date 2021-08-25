@@ -95,6 +95,10 @@ class Wallet < ApplicationRecord
     blockchain.transactions.by_address(address.downcase)
   end
 
+  def fee_amount
+    transactions.accountable_fee.sum(:fee)
+  end
+
   def native_currency
     currencies.find { |c| c.parent_id.nil? } || raise("No native currency for wallet id #{id}")
   end

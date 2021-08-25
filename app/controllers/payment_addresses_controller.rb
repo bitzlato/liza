@@ -4,5 +4,6 @@
 
 class PaymentAddressesController < ResourcesController
   include CurrencySupport
+  include BlockchainSupport
   layout 'fluid'
 end

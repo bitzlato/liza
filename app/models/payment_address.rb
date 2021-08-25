@@ -34,11 +34,15 @@ class PaymentAddress < ApplicationRecord
     blockchain&.explore_address_url address
   end
 
+  def fee_amount
+    transactions.accountable_fee.sum(:fee)
+  end
+
   def transactions
     if address.nil?
-      []
+      Transaction.none
     else
-      return if blockchain.nil?
+      return Transaction.none if blockchain.nil?
 
       # TODO: blockchain normalize
       blockchain.transactions.by_address(address.downcase)
