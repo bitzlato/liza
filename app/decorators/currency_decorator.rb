@@ -8,7 +8,7 @@ class CurrencyDecorator < ApplicationDecorator
   def self.table_columns
     %i[
       id visible position name parent withdraw_limit_24h deposit_enabled
-      withdrawal_enabled enable_invoice blockchain contract_address subunits precision
+      withdrawal_enabled blockchain contract_address subunits precision
       min_deposit_amount min_withdraw_amount min_collection_amount withdraw_fee deposit_fee gas_limit gas_price
     ]
   end
