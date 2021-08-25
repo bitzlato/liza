@@ -1,0 +1,2 @@
+class TransactionComment < ReportsRecord
+end
