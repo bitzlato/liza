@@ -31,7 +31,7 @@ class Transaction < ApplicationRecord
   enum from: ADDRESS_KINDS, _prefix: true
 
   def self.ransackable_scopes(auth_object = nil)
-    %w(by_address)
+    %w(by_address accountable_fee)
   end
 
   def transaction_url
