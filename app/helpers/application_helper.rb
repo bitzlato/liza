@@ -55,19 +55,31 @@ module ApplicationHelper
     end
   end
 
+  def present_address_kind(kind)
+    css_class = {
+      'deposit' => 'badge badge-success',
+      'unknown' => 'badge badge-secondary',
+      'wallet' => 'badge badge-warning',
+      'absence' => 'badge badge-secondary',
+      nil => 'badge badge-warning',
+    }
+    content_tag :span, kind || :null, class: css_class[kind] || "badge badge-danger"
+  end
+
   def present_kind(kind)
     css_class = {
       'withdraw' => 'badge badge-primary',
       'gas_refuel' => 'badge badge-info',
       'refill' => 'badge badge-info',
       'deposit' => 'badge badge-success',
-      'collect' => 'badge badge-success',
+      'collection' => 'badge badge-success',
       'unknown' => 'badge badge-warning',
       'internal' => 'badge badge-secondary',
       'unauthorized_withdraw' => 'badge badge-warning',
       'none' => 'badge badge-secondary',
+      nil => 'badge badge-warning',
     }
-    content_tag :span, kind, class: css_class[kind] || "badge badge-danger"
+    content_tag :span, kind || :null, class: css_class[kind] || "badge badge-danger"
   end
 
   def present_address(address)

@@ -6,9 +6,17 @@ class TransactionDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id blockchain currency reference kind txid txout from_address to_address
-    amount block_number status options fee accountable_fee created_at updated_at
+    %i[id blockchain currency reference kind txid txout from_address from to_address to
+    kind amount block_number status options fee accountable_fee created_at updated_at
     is_followed]
+  end
+
+  def to
+    h.present_address_kind object.to
+  end
+
+  def from
+    h.present_address_kind object.from
   end
 
   def status
