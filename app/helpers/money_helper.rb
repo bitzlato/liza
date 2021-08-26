@@ -13,13 +13,13 @@ module MoneyHelper
     end
   end
 
-  def format_divergence(amount, currency)
+  def format_divergence(amount, currency = nil, options = {})
     if amount.zero?
       content_tag :span, class: 'text-success' do
         t('helpers.no_divergence')
       end
     else
-      format_money amount, currency, css_class: 'text-warning', tooltip: 'Должно быть 0'
+      format_money amount, currency, options.reverse_merge(css_class: 'text-warning', tooltip: 'Должно быть 0')
     end
   end
 
