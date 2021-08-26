@@ -6,13 +6,14 @@ table.table.table-condensed.table-striped.table-cross-row
         div Баланс на системных счетах
         = column_tip 'На системных кошельках + на депозитных счетах'
       th.text-right
-        div Операционные активы
+        div Операционные активы по базе
         = column_tip 'Активы - блокчейн_комиссии'
       th.text-right
-        div На депозитных счетах
+        div Разница между системными счетами и введено-выведено
+        = column_tip 'Депозиты - Списания - Комиссия_сети - Сумма_на_кошельках_и_пользовательских_счетах == 0'
       th.text-right 
         div Расчётный баланс на счетах
-        = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии'
+        = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии_торговые_и_депозит/списания'
       th.text-right 
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
@@ -38,7 +39,7 @@ table.table.table-condensed.table-striped.table-cross-row
           = format_currency currency_id
         td.text-right 
           = format_money total_balance = (system_balance + paymand_address_amounts), currency
-          div.text-small.mt-2
+          .text-small.mt-2
             = link_to wallets_path do
               = format_money system_balance, currency
             span.ml-2.mr-2= '+'
@@ -46,7 +47,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money paymand_address_amounts, currency
         td.text-right 
           = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d), currency_id
-          div.text-small.mt-2
+          .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
               = format_money total_operations_assets_credit, currency
             span.ml-2.mr-2= '-'
@@ -54,12 +55,20 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money accountable_fee[currency_id].to_d, currency_id
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency 
-        td.text-right
-          = link_to payment_addresses_path(q: { currency_id_eq: currency_id }) do
-            = format_money PaymentAddress.total_balances[currency_id.downcase] || 0, currency_id
+        td.text-rigth
+          = format_divergence total_deposit - total_withdraw - accountable_fee[currency_id].to_d - total_balance, currency
+          .text-small.mt-2
+            = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
+              = format_money total_deposit
+            span.ml-2.mr-2= '-'
+            = format_money total_withdraw
+            span.ml-2.mr-2= '-'
+            = format_money accountable_fee[currency_id].to_d
+            span.ml-2.mr-2= '-'
+            = format_money total_balance
         td.text-right 
           = format_money total_deposit - total_withdraw - total_operations_amount, currency_id
-          div.text-small.mt-2
+          .text-small.mt-2
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
               = format_money total_deposit, currency_id
             span.ml-2.mr-2= '-'
