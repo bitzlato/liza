@@ -18,7 +18,6 @@ class Deposit < ApplicationRecord
   belongs_to :currency, required: true
   belongs_to :member, required: true
   belongs_to :blockchain
-  has_one :recorded_transaction, through: :blockchain, source: :transactions, class_name: 'Transaction', primary_key: :txid
 
   scope :success, -> { completed }
   scope :completed, -> { where aasm_state: COMPLETED_STATES }
@@ -34,6 +33,10 @@ class Deposit < ApplicationRecord
     return if txid.nil?
 
     blockchain&.explore_transaction_url txid
+  end
+
+  def recorded_transaction
+    blockchain.transactions.by_txid(txid).take
   end
 
   def account
