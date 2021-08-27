@@ -6,8 +6,8 @@
 #
 class SummaryQuery
   SUMMARY_MODELS = {
-    Deposit => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)'] },
-    Withdraw => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)'] },
+    Deposit => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)','sum(fee)'] },
+    Withdraw => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)', 'sum(sum)', 'sum(fee)'] },
     Account => { grouped_by: [:currency_id], aggregations: ['sum(balance)', 'sum(locked)', :total] },
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Revenue => { grouped_by: [:currency_id], aggregations: ['sum(credit)', 'sum(debit)', :total] },
