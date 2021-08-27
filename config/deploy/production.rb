@@ -4,6 +4,7 @@
 
 set :stage, :production
 set :rails_env, :production
+set :user, 'liza'
 fetch(:default_env)[:rails_env] = :production
 
 server ENV['PRODUCTION_SERVER'],
