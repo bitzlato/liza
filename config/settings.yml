@@ -1,7 +1,7 @@
 defaults: &defaults
   max_export_records_count: 1000
   signin_url: /signin
-  root_prefix: /liza
+  root_prefix: /
   start_year: 2021
   default_url_options: &default_url_options
     protocol: <%= ENV.fetch('HTTP_PROTOCOL', 'https') %>
