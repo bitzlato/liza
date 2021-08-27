@@ -13,7 +13,7 @@ Rails.application.config.assets.version = '1.1'
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.paths << Rails.root.join('vendor/assets')
 
-Rails.application.config.assets.prefix = "#{Settings.root_prefix}/assets"
+Rails.application.config.assets.prefix = "#{Settings.root_prefix}/assets" if Settings.root_prefix.present?
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets

@@ -8,31 +8,29 @@ require 'sidekiq/cron/web'
 Rails.application.routes.draw do
   default_url_options Settings.default_url_options.symbolize_keys
 
-  mount Sidekiq::Web => Settings.root_prefix + '/sidekiq'
-  scope Settings.root_prefix do
-    root to: 'dashboard#index'
-    resources :reports
-    resources :withdraws
-    resources :deposits
-    resources :transactions
+  mount Sidekiq::Web => '/sidekiq'
+  root to: 'dashboard#index'
+  resources :reports
+  resources :withdraws
+  resources :deposits
+  resources :transactions
+  resources :accounts
+  resources :trades
+  resources :orders
+  resources :members
+  resources :adjustments
+  resources :service_withdraws, only: %i[index show]
+  resources :service_invoices, only: %i[index show]
+  resources :service_transactions, only: %i[index show]
+  resources :wallets, only: %i[index show]
+  resources :payment_addresses, only: %i[index show]
+  resources :currencies, only: %i[index show]
+  resources :blockchains, only: %i[index show]
+  namespace :operations do
+    resources :liabilities
     resources :accounts
-    resources :trades
-    resources :orders
-    resources :members
-    resources :adjustments
-    resources :service_withdraws, only: %i[index show]
-    resources :service_invoices, only: %i[index show]
-    resources :service_transactions, only: %i[index show]
-    resources :wallets, only: %i[index show]
-    resources :payment_addresses, only: %i[index show]
-    resources :currencies, only: %i[index show]
-    resources :blockchains, only: %i[index show]
-    namespace :operations do
-      resources :liabilities
-      resources :accounts
-      resources :assets
-      resources :expenses
-      resources :revenues
-    end
+    resources :assets
+    resources :expenses
+    resources :revenues
   end
 end
