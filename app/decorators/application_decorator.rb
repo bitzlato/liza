@@ -48,12 +48,14 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def updated_at
+    return object.updated_at.iso8601 if h.request.format.xlsx?
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.updated_at
     end
   end
 
   def created_at
+    return object.created_at.iso8601 if h.request.format.xlsx?
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.created_at
     end
