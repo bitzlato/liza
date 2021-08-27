@@ -22,6 +22,8 @@ class Transaction < ApplicationRecord
   scope :by_from, ->(value) { where from: value }
   scope :by_txid, ->(value) { where txid: value }
   scope :by_txout, ->(value) { where txout: value }
+  scope :by_kind, ->(value) { where kind: value }
+  scope :by_direction, ->(value) { where direction: value }
 
   belongs_to :reference, polymorphic: true
   belongs_to :currency
@@ -34,8 +36,11 @@ class Transaction < ApplicationRecord
   enum to: ADDRESS_KINDS, _prefix: true
   enum from: ADDRESS_KINDS, _prefix: true
 
+  DIRECTIONS = { unknown: 0, income: 1, outcome: 2, internal: 3, failed: 4 }
+  enum direction: DIRECTIONS, _prefix: true
+
   def self.ransackable_scopes(_auth_object = nil)
-    %w[by_address accountable_fee by_to by_from by_txid by_txout]
+    %w[by_address accountable_fee by_to by_from by_txid by_txout by_direction by_kin]
   end
 
   def transaction_url
