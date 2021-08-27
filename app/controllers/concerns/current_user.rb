@@ -7,14 +7,9 @@ module CurrentUser
 
   included do
     helper_method :current_user
-    before_action :authenticate!
   end
 
   private
-
-  def authenticate!
-    redirect_to Settings.signin_url unless current_user.present?
-  end
 
   def current_user
     @current_user ||= load_current_user
