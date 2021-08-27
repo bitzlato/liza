@@ -5,6 +5,7 @@
 class ApplicationDecorator < Draper::Decorator
   TEXT_RIGHT = %i[fee debit balance credit amount locked total price volume origin_volume origin_locked funds_received maker_fee
   fee_amount total_deposit_amount total_withdraw_amount estimated_amount divergence total_sell total_buy
+  txout
   taker_fee].freeze
 
   def self.table_columns
@@ -12,7 +13,7 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def self.table_th_class(column)
-    return 'text-right' if TEXT_RIGHT.include? column
+    return 'text-right' if TEXT_RIGHT.include? column.to_sym
   end
 
   def self.table_td_class(column)

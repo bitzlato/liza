@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   include CurrentUser
   include RescueErrors
+  include HidedColumns
 
   skip_before_action :verify_authenticity_token if Rails.env.development?
 

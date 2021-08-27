@@ -19,3 +19,4 @@ div.mb-2
       = download_link
 = render 'table', items: paginated_records.decorate, css_class: 'table-sm table-condensed text-small' if paginated_records.count.positive?
 = paginate paginated_records
+= render 'hided_columns'

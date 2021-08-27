@@ -49,6 +49,14 @@ module ApplicationHelper
     sort_link q, column, title
   end
 
+  def hide_column(column)
+    link_to '[×]', url_for(q: params.fetch(:q, {}).permit!, hide_columns: hided_columns + [column]), class: 'ml-2'
+  end
+
+  def unhide_column_url(column)
+    url_for(q: params.fetch(:q, {}).permit!, hide_columns: hided_columns - [column])
+  end
+
   def format_liability_account(account)
     link_to account do
       account.description + ' [' + account.scope + ']'
