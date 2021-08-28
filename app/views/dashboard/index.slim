@@ -9,8 +9,8 @@ table.table.table-condensed.table-striped.table-cross-row
         div Операционные активы по базе
         = column_tip 'Активы - блокчейн_комиссии'
       th.text-right
-        div Разница между системными счетами и введено-выведено
-        = column_tip 'Депозиты - Списания - Комиссия_сети - Сумма_на_кошельках_и_пользовательских_счетах == 0'
+        div Расчетный баланс на системных счетах
+        = column_tip 'Депозиты - Списания - Комиссия_сети'
       th.text-right 
         div Расчётный баланс на счетах
         = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии_торговые_и_депозит/списания'
@@ -56,7 +56,7 @@ table.table.table-condensed.table-striped.table-cross-row
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency , show_currency: false
         td.text-right
-          = format_divergence total_deposit - total_withdraw - accountable_fee[currency_id].to_d - total_balance, currency, show_currency: false
+          = format_money calculated_total_balance = total_deposit - total_withdraw - accountable_fee[currency_id].to_d, currency_id, show_currency: false
           .text-small.mt-2
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
               = format_money total_deposit, currency_id, show_currency: false
@@ -64,8 +64,8 @@ table.table.table-condensed.table-striped.table-cross-row
             = format_money total_withdraw, currency_id, show_currency: false
             span.ml-2.mr-2= '-'
             = format_money accountable_fee[currency_id].to_d, currency_id, show_currency: false
-            span.ml-2.mr-2= '-'
-            = format_money total_balance, currency_id, show_currency: false
+          .text-small.mt-2
+            = format_divergence calculated_total_balance - total_balance, currency, show_currency: false
         td.text-right 
           = format_money total_deposit - total_withdraw - total_operations_amount, currency_id, show_currency: false
           .text-small.mt-2
