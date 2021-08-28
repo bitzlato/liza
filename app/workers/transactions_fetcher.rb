@@ -10,6 +10,7 @@ class TransactionsFetcher
   sidekiq_options queue: :transactions_fetcher
 
   def perform
+    return unless Rails.env.production?
     Wallet.active.standalone.find_each do |wallet|
       perform_wallet wallet
     end
