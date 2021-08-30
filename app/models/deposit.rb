@@ -20,6 +20,8 @@ class Deposit < ApplicationRecord
   belongs_to :blockchain
 
   scope :success, -> { completed }
+  scope :skipped, -> { where aasm_state: %i[skipped] }
+  scope :accountable, -> { where aasm_state: %i[dispatched skipped] }
   scope :completed, -> { where aasm_state: COMPLETED_STATES }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
 
@@ -36,7 +38,7 @@ class Deposit < ApplicationRecord
   end
 
   def recorded_transaction
-    blockchain.transactions.by_txid(txid).take
+    blockchain.transactions.find_by(txid: txid, txout: txout)
   end
 
   def account
