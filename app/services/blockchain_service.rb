@@ -12,7 +12,7 @@ class BlockchainService
 
   def scan_latest_block
     return nil unless scan_url
-    Rails.cache.fetch [:blockchain_service, blockchain.key, :scan_latest_block] do
+    Rails.cache.fetch [:v2, :blockchain_service, blockchain.key, :scan_latest_block], expires_in: 30.seconds do
       JSON.parse(URI.open(scan_url).read).
         fetch('result').
         to_i(16)
