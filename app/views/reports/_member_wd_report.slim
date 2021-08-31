@@ -1,7 +1,7 @@
 = render 'member_brief', member: report.form_object.member
 - if results[:records].count > 0
   div.mb-2
-    = t '.total_records', count: results[:records].count
+    = t 'application.index.total_records', count: results[:records].count
   = render 'table', items: results[:records], decorator: WdDecorator if results[:records].count.positive?
 - else
-  div= t '.no_records'
+  div= t 'application.index.no_records'

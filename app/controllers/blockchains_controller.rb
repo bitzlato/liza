@@ -3,6 +3,11 @@
 # frozen_string_literal: true
 
 class BlockchainsController < ResourcesController
-  include CurrencySupport
   layout 'fluid'
+
+  private
+
+  def default_sort
+    'status desc, key desc'
+  end
 end

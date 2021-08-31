@@ -21,7 +21,7 @@ h1= paginated_records.model_name.human_plural
 = render 'balances', balances: PaymentAddress.total_balances if paginated_records.model == PaymentAddress
 hr
 div.mb-2
-  = t '.total_records', count: paginated_records.total_count
+  = t 'application.index..total_records', count: paginated_records.total_count
   span.ml-4
     - if paginated_records.total_count > Settings.max_export_records_count
       span.text-muted= t '.too_much_records_to_export'

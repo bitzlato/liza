@@ -1,8 +1,8 @@
 - paginated_records = results[:records].page(params[:page]).per(params[:per])
 - if paginated_records.total_count > 0
   div.mb-2
-    = t '.total_records', count: paginated_records.total_count
+    = t 'application.index.total_records', count: paginated_records.total_count
   = render 'table', items: paginated_records.decorate if paginated_records.count.positive?
   = paginate paginated_records
 - else
-  div= t '.no_records'
+  div= t 'application.index.no_records'

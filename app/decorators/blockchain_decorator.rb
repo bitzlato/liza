@@ -9,6 +9,10 @@ class BlockchainDecorator < ApplicationDecorator
     %i[key name height height_updated_at client client_version min_confirmations status explorer_transaction explorer_address client_options]
   end
 
+  def key
+    h.content_tag :span, object.key, class: 'text-nowrap text-monospace'
+  end
+
   def height_updated_at
     present_time object.height_updated_at
   end

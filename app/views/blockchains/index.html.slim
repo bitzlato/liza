@@ -1,0 +1,11 @@
+h1= paginated_records.model_name.human_plural
+div.mb-2
+  = t 'application.index..total_records', count: paginated_records.total_count
+  span.ml-4
+    - if paginated_records.total_count > Settings.max_export_records_count
+      span.text-muted= t '.too_much_records_to_export'
+    - elsif paginated_records.total_count.positive?
+      = download_link
+= render 'table', items: paginated_records.decorate if paginated_records.count.positive?
+= paginate paginated_records
+= render 'hided_columns'
