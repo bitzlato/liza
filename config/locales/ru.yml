@@ -10,6 +10,9 @@ ru:
     navbar:
       operations: Операционка
       service: Данные сервиса
+      market: Биржа
+      accounting: Учёт
+      gateway: Шлюзы
 
   reports:
     time_range_form:

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :transactions
   resources :accounts
   resources :trades
+  resources :markets
   resources :orders
   resources :members
   resources :adjustments

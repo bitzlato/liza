@@ -14,10 +14,13 @@ ru:
       member_history_report: История изменения баланса пользователя
       adjustments_report: Отчет по корректировкам
       wallet: Системный кошелёк
-      service_withdraw: Списания системы
+      service_withdraw: Списания через P2P
       service_invoice: Счета система
-      service_transaction: Зачисление системы
+      service_transaction: Зачисления из P2P
       payment_address: Адреса депонирования
+      currency: Валюта
+      market: Рынки
+      blockchain: Блокчейн
       adjustment:
         one: Корректировка
         many: Корректировки

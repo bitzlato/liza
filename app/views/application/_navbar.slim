@@ -6,19 +6,37 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        - [Account, Order, Trade, Member, Deposit, Withdraw, Report, PaymentAddress, Currency].each do |model|
-          = active_link_to url_for(model), class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
-            = t model.model_name.human_plural
+        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+          = link_to t('.market'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
+          .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
+            - [Order, Trade, Market].each do |model|
+              = link_to url_for(model), class: 'dropdown-item' do
+                = t model.model_name.human_plural
+        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+          = link_to t('.accounting'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
+          .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
+            - [Account, Member, Deposit, Withdraw].each do |model|
+              = link_to url_for(model), class: 'dropdown-item' do
+                = t model.model_name.human_plural
+        /- [Account, Member, Deposit, Withdraw, Report].each do |model|
+          /= active_link_to url_for(model), class: 'nav-link', wrap_tag: :li, wrap_class: 'nav-item' do
+            /= t model.model_name.human_plural
+        li.nav-item.dropdown.mr-2.d-flex.align-items-center
+          = link_to t('.gateway'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
+          .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
+            - [ServiceWithdraw, ServiceTransaction, Blockchain, Transaction, PaymentAddress].each do |model|
+              = link_to url_for(model), class: 'dropdown-item' do
+                = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.service'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
-            - [Wallet, ServiceWithdraw, ServiceTransaction, Blockchain].each do |model|
+            - [Wallet, Currency, Report].each do |model|
               = link_to url_for(model), class: 'dropdown-item' do
                 = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.operations'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
-            - [Operations::Account, Operations::Liability, Operations::Asset, Operations::Revenue, Transaction, Adjustment].each do |model|
+            - [Operations::Account, Operations::Liability, Operations::Asset, Operations::Revenue, Adjustment].each do |model|
               = link_to url_for(model), class: 'dropdown-item' do
                 = t model.model_name.human_plural
       ul.navbar-nav.navbar-right
