@@ -113,6 +113,14 @@ module ApplicationHelper
   end
   # rubocop:enable Metrics/MethodLength
 
+  def blockchain_status(status)
+    css_class = {
+      'active' => 'badge badge-success',
+      'disabled' => 'badge badge-secondary'
+    }
+    content_tag :span, status, class: css_class[status] || 'badge badge-danger'
+  end
+
   def transaction_status(status)
     css_class = {
       'success' => 'badge badge-success',

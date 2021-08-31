@@ -49,17 +49,11 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def updated_at
-    return object.updated_at.iso8601 if h.request.format.xlsx?
-    h.content_tag :span, class: 'text-nowrap' do
-      I18n.l object.updated_at
-    end
+    present_time object.updated_at
   end
 
   def created_at
-    return object.created_at.iso8601 if h.request.format.xlsx?
-    h.content_tag :span, class: 'text-nowrap' do
-      I18n.l object.created_at
-    end
+    present_time object.created_at
   end
 
   def transactions_count
@@ -125,6 +119,14 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   private
+
+  def present_time(time)
+    return if time.nil?
+    return time.iso8601 if h.request.format.xlsx?
+    h.content_tag :span, class: 'text-nowrap' do
+      I18n.l time
+    end
+  end
 
   def present_txid(txid)
     return h.middot if txid.nil?
