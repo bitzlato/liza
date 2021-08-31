@@ -2,6 +2,6 @@
 
 # frozen_string_literal: true
 
-class MraketsController < ResourcesController
+class MarketsController < ResourcesController
   layout 'fluid'
 end
