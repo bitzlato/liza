@@ -16,8 +16,16 @@ class Blockchain < ApplicationRecord
     currencies.find { |c| c.parent_id.nil? } || raise("No native currency for wallet id #{id}")
   end
 
+  def scan_latest_block
+    @scan_latest_block ||= service.scan_latest_block
+  end
+
   def fee_currency
     native_currency
+  end
+
+  def service
+    @service ||= BlockchainService.new(self)
   end
 
   def to_s

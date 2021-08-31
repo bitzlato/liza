@@ -2,9 +2,9 @@
 
 # frozen_string_literal: true
 
-def report_exception(exception, report_to_ets: true, context: {})
+def report_exception(exception, report_to_ets = true, meta = {})
   report_exception_to_screen(exception)
-  report_exception_to_ets(exception, context: context) if report_to_ets
+  report_exception_to_ets(exception, meta) if report_to_ets
 end
 
 def report_exception_to_screen(exception)
@@ -13,7 +13,7 @@ def report_exception_to_screen(exception)
 end
 
 # rubocop:disable Metrics/MethodLength
-def report_exception_to_ets(exception, context: {})
+def report_exception_to_ets(exception, context = {})
   if defined?(Bugsnag)
     Bugsnag.notify exception do |report|
       report.add_tab :context, context if context.present?
@@ -30,6 +30,6 @@ def report_exception_to_ets(exception, context: {})
     end
   end
 rescue StandardError => e
-  report_exception(e, report_to_ets: false)
+  report_exception(e, false)
 end
 # rubocop:enable Metrics/MethodLength

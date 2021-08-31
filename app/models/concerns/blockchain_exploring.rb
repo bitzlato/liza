@@ -8,6 +8,12 @@ module BlockchainExploring
     write_attribute(:explorer_transaction, hash.fetch('transaction'))
   end
 
+  def explorer_url
+    return if explorer_address.blank?
+    u = URI(explore_address_url('fake'))
+    u.scheme + '://' + u.host
+  end
+
   def explore_address_url(address)
     explorer_address.to_s.gsub('#{address}', address)
   end

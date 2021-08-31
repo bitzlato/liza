@@ -6,19 +6,30 @@ class BlockchainDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[key name height height_updated_at client client_version min_confirmations status explorer_transaction explorer_address client_options]
+    %i[key name height scan_latest_block client client_version min_confirmations status explorer_transaction explorer_address client_options]
   end
 
   def key
     h.content_tag :span, object.key, class: 'text-nowrap text-monospace'
   end
 
-  def height_updated_at
-    present_time object.height_updated_at
+  def height
+    buffer = []
+    buffer << h.content_tag(:div, object.height, class: 'text-nowrap text-monospace')
+    buffer << h.content_tag(:div, present_time(object.height_updated_at), class: 'text-muted text-small')
+    buffer.join.html_safe
   end
 
   def status
     h.blockchain_status object.status
+  end
+
+  def scan_latest_block
+    return h.middot if object.scan_latest_block.nil?
+    buffer = []
+    buffer << h.link_to(h.content_tag(:div, object.scan_latest_block, title: blockchain.service.scan_host), object.explorer_url, class: 'text-nowrap text-monospace', target: '_blank')
+    buffer << h.difference_between_heights(object.height, object.scan_latest_block)
+    buffer.join.html_safe
   end
 
   def client_options

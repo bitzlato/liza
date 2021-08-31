@@ -121,6 +121,17 @@ module ApplicationHelper
     content_tag :span, status, class: css_class[status] || 'badge badge-danger'
   end
 
+  def difference_between_heights(fetched_height, actual_height)
+    d = actual_height - fetched_height
+
+    if d < 10
+      css_class = 'text-success'
+    else
+      css_class = 'text-danger'
+    end
+    content_tag :span, "Отставание: #{d}", class: "#{css_class} text-small"
+  end
+
   def transaction_status(status)
     css_class = {
       'success' => 'badge badge-success',
