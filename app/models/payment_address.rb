@@ -36,7 +36,7 @@ class PaymentAddress < ApplicationRecord
   end
 
   def fee_amount
-    transactions.accountable_fee.sum(:fee)
+    transactions.where(from: :deposit).sum(:fee)
   end
 
   def transactions
