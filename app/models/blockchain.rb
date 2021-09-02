@@ -11,6 +11,7 @@ class Blockchain < ApplicationRecord
   has_many :payment_addresses
   has_many :transactions
   has_many :deposits, through: :currencies
+  has_many :block_numbers
 
   def native_currency
     currencies.find { |c| c.parent_id.nil? } || raise("No native currency for wallet id #{id}")
@@ -22,6 +23,10 @@ class Blockchain < ApplicationRecord
 
   def fee_currency
     native_currency
+  end
+
+  def block_numbers_agg
+    block_numbers.reorder('').pluck('min(number), max(number), count(number)').first
   end
 
   def service

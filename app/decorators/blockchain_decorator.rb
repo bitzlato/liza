@@ -6,7 +6,20 @@ class BlockchainDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[key name height scan_latest_block client client_version min_confirmations status explorer_transaction explorer_address client_options]
+    %i[key name height scan_latest_block client client_version min_confirmations status explorer_transaction explorer_address block_numbers client_options]
+  end
+
+  def block_numbers
+    min, max, count = object.block_numbers_agg
+    return h.middot if min.nil?
+    buffer = []
+    if max - min + 1 == count
+      buffer << h.content_tag(:div, "#{min} - #{max}", class: 'text-nowrap text-monospace text-succcess')
+    else
+      buffer << h.content_tag(:div, "#{min} - #{max}", class: 'text-nowrap text-monospace text-danger')
+      buffer << h.content_tag(:div, "Нехватка #{max - min +1} блоков", class: 'text-small text-muted')
+    end
+    buffer.join.html_safe
   end
 
   def key
