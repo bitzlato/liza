@@ -10,6 +10,7 @@ class BlockchainDecorator < ApplicationDecorator
   end
 
   def block_numbers
+    return 'временно отключен'
     min, max, count = object.block_numbers_agg
     return h.middot if min.nil?
     buffer = []
