@@ -121,6 +121,10 @@ module ApplicationHelper
     content_tag :span, status, class: css_class[status] || 'badge badge-danger'
   end
 
+  def present_boolean(flag)
+    content_tag :span, flag, class: flag ? 'badge badge-success' : 'badge badge-secondary'
+  end
+
   def difference_between_heights(fetched_height, actual_height)
     d = actual_height - fetched_height
 

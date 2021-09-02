@@ -13,6 +13,22 @@ class CurrencyDecorator < ApplicationDecorator
     ]
   end
 
+  def visible
+    h.present_boolean object.visible
+  end
+
+  def withdrawal_enabled
+    h.present_boolean object.withdrawal_enabled
+  end
+
+  def deposit_enabled
+    h.present_boolean object.deposit_enabled
+  end
+
+  def name
+    h.content_tag :span, object.name, class: 'text-nowrap'
+  end
+
   def id
     h.format_currency object
   end

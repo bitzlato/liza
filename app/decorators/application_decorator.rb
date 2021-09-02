@@ -74,19 +74,15 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def address
-    return h.middot if object.address.nil?
+    present_address object.address
+  end
 
-    h.link_to object.blockchain.explore_address_url(object.address), target: '_blank', class: 'text-monospace' do
-      h.present_address object.address
-    end
+  def contract_address
+    present_address object.contract_address
   end
 
   def to_address
-    return h.middot if object.to_address.nil?
-
-    h.link_to object.blockchain.explore_address_url(object.to_address), target: '_blank', class: 'text-monospace' do
-      h.present_address object.to_address
-    end
+    present_address object.to_address
   end
 
   def rid
@@ -119,6 +115,14 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   private
+
+  def present_address(address)
+    return h.middot if address.nil?
+
+    h.link_to object.blockchain.explore_address_url(address), target: '_blank', class: 'text-monospace' do
+      h.present_address address
+    end
+  end
 
   def present_time(time)
     return if time.nil?

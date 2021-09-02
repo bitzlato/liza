@@ -3,6 +3,6 @@
 # frozen_string_literal: true
 
 class CurrenciesController < ResourcesController
-  include CurrencySupport
+  include BlockchainSupport
   layout 'fluid'
 end
