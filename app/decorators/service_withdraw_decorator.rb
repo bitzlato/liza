@@ -6,7 +6,7 @@ class ServiceWithdrawDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    super + %i[withdraw_member withdraw_state] - %i[updated_at]
+    super + %i[withdraw_member withdraw_state] - %i[updated_at] + %i[dump]
   end
 
   def date

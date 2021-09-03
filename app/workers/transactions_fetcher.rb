@@ -45,7 +45,8 @@ class TransactionsFetcher
         public_name: payment['publicName'],
         currency_id: payment['cryptocurrency'].downcase,
         withdraw_type: payment['type'],
-        amount: payment['amount']
+        amount: payment['amount'],
+        dump: payment
       }
       sw = ServiceWithdraw.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, withdraw_id: withdraw_id)
       sw.assign_attributes attrs

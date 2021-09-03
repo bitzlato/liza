@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_26_123059) do
+ActiveRecord::Schema.define(version: 2021_08_31_072354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -86,6 +86,21 @@ ActiveRecord::Schema.define(version: 2021_08_26_123059) do
     t.index ["blockchain_id"], name: "index_block_numbers_on_blockchain_id"
   end
 
+  create_table "blockchain_nodes", force: :cascade do |t|
+    t.bigint "blockchain_id"
+    t.string "client", null: false
+    t.string "server_encrypted", limit: 1024
+    t.bigint "latest_block_number"
+    t.datetime "server_touched_at"
+    t.boolean "is_public", default: false, null: false
+    t.boolean "has_accounts", default: false, null: false
+    t.boolean "use_for_withdraws", default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blockchain_id"], name: "index_blockchain_nodes_on_blockchain_id"
+  end
+
   create_table "blockchains", force: :cascade do |t|
     t.string "key", null: false
     t.string "name"
@@ -100,6 +115,9 @@ ActiveRecord::Schema.define(version: 2021_08_26_123059) do
     t.boolean "enable_invoice", default: false, null: false
     t.string "explorer_contract_address"
     t.string "client", null: false
+    t.jsonb "client_options", default: {}, null: false
+    t.datetime "height_updated_at"
+    t.string "client_version"
     t.index ["key"], name: "index_blockchains_on_key", unique: true
     t.index ["status"], name: "index_blockchains_on_status"
   end
@@ -483,6 +501,7 @@ ActiveRecord::Schema.define(version: 2021_08_26_123059) do
     t.integer "to"
     t.integer "from"
     t.integer "kind"
+    t.integer "direction"
     t.index ["blockchain_id", "from"], name: "index_transactions_on_blockchain_id_and_from"
     t.index ["blockchain_id", "kind"], name: "index_transactions_on_blockchain_id_and_kind"
     t.index ["blockchain_id", "to"], name: "index_transactions_on_blockchain_id_and_to"
@@ -579,6 +598,7 @@ ActiveRecord::Schema.define(version: 2021_08_26_123059) do
     t.index ["type"], name: "index_withdraws_on_type"
   end
 
+  add_foreign_key "blockchain_nodes", "blockchains"
   add_foreign_key "currencies", "currencies", column: "parent_id"
   add_foreign_key "deposit_spreads", "deposits"
   add_foreign_key "gas_refuels", "blockchains"
