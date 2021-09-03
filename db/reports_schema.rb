@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2021_09_03_083014) do
     t.integer "withdraw_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "dump"
     t.index ["date"], name: "index_service_withdraws_on_date"
     t.index ["wallet_id", "withdraw_id"], name: "index_service_withdraws_on_wallet_id_and_withdraw_id", unique: true
   end
