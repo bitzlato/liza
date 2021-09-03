@@ -44,7 +44,7 @@ table.table.table-condensed.table-striped.table-cross-row
             = link_to wallets_path do
               = format_money system_balance, currency, show_currency: false
             span.ml-2.mr-2= '+'
-            = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id }) do
+            = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id, currency_id_eq: currency_id, with_balances: true }) do
               = format_money paymand_address_amounts, currency, show_currency: false
         td.text-right 
           = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d + total_skipped_deposits), currency_id, show_currency: false
