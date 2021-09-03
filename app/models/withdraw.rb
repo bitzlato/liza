@@ -25,8 +25,6 @@ class Withdraw < ApplicationRecord
   belongs_to :member, required: true
   belongs_to :blockchain, required: true, touch: false
 
-  has_one :recorded_transaction, through: :blockchain, source: :transactions, class_name: 'Transaction', primary_key: :txid
-
   # Optional beneficiary association gives ability to support both in-peatio
   # beneficiaries and managed by third party application.
   belongs_to :beneficiary, optional: true
@@ -78,6 +76,10 @@ class Withdraw < ApplicationRecord
 
   def completed?
     aasm_state.in?(COMPLETED_STATES.map(&:to_s))
+  end
+
+  def recorded_transaction
+    blockchain.transactions.find_by(txid: txid)
   end
 
   def self.ransackable_scopes(auth_object = nil)
