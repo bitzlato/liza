@@ -52,6 +52,9 @@ class TransactionsFetcher
       sw.assign_attributes attrs
       sw.save! if sw.changed?
     end
+    # Ignore bugsnag for timeout errors
+  rescue Faraday::TimeoutError => err
+    Rails.logger.error err
   end
   # rubocop:enable Metrics/MethodLength
 
