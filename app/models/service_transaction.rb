@@ -15,6 +15,6 @@ class ServiceTransaction < ReportsRecord
 
   def invoice_id
     uid = ENV.fetch('BITZLATO_API_CLIENT_UID', wallet.fetch(:uid)).to_i
-    [uid, object.invoice_id].join(':')
+    [uid, super].join(':')
   end
 end
