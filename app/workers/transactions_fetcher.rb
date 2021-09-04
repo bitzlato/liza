@@ -36,19 +36,20 @@ class TransactionsFetcher
     client
       .get('/api/gate/v1/payments/list/')
       .each do |payment|
-      withdraw_id = payment['clientProvidedId']
-      raise "Fetch payment has no clientProvidedId (#{payment})" if withdraw_id.nil?
+      client_provided_id = payment['clientProvidedId']
+      raise "Fetch payment has no clientProvidedId (#{payment})" if client_provided_id.nil?
 
+      withdraw = client_provided_id.to_s.start_with?('TID') ? Withdraw.find_by(tid: client_provided_id) : Withdraw.find_by(id: client_provided_id)
       attrs = {
-        status: payment['status'],
-        date: parse_time(payment['date']),
-        public_name: payment['publicName'],
-        currency_id: payment['cryptocurrency'].downcase,
+        status:        payment['status'],
+        date:          parse_time(payment['date']),
+        public_name:   payment['publicName'],
+        currency_id:   payment['cryptocurrency'].downcase,
         withdraw_type: payment['type'],
-        amount: payment['amount'],
-        dump: payment
+        amount:        payment['amount'],
+        dump:          payment
       }
-      sw = ServiceWithdraw.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, withdraw_id: withdraw_id)
+      sw = ServiceWithdraw.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, withdraw_id: withdraw.id)
       sw.assign_attributes attrs
       sw.save! if sw.changed?
     end
