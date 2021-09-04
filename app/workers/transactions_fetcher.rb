@@ -19,10 +19,10 @@ class TransactionsFetcher
   def perform_wallet(wallet)
     @wallet = wallet
     @client = build_client wallet
-    fetch_payments
-    fetch_vouchers
-    fetch_invoices
-    fetch_transactions
+    fetch_payments rescue Faraday::TimeoutError
+    fetch_vouchers rescue Faraday::TimeoutError
+    fetch_invoices rescue Faraday::TimeoutError
+    fetch_transactions rescue Faraday::TimeoutError
   end
 
   private
