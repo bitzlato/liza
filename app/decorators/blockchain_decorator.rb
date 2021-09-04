@@ -6,11 +6,15 @@ class BlockchainDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[key name height client client_version min_confirmations status explorer_transaction explorer_address block_numbers client_options]
+    %i[key name height client client_version min_confirmations status explorer_transaction explorer_address transactions_count block_numbers client_options]
+  end
+
+  def transactions_count
+    h.link_to object.transactions.count, h.transactions_path(q: { blockchain_id_eq: object.id })
   end
 
   def block_numbers
-    return 'временно отключен'
+    return h.middot unless object.height > 1
     min, max, count = object.block_numbers_agg
     return h.middot if min.nil?
     buffer = []
@@ -20,7 +24,9 @@ class BlockchainDecorator < ApplicationDecorator
       buffer << h.content_tag(:div, "#{min} - #{max}", class: 'text-nowrap text-monospace text-danger')
       buffer << h.content_tag(:div, "Нехватка #{max - min +1} блоков", class: 'text-small text-muted')
     end
-    buffer.join.html_safe
+    h.link_to h.block_numbers_path(q: { blockchain_id_eq: object.id }) do
+      buffer.join.html_safe
+    end
   end
 
   def key

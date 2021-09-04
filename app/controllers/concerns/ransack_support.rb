@@ -31,7 +31,7 @@ module RansackSupport
   private
 
   def index_form
-    'time_form'
+    'index_form'
   end
 
   def q
