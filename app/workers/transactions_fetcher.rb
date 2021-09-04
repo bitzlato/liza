@@ -36,8 +36,8 @@ class TransactionsFetcher
     client
       .get('/api/gate/v1/payments/list/')
       .each do |payment|
-      withdraw_id = payment['clientProvidedId'].to_i
-      raise "Fetch payment has no clientProvidedId (#{payment})" if withdraw_id.zero?
+      withdraw_id = payment['clientProvidedId']
+      raise "Fetch payment has no clientProvidedId (#{payment})" if withdraw_id.nil?
 
       attrs = {
         status: payment['status'],
