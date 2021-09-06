@@ -30,10 +30,6 @@ module RansackSupport
 
   private
 
-  def index_form
-    'index_form'
-  end
-
   def q
     @q ||= build_q
   end

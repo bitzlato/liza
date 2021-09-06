@@ -8,6 +8,7 @@ class ResourcesController < ApplicationController
   include PaginationSupport
   include RansackSupport
   include ShowAction
+  include IndexFormSupport
 
   layout 'fluid'
 
