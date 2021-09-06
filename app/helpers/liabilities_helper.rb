@@ -18,6 +18,8 @@ module LiabilitiesHelper
       present_trade(reference)
     when Adjustment
       present_adjustment(reference)
+    when InternalTransfer
+      present_internal_transfer(reference)
     when nil
       '-'
     else
@@ -30,6 +32,10 @@ module LiabilitiesHelper
     link_to wallet_path(wallet) do
       "wallet[#{wallet.id}:#{wallet.kind}]".html_safe
     end
+  end
+
+  def present_internal_transfer(internal_transfer)
+    "internal transfer #{internal_transfer.id}"
   end
 
   def present_payment_address(payment_address)
