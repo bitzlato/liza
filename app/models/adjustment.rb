@@ -47,6 +47,10 @@ class Adjustment < ApplicationRecord
     end
   end
 
+  def receiving_member
+    Member.find_by_uid receiving_account_number.split('-').last
+  end
+
   def to_s
     [id, ' ', reason, ' ', description].join
   end
