@@ -6,7 +6,11 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id name status kind address available_balances enable_invoice use_as_fee_source fee_amount transactions_count]
+    %i[id name status kind address available_balances enable_invoice use_as_fee_source fee_amount currencies transactions_count]
+  end
+
+  def currencies
+    object.currencies.join(', ')
   end
 
   def balance_updated_at
