@@ -1,0 +1,11 @@
+table.table.table-sm.table-narrow
+  thead
+    tr
+      th Currncy
+      th Use in balance
+
+  tbody
+    - currency_wallets.each do |cw|
+      tr
+        td= cw.currency_id
+        td= present_boolean cw.use_in_balance

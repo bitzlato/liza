@@ -9,8 +9,16 @@ class WalletDecorator < ApplicationDecorator
     %i[id name status kind address available_balances enable_invoice use_as_fee_source fee_amount currencies transactions_count]
   end
 
+  def use_as_fee_source
+    h.present_boolean object.use_as_fee_source
+  end
+
+  def enable_invoice
+    h.present_boolean object.enable_invoice
+  end
+
   def currencies
-    object.currencies.join(', ')
+    h.render 'currency_wallets', currency_wallets: object.currency_wallets
   end
 
   def balance_updated_at
