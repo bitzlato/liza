@@ -9,6 +9,10 @@ class ServiceInvoiceDecorator < ApplicationDecorator
     super + %i[deposit]
   end
 
+  def expiry_at
+    present_time object.expiry_at
+  end
+
   def invoice_created_at
     present_time object.invoice_created_at
   end

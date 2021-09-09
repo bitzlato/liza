@@ -9,6 +9,10 @@ class DepositDecorator < ApplicationDecorator
     %i[id member created_at updated_at currency aasm_state invoice_expires_at amount fee txid txout tid transfer_type address invoice_id data]
   end
 
+  def invoice_expires_at
+    present_time object.invoice_expires_at
+  end
+
   def id
     h.content_tag :span, object.id, title: object.type
   end
