@@ -9,6 +9,10 @@ class ServiceInvoiceDecorator < ApplicationDecorator
     super + %i[deposit]
   end
 
+  def invoice_created_at
+    present_time object.invoice_created_at
+  end
+
   def deposit
     return h.middot if object.deposit.nil?
     h.link_to h.present_deposit(object.deposit), h.deposit_path(object.deposit.id)
