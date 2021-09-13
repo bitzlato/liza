@@ -37,6 +37,7 @@ class Withdraw < ApplicationRecord
   scope :succeed_processing, -> { where(aasm_state: SUCCEED_PROCESSING_STATES) }
   scope :last_24_hours, -> { where('created_at > ?', 24.hour.ago) }
   scope :last_1_month, -> { where('created_at > ?', 1.month.ago) }
+  scope :locked, -> { where(is_locked: true) }
 
   class << self
     def sum_query
