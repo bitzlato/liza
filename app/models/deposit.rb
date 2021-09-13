@@ -24,6 +24,7 @@ class Deposit < ApplicationRecord
   scope :accountable, -> { where aasm_state: %i[dispatched skipped] }
   scope :completed, -> { where aasm_state: COMPLETED_STATES }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
+  scope :locked, -> { where(is_locked: true) }
 
   scope :recent, -> { order(id: :desc) }
 

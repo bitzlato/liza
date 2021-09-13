@@ -2,7 +2,7 @@ table.table.table-condensed.table-striped.table-cross-row
   thead.thead-dark
     tr
       th  Валюта
-      th.text-right 
+      th.text-right
         div Баланс на системных счетах
         = column_tip 'На системных кошельках + на депозитных счетах'
       th.text-right
@@ -11,18 +11,21 @@ table.table.table-condensed.table-striped.table-cross-row
       th.text-right
         div Расчетный баланс на системных счетах
         = column_tip 'Депозиты - Списания - Комиссия_сети'
-      th.text-right 
+      th.text-right
         div Расчётный баланс на счетах
         = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии_торговые_и_депозит/списания'
-      th.text-right 
+      th.text-right
         div Балансы на счетах
         = column_tip 'Доступно + Заблокировано'
-      th.text-right 
+      th.text-right
         div Расхождение балансов (внутренний аудит)
         = column_tip 'Расчетный - Фактический - Операционная_прибыль + Корректировки - Незачисленные_депозиты'
 
       th.text-right  Операционная прибыль (комиссии)
       th.text-right  Корректировки
+      th.text-right
+        div Расчётный баланс заблокированных сумм
+        = column_tip 'Заблокировано_на_счетах - Заблокировано_в_депозитах - Заблокировано_в_списаниях - Заблокировано_в_сделках'
   tbody
     - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(member_id)').each do |row|
       - currency_id = row[0]
@@ -38,7 +41,7 @@ table.table.table-condensed.table-striped.table-cross-row
       tr
         th.text-right
           = format_currency currency_id
-        td.text-right 
+        td.text-right
           = format_money total_balance = (system_balance + paymand_address_amounts), currency, show_currency: false
           .text-small.mt-2
             = link_to wallets_path do
@@ -46,7 +49,7 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id, currency_id_eq: currency_id, with_balances: true }) do
               = format_money paymand_address_amounts, currency, show_currency: false
-        td.text-right 
+        td.text-right
           = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d + total_skipped_deposits - adjustments_amount), currency_id, show_currency: false
           .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
@@ -73,7 +76,7 @@ table.table.table-condensed.table-striped.table-cross-row
             = format_money accountable_fee[currency_id].to_d, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence calculated_total_balance - total_balance, currency, show_currency: false
-        td.text-right 
+        td.text-right
           = format_money total_deposit - total_withdraw - total_operations_amount, currency_id, show_currency: false
           .text-small.mt-2
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
@@ -85,7 +88,7 @@ table.table.table-condensed.table-striped.table-cross-row
             = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ), title: 'Комиссии' do
               = format_money total_operations_amount, currency_id, show_currency: false
 
-        td.text-right 
+        td.text-right
           = link_to accounts_path(q: { currency_id_eq: currency_id} ) do
             = format_money row[1] + row[2], currency_id, show_currency: false
           .text-small.text-muted.mt-2
@@ -94,12 +97,26 @@ table.table.table-condensed.table-striped.table-cross-row
             span.mr-2.ml-2= '+'
             span title='Заблокировано'
               = format_money row[2], currency_id, show_currency: false
-        td.text-right 
+        td.text-right
           = format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_amount + adjustments_amount - total_skipped_deposits, currency_id, show_currency: false
           .text-small.text-muted.mt-2
-        td.text-right 
+        td.text-right
           = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
             = format_money total_operations_amount, currency, show_currency: false
-        td.text-right 
+        td.text-right
           = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
             = format_money adjustments_amount, currency, show_currency: false
+        td.text-right
+          - locked_deposits_amount = Deposit.locked.where(currency_id: currency_id).sum(:amount)
+          - locked_withdraws_sum = Withdraw.locked.where(currency_id: currency_id).sum(:sum)
+          - locked_orders_amount = OrderAsk.active.where(ask: currency_id).sum(:locked) + OrderBid.active.where(bid: currency_id).sum(:locked)
+          - value = row[2] - locked_deposits_amount - locked_withdraws_sum - locked_orders_amount
+          = format_money value, currency, show_currency: false
+          .text-small.text-muted.mt-2
+            = format_money row[2], currency_id, show_currency: false
+            span.mx-2= '-'
+            = format_money locked_deposits_amount, currency_id, show_currency: false
+            span.mx-2= '-'
+            = format_money locked_withdraws_sum, currency_id, show_currency: false
+            span.mx-2= '-'
+            = format_money locked_orders_amount, currency_id, show_currency: false
