@@ -1,5 +1,5 @@
 = cache member do
   - if member.present?
-    = link_to member.email, member_path(member)
+    = link_to member.email, member_url(member)
   - else
     = middot
