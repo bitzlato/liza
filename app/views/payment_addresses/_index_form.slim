@@ -6,3 +6,8 @@ ul.nav.nav-pills.mb-3
   li.nav-item
     = link_to t('.with_balances'), 
       url_for(q: clean_q.merge(with_balances: true)), class: active_class('nav-link', qq[:with_balances])
+
+= search_form_for q do |f|
+  = f.input :by_address, as: :string, input_html: { style: 'max-width: 500px' }
+  = f.button :submit, class: 'btn btn-primary'
+  = link_to t('reset'), transactions_path, class: 'btn btn-secondary ml-2' if params[:q].present?

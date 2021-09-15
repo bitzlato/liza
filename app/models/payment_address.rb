@@ -13,12 +13,13 @@ class PaymentAddress < ApplicationRecord
   delegate :native_currency, to: :blockchain
 
   scope :currency_id_eq, ->(currency_id) { joins(:currencies).where(currencies: { id: currency_id }) }
+  scope :by_address, ->(address) { where 'lower(address) = ?', address.downcase }
 
   # SELECT DISTINCT pa.* FROM payment_addresses pa CROSS JOIN jsonb_each_text(balances) AS each(KEY,val) WHERE "val"::decimal >= 0;
   scope :with_balances, -> { where 'EXISTS ( SELECT * FROM jsonb_each_text(balances) AS each(KEY,val) WHERE "val"::decimal >= 0)' }
 
   def self.ransackable_scopes(_auth_object = nil)
-    %w[currency_id_eq with_balances]
+    %w[currency_id_eq with_balances by_address]
   end
 
   def format_address(format)
