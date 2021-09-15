@@ -9,5 +9,6 @@ ul.nav.nav-pills.mb-3
 
 = search_form_for q do |f|
   = f.input :by_address, as: :string, input_html: { style: 'max-width: 500px' }
+  = f.input :collection_state_eq, collection: PaymentAddress.group(:collection_state).count.keys.sort, input_html: { style: 'max-width: 100px' }
   = f.button :submit, class: 'btn btn-primary'
   = link_to t('reset'), transactions_path, class: 'btn btn-secondary ml-2' if params[:q].present?

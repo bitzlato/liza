@@ -113,6 +113,14 @@ module ApplicationHelper
   end
   # rubocop:enable Metrics/MethodLength
 
+  def collection_state_badge(state)
+    css_class = {
+      'collecting' => 'badge badge-success',
+      'gas_refueling' => 'badge badge-warning'
+    }
+    content_tag :span, state, class: css_class[state] || 'badge badge-secondary'
+  end
+
   def blockchain_status(status)
     css_class = {
       'active' => 'badge badge-success',
