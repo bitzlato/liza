@@ -57,12 +57,12 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '-'
             = link_to transactions_path(q: { accountable_fee: true, blockchain_id_eq: currency.blockchain_id }) do
               = format_money accountable_fee[currency_id].to_d, currency_id, show_currency: false
-            span.ml-2.mr-2= '+'
-            = link_to deposits_path(q: { aasm_state_eq: :skipped, blockchain_id_eq: currency.blockchain_id }) do
-              = format_money total_skipped_deposits, currency_id, show_currency: false
             span.ml-2.mr-2= '-'
             = link_to adjustments_path(q: { currency_id_eq: currency_id }) do
               = format_money adjustments_amount, currency_id, show_currency: false
+            span.ml-2.mr-2= '+'
+            = link_to deposits_path(q: { aasm_state_eq: :skipped, blockchain_id_eq: currency.blockchain_id }) do
+              = format_money total_skipped_deposits, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency , show_currency: false
         td.text-right
