@@ -6,7 +6,7 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id name status kind address available_balances enable_invoice use_as_fee_source fee_amount currencies transactions_count]
+    %i[id name status kind address available_balances balances_by_transactions enable_invoice use_as_fee_source fee_amount currencies transactions_count]
   end
 
   def use_as_fee_source
@@ -26,6 +26,12 @@ class WalletDecorator < ApplicationDecorator
     h.content_tag :span, class: 'text-nowrap', title: I18n.l(object.balance_updated_at) do
       h.time_ago_in_words object.balance_updated_at
     end
+  end
+
+  def balances_by_transactions
+    buffer = h.render 'balances', balances: object.balances_by_transactions
+    buffer << h.content_tag(:span, object.transactions.maximum(:updated_at), class: 'text-small text-muted')
+    buffer
   end
 
   def available_balances

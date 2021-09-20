@@ -14,6 +14,8 @@ class Transaction < ApplicationRecord
     scope status, -> { where status: status }
   end
 
+  scope :failed_or_success, -> { where status: [SUCCESS_STATUS, FAIL_STATUS] }
+
   # TODO: fee payed by us
   scope :accountable_fee, -> { where from: %i[wallet deposit] }
   # TODO: blockchain normalize

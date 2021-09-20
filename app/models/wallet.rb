@@ -86,6 +86,15 @@ class Wallet < ApplicationRecord
     'wallet#' + id.to_s
   end
 
+  def balances_by_transactions
+    plus = blockchain.transactions.success.where(to_address: address.downcase).group(:currency_id).sum(:amount)
+    minus = blockchain.transactions.success.where(from_address: address.downcase).group(:currency_id).sum(:amount)
+    minus_fee = blockchain.transactions.where(from_address: address.downcase).failed_or_success.group(:fee_currency_id).sum(:fee)
+    (plus.keys + minus.keys + minus_fee.keys).uniq.compact.each_with_object({}) do |currency_id, agg|
+      agg[currency_id] = plus.fetch(currency_id, 0.0) - minus.fetch(currency_id, 0.0) - minus_fee.fetch(currency_id, 0.0)
+    end
+  end
+
   def available_balances
     balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end
