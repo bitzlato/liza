@@ -6,7 +6,7 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id name status kind address available_balances balances_by_transactions enable_invoice use_as_fee_source fee_amount currencies transactions_count]
+    %i[id name status kind address available_balances balances_by_transactions balances_diff enable_invoice use_as_fee_source fee_amount currencies transactions_count]
   end
 
   def use_as_fee_source
@@ -15,6 +15,13 @@ class WalletDecorator < ApplicationDecorator
 
   def enable_invoice
     h.present_boolean object.enable_invoice
+  end
+
+  def balances_diff
+    balances_diff = (object.available_balances.keys + object.balances_by_transactions.keys).uniq.each_with_object({}) do |currency_id, agg|
+      agg[currency_id] = object.available_balances.fetch(currency_id, 0.0).to_d - object.balances_by_transactions.fetch(currency_id, 0.0)
+    end
+    h.render 'balances', balances: balances_diff
   end
 
   def currencies
