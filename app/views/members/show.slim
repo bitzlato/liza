@@ -13,7 +13,7 @@
   .col-md-3
     h3= t '.reports'
     ul
-      - [MemberOrdersReport, MemberTradesReport, MemberWdReport, MemberHistoryReport].each do |report_class|
+      - [MemberOrdersReport, MemberTradesReport, MemberWdReport].each do |report_class|
         li= link_to report_class.model_name.human, new_report_path(report_type: report_class, form: { member_id: member.id })
   .col-md-3
     h3= Beneficiary.model_name.human_plural
