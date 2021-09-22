@@ -42,7 +42,7 @@ class Transaction < ApplicationRecord
   enum direction: DIRECTIONS, _prefix: true
 
   def self.ransackable_scopes(_auth_object = nil)
-    %w[by_address accountable_fee by_to by_from by_txid by_txout by_direction by_kin]
+    %w[by_address accountable_fee by_to by_from by_txid by_txout by_direction by_kind]
   end
 
   def transaction_url
