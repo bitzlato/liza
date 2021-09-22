@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object
+  sheet.add_row WdDecorator.table_columns
+  report.results[:records].each do |record|
+    record = WdDecorator.decorate record
+    sheet.add_row WdDecorator.table_columns.map { |c| record.send c }
+  end
+end
+
