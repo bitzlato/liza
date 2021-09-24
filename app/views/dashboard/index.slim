@@ -111,7 +111,7 @@ table.table.table-condensed.table-striped.table-cross-row
           - locked_withdraws_sum = Withdraw.locked.where(currency_id: currency_id).sum(:sum)
           - locked_orders_amount = OrderAsk.active.where(ask: currency_id).sum(:locked) + OrderBid.active.where(bid: currency_id).sum(:locked)
           - value = row[2] - locked_deposits_amount - locked_withdraws_sum - locked_orders_amount
-          = format_money value, currency, show_currency: false
+          = format_divergence value, currency, show_currency: false
           .text-small.text-muted.mt-2
             = format_money row[2], currency_id, show_currency: false
             span.mx-2= '-'
