@@ -136,11 +136,11 @@ module ApplicationHelper
   def difference_between_heights(fetched_height, actual_height)
     d = actual_height - fetched_height
 
-    if d < 10
-      css_class = 'text-success'
-    else
-      css_class = 'text-danger'
-    end
+    css_class = if d < 10
+                  'text-success'
+                else
+                  'text-danger'
+                end
     content_tag :span, "Отставание: #{d}", class: "#{css_class} text-small"
   end
 

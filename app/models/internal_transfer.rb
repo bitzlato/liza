@@ -1,3 +1,5 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class InternalTransfer < ApplicationRecord
   belongs_to :currency
   belongs_to :sender, class_name: :Member, required: true

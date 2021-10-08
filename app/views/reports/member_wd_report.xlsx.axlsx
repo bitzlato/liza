@@ -10,4 +10,3 @@ xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
     sheet.add_row WdDecorator.table_columns.map { |c| record.send c }
   end
 end
-

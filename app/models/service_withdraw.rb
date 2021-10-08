@@ -4,6 +4,6 @@
 
 class ServiceWithdraw < ReportsRecord
   def withdraw
-    @withdraw||= Withdraw.find_by(id: withdraw_id)
+    @withdraw ||= Withdraw.find_by(id: withdraw_id)
   end
 end

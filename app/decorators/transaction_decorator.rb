@@ -36,14 +36,15 @@ class TransactionDecorator < ApplicationDecorator
     end
 
     return buffer.join.html_safe unless object.direction == 'outcome'
+
     withdraw = Withdraw.find_by_txid(object.txid)
-    if withdraw.present?
-      buffer << h.link_to(h.withdraw_path(withdraw), class: 'badge badge-success') do
-        "withdraw##{withdraw.id}&nbsp;#{h.format_money(withdraw.amount, withdraw.currency)}".html_safe
-      end
-    else
-      buffer << h.content_tag(:div, 'no withdraw linked!', class: 'badge badge-danger')
-    end
+    buffer << if withdraw.present?
+                h.link_to(h.withdraw_path(withdraw), class: 'badge badge-success') do
+                  "withdraw##{withdraw.id}&nbsp;#{h.format_money(withdraw.amount, withdraw.currency)}".html_safe
+                end
+              else
+                h.content_tag(:div, 'no withdraw linked!', class: 'badge badge-danger')
+              end
     buffer.join.html_safe
   end
 

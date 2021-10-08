@@ -36,6 +36,7 @@ module MoneyHelper
   def format_money(amount, currency = nil, options = {})
     # Return as is for export
     return amount if request.format.xlsx?
+
     amount = amount.to_d if amount.is_a? String
     if amount.is_a? Money
       currency = amount.currency

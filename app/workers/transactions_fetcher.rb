@@ -11,6 +11,7 @@ class TransactionsFetcher
 
   def perform
     return unless Rails.env.production?
+
     Wallet.active.standalone.find_each do |wallet|
       perform_wallet wallet
     end
@@ -19,10 +20,26 @@ class TransactionsFetcher
   def perform_wallet(wallet)
     @wallet = wallet
     @client = build_client wallet
-    fetch_payments rescue Faraday::TimeoutError
-    fetch_vouchers rescue Faraday::TimeoutError
-    fetch_invoices rescue Faraday::TimeoutError
-    fetch_transactions rescue Faraday::TimeoutError
+    begin
+      fetch_payments
+    rescue StandardError
+      Faraday::TimeoutError
+    end
+    begin
+      fetch_vouchers
+    rescue StandardError
+      Faraday::TimeoutError
+    end
+    begin
+      fetch_invoices
+    rescue StandardError
+      Faraday::TimeoutError
+    end
+    begin
+      fetch_transactions
+    rescue StandardError
+      Faraday::TimeoutError
+    end
   end
 
   private
@@ -41,21 +58,21 @@ class TransactionsFetcher
 
       withdraw = client_provided_id.to_s.start_with?('TID') ? Withdraw.find_by(tid: client_provided_id) : Withdraw.find_by(id: client_provided_id)
       attrs = {
-        status:        payment['status'],
-        date:          parse_time(payment['date']),
-        public_name:   payment['publicName'],
-        currency_id:   payment['cryptocurrency'].downcase,
+        status: payment['status'],
+        date: parse_time(payment['date']),
+        public_name: payment['publicName'],
+        currency_id: payment['cryptocurrency'].downcase,
         withdraw_type: payment['type'],
-        amount:        payment['amount'],
-        dump:          payment
+        amount: payment['amount'],
+        dump: payment
       }
       sw = ServiceWithdraw.create_with(attrs).find_or_create_by!(wallet_id: @wallet.id, withdraw_id: withdraw.id)
       sw.assign_attributes attrs
       sw.save! if sw.changed?
     end
     # Ignore bugsnag for timeout errors
-  rescue Faraday::TimeoutError => err
-    Rails.logger.error err
+  rescue Faraday::TimeoutError => e
+    Rails.logger.error e
   end
   # rubocop:enable Metrics/MethodLength
 

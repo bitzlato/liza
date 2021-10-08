@@ -1,5 +1,7 @@
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
 class BlockNumber < ApplicationRecord
   belongs_to :blockchain
 
-  STATUSES = %w(pending processing success error)
+  STATUSES = %w[pending processing success error]
 end

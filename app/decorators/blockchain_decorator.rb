@@ -15,14 +15,16 @@ class BlockchainDecorator < ApplicationDecorator
 
   def block_numbers
     return h.middot unless object.height > 1
+
     min, max, count = object.block_numbers_agg
     return h.middot if min.nil?
+
     buffer = []
     if max - min + 1 == count
       buffer << h.content_tag(:div, "#{min} - #{max}", class: 'text-nowrap text-monospace text-succcess')
     else
       buffer << h.content_tag(:div, "#{min} - #{max}", class: 'text-nowrap text-monospace text-danger')
-      buffer << h.content_tag(:div, "Нехватка #{max - min +1} блоков", class: 'text-small text-muted')
+      buffer << h.content_tag(:div, "Нехватка #{max - min + 1} блоков", class: 'text-small text-muted')
     end
     h.link_to h.block_numbers_path(q: { blockchain_id_eq: object.id }) do
       buffer.join.html_safe
@@ -46,8 +48,10 @@ class BlockchainDecorator < ApplicationDecorator
 
   def scan_latest_block
     return h.middot if object.scan_latest_block.nil?
+
     buffer = []
-    buffer << h.link_to(h.content_tag(:div, object.scan_latest_block, title: blockchain.service.scan_host), object.explorer_url, class: 'text-nowrap text-monospace', target: '_blank')
+    buffer << h.link_to(h.content_tag(:div, object.scan_latest_block, title: blockchain.service.scan_host), object.explorer_url,
+                        class: 'text-nowrap text-monospace', target: '_blank')
     buffer << h.difference_between_heights(object.height, object.scan_latest_block)
     buffer.join.html_safe
   end

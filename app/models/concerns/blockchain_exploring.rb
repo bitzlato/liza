@@ -10,6 +10,7 @@ module BlockchainExploring
 
   def explorer_url
     return if explorer_address.blank?
+
     u = URI(explore_address_url('fake'))
     u.scheme + '://' + u.host
   end
