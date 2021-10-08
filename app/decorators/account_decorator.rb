@@ -7,12 +7,24 @@ class AccountDecorator < ApplicationDecorator
 
   def self.table_columns
     %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue
+       locked_checks
        trade_income]
   end
 
   def self.attributes
     %i[id member currency created_at amount balance locked total_deposit_amount total_withdraw_amount total_sell total_buy total_paid total_revenue
        trade_income trades trades_fee estimated_amount]
+  end
+
+  def locked_checks
+    result = AccountLocksChecker.new(object).perform
+    if result.fetch(:locked_equal)
+      h.content_tag :span, 'Сходится', class: 'badge badge-success'
+    else
+      buffer = []
+      buffer << h.content_tag(:span, 'НЕ Сходится', class: 'badge badge-danger')
+      buffer << h.content_tag(:code, result, class: 'text-small text-muted')
+    end
   end
 
   def trades_fee

@@ -55,8 +55,24 @@ class Account < ApplicationRecord
     member.deposits.where(currency_id: currency_id)
   end
 
+  def locked_in_withdraws
+    member.withdraws.where(currency_id: currency_id, is_locked: true).sum(:sum)
+  end
+
+  def locked_in_deposits
+    member.deposits.where(currency_id: currency_id, is_locked: true).sum(:amount)
+  end
+
   def base_orders
     member.orders.where(market_id: Market.where(base_unit: currency_id).pluck(:symbol))
+  end
+
+  def bid_orders
+    quote_orders.where(type: 'OrderBid')
+  end
+
+  def ask_orders
+    base_orders.where(type: 'OrderAsk')
   end
 
   def quote_orders
