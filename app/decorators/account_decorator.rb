@@ -24,6 +24,7 @@ class AccountDecorator < ApplicationDecorator
       buffer = []
       buffer << h.content_tag(:span, 'НЕ Сходится', class: 'badge badge-danger')
       buffer << h.content_tag(:code, result, class: 'text-small text-muted')
+      buffer.join.html_safe
     end
   end
 
