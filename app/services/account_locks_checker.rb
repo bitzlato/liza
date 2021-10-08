@@ -9,6 +9,7 @@ class AccountLocksChecker
 
   def perform
     Account.transaction do
+      @account.reload
       locked_in_ask_orders = @account.ask_orders.active.sum(:locked)
       locked_in_bid_orders = @account.bid_orders.active.sum(:locked)
       locked_in_withdraws = @account.locked_in_withdraws
