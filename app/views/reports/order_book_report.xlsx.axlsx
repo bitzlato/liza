@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
+
+def present_orders(sheet, orders: , type:)
+  sheet.add_row [type]
+
+  if orders.empty?
+    sheet.add_row ['no orders']
+  else
+    sheet.add_row ['price', 'price_currency', 'volume', 'volume currency', 'amount', 'amount currency', 'member']
+    orders.each do |order_data|
+      order = Order.new(order_data.except(:member)).freeze
+      sheet.add_row [order.price, order.price_currency, order.origin_volume, order.volume_currency, (order.origin_volume * order.price), order.price_currency, Member.find(order.member_id).uid]
+    end
+  end
+end
+
+results = report.results
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  sheet.add_row [results[:time]]
+  results[:markets].each do |market_data|
+    sheet.add_row [market_data[:market][:symbol]]
+    if market_data[:order_ask].present? || market_data[:order_bid].present?
+      present_orders sheet, orders: market_data[:order_ask], type: :order_ask if market_data[:order_ask].present?
+      present_orders sheet, orders: market_data[:order_bid], type: :order_bid if market_data[:order_bid].present?
+    else
+      sheet.add_row ['no orders']
+    end
+    sheet.add_row ['---']
+  end
+end
