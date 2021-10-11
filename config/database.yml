@@ -25,21 +25,21 @@ default: &default
   password: <%= ENV['DATABASE_PASS'] %>
 
 staging:
-  peatio:
-    <<: *default
-    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_production') %>
   primary:
     <<: *default
     migrations_paths: db/reports_migrate
     database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>
-development:
   peatio:
     <<: *default
-    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_development') %>
+    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_production') %>
+development:
   primary:
     <<: *default
     migrations_paths: db/reports_migrate
     database: peatio_development_reports
+  peatio:
+    <<: *default
+    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_development') %>
 test:
   peatio:
     <<: *default
@@ -70,10 +70,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  peatio:
-    <<: *default
-    database: <%= ENV.fetch('DATABASE_NAME', 'peatio_production') %>
   primary:
     <<: *default
     migrations_paths: db/reports_migrate
     database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'liza_reports_production') %>
+  peatio:
+    <<: *default
+    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_production') %>
