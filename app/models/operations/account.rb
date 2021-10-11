@@ -4,7 +4,7 @@
 
 # TODO: Add admin rubric for Account.
 module Operations
-  class Account < ApplicationRecord
+  class Account < PeatioRecord
     SCOPES = %w[member platform].freeze
 
     MEMBER_TYPES = %w[liability].freeze
