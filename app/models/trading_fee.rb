@@ -35,7 +35,7 @@
 #   maker fee will be 0.07%;
 #   taker fee will be 0.09%;
 #
-class TradingFee < ApplicationRecord
+class TradingFee < PeatioRecord
   # == Constants ============================================================
 
   # For fee we define static precision - 4.

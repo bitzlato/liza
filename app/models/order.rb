@@ -4,7 +4,7 @@
 
 require 'csv'
 
-class Order < ApplicationRecord
+class Order < PeatioRecord
   attribute :uuid, :uuid if Rails.configuration.database_adapter.downcase != 'PostgreSQL'.downcase
 
   # Error is raised in case market doesn't have enough volume to fulfill the Order.

@@ -16,7 +16,7 @@
 # Ask/Base currency/unit = BTC.
 # Bid/Quote currency/unit = USD.
 
-class Market < ApplicationRecord
+class Market < PeatioRecord
   self.inheritance_column = nil
   # == Constants ============================================================
 

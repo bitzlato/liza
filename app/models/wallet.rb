@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Wallet < ApplicationRecord
+class Wallet < PeatioRecord
   extend Enumerize
 
   # We use this attribute values rules for wallet kinds:

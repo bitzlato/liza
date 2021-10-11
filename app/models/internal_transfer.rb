@@ -1,6 +1,6 @@
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
-class InternalTransfer < ApplicationRecord
+class InternalTransfer < PeatioRecord
   belongs_to :currency
   belongs_to :sender, class_name: :Member, required: true
   belongs_to :receiver, class_name: :Member, required: true

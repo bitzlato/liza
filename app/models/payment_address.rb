@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 # TODO: Rename to DepositAddress
-class PaymentAddress < ApplicationRecord
+class PaymentAddress < PeatioRecord
   extend PaymentAddressTotals
 
   belongs_to :member

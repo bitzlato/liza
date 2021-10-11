@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Currency < ApplicationRecord
+class Currency < PeatioRecord
   extend Memoist
   OPTIONS_ATTRIBUTES = %i[erc20_contract_address gas_limit gas_price].freeze
   OPTIONS_ATTRIBUTES.each do |attribute|

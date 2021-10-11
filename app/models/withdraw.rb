@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Withdraw < ApplicationRecord
+class Withdraw < PeatioRecord
   self.inheritance_column = nil
   STATES = %i[prepared rejected accepted skipped processing succeed canceled failed errored confirming].freeze
   COMPLETED_STATES = %i[succeed rejected canceled failed].freeze

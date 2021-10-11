@@ -2,7 +2,7 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
-class Transaction < ApplicationRecord
+class Transaction < PeatioRecord
   # == Constants ============================================================
 
   PENDING_STATUS = 'pending'

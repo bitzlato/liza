@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Trade < ApplicationRecord
+class Trade < PeatioRecord
   # == Constants ============================================================
 
   extend Enumerize

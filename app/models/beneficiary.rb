@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Beneficiary < ApplicationRecord
+class Beneficiary < PeatioRecord
   # == Constants ============================================================
 
   extend Enumerize

@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Account < ApplicationRecord
+class Account < PeatioRecord
   extend Memoist
 
   self.primary_keys = :currency_id, :member_id

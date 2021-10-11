@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class CurrencyWallet < ApplicationRecord
+class CurrencyWallet < PeatioRecord
   self.table_name = 'currencies_wallets'
 
   belongs_to :currency

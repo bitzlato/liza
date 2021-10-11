@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Deposit < ApplicationRecord
+class Deposit < PeatioRecord
   COMPLETED_STATES = %i[dispatched].freeze
   TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 

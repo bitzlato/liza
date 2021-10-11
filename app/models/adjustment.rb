@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Adjustment < ApplicationRecord
+class Adjustment < PeatioRecord
   # == Constants ============================================================
 
   CATEGORIES = %w[asset_registration investment minting_token

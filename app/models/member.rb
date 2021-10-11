@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-class Member < ApplicationRecord
+class Member < PeatioRecord
   has_many :orders
   has_many :accounts
   # has_many :stats_member_pnl

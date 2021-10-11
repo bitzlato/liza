@@ -5,7 +5,7 @@
 # {Operation} provides generic methods for the accounting operations
 # models.
 # @abstract
-class Operation < ApplicationRecord
+class Operation < PeatioRecord
   belongs_to :reference, polymorphic: true
   belongs_to :currency, foreign_key: :currency_id
   belongs_to :account, class_name: 'Operations::Account',

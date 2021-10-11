@@ -2,7 +2,7 @@
 
 # Copyright (c) 2019 Danil Pismenny <danil@brandymint.ru>
 
-class Blockchain < ApplicationRecord
+class Blockchain < PeatioRecord
   include BlockchainExploring
 
   has_many :wallets

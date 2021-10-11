@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 # ServiceAccount model
-class ServiceAccount < ApplicationRecord
+class ServiceAccount < PeatioRecord
   UID_PREFIX = 'SI'
 
   belongs_to :user, foreign_key: 'owner_id', optional: true
