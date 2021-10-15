@@ -8,7 +8,7 @@ class ReportsController < ResourcesController
   layout 'fluid'
 
   def new
-    render locals: { form: form, report_class: report_class, report_type: params[:report_type] }
+    render :new, locals: { form: form, report_class: report_class, report_type: params[:report_type] }
   end
 
   def create
