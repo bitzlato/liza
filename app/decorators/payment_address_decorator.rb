@@ -7,7 +7,7 @@ class PaymentAddressDecorator < ApplicationDecorator
 
   def self.table_columns
     %i[id address member native_currency blockchain balances balances_updated_at fee_amount transactions_count collection_state collected_at gas_refueled_at
-       last_transfer_try_at last_transfer_status enqueued_generation_at]
+       last_transfer_try_at last_transfer_status enqueued_generation_at blockchain_approvals]
   end
 
   def collection_state
@@ -52,5 +52,9 @@ class PaymentAddressDecorator < ApplicationDecorator
     h.content_tag :span, class: 'text-nowrap' do
       I18n.l object.balanced_updated_at
     end
+  end
+
+  def blockchain_approvals
+    BlockchainApproval.where(blockchain: object.blockchain, owner_address: object.address).as_json(only: %i[currency_id status txid created_at updated_at])
   end
 end
