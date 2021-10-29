@@ -6,7 +6,7 @@ class BlockchainDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[key name height client client_version min_confirmations status explorer_transaction explorer_address transactions_count block_numbers client_options]
+    %i[key name height client client_version min_confirmations status explorer_transaction explorer_address transactions_count block_numbers client_options disable_collection]
   end
 
   def transactions_count
