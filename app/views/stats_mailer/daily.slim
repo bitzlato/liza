@@ -17,12 +17,19 @@ html
       caption Торги
       tr
         th Рынок
-        th Количество сделок
+        th Кол-во сделок(Пользователи)
+        th Кол-во сделок(Боты)
+        th Кол-во всех сделок
       - @markets.each do |market|
         tr
           td = market.symbol
           td align='right'
+          = @total_trades_count[market.symbol].to_i - @total_trade_bots_count[market.symbol].to_i
+          td align='right'
+            = @total_trade_bots_count[market.symbol].to_i
+          td align='right'
             = @total_trades_count[market.symbol].to_i
+
 
     br
     br

@@ -6,8 +6,13 @@ class StatsMailer < ApplicationMailer
     @new_users_count    = Member.where(created_at: date.all_day).count
 
     # Markets stat
-    @markets            = Market.all
+    uids = ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS').split(',')
+    @markets             = Market.all
     @total_trades_count  = Trade.where(created_at: date.all_day).group(:market_id).count
+    @total_trade_bots_count = Trade.joins(:maker, :taker)
+                                   .where(created_at: date.all_day)
+                                   .where(maker: {uid: uids}).or(Trade.where(taker: {uid: uids}))
+                                   .group(:market_id).count
 
     # Currency stat
     @currencies         = Currency.all
