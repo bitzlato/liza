@@ -14,6 +14,8 @@ class StatsMailer < ApplicationMailer
     @total_deposit      = Deposit.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
     @total_withdraw     = Withdraw.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
 
+    @date               = date.to_s
+
     mail(to: emails, from: ENV['SMTP_FROM'], subject: "liza daily stats: #{date.to_s}")
   end
 end

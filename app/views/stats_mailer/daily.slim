@@ -3,15 +3,17 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
   body
-    table
+    h2 Статистика за #{@date}
+
+    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
       tr
-        th Новые пользователи:
+        th Зарегистрировано пользователей
         td = @new_users_count
 
     br
     br
 
-    table
+    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
       caption Рынки
       tr
         th Рынок
@@ -24,9 +26,10 @@ html
     br
     br
 
-    table
-      caption Баланс
+    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
+      caption Движения по счетам
       tr
+        th Валюта
         th Ввод
         th Вывод
       - @currencies.each do |currency|
