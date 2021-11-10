@@ -6,6 +6,6 @@ class DailyStatWorker
   sidekiq_options queue: :reports
 
   def perform
-    StatsMailer.daily(Date.yesterday).deliver_now
+    StatsMailer.daily(Date.yesterday).deliver_now!
   end
 end

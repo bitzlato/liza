@@ -16,6 +16,6 @@ class StatsMailer < ApplicationMailer
 
     @date               = date.to_s
 
-    mail(to: emails, from: ENV['SMTP_FROM'], subject: "liza daily stats: #{date.to_s}")
+    mail(to: emails, from: ENV['SMTP_FROM'], subject: "Суточная статстика по бирже за #{date.to_s}")
   end
 end
