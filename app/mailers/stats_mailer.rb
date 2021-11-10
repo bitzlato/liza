@@ -1,6 +1,6 @@
 class StatsMailer < ApplicationMailer
   def daily(date = Date.current)
-    emails = ENV.fetch('USERS_STATS_EMAIL')
+    emails = ENV.fetch('DAILY_STATS_EMAILS')
 
     # Member stat
     @new_users_count    = Member.where(created_at: date.all_day).count
