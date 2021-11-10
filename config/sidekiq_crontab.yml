@@ -1,3 +1,7 @@
 TransactionsFetcher:
   cron: '*/30 * * * * *'
   class: TransactionsFetcher
+
+DailyStatWorker:
+  cron: '0 6 * * *'
+  class: DailyStatWorker

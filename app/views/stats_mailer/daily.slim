@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+  body
+    table
+      tr
+        th Новые пользователи:
+        td = @new_users_count
+
+    br
+    br
+
+    table
+      caption Рынки
+      tr
+        th Рынок
+        th Кол-во торгов
+      - @markets.each do |market|
+        tr
+          td = market.symbol
+          td = @total_trades_count[market.symbol].to_i
+
+    br
+    br
+
+    table
+      caption Баланс
+      tr
+        th Ввод
+        th Вывод
+      - @currencies.each do |currency|
+        tr
+          td= currency.id
+          td = @total_deposit[currency.id].to_d
+          td = @total_withdraw[currency.id].to_d
