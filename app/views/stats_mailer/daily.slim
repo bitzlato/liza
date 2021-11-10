@@ -5,7 +5,7 @@ html
   body
     h2 Статистика за #{@date}
 
-    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
       tr
         th Зарегистрировано пользователей
         td = @new_users_count
@@ -13,21 +13,22 @@ html
     br
     br
 
-    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
-      caption Рынки
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Торги
       tr
         th Рынок
-        th Кол-во торгов
+        th Количество сделок
       - @markets.each do |market|
         tr
           td = market.symbol
-          td = @total_trades_count[market.symbol].to_i
+          td align='right'
+            = @total_trades_count[market.symbol].to_i
 
     br
     br
 
-    table bgcolor="#ACD13C" width="100%" cellpadding="2" cellspacing="0"
-      caption Движения по счетам
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Движения по пользовательким счетам
       tr
         th Валюта
         th Ввод
@@ -35,5 +36,7 @@ html
       - @currencies.each do |currency|
         tr
           td= currency.id
-          td = @total_deposit[currency.id].to_d
-          td = @total_withdraw[currency.id].to_d
+          td align='right'
+            = @total_deposit[currency.id].to_d
+          td align='right'
+            = @total_withdraw[currency.id].to_d
