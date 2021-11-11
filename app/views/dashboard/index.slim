@@ -20,12 +20,11 @@ table.table.table-condensed.table-striped.table-cross-row
       th.text-right
         div Расхождение балансов (внутренний аудит)
         = column_tip 'Расчетный - Фактический - Операционная_прибыль + Корректировки - Незачисленные_депозиты'
-
-      th.text-right  Операционная прибыль (комиссии)
-      th.text-right  Корректировки
       th.text-right
         div Расчётный баланс заблокированных сумм
         = column_tip 'Заблокировано_на_счетах - Заблокировано_в_депозитах - Заблокировано_в_списаниях - Заблокировано_в_сделках'
+      th.text-right  Операционная прибыль (комиссии)
+      th.text-right  Корректировки
   tbody
     - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(member_id)').each do |row|
       - currency_id = row[0]
@@ -101,12 +100,6 @@ table.table.table-condensed.table-striped.table-cross-row
           = format_divergence (total_deposit - total_withdraw) - (row[1] + row[2]) - total_operations_amount + adjustments_amount - total_skipped_deposits, currency_id, show_currency: false
           .text-small.text-muted.mt-2
         td.text-right
-          = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
-            = format_money total_operations_amount, currency, show_currency: false
-        td.text-right
-          = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
-            = format_money adjustments_amount, currency, show_currency: false
-        td.text-right
           - locked_deposits_amount = Deposit.locked.where(currency_id: currency_id).sum(:amount)
           - locked_withdraws_sum = Withdraw.locked.where(currency_id: currency_id).sum(:sum)
           - locked_orders_amount = OrderAsk.active.where(ask: currency_id).sum(:locked) + OrderBid.active.where(bid: currency_id).sum(:locked)
@@ -120,3 +113,9 @@ table.table.table-condensed.table-striped.table-cross-row
             = format_money locked_withdraws_sum, currency_id, show_currency: false
             span.mx-2= '-'
             = format_money locked_orders_amount, currency_id, show_currency: false
+        td.text-right
+          = link_to operations_revenues_path(q: { currency_id_eq: currency_id} ) do
+            = format_money total_operations_amount, currency, show_currency: false
+        td.text-right
+          = link_to adjustments_path(q: { currency_id_eq: currency_id} ) do
+            = format_money adjustments_amount, currency, show_currency: false
