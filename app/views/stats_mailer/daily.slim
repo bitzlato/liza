@@ -29,7 +29,11 @@ html
             = @total_trade_bots_count[market.symbol].to_i
           td align='right'
             = @total_trades_count[market.symbol].to_i
-
+      tr
+        td
+        td = @total_trades_count.values.sum - @total_trade_bots_count.values.sum
+        td = @total_trade_bots_count.values.sum
+        td = @total_trades_count.values.sum
 
     br
     br

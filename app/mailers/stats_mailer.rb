@@ -13,7 +13,6 @@ class StatsMailer < ApplicationMailer
                                    .where(created_at: date.all_day)
                                    .where(maker: {uid: uids}).or(Trade.where(taker: {uid: uids}))
                                    .group(:market_id).count
-
     # Currency stat
     @currencies         = Currency.all
     @total_deposit      = Deposit.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
