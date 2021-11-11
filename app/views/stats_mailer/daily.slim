@@ -14,15 +14,30 @@ html
     br
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
-      caption Торги
+      caption Кол-во сделок
       tr
         th Рынок
-        th Количество сделок
+        th Пользователи
+        th Боты
+        th Всего
       - @markets.each do |market|
         tr
-          td = market.symbol
+          td
+            = link_to market.symbol, market_url(market)
+          td align='right'
+            = @total_trades_count[market.symbol].to_i - @total_trade_bots_count[market.symbol].to_i
+          td align='right'
+            = @total_trade_bots_count[market.symbol].to_i
           td align='right'
             = @total_trades_count[market.symbol].to_i
+      tr
+        th Всего
+        td align='right'
+          = @total_trades_count.values.sum - @total_trade_bots_count.values.sum
+        td align='right'
+          = @total_trade_bots_count.values.sum
+        td align='right'
+          = @total_trades_count.values.sum
 
     br
     br
@@ -40,3 +55,10 @@ html
             = @total_deposit[currency.id].to_d
           td align='right'
             = @total_withdraw[currency.id].to_d
+
+    br
+    br
+
+    div
+      | Версия: #{AppVersion.to_s}
+
