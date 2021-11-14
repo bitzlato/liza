@@ -9,10 +9,12 @@ html
       caption Пользователи
       tr
         th Новые
-        td = @new_users_count
+        td align='right'
+          = @new_users_count
       tr
         th Всего
-        td = Member.count
+        td align='right'
+          = Member.count
 
     br
     br
@@ -63,6 +65,13 @@ html
     br
     br
 
-    div
-      | Версия: #{AppVersion.to_s}
+    hr
+
+    p
+      small
+        | Версия: #{AppVersion.to_s}
+
+    p
+      small
+        | Боты: #{ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS')}
 
