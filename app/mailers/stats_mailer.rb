@@ -18,8 +18,12 @@ class StatsMailer < ApplicationMailer
     @total_deposit      = Deposit.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
     @total_withdraw     = Withdraw.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
 
-    @date               = date.to_s
+    @date               = I18n.l(date, format: '%d %B %Y (%A)')
 
-    mail(to: emails, from: ENV['SMTP_FROM'], subject: "Суточная статстика по бирже за #{date.to_s}")
+    mail(
+      to: emails,
+      from: ENV['SMTP_FROM'],
+      subject: "Суточная статстика по бирже за #{@date}"
+    )
   end
 end

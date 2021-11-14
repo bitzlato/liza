@@ -6,9 +6,13 @@ html
     h2 Статистика за #{@date}
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Пользователи
       tr
-        th Зарегистрировано пользователей
+        th Новые
         td = @new_users_count
+      tr
+        th Всего
+        td = Member.count
 
     br
     br
