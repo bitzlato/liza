@@ -13,19 +13,19 @@ class TradeDecorator < ApplicationDecorator
   end
 
   def amount
-    h.format_money object.amount, object.maker_order.currency
+    h.format_money object.amount, object.maker_order.ask_currency
   end
 
   def price
-    h.format_money object.price, object.taker_order.currency
+    h.format_money object.price, object.taker_order.bid_currency
   end
 
   def volume
-    h.format_money object.volume, object.taker_order.currency
+    h.format_money object.volume, object.taker_order.ask_currency
   end
 
   def total
-    h.format_money object.total, object.taker_order.currency
+    h.format_money object.total, object.taker_order.bid_currency
   end
 
   def maker_fee_amount
