@@ -13,9 +13,9 @@ h3= t type, scope: :helpers
       - orders.each do |order_data|
         - order = Order.new(order_data.except(:member)).freeze
         tr class=(type==:order_ask ? 'table-danger' : 'table-success')    
-          td= format_money order.price, order.price_currency
-          td= format_money order.volume, order.volume_currency
-          td= format_money (order.volume * order.price), order.price_currency
+          td= format_money order.price, order.bid_currency
+          td= format_money order.volume, order.ask_currency
+          td= format_money (order.volume * order.price), order.bid_currency
           td
             = render 'member_brief', member: Member.find(order.member_id)
 hr

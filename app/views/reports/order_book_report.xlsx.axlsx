@@ -11,7 +11,7 @@ def present_orders(sheet, orders: , type:)
     sheet.add_row ['price', 'price_currency', 'volume', 'volume currency', 'amount', 'amount currency', 'member']
     orders.each do |order_data|
       order = Order.new(order_data.except(:member)).freeze
-      sheet.add_row [order.price, order.price_currency, order.origin_volume, order.volume_currency, (order.origin_volume * order.price), order.price_currency, Member.find(order.member_id).uid]
+      sheet.add_row [order.price, order.bid_currency, order.origin_volume, order.ask_currency, (order.origin_volume * order.price), order.bid_currency, Member.find(order.member_id).uid]
     end
   end
 end
