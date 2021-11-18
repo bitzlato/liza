@@ -23,25 +23,35 @@ html
       caption Кол-во сделок
       tr
         th Рынок
-        th Пользователи
-        th Боты
+        th Пользователи за весь период
+        th Пользователи/Пользователи
+        th Пользователи/Боты
+        th Боты/Боты
         th Всего
       - @markets.each do |market|
         tr
           td
             = link_to market.symbol, market_url(market)
           td align='right'
-            = @total_trades_count[market.symbol].to_i - @total_trade_bots_count[market.symbol].to_i
+            = @total_users_trade[market.symbol].to_i
           td align='right'
-            = @total_trade_bots_count[market.symbol].to_i
+            = @total_trades_user_and_user[market.symbol].to_i
+          td align='right'
+            = @total_trades_bot_and_user[market.symbol].to_i
+          td align='right'
+            = @total_trades_bot_and_bot[market.symbol].to_i
           td align='right'
             = @total_trades_count[market.symbol].to_i
       tr
         th Всего
         td align='right'
-          = @total_trades_count.values.sum - @total_trade_bots_count.values.sum
+          = @total_users_trade.values.sum
         td align='right'
-          = @total_trade_bots_count.values.sum
+          = @total_trades_user_and_user.values.sum
+        td align='right'
+          = @total_trades_bot_and_user.values.sum
+        td align='right'
+          = @total_trades_bot_and_bot.values.sum
         td align='right'
           = @total_trades_count.values.sum
 

@@ -10,9 +10,19 @@ class StatsMailer < ApplicationMailer
     member_ids          = Member.where(uid: uids).ids
     @markets            = Market.all
     @total_trades_count = Trade.where(created_at: date.all_day).group(:market_id).count
-    @total_trade_bots_count = Trade.where(created_at: date.all_day)
-                                   .merge(Trade.where(maker_id: member_ids).or(Trade.where(taker_id: member_ids)))
-                                   .group(:market_id).count
+
+    trade = Trade.where(created_at: date.all_day)
+
+    @total_trades_user_and_user = trade.where.not(maker_id: member_ids)
+                                       .where.not(taker_id: member_ids)
+                                       .group(:market_id).count
+    @total_trades_bot_and_user = trade.where("(maker_id IN (:member_ids) AND taker_id NOT IN (:member_ids)) OR (maker_id NOT IN (:member_ids) AND taker_id IN (:member_ids))", member_ids: member_ids)
+                                      .group(:market_id).count
+    @total_trades_bot_and_bot = trade.where(maker_id: member_ids, taker_id: member_ids)
+                                     .group(:market_id).count
+
+    @total_users_trade = Trade.where.not(maker_id: member_ids).where.not(taker_id: member_ids).group(:market_id).count
+
     # Currency stat
     @currencies         = Currency.all
     @total_deposit      = Deposit.success.where(created_at: date.all_day).group(:currency_id).sum(:amount)
