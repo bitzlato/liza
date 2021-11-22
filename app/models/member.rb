@@ -3,6 +3,8 @@
 # frozen_string_literal: true
 
 class Member < PeatioRecord
+  BOT_UIDS = ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS').split(',')
+
   has_many :orders
   has_many :accounts
   # has_many :stats_member_pnl
@@ -16,6 +18,10 @@ class Member < PeatioRecord
 
   def trades
     Trade.by_member(id)
+  end
+
+  def self.bots
+    Member.where(uid: BOT_UIDS)
   end
 
   def to_s

@@ -24,6 +24,15 @@ class Trade < PeatioRecord
   scope :with_market, ->(market) { where(market_id: market) }
   scope :by_member, ->(member_id) { where 'taker_id=? or maker_id=?', member_id, member_id }
 
+  scope :user_trades, -> do
+    ids = Member.bots.ids
+    where('maker_id not in (?) or taker_id not in (?)', ids, ids)
+  end
+
+  scope :bot_trades, -> do
+    where(maker_id: Member.bots.ids, taker_id: Member.bots.ids)
+  end
+
   # == Class Methods ========================================================
 
   class << self
