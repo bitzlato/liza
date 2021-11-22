@@ -26,6 +26,14 @@ html
         th Пользователи
         th Боты
         th Всего
+      tr
+        th Всего
+        td align='right'
+          = @total_trade_users_count.values.sum
+        td align='right'
+          = @total_trade_bots_count.values.sum
+        td align='right'
+          = @total_trades_count.values.sum
       - @markets.each do |market|
         tr
           td
@@ -36,15 +44,6 @@ html
             = @total_trade_bots_count[market.symbol].to_i
           td align='right'
             = @total_trades_count[market.symbol].to_i
-      tr
-        th Всего
-        td align='right'
-          = @total_trade_users_count.values.sum
-        td align='right'
-          = @total_trade_bots_count.values.sum
-        td align='right'
-          = @total_trades_count.values.sum
-
     br
     br
 
