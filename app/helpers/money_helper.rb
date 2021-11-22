@@ -19,7 +19,9 @@ module MoneyHelper
         t('helpers.no_divergence')
       end
     else
-      format_money amount, currency, options.reverse_merge(css_class: 'text-warning', tooltip: 'Должно быть 0')
+      money = format_money amount, currency, options.reverse_merge(css_class: 'text-warning', tooltip: 'Должно быть 0')
+      money = content_tag :div, money, data: { divergence: 'true' } if options.fetch(:tracked, true)
+      money
     end
   end
 

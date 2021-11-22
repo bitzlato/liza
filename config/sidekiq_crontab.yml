@@ -5,3 +5,8 @@ TransactionsFetcher:
 DailyStatWorker:
   cron: '0 4 * * *'
   class: DailyStatWorker
+
+DivergenceNotifierWorker:
+  cron: '*/15 * * * *'
+  class: DivergenceNotifierWorker
+

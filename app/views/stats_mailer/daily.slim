@@ -8,7 +8,7 @@ html
     table border="#ACD13C" cellpadding="5" cellspacing="0"
       caption Пользователи
       tr
-        th Новые
+        th Зарегистрировано
         td align='right'
           = @new_users_count
       tr
@@ -33,15 +33,15 @@ html
           td align='right'
             = @total_trade_users_count[market.symbol].to_i
           td align='right'
-            = @total_trade_bots_count[market.symbol].to_i
+            = @total_trades_bot[market.symbol].to_i
           td align='right'
             = @total_trades_count[market.symbol].to_i
       tr
         th Всего
         td align='right'
-          = @total_trades_count.values.sum - @total_trade_bots_count.values.sum
+          = @total_trades_count.values.sum - @total_trades_bot.values.sum
         td align='right'
-          = @total_trade_bots_count.values.sum
+          = @total_trades_bot.values.sum
         td align='right'
           = @total_trades_count.values.sum
 
@@ -54,13 +54,19 @@ html
         th Валюта
         th Ввод
         th Вывод
-      - @currencies.each do |currency|
+
+      - currencies = @currencies.select { |c| @total_deposit[c.id].to_d > 0 || @total_withdraw[c.id].to_d > 0 }
+      - if currencies.blank?
         tr
-          td= currency.id
-          td align='right'
-            = @total_deposit[currency.id].to_d
-          td align='right'
-            = @total_withdraw[currency.id].to_d
+          td colspan=3 align='center' Движений нет
+      - else
+        - currencies.each do |currency|
+          tr
+            td= currency.id
+            td align='right'
+              = @total_deposit[currency.id].to_d
+            td align='right'
+              = @total_withdraw[currency.id].to_d
 
     br
     br
