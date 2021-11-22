@@ -11,7 +11,7 @@ class DivergenceNotifierWorker
     app.get(url)
     body = app.response.body
 
-    if body !~ /data=divergence="true"/
+    if body =~ /data-divergence="true"/
       SlackNotifier.notifications.ping("Обнаружены расхождения #{url}")
     end
   end
