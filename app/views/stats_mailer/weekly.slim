@@ -3,7 +3,7 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
   body
-    h2 Статистика за #{@date}
+    h2 Статистика c #{@start_date} по #{@end_date}
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
       caption Пользователи
@@ -80,4 +80,3 @@ html
     p
       small
         | Боты: #{ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS')}
-
