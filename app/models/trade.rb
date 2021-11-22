@@ -5,6 +5,8 @@
 class Trade < PeatioRecord
   # == Constants ============================================================
 
+  BOT_UIDS = ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS').split(',')
+
   extend Enumerize
   ZERO = '0.0'.to_d
 
@@ -23,6 +25,16 @@ class Trade < PeatioRecord
   scope :h24, -> { where('created_at > ?', 24.hours.ago) }
   scope :with_market, ->(market) { where(market_id: market) }
   scope :by_member, ->(member_id) { where 'taker_id=? or maker_id=?', member_id, member_id }
+
+  scope :user_trades, -> do
+    bots = Member.where(uid: BOT_UIDS).ids
+    where.not(market_id: bots).or(Trade.where.not(taker_id: bots))
+  end
+
+  scope :bot_trades, -> do
+    bots = Member.where(uid: BOT_UIDS).ids
+    where(market_id: bots, taker_id: bots)
+  end
 
   # == Class Methods ========================================================
 

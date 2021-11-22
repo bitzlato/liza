@@ -31,7 +31,7 @@ html
           td
             = link_to market.symbol, market_url(market)
           td align='right'
-            = @total_trades_count[market.symbol].to_i - @total_trade_bots_count[market.symbol].to_i
+            = @total_trade_users_count[market.symbol].to_i
           td align='right'
             = @total_trade_bots_count[market.symbol].to_i
           td align='right'
