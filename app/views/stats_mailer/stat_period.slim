@@ -3,7 +3,7 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
   body
-    h2 Статистика за #{@date}
+    h2 = @title
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
       caption Пользователи
@@ -21,29 +21,43 @@ html
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
       caption Кол-во сделок
+
       tr
-        th Рынок
-        th Пользователи
+        th rowspan='2' Рынок
+        th colspan='2' Пользователи
         th Боты
         th Всего
       tr
+        th Объем
+        th Сделки
+
+        th Сделки
+
+        th Сделки
+      tr
         th Всего
-        td align='right'
-          = @total_trade_users_count.values.sum
-        td align='right'
-          = @total_trade_bots_count.values.sum
-        td align='right'
-          = @total_trades_count.values.sum
+
+        td align='right' &ndash;
+        td align='right' = @total_trade_users_count.values.sum
+
+        td align='right' = @total_trade_bots_count.values.sum
+
+        td align='right' = @total_trades_count.values.sum
+
       - @markets.each do |market|
         tr
-          td
-            = link_to market.symbol, market_url(market)
+          td = link_to market.symbol, market_url(market)
+
           td align='right'
-            = @total_trade_users_count[market.symbol].to_i
-          td align='right'
-            = @total_trade_bots_count[market.symbol].to_i
-          td align='right'
-            = @total_trades_count[market.symbol].to_i
+            = market.round_amount(@total_trade_users_volume[market.symbol].to_d)
+            | &nbsp;
+            small
+              = market.base_unit
+          td align='right' = @total_trade_users_count[market.symbol].to_i
+
+          td align='right' = @total_trade_bots_count[market.symbol].to_i
+
+          td align='right' = @total_trades_count[market.symbol].to_i
 
     br
     br

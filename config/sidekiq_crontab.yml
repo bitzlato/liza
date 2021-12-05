@@ -3,8 +3,16 @@ TransactionsFetcher:
   class: TransactionsFetcher
 
 DailyStatWorker:
-  cron: '0 4 * * *'
-  class: DailyStatWorker
+  cron: '0 7 * * * Europe/Moscow'
+  class: StatWorker
+  args:
+    period: 'daily'
+
+MonthlyStatWorker:
+  cron: '0 7 1 * * Europe/Moscow'
+  class: StatWorker
+  args:
+    period: 'monthly'
 
 DivergenceNotifierWorker:
   cron: '*/15 * * * *'
