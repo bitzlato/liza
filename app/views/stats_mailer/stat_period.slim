@@ -37,27 +37,26 @@ html
       tr
         th Всего
 
-        td align='right' &ndash;
-        td align='right' = @total_trade_users_count.values.sum
-
-        td align='right' = @total_trade_bots_count.values.sum
-
-        td align='right' = @total_trades_count.values.sum
+        td align='center' &ndash;
+        td align='right'
+          = number_with_delimiter(@total_trade_users_count.values.sum)
+        td align='right'
+          = number_with_delimiter(@total_trade_bots_count.values.sum)
+        td align='right'
+          = number_with_delimiter(@total_trades_count.values.sum)
 
       - @markets.each do |market|
         tr
-          td = link_to market.symbol, market_url(market)
-
+          td style='white-space: nowrap'
+            = link_to market.symbol, market_url(market)
+          td align='right' style='white-space: nowrap'
+            = number_to_currency(market.round_amount(@total_trade_users_volume[market.symbol].to_d), unit: market.base_unit, format: "%n %u")
           td align='right'
-            = market.round_amount(@total_trade_users_volume[market.symbol].to_d)
-            | &nbsp;
-            small
-              = market.base_unit
-          td align='right' = @total_trade_users_count[market.symbol].to_i
-
-          td align='right' = @total_trade_bots_count[market.symbol].to_i
-
-          td align='right' = @total_trades_count[market.symbol].to_i
+            = number_with_delimiter(@total_trade_users_count[market.symbol].to_i)
+          td align='right'
+            = number_with_delimiter(@total_trade_bots_count[market.symbol].to_i)
+          td align='right'
+            = number_with_delimiter(@total_trades_count[market.symbol].to_i)
 
     br
     br
@@ -78,9 +77,9 @@ html
           tr
             td= currency.id
             td align='right'
-              = @total_deposit[currency.id].to_d
+              = number_with_precision(@total_deposit[currency.id].to_d, strip_insignificant_zeros: true, delimiter: ' ', precision: currency.precision)
             td align='right'
-              = @total_withdraw[currency.id].to_d
+              = number_with_precision(@total_withdraw[currency.id].to_d, strip_insignificant_zeros: true, delimiter: ' ', precision: currency.precision)
 
     br
     br
