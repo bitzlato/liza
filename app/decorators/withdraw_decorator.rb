@@ -6,7 +6,7 @@ class WithdrawDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id member_uid member created_at updated_at currency aasm_state sum amount fee is_locked type txid tid rid note beneficiary transfer_type error note tx_dump]
+    %i[id member_uid member created_at updated_at currency aasm_state sum amount fee type txid tid rid note beneficiary transfer_type error note tx_dump]
   end
 
   def tx_dump
