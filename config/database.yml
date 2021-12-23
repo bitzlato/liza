@@ -31,7 +31,7 @@ staging:
     database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>
   peatio:
     <<: *default
-    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_production') %>
+    database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_production') %>
 development:
   primary:
     <<: *default
@@ -39,7 +39,7 @@ development:
     database: peatio_development_reports
   peatio:
     <<: *default
-    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_development') %>
+    database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_development') %>
 test:
   peatio:
     <<: *default
@@ -76,4 +76,4 @@ production:
     database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'liza_reports_production') %>
   peatio:
     <<: *default
-    database: <%= ENV.fetch('PEATIO_DATABASE_NANE', 'peatio_production') %>
+    database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_production') %>
