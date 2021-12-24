@@ -25,7 +25,4 @@ class WithdrawDecorator < ApplicationDecorator
     txid_with_recorded_transaction object.txid
   end
 
-  def member_uid
-    object.member.uid
-  end
 end

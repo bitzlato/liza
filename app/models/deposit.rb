@@ -28,6 +28,8 @@ class Deposit < PeatioRecord
 
   scope :recent, -> { order(id: :desc) }
 
+  delegate :uid, to: :member, prefix: true
+
   def to_s
     ['deposit#', id.to_s, ' ', amount.to_s, ' ', currency_id].join
   end

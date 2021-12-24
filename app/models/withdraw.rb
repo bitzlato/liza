@@ -39,6 +39,8 @@ class Withdraw < PeatioRecord
   scope :last_1_month, -> { where('created_at > ?', 1.month.ago) }
   scope :locked, -> { where(is_locked: true) }
 
+  delegate :uid, to: :member, prefix: true
+
   class << self
     def sum_query
       'SELECT sum(w.sum * c.price) as sum FROM withdraws as w ' \
