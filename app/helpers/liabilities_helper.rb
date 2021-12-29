@@ -20,6 +20,8 @@ module LiabilitiesHelper
       present_adjustment(reference)
     when InternalTransfer
       present_internal_transfer(reference)
+    when Transfer
+      present_transfer(reference)
     when nil
       '-'
     else
@@ -36,6 +38,12 @@ module LiabilitiesHelper
 
   def present_internal_transfer(internal_transfer)
     "internal transfer #{internal_transfer.id}"
+  end
+
+  def present_transfer(transfer)
+    link_to transfer_path(transfer) do
+      "transfer #{transfer.id}"
+    end
   end
 
   def present_payment_address(payment_address)

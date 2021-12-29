@@ -5,6 +5,7 @@
 module Operations
   class RevenuesController < ResourcesController
     include CurrencySupport
+    include RansackSupport
 
     layout 'fluid'
 
