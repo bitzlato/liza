@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :members
   resources :adjustments
+  resources :internal_transfers
   resources :service_withdraws, only: %i[index show]
   resources :service_invoices, only: %i[index show]
   resources :service_transactions, only: %i[index show]
