@@ -14,6 +14,6 @@ MonthlyStatWorker:
   args:
     period: 'monthly'
 
-#DivergenceNotifierWorker:
-#  cron: '*/15 * * * *'
-#  class: DivergenceNotifierWorker
+DivergenceNotifierWorker:
+  cron: '*/15 * * * *'
+  class: DivergenceNotifierWorker
