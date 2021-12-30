@@ -7,10 +7,10 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'На системных кошельках + на депозитных счетах'
       th.text-right
         div Операционные активы по базе
-        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции + Незачисленные_депозиты'
+        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции + Незачисленные_депозиты - Операционные_доходы_за_p2p_трансфер'
       th.text-right
         div Расчетный баланс на системных счетах
-        = column_tip 'Депозиты - Списания - Комиссия_сети + Зарегистрированные_активы'
+        = column_tip 'Депозиты - Списания - Комиссия_сети + Зарегистрированные_активы - Обязательства_за_p2p_трансфер'
       th.text-right
         div Расчётный баланс на счетах
         = column_tip 'Введено_по_депозитам - Выведено_по_съёмам - Комиссии_торговые_и_депозит/списания'
@@ -36,6 +36,8 @@ table.table.table-condensed.table-striped.table-cross-row
       - total_withdraw = Withdraw.success.where(currency_id: currency_id).sum(:amount)
       - total_operations_amount = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
       - total_operations_assets_credit = currency.operations_assets.sum(:credit) - currency.operations_assets.sum(:debit)
+      - total_transfer_liabilities = transfer_liabilities[currency_id].to_d
+      - total_transfer_revenue = transfer_revenues[currency_id].to_d
       - investment_amount = adjustments[[currency_id, 'investment']].to_d
       - asset_registration_amount = adjustments[[currency_id, 'asset_registration']].to_d
       - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
@@ -53,7 +55,7 @@ table.table.table-condensed.table-striped.table-cross-row
             = link_to payment_addresses_path(q: { blockchain_id_eq: currency.blockchain_id, currency_id_eq: currency_id, with_balances: true }) do
               = format_money paymand_address_amounts, currency, show_currency: false
         td.text-right
-          = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d + total_skipped_deposits - investment_amount), currency_id, show_currency: false
+          = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d + total_skipped_deposits - investment_amount - total_transfer_revenue), currency_id, show_currency: false
           .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
               = format_money total_operations_assets_credit, currency, show_currency: false
@@ -66,10 +68,13 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to deposits_path(q: { aasm_state_eq: :skipped, blockchain_id_eq: currency.blockchain_id }) do
               = format_money total_skipped_deposits, currency_id, show_currency: false
+            span.ml-2.mr-2= '-'
+            = link_to operations_revenues_path(q: { reference_type_eq: 'Transfer'}) do
+              = format_money total_transfer_revenue, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency , show_currency: false
         td.text-right
-          = format_money calculated_total_balance = total_deposit - total_withdraw - accountable_fee[currency_id].to_d + asset_registration_amount, currency_id, show_currency: false
+          = format_money calculated_total_balance = total_deposit - total_withdraw - accountable_fee[currency_id].to_d + asset_registration_amount + total_transfer_liabilities, currency_id, show_currency: false
           .text-small.mt-2
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
               = format_money total_deposit, currency_id, show_currency: false
@@ -80,6 +85,9 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to adjustments_path(q: { currency_id_eq: currency_id, category_eq: 'asset_registration' }) do
               = format_money asset_registration_amount, currency_id, show_currency: false
+            span.ml-2.mr-2= '+'
+            = link_to operations_liabilities_path(q: { reference_type_eq: 'Transfer'}) do
+              = format_money total_transfer_liabilities, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence calculated_total_balance - total_balance, currency, show_currency: false
         td.text-right
