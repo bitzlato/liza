@@ -38,10 +38,10 @@ ru:
       withdraw:
         one: Вывод
         many: Выводы
-      account: 
+      account:
         one: Счёт участника
         many: Счета участников
-      trade: 
+      trade:
         one: Сделка
         many: Сделки
       order:
@@ -62,6 +62,9 @@ ru:
       transaction:
         one: Транзакция
         many: Транзакции
+      internal_transfer:
+        one: Внутрений перевод
+        many: Внутрение переводы
     attributes:
       trade:
         created_at: Создано
