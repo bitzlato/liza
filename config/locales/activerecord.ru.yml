@@ -65,6 +65,9 @@ ru:
       internal_transfer:
         one: Внутрений перевод
         many: Внутрение переводы
+      transfer:
+        one: Перевод
+        many: Переводы
     attributes:
       trade:
         created_at: Создано
