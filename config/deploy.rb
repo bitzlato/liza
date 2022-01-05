@@ -4,7 +4,6 @@
 
 lock '3.16'
 
-set :user, 'app'
 set :application, 'liza'
 
 set :roles, %w[sidekiq web app db].freeze
