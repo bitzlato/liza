@@ -5,12 +5,15 @@
 # Summary query for different models
 #
 class SummaryQuery
+  RANSAK_COLUMN_MAPPING = {
+    'operations_accounts.description' => 'account_description'
+  }
   SUMMARY_MODELS = {
     Deposit => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)', 'sum(fee)'] },
     Withdraw => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)', 'sum(sum)', 'sum(fee)'] },
     Account => { grouped_by: [:currency_id], aggregations: ['sum(balance)', 'sum(locked)', :total] },
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
-    Operations::Revenue => { grouped_by: [:currency_id], aggregations: ['sum(credit)', 'sum(debit)', :total] },
+    Operations::Revenue => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Asset => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)', 'sum(fee)'] },
     ServiceWithdraw => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
@@ -24,6 +27,7 @@ class SummaryQuery
     return unless SUMMARY_MODELS[model_class].present?
 
     meta = SUMMARY_MODELS[model_class]
+
     plucks = ((meta[:grouped_by] + meta[:aggregations]) - [:total]).map do |p|
       p.to_s.include?('(') || p.to_s.include?('.') ? p : [model_class.table_name, p].join('.')
     end
@@ -35,8 +39,8 @@ class SummaryQuery
            .map { |row| prepare_row row, meta[:aggregations] }
 
     {
-      grouped_by: meta[:grouped_by],
-      aggregations: meta[:aggregations],
+      grouped_by: meta[:grouped_by].map { |col| RANSAK_COLUMN_MAPPING[col] || col },
+      aggregations: meta[:aggregations].map { |col| RANSAK_COLUMN_MAPPING[col] || col },
       rows: rows
     }
   end
