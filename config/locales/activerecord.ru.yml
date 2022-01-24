@@ -12,7 +12,8 @@ ru:
       member_wd_report: Вводы-выводы пользователя
       member_history_report: История изменения баланса пользователя
       adjustments_report: Отчет по корректировкам
-      member_takers_trades_report: Сделки пользователей-тэйкерв
+      member_takers_trades_report: Кол-во сделок user-тэйкерв
+      member_makers_trades_report: Кол-во сделок user-мэйкеров
       wallet: Системный кошелёк
       service_withdraw: Списания через P2P
       service_invoice: Счета система
