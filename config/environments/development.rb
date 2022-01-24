@@ -81,6 +81,8 @@ Rails.application.configure do
 
   config.web_console.whiny_requests = false if ENV.true? 'WHINY_REQUESTS'
 
+  config.asset_host = 'http://0.0.0.0:3003'
+
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 end

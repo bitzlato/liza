@@ -14,6 +14,7 @@ ru:
       adjustments_report: Отчет по корректировкам
       member_takers_trades_report: Кол-во сделок user-тэйкерв
       member_makers_trades_report: Кол-во сделок user-мэйкеров
+      active_members_report: Кол-во активных пользователей
       wallet: Системный кошелёк
       service_withdraw: Списания через P2P
       service_invoice: Счета система

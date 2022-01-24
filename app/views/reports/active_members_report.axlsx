@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+header = wb.styles.add_style b: true, alignment: { horizontal: :center }
+total_header = wb.styles.add_style b: true, alignment: { horizontal: :right }
+bold = wb.styles.add_style b: true
+
+wb.add_worksheet(name: report.name) do |sheet|
+  sheet.add_row [t('.amount', default: 'Amount'), report.results['records_count']], style: [total_header, bold]
+end

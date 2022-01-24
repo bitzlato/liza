@@ -13,6 +13,7 @@ class Member < PeatioRecord
   has_many :deposits, -> { order(id: :desc) }
   has_many :beneficiaries, -> { order(id: :desc) }
   has_many :operations_revenues, class_name: 'Operations::Revenue'
+  has_many :operations_liabilities, class_name: 'Operations::Liability'
 
   scope :enabled, -> { where(state: 'active') }
 

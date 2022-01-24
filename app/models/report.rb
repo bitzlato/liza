@@ -33,7 +33,6 @@ class Report < ReportsRecord
 
   def records_count
     results[:records_count]
-
   rescue StandardError => e
     report_exception(e, context: { report_id: id })
     e
