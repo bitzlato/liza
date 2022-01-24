@@ -1,0 +1,15 @@
+h1= t '.member_takers_trades'
+hr
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.market'
+      th= t '.count'
+  tbody
+    tr
+      th.text-right= t '.total'
+      th= number_with_delimiter(results.values.sum)
+    - results.each do |market_symbol, trades_count|
+      tr
+        td.nowrap= market_symbol
+        td.text-right.nowrap= number_with_delimiter(trades_count)

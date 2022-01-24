@@ -1,14 +1,14 @@
 .container-fluid
   h2= t '.build_report'
   ul
-    - [WdReport, LiabilityReport, OrdersBalanceReport, RevenuesReport, OrderBookReport, OrderBookLimitsReport, MemberOrdersReport, MemberTradesReport, MemberWdReport, AdjustmentsReport].each do |report_class|
+    - [WdReport, LiabilityReport, OrdersBalanceReport, RevenuesReport, OrderBookReport, OrderBookLimitsReport, MemberOrdersReport, MemberTradesReport, MemberWdReport, AdjustmentsReport, MemberTakersTradesReport].each do |report_class|
       li
         - title = report_class.model_name.human
         - if report_class.form_class.present?
           = link_to title, new_report_path(report_type: report_class.name)
         - else
           = link_to title, reports_path(form: { report_type: report_class.name }), method: :create
-    
+
   h1= paginated_records.model_name.human_plural
   hr
   = render 'table', items: paginated_records.decorate

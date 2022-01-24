@@ -12,6 +12,8 @@ class ReportsController < ResourcesController
   end
 
   def create
+    current_user = Member.last
+
     if report_class.form_class.nil? || form.valid?
       report = report_class.create! author: current_user, form: form.nil? ? {} : form.as_json.except(*%w[validation_context errors])
       redirect_to report_path(report)

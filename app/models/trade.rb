@@ -29,6 +29,16 @@ class Trade < PeatioRecord
     where('maker_id not in (?) or taker_id not in (?)', ids, ids)
   end
 
+  scope :user_taker_trades, -> do
+    ids = Member.bots.ids
+    where('taker_id not in (?)', ids)
+  end
+
+  scope :user_maker_trades, -> do
+    ids = Member.bots.ids
+    where('maker_id not in (?)', ids)
+  end
+
   scope :bot_trades, -> do
     where(maker_id: Member.bots.ids, taker_id: Member.bots.ids)
   end
