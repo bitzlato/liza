@@ -1,6 +1,11 @@
-= render 'time_range_form', form: form, report_type: report_type do |f|
+= simple_form_for form, as: :form, url: reports_path do |f|
+  = f.input :report_type, as: :hidden, input_html: { value: report_type }
   .row
     .col-md-4
-      = f.input :market_id, collection: Market.ordered.pluck(:symbol), require: true, include_blank: true
+      = f.input :market_id, collection: Market.ordered.pluck(:symbol), require: true, include_blank: 'All'
+  .row
     .col-md-4
       = f.input :only_quick_exchange, as: :boolean
+  = render 'time_range_fields', form: f
+
+  = f.button :submit, class: 'btn btn-primary'

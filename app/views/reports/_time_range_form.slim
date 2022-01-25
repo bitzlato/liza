@@ -1,10 +1,6 @@
 = simple_form_for form, as: :form, url: reports_path do |f|
   = f.input :report_type, as: :hidden, input_html: { value: report_type }
-  .row
-    .col-md-4
-      = f.input :time_from, input_html: { class: 'datetimepicker' }
-    .col-md-4
-      = f.input :time_to, input_html: { class: 'datetimepicker' }
-  - if block_given? 
+  = render 'time_range_fields', form: f
+  - if block_given?
     = yield f
   = f.button :submit, class: 'btn btn-primary'
