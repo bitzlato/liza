@@ -26,6 +26,7 @@ class Order < PeatioRecord
   belongs_to :member, required: true
   belongs_to :ask_currency, class_name: 'Currency', foreign_key: :ask
   belongs_to :bid_currency, class_name: 'Currency', foreign_key: :bid
+  has_one :swap_order
 
   attr_readonly :member_id,
                 :bid,

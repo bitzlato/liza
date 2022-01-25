@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+header = wb.styles.add_style b: true, alignment: { horizontal: :center }
+total_header = wb.styles.add_style b: true, alignment: { horizontal: :right }
+bold = wb.styles.add_style b: true
+
+wb.add_worksheet(name: report.name) do |sheet|
+  sheet.add_row [t('.market', default: 'Market'), t('.count', default: 'Count')], style: header
+  sheet.add_row [t('.total', default: 'Total'), report.results.values.sum], style: [total_header, bold]
+  report.results.each do |market_symbol, trades_count|
+    sheet.add_row [market_symbol, trades_count]
+  end
+end
