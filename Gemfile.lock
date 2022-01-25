@@ -583,6 +583,7 @@ DEPENDENCIES
   memoist
   mini_racer (~> 0.4.0)
   money (~> 6.16)
+  nokogiri
   pagy
   pg (~> 1.1)
   premailer-rails

@@ -119,6 +119,8 @@ gem 'sd_notify'
 
 gem 'bugsnag'
 
+gem 'nokogiri'
+
 group :deploy do
   gem 'bugsnag-capistrano', require: false
   gem 'capistrano', require: false
