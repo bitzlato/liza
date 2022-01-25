@@ -8,13 +8,16 @@ class ActiveMembersReport < Report
 
     def q
       {
-        operations_liabilities_created_at_gt: form.time_from,
-        operations_liabilities_created_at_lteq: form.time_to
+        g: [
+          { withdraws_created_at_gt: form.time_from, withdraws_created_at_lteq: form.time_to },
+          { deposits_at_gt: form.time_from, deposits_at_lteq: form.time_to },
+          { orders_at_gt: form.time_from, orders_at_lteq: form.time_to }
+        ]
       }
     end
 
     def records
-      Member.ransack(q).result
+      Member.ransack(q).result(distinct: true)
     end
   end
 end
