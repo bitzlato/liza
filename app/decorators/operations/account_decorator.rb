@@ -35,15 +35,9 @@ module Operations
 
       grouped_operations.map do |o|
         currency_id, credit, debit = o
-        report_exception("Credits and debits are both presented for #{object.class}#{object.id}.#{association}") if credit.present? && debit.present?
-        if credit.present?
-          h.link_to h.url_for([:operations, association, { q: { currency_id_eq: currency_id, account_id_eq: object.id } }]) do
-            h.format_money credit, currency_id
-          end
-        elsif debit.present?
-          h.link_to h.url_for([:operations, association, { q: { currency_id_eq: currency_id, account_id_eq: object.id } }]) do
-            h.format_money(-debit, currency_id)
-          end
+        currency = Currency.find(currency_id)
+        h.link_to(h.url_for([:operations, association, { q: { currency_id_eq: currency_id, account_id_eq: object.id } }])) do
+          (h.money_precission(credit, currency.precision) + ' / ' + h.money_precission(-debit, currency.precision) + ' ' + h.format_currency(currency)).html_safe
         end
       end.join(', ').html_safe
     end
