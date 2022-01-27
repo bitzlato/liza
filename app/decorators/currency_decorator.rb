@@ -7,9 +7,9 @@ class CurrencyDecorator < ApplicationDecorator
 
   def self.table_columns
     %i[
-      id visible position name parent withdraw_limit_24h deposit_enabled
-      withdrawal_enabled blockchain contract_address subunits precision
-      min_deposit_amount min_withdraw_amount min_collection_amount withdraw_fee deposit_fee gas_limit gas_price
+      id visible position name withdraw_limit_24h deposit_enabled
+      withdrawal_enabled precision
+      min_deposit_amount min_withdraw_amount min_collection_amount withdraw_fee deposit_fee
     ]
   end
 
@@ -31,9 +31,5 @@ class CurrencyDecorator < ApplicationDecorator
 
   def id
     h.format_currency object
-  end
-
-  def blockchain
-    h.content_tag :span, object.blockchain.key, class: 'text-nowrap'
   end
 end

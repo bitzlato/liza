@@ -22,11 +22,13 @@ class Beneficiary < PeatioRecord
   enumerize :state, in: STATES_MAPPING, scope: true
   # == Relationships ========================================================
 
-  belongs_to :currency, required: true
+  belongs_to :blockchain_currency
   belongs_to :member, required: true
   # == Scopes ===============================================================
 
   scope :available_to_member, -> { with_state(:pending, :active) }
+
+  delegate :currency, to: :blockchain_currency
 
   def to_s
     name

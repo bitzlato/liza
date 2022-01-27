@@ -7,14 +7,15 @@ class Blockchain < PeatioRecord
 
   has_many :wallets
   has_many :withdraws
-  has_many :currencies
+  has_many :blockchain_currencies
+  has_many :currencies, through: :blockchain_currencies
   has_many :payment_addresses
   has_many :transactions
   has_many :deposits, through: :currencies
   has_many :block_numbers
 
   def native_currency
-    currencies.find { |c| c.parent_id.nil? } || raise("No native currency for wallet id #{id}")
+    blockchain_currencies.find_by(parent_id: nil)&.currency || raise("No native currency for blockchain id #{id}")
   end
 
   def scan_latest_block

@@ -15,8 +15,8 @@ module ApplicationHelper
     l time, format: :short
   end
 
-  def find_fee_currency(currency_id)
-    Currency.find(currency_id).blockchain.fee_currency
+  def find_fee_currency(blockchain_id)
+    Blockchain.find(blockchain_id).fee_currency
   end
 
   def app_title

@@ -10,6 +10,7 @@ table.table.table-bordered.table-condensed.table-narrow.table-sm.text-small
   tbody
     - summary[:rows].each do |record|
       - currency_id = record.first
+      - blockchain_id = record[1]
       tr
         - q = {}
         - summary[:grouped_by].each_with_index do |column, index|
@@ -24,4 +25,4 @@ table.table.table-bordered.table-condensed.table-narrow.table-sm.text-small
           - value = record[index + summary[:grouped_by].length]
           td.text-right
             = link_to url_for(q: q) do
-              = format_money value, column == 'sum(fee)' ? find_fee_currency(currency_id) : currency_id
+              = format_money value, column == 'sum(fee)' ? find_fee_currency(blockchain_id) : currency_id
