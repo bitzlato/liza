@@ -33,6 +33,7 @@ class Wallet < PeatioRecord
   scope :active,   -> { where(status: :active) }
   scope :deposit,  -> { where(kind: kinds(deposit: true, values: true)) }
   scope :fee,      -> { where(kind: kinds(fee: true, values: true)) }
+  scope :hot,      -> { where(kind: kinds(hot: true, values: true)) }
   scope :withdraw, -> { where(kind: kinds(withdraw: true, values: true)) }
   scope :with_currency, ->(currency) { joins(:currencies).where(currencies: { id: currency }) }
   scope :ordered, -> { order(kind: :asc) }

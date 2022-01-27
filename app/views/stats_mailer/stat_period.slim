@@ -37,7 +37,9 @@ html
       tr
         th Всего
 
-        td align='center' style='white-space: nowrap' &ndash;
+        td align='right' style='white-space: nowrap'
+          - total = @markets.sum { |market| @total_trade_users_volume[market.symbol].to_d * @current_rates['rates'][market.base_unit].to_d }
+          = number_to_currency(total, unit: @current_rates['target_currency'], format: "%n %u")
         td align='right' style='white-space: nowrap'
           = number_with_delimiter(@total_trade_users_count.values.sum)
         td align='right' style='white-space: nowrap'
@@ -80,6 +82,26 @@ html
               = number_with_precision(@total_deposit[currency.id].to_d, strip_insignificant_zeros: true, delimiter: ' ', precision: currency.precision)
             td align='right' style='white-space: nowrap'
               = number_with_precision(@total_withdraw[currency.id].to_d, strip_insignificant_zeros: true, delimiter: ' ', precision: currency.precision)
+
+    br
+    br
+
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Объем резервов в #{@current_rates['target_currency']}
+      tr
+        th align='left' style='white-space: nowrap' Всего
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_hot_wallets_balances + @total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+
+      tr
+        th align='left' style='white-space: nowrap' Кошельки системы
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_hot_wallets_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+
+      tr
+        th align='left' style='white-space: nowrap' Счета пользователей
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
 
     br
     br
