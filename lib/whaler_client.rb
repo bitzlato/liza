@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BzPublicClient
+class WhalerClient
   Error = Class.new StandardError
   WrongResponse = Class.new Error
 

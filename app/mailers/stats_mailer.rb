@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bz_public_client'
+require 'whaler_client'
 
 class StatsMailer < ApplicationMailer
   TARGET_CURRENCY_RATE = 'USD'
@@ -54,7 +54,7 @@ class StatsMailer < ApplicationMailer
     @total_deposit  = Deposit.success.where(created_at: period).group(:currency_id).sum(:amount)
     @total_withdraw = Withdraw.success.where(created_at: period).group(:currency_id).sum(:amount)
 
-    @current_rates = bz_public_client.rates(TARGET_CURRENCY_RATE).yield_self do |data|
+    @current_rates = whaler_client.rates(TARGET_CURRENCY_RATE).yield_self do |data|
       data['rates'].transform_keys!(&:downcase)
       data
     end
@@ -67,7 +67,7 @@ class StatsMailer < ApplicationMailer
 
   private
 
-  def bz_public_client
-    @bz_public_client ||= BzPublicClient.new(base_url: ENV.fetch('BITZLATO_API_URL'))
+  def whaler_client
+    @bz_public_client ||= WhalerClient.new(base_url: ENV.fetch('WHALER_API_URL'))
   end
 end
