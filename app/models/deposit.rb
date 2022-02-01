@@ -10,7 +10,6 @@ class Deposit < PeatioRecord
 
   serialize :spread, Array
   serialize :from_addresses, Array
-  serialize :data, JSON unless Rails.configuration.database_support_json
 
   extend Enumerize
   include OperationsReferences

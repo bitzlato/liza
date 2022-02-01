@@ -14,9 +14,6 @@ class Withdraw < PeatioRecord
   extend Enumerize
   include OperationsReferences
 
-  serialize :error, JSON unless Rails.configuration.database_support_json
-  serialize :metadata, JSON unless Rails.configuration.database_support_json
-
   TRANSFER_TYPES = { fiat: 100, crypto: 200 }.freeze
 
   enumerize :aasm_state, in: STATES, predicates: true

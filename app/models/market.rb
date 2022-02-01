@@ -54,8 +54,6 @@ class Market < PeatioRecord
 
   # == Extensions ===========================================================
 
-  serialize :data, JSON unless Rails.configuration.database_support_json
-
   # == Relationships ========================================================
 
   has_one :base, class_name: 'Currency', foreign_key: :id, primary_key: :base_unit
