@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :adjustments
   resources :internal_transfers
   resources :transfers
-  resources :whaler_tranfers
+  resources :whaler_transfers
   resources :service_withdraws, only: %i[index show]
   resources :service_invoices, only: %i[index show]
   resources :service_transactions, only: %i[index show]
