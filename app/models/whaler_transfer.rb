@@ -1,4 +1,2 @@
-class WhalerTransfer < ActiveRecord::Base
-  self.abstract_class = true
-  establish_connection :whaler
+class WhalerTransfer < WhalerRecord
 end
