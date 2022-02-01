@@ -1,7 +1,14 @@
+whaler_default: &whaler_default
+  adapter: postgresql
+  encoding: utf8
+  schema_search_path: whaler
+  url: <%= ENV.fetch( 'BITZLATO_DATABASE_URL', 'postgres://localhost/bitzlato_development'  ) %>
+  migrations_paths: db/migrate_bitzlato
+
 bitzlato_default: &bitzlato_default
   adapter: postgresql
   encoding: utf8
-  schema_search_path: p2p,public,whaler
+  schema_search_path: p2p,public
   url: <%= ENV.fetch( 'BITZLATO_DATABASE_URL', 'postgres://localhost/bitzlato_development'  ) %>
   migrations_paths: db/migrate_bitzlato
 
@@ -30,9 +37,13 @@ staging:
   peatio:
     <<: *peatio
     database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_production') %>
+  whaler:
+    <<: *whaler
   bitzlato:
     <<: *bitzlato
 development:
+  whaler:
+    <<: *whaler
   bitzlato:
     <<: *bitzlato
   primary:
@@ -42,6 +53,8 @@ development:
     <<: *peatio
     database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_development') %>
 test:
+  whaler:
+    <<: *whaler
   bitzlato:
     <<: *bitzlato
   peatio:
@@ -51,6 +64,8 @@ test:
     <<: *primary
     database: liza_test_reports
 production:
+  whaler:
+    <<: *whaler
   bitzlato:
     <<: *bitzlato
   primary:
