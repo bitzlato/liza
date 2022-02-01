@@ -23,8 +23,6 @@ class Currency < PeatioRecord
   # It's preferred to use code where this attributes are equal.
   alias_attribute :code, :id
 
-  serialize :options, JSON unless Rails.configuration.database_support_json
-
   belongs_to :blockchain
   has_many :wallets, through: :blockchain
   has_one :parent, class_name: 'Currency', foreign_key: :id, primary_key: :parent_id
