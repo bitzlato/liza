@@ -18,7 +18,8 @@ class SummaryQuery
     Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)', 'sum(fee)'] },
     ServiceWithdraw => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
     ServiceInvoice => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
-    ServiceTransaction => { grouped_by: %i[currency_id], aggregations: ['sum(service_transactions.amount)'] }
+    ServiceTransaction => { grouped_by: %i[currency_id], aggregations: ['sum(service_transactions.amount)'] },
+    WhalerTransfer => { grouped_by: %i[currency_code state], aggregations: ['sum(amount)'] }
   }.freeze
 
   # rubocop:disable Metrics/MethodLength
