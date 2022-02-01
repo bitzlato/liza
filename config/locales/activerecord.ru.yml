@@ -66,8 +66,8 @@ ru:
         one: Транзакция
         many: Транзакции
       internal_transfer:
-        one: Внутрений перевод
-        many: Внутрение переводы
+        one: Перевод между счетами пользователей (InteranalTransfer)
+        many: Переводы между счетами пользователей (InternalTransfer)
       transfer:
         one: Внешний перевод на биржу
         many: Внешние переводы на биржу
