@@ -98,14 +98,14 @@
                                          PATCH  /transfers/:id(.:format)                                                                          transfers#update
                                          PUT    /transfers/:id(.:format)                                                                          transfers#update
                                          DELETE /transfers/:id(.:format)                                                                          transfers#destroy
-                         whaler_tranfers GET    /whaler_tranfers(.:format)                                                                        whaler_tranfers#index
-                                         POST   /whaler_tranfers(.:format)                                                                        whaler_tranfers#create
-                      new_whaler_tranfer GET    /whaler_tranfers/new(.:format)                                                                    whaler_tranfers#new
-                     edit_whaler_tranfer GET    /whaler_tranfers/:id/edit(.:format)                                                               whaler_tranfers#edit
-                          whaler_tranfer GET    /whaler_tranfers/:id(.:format)                                                                    whaler_tranfers#show
-                                         PATCH  /whaler_tranfers/:id(.:format)                                                                    whaler_tranfers#update
-                                         PUT    /whaler_tranfers/:id(.:format)                                                                    whaler_tranfers#update
-                                         DELETE /whaler_tranfers/:id(.:format)                                                                    whaler_tranfers#destroy
+                        whaler_transfers GET    /whaler_transfers(.:format)                                                                       whaler_transfers#index
+                                         POST   /whaler_transfers(.:format)                                                                       whaler_transfers#create
+                     new_whaler_transfer GET    /whaler_transfers/new(.:format)                                                                   whaler_transfers#new
+                    edit_whaler_transfer GET    /whaler_transfers/:id/edit(.:format)                                                              whaler_transfers#edit
+                         whaler_transfer GET    /whaler_transfers/:id(.:format)                                                                   whaler_transfers#show
+                                         PATCH  /whaler_transfers/:id(.:format)                                                                   whaler_transfers#update
+                                         PUT    /whaler_transfers/:id(.:format)                                                                   whaler_transfers#update
+                                         DELETE /whaler_transfers/:id(.:format)                                                                   whaler_transfers#destroy
                        service_withdraws GET    /service_withdraws(.:format)                                                                      service_withdraws#index
                         service_withdraw GET    /service_withdraws/:id(.:format)                                                                  service_withdraws#show
                         service_invoices GET    /service_invoices(.:format)                                                                       service_invoices#index
