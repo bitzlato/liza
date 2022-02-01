@@ -71,6 +71,9 @@ ru:
       transfer:
         one: Внешний перевод на биржу
         many: Внешние переводы на биржу
+      whaler_transfer:
+        one: Межсервисный перевод
+        many: Межсервесные переводы
     attributes:
       trade:
         created_at: Создано
