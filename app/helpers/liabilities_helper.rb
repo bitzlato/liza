@@ -22,6 +22,8 @@ module LiabilitiesHelper
       present_internal_transfer(reference)
     when Transfer
       present_transfer(reference)
+    when MemberTransfer
+      present_member_transfer(reference)
     when nil
       '-'
     else
@@ -43,6 +45,12 @@ module LiabilitiesHelper
   def present_transfer(transfer)
     link_to transfer_path(transfer) do
       "transfer #{transfer.id}"
+    end
+  end
+
+  def present_member_transfer(member_transfer)
+    link_to member_transfer do
+      "member_transfer##{member_transfer.id}&nbsp;#{format_money(member_transfer.amount, member_transfer.currency)}".html_safe
     end
   end
 
