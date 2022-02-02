@@ -19,7 +19,8 @@ class SummaryQuery
     ServiceWithdraw => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
     ServiceInvoice => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
     ServiceTransaction => { grouped_by: %i[currency_id], aggregations: ['sum(service_transactions.amount)'] },
-    WhalerTransfer => { grouped_by: %i[currency_code state], aggregations: ['sum(amount)'] }
+    WhalerTransfer => { grouped_by: %i[currency_code state], aggregations: ['sum(amount)'] },
+    MemberTransfer => { grouped_by: %i[currency_id service], aggregations: ['sum(amount)'] }
   }.freeze
 
   # rubocop:disable Metrics/MethodLength
