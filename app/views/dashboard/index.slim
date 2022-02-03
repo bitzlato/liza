@@ -39,6 +39,7 @@ table.table.table-condensed.table-striped.table-cross-row
       - investment_amount = adjustments[[currency_id, 'investment']].to_d
       - asset_registration_amount = adjustments[[currency_id, 'asset_registration']].to_d
       - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
+      - bitzlato_balance = bitzlato_balances.fetch(currency_id, 0)
       - system_balance = system_balances.fetch(currency_id, 0)
       - total_skipped_deposits = Deposit.skipped.where(currency_id: currency_id).sum(:amount)
       - total_member_transfers = MemberTransfer.where(currency_id: currency_id).sum(:amount)
@@ -49,7 +50,7 @@ table.table.table-condensed.table-striped.table-cross-row
           = format_currency currency_id
         // 2
         td.text-right
-          = format_money total_balance = (system_balance + paymand_address_amounts), currency, show_currency: false
+          = format_money total_balance = (bitzlato_balance + system_balance + paymand_address_amounts), currency, show_currency: false
           .text-small.mt-2
             = link_to wallets_path do
               = format_money system_balance, currency, show_currency: false
