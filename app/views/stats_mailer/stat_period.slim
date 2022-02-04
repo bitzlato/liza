@@ -107,10 +107,15 @@ html
     br
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Межсервесные трансферы
       tr
-        th align='left' style='white-space: nowrap' Объём межсервесных трансферов
+        th align='left' style='white-space: nowrap' Объём
         th align='right' style='white-space: nowrap'
-          = number_to_currency(@total_whaler_transfers, unit: @current_rates['target_currency'], format: "%n %u")
+          = number_to_currency(@total_whaler_transfers_volume, unit: @current_rates['target_currency'], format: "%n %u")
+        tr
+          th align='left' style='white-space: nowrap' Кол-во
+          th align='right' style='white-space: nowrap'
+            = @total_whaler_transfers_count
 
     hr
 
