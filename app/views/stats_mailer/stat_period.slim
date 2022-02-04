@@ -106,6 +106,12 @@ html
     br
     br
 
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Объём межсервесных трансферов в #{@current_rates['target_currency']}
+      tr
+        td align='right' style='white-space: nowrap'
+          = number_with_precision(@total_whaler_transfers, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+
     hr
 
     p
