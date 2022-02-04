@@ -4,7 +4,7 @@ table.table.table-condensed.table-striped.table-cross-row
       th  Валюта
       th.text-right
         div Баланс на системных счетах
-        = column_tip 'На системных кошельках + на депозитных счетах'
+        = column_tip 'P2P баланс + На системных кошельках + на депозитных счетах'
       th.text-right
         div Операционные активы по базе
         = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции + Незачисленные_депозиты'
@@ -52,6 +52,9 @@ table.table.table-condensed.table-striped.table-cross-row
         td.text-right
           = format_money total_balance = (bitzlato_balance + system_balance + paymand_address_amounts), currency, show_currency: false
           .text-small.mt-2
+            = link_to '#' do
+              = format_money bitzlato_balance, currency, show_currency: false
+            span.ml-2.mr-2= '+'
             = link_to wallets_path do
               = format_money system_balance, currency, show_currency: false
             span.ml-2.mr-2= '+'
