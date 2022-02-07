@@ -6,7 +6,7 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id name status kind address bitzlato_balances available_balances balances_by_transactions balances_diff enable_invoice use_as_fee_source fee_amount currencies
+    %i[id name status kind address available_balances balances_by_transactions balances_diff enable_invoice use_as_fee_source fee_amount currencies
        transactions_count]
   end
 
