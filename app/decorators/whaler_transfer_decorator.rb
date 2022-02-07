@@ -6,7 +6,7 @@ class WhalerTransferDecorator < ApplicationDecorator
   end
 
   def self.attributes
-    table_columns + %i[cancel_message]
+    (table_columns + %i[cancel_message] + object_class.attribute_names.map(&:to_sym) - %i[log]).uniq
   end
 
   def last_log_message
