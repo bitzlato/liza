@@ -2,16 +2,17 @@ class WhalerTransferDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id user_id member amount currency_code source destination description state last_log_message created_at updated_at]
+    %i[id user_id member amount currency_code source destination description state log created_at updated_at]
   end
 
-  def last_log_message
-    Array.wrap(object.log).last&.dig('message')
+  def log
+    buffer = h.content_tag :span, Array.wrap(object.log).last&.dig('message')
+    buffer << h.button_tag('more', class: 'btn btn-link', data: { toggle: 'popover' })
   end
 
   def member
     member = Member.find_by(uid: object.member_uid)
-    h.link_to "#{member.email}(#{member.uid})", h.member_path(member)
+    h.link_to "#{member&.email}(#{object.member_uid})", h.member_path(object.member_uid)
   end
 
   def state
