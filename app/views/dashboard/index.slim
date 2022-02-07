@@ -84,7 +84,7 @@ table.table.table-condensed.table-striped.table-cross-row
             = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Депозиты' do
               = format_money total_deposit, currency_id, show_currency: false
             span.ml-2.mr-2= '-'
-            = link_to deposits_path(q: { currency_id_eq: currency_id} ), title: 'Списания' do
+            = link_to withdraws_path(q: { currency_id_eq: currency_id} ), title: 'Списания' do
               = format_money total_withdraw, currency_id, show_currency: false
             span.ml-2.mr-2= '+'
             = link_to member_transfers_path(q: { currency_id_eq: currency_id} ), title: 'Трансферы' do

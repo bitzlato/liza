@@ -6,4 +6,12 @@ class WhalerTransfer < WhalerRecord
   def currency_id
     currency_code.downcase
   end
+
+  def successful?
+    state == 'successful'
+  end
+
+  def fail?
+    state == 'failed'
+  end
 end
