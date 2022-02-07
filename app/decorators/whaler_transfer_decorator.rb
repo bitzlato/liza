@@ -5,6 +5,10 @@ class WhalerTransferDecorator < ApplicationDecorator
     %i[id user_id member amount currency_code source destination description state received_at sent_at last_log_message created_at updated_at]
   end
 
+  def self.attributes
+    table_columns + %i[cancel_message]
+  end
+
   def last_log_message
     Array.wrap(object.log).last&.dig('message')
   end
