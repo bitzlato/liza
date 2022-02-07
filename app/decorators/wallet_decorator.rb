@@ -50,7 +50,7 @@ class WalletDecorator < ApplicationDecorator
   end
 
   def bitzlato_balances
-    h.render 'balances', balances: BitzlatoWallet.market_balances
+    h.render 'balances', balances: BitzlatoWallet.market_balances.slice(*object.currency_wallets.pluck(:currency_id))
   end
 
   def created_at
