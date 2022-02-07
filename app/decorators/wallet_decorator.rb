@@ -6,7 +6,7 @@ class WalletDecorator < ApplicationDecorator
   delegate_all
 
   def self.table_columns
-    %i[id name status kind address available_balances balances_by_transactions balances_diff enable_invoice use_as_fee_source fee_amount currencies
+    %i[id name status kind address bitzlato_balances available_balances balances_by_transactions balances_diff enable_invoice use_as_fee_source fee_amount currencies
        transactions_count]
   end
 
@@ -47,6 +47,10 @@ class WalletDecorator < ApplicationDecorator
     buffer = h.render 'balances', balances: object.available_balances
     buffer << h.content_tag(:span, balance_updated_at, class: 'text-small text-muted')
     buffer
+  end
+
+  def bitzlato_balances
+    h.render 'balances', balances: BitzlatoWallet.market_balances
   end
 
   def created_at
