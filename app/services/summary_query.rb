@@ -9,13 +9,13 @@ class SummaryQuery
     'operations_accounts.description' => 'account_description'
   }
   SUMMARY_MODELS = {
-    Deposit => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)', 'sum(fee)'] },
-    Withdraw => { grouped_by: %i[currency_id aasm_state], aggregations: ['sum(amount)', 'sum(sum)', 'sum(fee)'] },
+    Deposit => { grouped_by: %i[currency_id blockchain_id aasm_state], aggregations: ['sum(amount)', 'sum(fee)'] },
+    Withdraw => { grouped_by: %i[currency_id blockchain_id aasm_state], aggregations: ['sum(amount)', 'sum(sum)', 'sum(fee)'] },
     Account => { grouped_by: [:currency_id], aggregations: ['sum(balance)', 'sum(locked)', :total] },
     Operations::Liability => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Revenue => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
     Operations::Asset => { grouped_by: [:currency_id, 'operations_accounts.description'], aggregations: ['sum(credit)', 'sum(debit)', :total] },
-    Transaction => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)', 'sum(fee)'] },
+    Transaction => { grouped_by: %i[currency_id blockchain_id status], aggregations: ['sum(amount)', 'sum(fee)'] },
     ServiceWithdraw => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
     ServiceInvoice => { grouped_by: %i[currency_id status], aggregations: ['sum(amount)'] },
     ServiceTransaction => { grouped_by: %i[currency_id], aggregations: ['sum(service_transactions.amount)'] },

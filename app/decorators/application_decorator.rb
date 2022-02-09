@@ -77,10 +77,6 @@ class ApplicationDecorator < Draper::Decorator
     present_address object.address
   end
 
-  def contract_address
-    present_address object.contract_address
-  end
-
   def to_address
     present_address object.to_address
   end
