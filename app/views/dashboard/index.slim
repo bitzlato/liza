@@ -87,10 +87,10 @@ table.table.table-condensed.table-striped.table-cross-row
             = link_to withdraws_path(q: { currency_id_eq: currency_id} ), title: 'Списания' do
               = format_money total_withdraw, currency_id, show_currency: false
             span.ml-2.mr-2= '+'
-            = link_to member_transfers_path(q: { currency_id_eq: currency_id} ), title: 'Трансферы' do
+            = link_to member_transfers_path(q: { currency_id_eq: currency_id } ), title: 'Трансферы' do
               = format_money total_member_transfers, currency_id, show_currency: false
             span.ml-2.mr-2= '-'
-            = link_to transactions_path(q: { accountable_fee: true, blockchain_id_eq: currency.blockchain_id }) do
+            = link_to transactions_path(q: { accountable_fee: true, currency_id_eq: currency_id }) do
               = format_money accountable_fee[currency_id].to_d, currency_id, show_currency: false
             span.ml-2.mr-2= '+'
             = link_to adjustments_path(q: { currency_id_eq: currency_id, category_eq: 'asset_registration' }) do
