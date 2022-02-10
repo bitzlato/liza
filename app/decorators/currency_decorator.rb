@@ -9,7 +9,7 @@ class CurrencyDecorator < ApplicationDecorator
     %i[
       id visible position name withdraw_limit_24h deposit_enabled
       withdrawal_enabled precision
-      min_deposit_amount min_withdraw_amount min_collection_amount withdraw_fee deposit_fee
+      min_withdraw_amount min_collection_amount deposit_fee
     ]
   end
 
