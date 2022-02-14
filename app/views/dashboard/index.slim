@@ -29,20 +29,22 @@ table.table.table-condensed.table-striped.table-cross-row
       th.text-right  Зарегистрированные_активы
 
   tbody
-    - Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(member_id)').each do |row|
+    - accounts_data = Account.group(:currency_id).pluck(:currency_id, 'sum(balance)', 'sum(locked)', 'count(member_id)')
+    - accounts_data.each do |row|
       - currency_id = row[0]
       - currency = Currency.find_by(id: currency_id)
-      - total_deposit = Deposit.accountable.where(currency_id: currency_id).sum(:amount)
-      - total_withdraw = Withdraw.success.where(currency_id: currency_id).sum(:amount)
-      - total_operations_amount = currency.operations_revenues.sum(:credit) - currency.operations_revenues.sum(:debit)
-      - total_operations_assets_credit = currency.operations_assets.sum(:credit) - currency.operations_assets.sum(:debit)
-      - investment_amount = adjustments[[currency_id, 'investment']].to_d
-      - asset_registration_amount = adjustments[[currency_id, 'asset_registration']].to_d
+      - ids = [currency_id] + currency.merged_tokens.ids
+      - total_deposit = Deposit.accountable.where(currency_id: ids).sum(:amount)
+      - total_withdraw = Withdraw.success.where(currency_id: ids).sum(:amount)
+      - total_operations_amount = Operations::Revenue.where(currency_id: ids).sum('credit - debit')
+      - total_operations_assets_credit = Operations::Asset.where(currency_id: ids).sum('credit - debit')
+      - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
+      - asset_registration_amount = ids.sum { |id| adjustments[[id, 'asset_registration']].to_d }
       - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
-      - bitzlato_balance = bitzlato_balances.fetch(currency_id, 0)
-      - system_balance = system_balances.fetch(currency_id, 0)
-      - total_skipped_deposits = Deposit.skipped.where(currency_id: currency_id).sum(:amount)
-      - total_member_transfers = MemberTransfer.where(currency_id: currency_id).sum(:amount)
+      - bitzlato_balance = ids.sum { |id| bitzlato_balances.fetch(id, 0) }
+      - system_balance = ids.sum { |id| system_balances.fetch(id, 0) }
+      - total_skipped_deposits = Deposit.skipped.where(currency_id: ids).sum(:amount)
+      - total_member_transfers = MemberTransfer.where(currency_id: ids).sum(:amount)
 
       tr
         // 1
@@ -62,7 +64,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money paymand_address_amounts, currency, show_currency: false
         // 3
         td.text-right
-          = format_money assets_amount = (total_operations_assets_credit - accountable_fee[currency_id].to_d + total_skipped_deposits - investment_amount), currency_id, show_currency: false
+          = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount), currency_id, show_currency: false
           .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
               = format_money total_operations_assets_credit, currency, show_currency: false
@@ -128,9 +130,9 @@ table.table.table-condensed.table-striped.table-cross-row
           .text-small.text-muted.mt-2
         // 8
         td.text-right
-          - locked_deposits_amount = Deposit.locked.where(currency_id: currency_id).sum(:amount)
-          - locked_withdraws_sum = Withdraw.locked.where(currency_id: currency_id).sum(:sum)
-          - locked_orders_amount = OrderAsk.active.where(ask: currency_id).sum(:locked) + OrderBid.active.where(bid: currency_id).sum(:locked)
+          - locked_deposits_amount = Deposit.locked.where(currency_id: ids).sum(:amount)
+          - locked_withdraws_sum = Withdraw.locked.where(currency_id: ids).sum(:sum)
+          - locked_orders_amount = OrderAsk.active.where(ask: ids).sum(:locked) + OrderBid.active.where(bid: ids).sum(:locked)
           - value = row[2] - locked_deposits_amount - locked_withdraws_sum - locked_orders_amount
           = format_divergence value, currency, show_currency: false, tracked: false
           .text-small.text-muted.mt-2

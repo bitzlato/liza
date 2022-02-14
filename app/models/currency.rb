@@ -17,6 +17,7 @@ class Currency < PeatioRecord
   has_many :base_markets, class_name: 'Market', foreign_key: :base_unit
   has_many :quote_markets, class_name: 'Market', foreign_key: :quote_unit
   has_many :adjustments
+  has_many :merged_tokens, class_name: 'Currency', foreign_key: :merged_token_id
 
   scope :visible, -> { where(visible: true) }
   scope :deposit_enabled, -> { where(deposit_enabled: true) }
