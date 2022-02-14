@@ -96,6 +96,14 @@ class Wallet < PeatioRecord
     end
   end
 
+  def balance
+    if blockchain.client == 'bitzlato'
+      BitzlatoWallet.market_balances
+    else
+      super
+    end
+  end
+
   def available_balances
     balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end
