@@ -10,28 +10,26 @@ class DivergenceNotifierWorker
   sidekiq_options queue: :reports
 
   def perform
+    new_divergents = current_divergent_currencies.each_with_object([]) do |(key, new_values), messages|
+                       if new_values.sort != saved_divergent_currencies.fetch(key, []).sort
+                         messages << ":exclamation: выявлено новое расхождение: #{key.upcase}"
+                         current_divergent_currencies[key].each { |msg| messages << "* #{msg}" }
+                       end
+                     end
+
+    fixed_divergents = saved_divergent_currencies.each_with_object([]) do |(key, old_values), messages|
+                         if old_values.sort != current_divergent_currencies.fetch(key, []).sort
+                           messages << ":white_check_mark: устранено расхождение: #{key.upcase}"
+                           saved_divergent_currencies[key].map { |msg| messages << "* #{msg}" }
+                         end
+                       end
+
+    return if new_divergents.blank? && fixed_divergents.blank?
+
     messages = []
-
-    if current_divergent_currencies.none?
-      messages << ":white_check_mark: Все расхождения устранены"
-    end
-
-    current_divergent_currencies.each do |key, new_values|
-      if new_values.sort != saved_divergent_currencies.fetch(key, []).sort
-        messages << ":exclamation: выявлено новое расхождение: #{key.upcase}"
-        messages += current_divergent_currencies[key].map { |msg| "* #{msg}" }
-      end
-    end
-
-    saved_divergent_currencies.each do |key, old_values|
-      if old_values.sort != current_divergent_currencies.fetch(key, []).sort
-        messages << ":white_check_mark: устранено расхождение: #{key.upcase}"
-        messages += saved_divergent_currencies[key].map { |msg| "* #{msg}" }
-      end
-    end
-
-    return if messages.blank?
-
+    messages << ":white_check_mark: Все расхождения устранены" if current_divergent_currencies.none?
+    messages += new_divergents
+    messages += fixed_divergents
     messages << "#{dashboard_url}"
 
     SlackNotifier.notifications.ping(messages.join("\n"))
