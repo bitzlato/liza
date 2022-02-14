@@ -10,19 +10,28 @@ class DivergenceNotifierWorker
   sidekiq_options queue: :reports
 
   def perform
-    return if current_divergent_currencies == saved_divergent_currencies
-
-    new_divergencies = current_divergent_currencies - saved_divergent_currencies
-    fixed_divergencies = saved_divergent_currencies - current_divergent_currencies
-
     messages = []
-    if current_divergent_currencies.any?
-      messages << ":warning: Текущие расхождения: #{current_divergent_currencies.join(', ')}"
-    else
+
+    if current_divergent_currencies.none?
       messages << ":white_check_mark: Все расхождения устранены"
     end
-    messages << ":exclamation: Новые расхождения: #{new_divergencies.join(', ')}" if new_divergencies.any?
-    messages << ":white_check_mark: Устраненные расхождения: #{fixed_divergencies.join(', ')}" if fixed_divergencies.any?
+
+    current_divergent_currencies.each do |key, new_values|
+      if new_values.sort != saved_divergent_currencies.fetch(key, []).sort
+        messages << ":exclamation: выявлено новое расхождение: #{key.upcase}"
+        messages += current_divergent_currencies[key].map { |msg| "* #{msg}" }
+      end
+    end
+
+    saved_divergent_currencies.each do |key, old_values|
+      if old_values.sort != current_divergent_currencies.fetch(key, []).sort
+        messages << ":white_check_mark: устранено расхождение: #{key.upcase}"
+        messages += saved_divergent_currencies[key].map { |msg| "* #{msg}" }
+      end
+    end
+
+    return if messages.blank?
+
     messages << "#{dashboard_url}"
 
     SlackNotifier.notifications.ping(messages.join("\n"))
@@ -45,20 +54,32 @@ class DivergenceNotifierWorker
     app.process :get, dashboard_url, params: {}, headers: { 'Authorization' => authorization }
 
     page = Nokogiri::HTML(app.response.body)
-    page.css('[data-divergence]').map do |item|
-      item.values[0].split(/\s+/)[1] # currency
-    end.uniq.sort
+    headers = page.css('.thead-dark tr th div').map(&:text)
+    data = {}
+
+    page.css('tbody tr').each do |tr|
+      tr.css('td').each.with_index do |td, i|
+        item = td.css('[data-divergence]').first
+        next unless item
+
+        amount, currency = item.values[0].split(/\s+/)
+        data[currency] ||= []
+        data[currency] << "#{headers[i]}: #{amount} #{currency.upcase}"
+      end
+    end
+
+    data
   end
 
   def save_divergent_currencies!(currencies)
-    File.write(STATUS_FILE, currencies.join(','))
+    File.write(STATUS_FILE, currencies.to_json)
   end
 
   def saved_divergent_currencies
     if File.exist? STATUS_FILE
-      File.read(STATUS_FILE).strip.split(',')
+      JSON.parse(File.read(STATUS_FILE).strip.to_s)
     else
-      []
+      {}
     end
   end
 
