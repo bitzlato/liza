@@ -33,6 +33,9 @@ table.table.table-condensed.table-striped.table-cross-row
     - accounts_data.each do |row|
       - currency_id = row[0]
       - currency = Currency.find_by(id: currency_id)
+
+      - next unless currency.visible?
+
       - ids = [currency_id] + currency.merged_tokens.ids
       - total_deposit = Deposit.accountable.where(currency_id: ids).sum(:amount)
       - total_withdraw = Withdraw.success.where(currency_id: ids).sum(:amount)
