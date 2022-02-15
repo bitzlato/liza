@@ -20,7 +20,7 @@ class WalletLowBalanceCheckerWorker
   def perform
     current = {}
     messages = []
-    Wallet.hot.each do |w|
+    Wallet.active.hot.each do |w|
       w.available_balances.each do |c, b|
         next unless LIMITS[c]
 
@@ -44,13 +44,6 @@ class WalletLowBalanceCheckerWorker
     SlackNotifier.notifications.ping(messages.join("\n"))
 
     save_current_low_balances!(current)
-  end
-
-  def current_low_balances
-    Wallet.hot.each_with_object({}) do |w, a|
-      low_balances = w.available_balances.select { |c, b| LIMITS[c].present? && b.to_d < LIMITS[c].to_d }
-      a[w.id] = low_balances if low_balances.any?
-    end
   end
 
   private
