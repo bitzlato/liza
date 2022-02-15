@@ -30,11 +30,11 @@ class WalletLowBalanceCheckerWorker
         end
 
         if b.to_d < LIMITS[c].to_d && !saved_low_balances.fetch(w.id.to_s, []).include?(c)
-          messages << "Низкий баланс кошелька(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} < #{LIMITS[c]}"
+          messages << ":exclamation: Низкий баланс кошелька(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} < #{LIMITS[c]}"
         end
 
         if b.to_d >= LIMITS[c].to_d && saved_low_balances.fetch(w.id.to_s, []).include?(c)
-          messages << "Баланс кошелька востановлен(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} > #{LIMITS[c]}"
+          messages << ":white_check_mark: Баланс кошелька востановлен(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} > #{LIMITS[c]}"
         end
       end
     end
