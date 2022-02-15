@@ -8,6 +8,7 @@ class WalletLowBalanceCheckerWorker
 
   LIMITS = {
     'usdt'  => 3000,
+    'usdc'  => 500,
     'btc'   => 0.1,
     'bnb'   => 7,
     'ht'    =>100,
