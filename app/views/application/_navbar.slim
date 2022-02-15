@@ -30,7 +30,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.flex-column.flex-md-row.sticky
         li.nav-item.dropdown.mr-2.d-flex.align-items-center
           = link_to t('.service'), '#', class: 'my-lg-0 py-lg-0 nav-link dropdown-toggle', data: { toggle: 'dropdown' }, id: :navbarDropdown, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false
           .dropdown-menu.dropdown-menu-right[aria-labelledby="navbarDropdown"]
-            - [Wallet, Currency, Report].each do |model|
+            - [BitzlatoWallet, Wallet, Currency, Report].each do |model|
               = link_to url_for(model), class: 'dropdown-item' do
                 = t model.model_name.human_plural
         li.nav-item.dropdown.mr-2.d-flex.align-items-center

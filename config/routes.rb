@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :service_invoices, only: %i[index show]
   resources :service_transactions, only: %i[index show]
   resources :wallets, only: %i[index show]
+  resources :bitzlato_wallets, only: %i[index show]
   resources :payment_addresses, only: %i[index show]
   resources :currencies, only: %i[index show]
   resources :blockchains, only: %i[index show]
