@@ -81,6 +81,14 @@ class Wallet < PeatioRecord
     def find_by_address(address)
       where('lower(address)=?', address.downcase).take
     end
+
+    def balances
+      Wallet.all.each_with_object({}) { |w, a| w.available_balances.each_pair { |c, b| a[c] ||= 0.0; a[c] += b.to_d } }
+    end
+
+    def hot_balances
+      Wallet.hot.each_with_object({}) { |w, a| w.available_balances.each_pair { |c, b| a[c] ||= 0.0; a[c] += b.to_d } }
+    end
   end
 
   def to_s

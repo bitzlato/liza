@@ -17,3 +17,8 @@ MonthlyStatWorker:
 DivergenceNotifierWorker:
   cron: '*/15 * * * *'
   class: DivergenceNotifierWorker
+
+
+WalletLowBalanceCheckerWorker:
+  cron: '*/15 * * * *'
+  class: WalletLowBalanceCheckerWorker

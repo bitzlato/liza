@@ -63,9 +63,9 @@ class StatsMailer < ApplicationMailer
     @total_whaler_transfers_count = whaler_transfers_scope.count
     @total_whaler_transfers_volume = whaler_transfers_scope.sum { |wt| wt.amount.to_d * @current_rates['rates'][wt.currency_id].to_d }
 
-    @total_hot_wallets_balances = Wallet.hot.each_with_object({}) do |w, a|
-      w.available_balances.each_pair { |c, b| a[c] ||= 0.0; a[c] += b.to_d * @current_rates['rates'][c].to_d }
-    end.values.sum
+    @total_hot_wallets_balances = Wallet.hot_balances do |c, b|
+      b.to_d * @current_rates['rates'][c].to_d
+    end
 
     @total_p2p_wallets_balances = BitzlatoWallet.market_balances.sum do |c, b|
       b.to_d * @current_rates['rates'][c].to_d
