@@ -15,9 +15,12 @@ ru:
       member_takers_trades_report: Кол-во сделок user-тэйкерв
       member_makers_trades_report: Кол-во сделок user-мэйкеров
       active_members_report: Кол-во активных пользователей
-      wallet: 
+      wallet:
         one: Системный кошелёк
         many: Системные кошельки
+      bitzlato_wallet:
+        one: p2p кошелек
+        many: p2p кошельки
       service_withdraw: Списания через P2P
       service_invoice: Счета система
       service_transaction: Зачисления из P2P
