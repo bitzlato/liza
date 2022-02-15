@@ -89,19 +89,23 @@ html
     table border="#ACD13C" cellpadding="5" cellspacing="0"
       caption Объем резервов в #{@current_rates['target_currency']}
       tr
-        th align='left' style='white-space: nowrap' Всего
-        th align='right' style='white-space: nowrap'
-          = number_with_precision(@total_hot_wallets_balances + @total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+        th align='center' style='white-space: nowrap' rowspan=2 Всего
+        th align='center' style='white-space: nowrap' colspan=2 Кошельки системы
+        th align='center' style='white-space: nowrap' rowspan=2 Счета пользователей
 
       tr
-        th align='left' style='white-space: nowrap' Кошельки системы
-        th align='right' style='white-space: nowrap'
-          = number_with_precision(@total_hot_wallets_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+        th align='center' style='white-space: nowrap' Биржа
+        th align='center' style='white-space: nowrap' P2P
 
       tr
-        th align='left' style='white-space: nowrap' Счета пользователей
         th align='right' style='white-space: nowrap'
-          = number_with_precision(@total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 2)
+          = number_with_precision(@total_p2p_wallets_balances + @total_hot_wallets_balances + @total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 0)
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_hot_wallets_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 0)
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_p2p_wallets_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 0)
+        th align='right' style='white-space: nowrap'
+          = number_with_precision(@total_deposits_balances, strip_insignificant_zeros: true, delimiter: ' ', precision: 0)
 
     br
     br

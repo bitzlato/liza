@@ -66,6 +66,10 @@ class StatsMailer < ApplicationMailer
     @total_hot_wallets_balances = Wallet.hot.each_with_object({}) do |w, a|
       w.available_balances.each_pair { |c, b| a[c] ||= 0.0; a[c] += b.to_d * @current_rates['rates'][c].to_d }
     end.values.sum
+
+    @total_p2p_wallets_balances = BitzlatoWallet.market_balances.sum do |c, b|
+      b.to_d * @current_rates['rates'][c].to_d
+    end
     @total_deposits_balances = PaymentAddress.total_balances.sum {|c, v| v.to_d * @current_rates['rates'][c].to_d }
   end
 
