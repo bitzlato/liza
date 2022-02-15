@@ -57,7 +57,7 @@ table.table.table-condensed.table-striped.table-cross-row
         td.text-right
           = format_money total_balance = (bitzlato_balance + system_balance + paymand_address_amounts), currency, show_currency: false
           .text-small.mt-2
-            = link_to '#' do
+            = link_to bitzlato_wallets_path(q: { cc_code_i_cont: currency_id}) do
               = format_money bitzlato_balance, currency, show_currency: false
             span.ml-2.mr-2= '+'
             = link_to wallets_path do
