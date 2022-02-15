@@ -15,6 +15,13 @@ class WalletLowBalanceCheckerWorker
     'avax'  => 35,
   }
 
+  BITZLATO_LIMITS = {
+    'btc' => 0.15,
+    'eth' => 1.2,
+    'usdt' => 3000,
+    'usdc' => 1000
+  }
+
   STATUS_FILE = Rails.root.join('./tmp/wallet_low_balances')
 
   def perform
@@ -25,17 +32,43 @@ class WalletLowBalanceCheckerWorker
         next unless LIMITS[c]
 
         if b.to_d < LIMITS[c].to_d
-          current[w.id] ||= []
-          current[w.id] << c
+          current['market'] ||= {}
+          current['market'][w.id] ||= []
+          current['market'][w.id] << c
         end
 
-        if b.to_d < LIMITS[c].to_d && !saved_low_balances.fetch(w.id.to_s, []).include?(c)
+        saved_value = saved_low_balances.dig('market', w.id.to_s) || []
+
+        if b.to_d < LIMITS[c].to_d && !saved_value.include?(c)
           messages << ":exclamation: Низкий баланс кошелька(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} < #{LIMITS[c]}"
         end
 
-        if b.to_d >= LIMITS[c].to_d && saved_low_balances.fetch(w.id.to_s, []).include?(c)
+        if b.to_d >= LIMITS[c].to_d && saved_value.include?(c)
           messages << ":white_check_mark: Баланс кошелька востановлен(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} > #{LIMITS[c]}"
         end
+      end
+    end
+
+    BitzlatoUser.market_user.wallets.each do |w|
+      c = w.cc_code.downcase
+      b = w.balance
+
+      next unless BITZLATO_LIMITS[c]
+
+      if b.to_d < BITZLATO_LIMITS[c].to_d
+        current['bitzlato'] ||= {}
+        current['bitzlato'][w.id] ||= []
+        current['bitzlato'][w.id] << c
+      end
+
+      saved_value = saved_low_balances.dig('bitzlato', w.id.to_s) || []
+
+      if b.to_d < BITZLATO_LIMITS[c].to_d && !saved_value.include?(c)
+        messages << ":exclamation: Низкий баланс кошелька(p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} < #{BITZLATO_LIMITS[c]}"
+      end
+
+      if b.to_d >= BITZLATO_LIMITS[c].to_d && saved_value.include?(c)
+        messages << ":white_check_mark: Баланс кошелька востановлен(p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} > #{BITZLATO_LIMITS[c]}"
       end
     end
 
