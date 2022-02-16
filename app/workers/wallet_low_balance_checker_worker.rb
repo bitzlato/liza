@@ -25,12 +25,17 @@ class WalletLowBalanceCheckerWorker
 
   STATUS_FILE = Rails.root.join('./tmp/wallet_low_balances')
 
+  TURNED_OFF = {
+    'avax-mainnet' => ['usdc']
+  }
+
   def perform
     current = {}
     messages = []
     Wallet.active.hot.each do |w|
       w.available_balances.each do |c, b|
         next unless LIMITS[c]
+        next if TURNED_OFF.dig(w.blockchain.key)&.include?(c)
 
         if b.to_d < LIMITS[c].to_d
           current['market'] ||= {}
