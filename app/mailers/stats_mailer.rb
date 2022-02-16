@@ -41,9 +41,9 @@ class StatsMailer < ApplicationMailer
     @new_users_count    = Member.where(created_at: period).count
 
     # Markets stat
-    @markets            = Market.all
+    @markets            = Market.active
 
-    trade_scope = Trade.where(created_at: period).group(:market_id)
+    trade_scope = Trade.where(created_at: period, market: @markets).group(:market_id)
     @total_trades_count       = trade_scope.count
     @total_trade_users_volume = trade_scope.user_trades.sum(:amount)
     @total_trade_users_count  = trade_scope.user_trades.count
