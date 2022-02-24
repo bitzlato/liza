@@ -6,6 +6,7 @@ set :user, 'app'
 
 set :rails_env, :staging
 set :disallow_pushing, false
+set :linked_files, %w[.env config/master.key config/settings.yml config/credentials.yml.enc]
 set :application, -> { 'liza-' + fetch(:stage).to_s }
 set :deploy_to, -> { "/home/#{fetch(:user)}/#{fetch(:stage)}/#{fetch(:application)}" }
 set :puma_bind, -> { "unix://#{shared_path}/tmp/sockets/puma.sock" }
