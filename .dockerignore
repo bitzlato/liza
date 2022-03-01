@@ -14,7 +14,6 @@ tmp
 log
 test
 config/deploy
-config/docker
 public/packs
 public/packs-test
 node_modules

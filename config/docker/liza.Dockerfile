@@ -56,7 +56,7 @@ EXPOSE 3000
 # The main command to run when the container starts. Also
 # tell the Rails dev server to bind to all interfaces by
 # default.
- COPY --chown=app:app config/docker/docker-entrypoint.sh /
- RUN chmod +x /docker-entrypoint.sh
- ENTRYPOINT ["/docker-entrypoint.sh"]
- CMD ["bundle", "exec", "puma", "--config", "config/puma.rb"]
+COPY --chown=${USER_NAME}:${USER_NAME} config/docker/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["bundle", "exec", "puma", "--config", "config/puma.rb"]
