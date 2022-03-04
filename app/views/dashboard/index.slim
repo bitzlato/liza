@@ -36,6 +36,7 @@ table.table.table-condensed.table-striped.table-cross-row
 
       - next unless currency.visible?
 
+      - currencies = [currency] + currency.merged_tokens
       - ids = [currency_id] + currency.merged_tokens.ids
       - total_deposit = Deposit.accountable.where(currency_id: ids).sum(:amount)
       - total_withdraw = Withdraw.success.where(currency_id: ids).sum(:amount)
@@ -44,7 +45,9 @@ table.table.table-condensed.table-striped.table-cross-row
       - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
       - asset_registration_amount = ids.sum { |id| adjustments[[id, 'asset_registration']].to_d }
       - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
-      - bitzlato_balance = ids.sum { |id| bitzlato_balances.fetch(id, 0) }
+
+      - bitzlato_balance = currencies.sum { |currency| bitzlato_balances.dig(currency.id) || bitzlato_balances.dig(currency.cc_code.to_s.downcase) || 0 }
+
       - system_balance = ids.sum { |id| system_balances.fetch(id, 0) }
       - total_skipped_deposits = Deposit.skipped.where(currency_id: ids).sum(:amount)
       - total_member_transfers = MemberTransfer.where(currency_id: ids).sum(:amount)
