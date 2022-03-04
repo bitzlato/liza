@@ -10,8 +10,8 @@ class WalletLowBalanceCheckerWorker
     'usdt'  => 3000,
     'usdc'  => 500,
     'btc'   => 0.1,
-    'bnb'   => 7,
-    'ht'    =>100,
+    'bnb-bep20'   => 7,
+    'ht-hrc20'    =>100,
     'matic' => 1500,
     'avax'  => 35,
   }
