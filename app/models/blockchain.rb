@@ -11,7 +11,6 @@ class Blockchain < PeatioRecord
   has_many :currencies, through: :blockchain_currencies
   has_many :payment_addresses
   has_many :transactions
-  has_many :deposits, through: :currencies
   has_many :block_numbers
 
   def native_currency
