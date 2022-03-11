@@ -105,7 +105,7 @@ class Wallet < PeatioRecord
   end
 
   def available_balances
-    balance.slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
+    (balance || {}).slice(*currency_wallets.where(use_in_balance: true).pluck(:currency_id))
   end
 
   def transactions
