@@ -7,6 +7,18 @@ class DivergenceNotifierWorker
 
   STATUS_FILE = Rails.root.join('./tmp/divergence_exists')
 
+  DIV_LIMITS = {
+    'btc'       => 0.00022,
+    'eth'       => 0.0031,
+    'usdt'      => 10,
+    'ustc'      => 10,
+    'bnb-bep20' => 0.024,
+    'ht-hrc20'  => 1,
+    'avax'      => 0.12,
+    'trx'       => 152
+  }
+
+
   sidekiq_options queue: :reports
 
   def perform
@@ -61,6 +73,9 @@ class DivergenceNotifierWorker
         next unless item
 
         amount, currency = item.values[0].split(/\s+/)
+
+        next if DIV_LIMITS[currency].present? && amount.to_d < DIV_LIMITS[currency]
+
         data[currency] ||= []
         data[currency] << "#{headers[i]}: #{amount} #{currency.upcase}"
       end
