@@ -1,6 +1,6 @@
 h1= paginated_records.model_name.human_plural
-= render 'blockchains_select' 
-= render 'currencies_select', currencies: Currency.where(id: Transaction.group(:currency_id).count.keys)
+= render 'blockchains_select'
+= render 'currencies_select', currencies: Currency.visible.where(id: Transaction.group(:currency_id).count.keys)
 = render 'state_select', states: model_class.group(:kind).count.keys, key: :by_kind
 = render 'state_select', states: model_class.group(:direction).count.keys, key: :by_direction
 = render 'state_select', states: model_class.group(:to).count.keys, key: :by_to
