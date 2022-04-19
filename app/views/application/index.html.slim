@@ -1,14 +1,14 @@
 h1= paginated_records.model_name.human_plural
 - if respond_to? :blockchain
-  = render 'blockchains_select' 
+  = render 'blockchains_select'
 - if respond_to? :currency
-  = render 'currencies_select', currencies: Currency.order(:id)
+  = render 'currencies_select', currencies: Currency.visible.order(:id)
 - if respond_to? :market
-  = render 'markets_select' 
+  = render 'markets_select'
 - if respond_to? :aasm_state
   = render 'state_select', states: model_class.group(:aasm_state).count.keys, key: :aasm_state_eq
-- if q.klass.ransackable_scopes.include? :completed 
-  = render 'deposit_status_select' 
+- if q.klass.ransackable_scopes.include? :completed
+  = render 'deposit_status_select'
 .clearfix
 = render index_form
 - if respond_to? :account

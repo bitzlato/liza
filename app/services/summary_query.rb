@@ -34,6 +34,7 @@ class SummaryQuery
       p.to_s.include?('(') || p.to_s.include?('.') ? p : [model_class.table_name, p].join('.')
     end
     rows = scope
+           .where.not(currency: Currency.hidden)
            .group(*meta[:grouped_by])
            .reorder('')
            .order(meta[:grouped_by].first)
