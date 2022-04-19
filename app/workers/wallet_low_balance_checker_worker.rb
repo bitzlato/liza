@@ -6,6 +6,15 @@ class WalletLowBalanceCheckerWorker
 
   sidekiq_options queue: :reports
 
+  BLOCKCHAIN_LIMITS = {
+    'tron-mainnet' => {
+      'usdt' => 5000
+    },
+    'bsc-mainnet' => {
+      'usdt' => 5000
+    }
+  }
+
   LIMITS = {
     'usdt'  => 3000,
     'usdc'  => 500,
@@ -34,10 +43,11 @@ class WalletLowBalanceCheckerWorker
     messages = []
     Wallet.active.hot.each do |w|
       w.available_balances.each do |c, b|
-        next unless LIMITS[c]
+        limit = BLOCKCHAIN_LIMITS.dig(w.blockchain.key, c) || LIMITS[c]
+        next unless limit
         next if TURNED_OFF.dig(w.blockchain.key)&.include?(c)
 
-        if b.to_d < LIMITS[c].to_d
+        if b.to_d < limit.to_d
           current['market'] ||= {}
           current['market'][w.id] ||= []
           current['market'][w.id] << c
@@ -45,12 +55,12 @@ class WalletLowBalanceCheckerWorker
 
         saved_value = saved_low_balances.dig('market', w.id.to_s) || []
 
-        if b.to_d < LIMITS[c].to_d && !saved_value.include?(c)
-          messages << ":exclamation: Низкий баланс кошелька(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} < #{LIMITS[c]}"
+        if b.to_d < limit.to_d && !saved_value.include?(c)
+          messages << ":exclamation: Низкий баланс кошелька(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} < #{limit}"
         end
 
-        if b.to_d >= LIMITS[c].to_d && saved_value.include?(c)
-          messages << ":white_check_mark: Баланс кошелька востановлен(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} > #{LIMITS[c]}"
+        if b.to_d >= limit.to_d && saved_value.include?(c)
+          messages << ":white_check_mark: Баланс кошелька востановлен(биржа): <#{wallet_url(id: w.id)}|#{w.name}> #{c.upcase}: #{b} > #{limit}"
         end
       end
     end
