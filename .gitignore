@@ -13,6 +13,7 @@ yarn-error.log
 config/master.key
 .vscode
 .envrc
+.env.*
 .powenv
 .byebug_history
 config/chewy.yml
