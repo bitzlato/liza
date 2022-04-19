@@ -20,6 +20,7 @@ class Currency < PeatioRecord
   has_many :merged_tokens, class_name: 'Currency', foreign_key: :merged_token_id
 
   scope :visible, -> { where(visible: true) }
+  scope :hidden, -> { where(visible: false) }
   scope :deposit_enabled, -> { where(deposit_enabled: true) }
   scope :withdrawal_enabled, -> { where(withdrawal_enabled: true) }
   scope :ordered, -> { order(position: :asc) }
