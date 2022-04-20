@@ -23,5 +23,11 @@ module Operations
     def show
       render locals: { record: Operations::Revenue.find(params[:id]) }
     end
+
+    private
+
+    def index_form
+      'operation_form'
+    end
   end
 end
