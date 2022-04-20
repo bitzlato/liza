@@ -1,0 +1,14 @@
+h1= t '.expanse'
+hr
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.blockchain'
+      th= t '.currency_id'
+      th= t '.fee'
+  tbody
+    - results[:records].each do |r|
+      tr
+        td.nowrap= r[:blockchain_name]
+        td.nowrap= r[:currency]
+        td.nowrap= r[:fee]

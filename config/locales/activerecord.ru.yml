@@ -7,6 +7,7 @@ ru:
       orders_balance_report: Баланс валют в ордерах
       order_book_limits_report: Изменения стакана
       revenues_report: Комиссии по валютным парам
+      expanse_report: Комиссии сетей(Расходы)
       member_orders_report: Заявки пользователя
       member_trades_report: Сделки пользователя
       member_wd_report: Вводы-выводы пользователя
