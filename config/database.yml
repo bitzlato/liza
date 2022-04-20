@@ -51,7 +51,11 @@ development:
     database: peatio_development_reports
   peatio:
     <<: *peatio
+<% if ENV['PEATIO_DATABASE_URL'] %>
+    url: <%= ENV.fetch('PEATIO_DATABASE_URL') %>
+<% else ENV['PEATIO_DATABASE_NAME'] %>
     database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_development') %>
+<% end %>
 test:
   whaler:
     <<: *whaler
