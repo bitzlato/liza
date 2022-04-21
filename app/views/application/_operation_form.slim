@@ -1,0 +1,4 @@
+= render 'time_form' do |f|
+  .row
+    .col-md-4
+      = f.input :exclude_bots, legend_tag: false, as: :check_boxes, collection: [[true, 'Exclude Bots']], label_method: :second, value_method: :first, include_hidden: false

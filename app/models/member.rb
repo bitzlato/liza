@@ -4,6 +4,8 @@
 
 class Member < PeatioRecord
   BOT_UIDS = ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS').split(',')
+  DEEP_STONER_BOT_ID = ENV.fetch('DEEP_STONER_BOT_ID', 7)
+  BARGAINER_BOT_ID = ENV.fetch('BARGAINER_BOT_ID', 6)
 
   has_many :orders
   has_many :accounts
