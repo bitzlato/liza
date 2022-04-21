@@ -8,6 +8,8 @@ module Operations
 
     layout 'fluid'
 
+    helper_method :form
+
     def show
       render locals: { record: Operations::Account.find(params[:id]) }
     end
@@ -20,6 +22,10 @@ module Operations
 
     def accounts
       Operations::Account.order(:code)
+    end
+
+    def form
+      @form ||= OperationAccountsForm.new(params[:operation_accounts_form]&.permit! || {})
     end
   end
 end

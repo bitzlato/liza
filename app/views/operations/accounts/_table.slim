@@ -1,14 +1,17 @@
 thead.thead-dark
   tr
     th= description
-    th 
+    th
 
     - Currency.order(:id).visible.each do |currency|
       th.text-right= format_currency currency
 
 tbody
   - Operations::AccountDecorator.decorate(accounts.order(:currency_type, :scope)).each do |account|
-    - go = grouped_operations(account.records)
+    - records = account.records
+    - records = records.exclude_bots if form.exclude_bots
+
+    - go = grouped_operations(records)
     - [:balance, :credit, :debit].each do |d|
       tr
         - if d==:balance

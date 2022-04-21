@@ -2,6 +2,16 @@
 h1= accounts.model_name.human_plural
 hr
 
+= simple_form_for form, url: operations_accounts_path, method: :get do |f|
+  .row
+    .col-md-3
+      = f.input :exclude_bots, as: :boolean, checked_value: true, unchecked_value: false
+
+    .col-md-2
+      = f.button :submit, 'Поиск', class: 'btn btn-primary'
+
+.mt-3
+
 table.table.table-striped.table-hover.table-narrow.table-bordered
   - [:coin, :fiat].each do |currency_type|
     - [:platform, :member].each do |scope|
