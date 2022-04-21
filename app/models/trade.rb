@@ -43,6 +43,13 @@ class Trade < PeatioRecord
     where(maker_id: Member.bots.ids, taker_id: Member.bots.ids)
   end
 
+  def self.swap_trades
+    taker = Trade.joins(taker_order: :swap_order).where(swap_order: { state: 200})
+    maker = Trade.joins(maker_order: :swap_order).where(swap_order: { state: 200})
+
+    Trade.all.union(taker, maker)
+  end
+
   # == Class Methods ========================================================
 
   class << self
