@@ -4,6 +4,19 @@
 
 Liza is a web server written on Ruby On Rails to monitor financial security of Peatio exchange service.
 
+- [LIZA is accountant reporter for Peatio](#liza-is-accountant-reporter-for-peatio)
+  - [Install](#install)
+  - [Configure application](#configure-application)
+  - [Configure and run for development](#configure-and-run-for-development)
+  - [Configure barong](#configure-barong)
+  - [Trades](#trades)
+  - [Deploy with capistrano](#deploy-with-capistrano)
+  - [Build docker image](#build-docker-image)
+  - [Setup ENV varilables](#setup-env-varilables)
+  - [Contributors](#contributors)
+  - [Contributing](#contributing)
+  - [License](#license)
+
 ## Install
 
 > git clone https://github.com/finfex/liza
@@ -77,7 +90,13 @@ Initialize directory and configs structure on the server
 
 > bundle exec cap production systemd:puma:setup systemd:sidekiq:setup master_key:setup
 
-# Setup ENV varilables
+## Build docker image
+
+```
+docker build -t barong_puma -f config/docker/liza.Dockerfile .
+```
+
+## Setup ENV varilables
 
 > bundle exec cap production config:set RAILS_ENV=production LIZA_HOST=<YOUR_HOST>
 

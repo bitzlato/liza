@@ -33,10 +33,10 @@ peatio: &peatio
 staging:
   primary:
     <<: *primary
-    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'peatio_production_reports') %>
+    database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'liza_staging') %>
   peatio:
     <<: *peatio
-    database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_production') %>
+    database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_staging') %>
   whaler:
     <<: *whaler
   bitzlato:
