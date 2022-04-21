@@ -7,7 +7,7 @@ module Operations
   class Liability < Operation
     belongs_to :member
 
-    scope :exclude_bots, ->(exclude) do
+    scope :exclude_bots, ->(exclude = true) do
       where.not(member_id: [Member::DEEP_STONER_BOT_ID, Member::BARGAINER_BOT_ID]) if exclude
     end
 

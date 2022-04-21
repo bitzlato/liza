@@ -5,7 +5,7 @@
 module Operations
   # {Asset} is a balance sheet operation
   class Asset < Operation
-    scope :exclude_bots, ->(exclude) do
+    scope :exclude_bots, ->(exclude = true) do
       if exclude
         bots_ids = [Member::DEEP_STONER_BOT_ID, Member::BARGAINER_BOT_ID]
         bots_uids = Member.where(id: bots_ids).pluck(:uid)
