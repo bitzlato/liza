@@ -121,6 +121,21 @@ html
           th align='right' style='white-space: nowrap'
             = @total_whaler_transfers_count
 
+    br
+    br
+
+    table border="#ACD13C" cellpadding="5" cellspacing="0"
+      caption Быстрые обмены
+      tr
+        th align='left' style='white-space: nowrap' Объём
+        th align='right' style='white-space: nowrap'
+          = number_to_currency(@total_swap_trades_volume, unit: @current_rates['target_currency'], format: "%n %u")
+        tr
+          th align='left' style='white-space: nowrap' Кол-во
+          th align='right' style='white-space: nowrap'
+            = @total_swap_trades_count
+
+
     hr
 
     p

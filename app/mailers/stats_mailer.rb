@@ -42,6 +42,7 @@ class StatsMailer < ApplicationMailer
 
     # Markets stat
     @markets            = Market.active
+    @markets_map        = @markets.index_by(&:symbol)
 
     trade_scope = Trade.where(created_at: period, market: @markets).group(:market_id)
     @total_trades_count       = trade_scope.count
@@ -70,6 +71,14 @@ class StatsMailer < ApplicationMailer
       b.to_d * @current_rates['rates'][c].to_d
     end
     @total_deposits_balances = PaymentAddress.total_balances.sum {|c, v| v.to_d * @current_rates['rates'][c].to_d }
+
+    # swaps
+    swap_trade_scope = Trade.swap_trades.where(created_at: period, market: @markets)
+    @total_swap_trades_count  = swap_trade_scope.count
+    @total_swap_trades_volume = swap_trade_scope.group(:market_id).sum(:amount).sum do |market_id, amount|
+      market = @markets_map[market_id]
+      amount.to_d * @current_rates['rates'][market.base_unit].to_d
+    end
   end
 
   private
