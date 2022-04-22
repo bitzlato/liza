@@ -18,30 +18,37 @@ class DivergenceNotifierWorker
     'trx'       => 152
   }
 
-
   sidekiq_options queue: :reports
 
   def perform
-    new_divergents = current_divergent_currencies.each_with_object([]) do |(key, new_values), messages|
-                       if new_values.sort != saved_divergent_currencies.fetch(key, []).sort
-                         messages << ":exclamation: выявлено новое расхождение: #{key.upcase}"
-                         current_divergent_currencies[key].each { |msg| messages << "* #{msg}" }
-                       end
+
+    data = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
+      saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
+    )
+    messages = data.map do |currency, columns|
+                 columns.map  do |column, data|
+                   new_amount = data['new_amount']
+                   old_amount = data['old_amount']
+
+                   if old_amount.nil? && new_amount.present?
+                     "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
+                   elsif old_amount.present? && new_amount.present?
+                     if old_amount.to_d < new_amount
+                       "\t :chart_with_upwards_trend:*#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
+                      elsif old_amount.to_d > new_amount
+                       "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
                      end
+                   elsif old_amount.present? && new_amount.nil?
+                     "\t :white_check_mark: *#{column}* Расхождение устранено:\n"
+                   end
+                 end.yield_self do |messages|
+                   "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
+                 end
+              end.select(&:present?)
 
-    fixed_divergents = saved_divergent_currencies.each_with_object([]) do |(key, old_values), messages|
-                         if old_values.sort != current_divergent_currencies.fetch(key, []).sort
-                           messages << ":white_check_mark: устранено расхождение: #{key.upcase}"
-                           saved_divergent_currencies[key].map { |msg| messages << "* #{msg}" }
-                         end
-                       end
+    return if messages.blank?
 
-    return if new_divergents.blank? && fixed_divergents.blank?
-
-    messages = []
     messages << ":white_check_mark: Все расхождения устранены" if current_divergent_currencies.none?
-    messages += new_divergents
-    messages += fixed_divergents
     messages << "#{dashboard_url}"
 
     SlackNotifier.notifications.ping(messages.join("\n"))
@@ -76,8 +83,8 @@ class DivergenceNotifierWorker
 
         next if DIV_LIMITS[currency].present? && amount.to_d < DIV_LIMITS[currency]
 
-        data[currency] ||= []
-        data[currency] << "#{headers[i]}: #{amount} #{currency.upcase}"
+        data[currency] ||= {}
+        data[currency][headers[i]] = amount.to_d
       end
     end
 
