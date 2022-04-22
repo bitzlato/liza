@@ -34,12 +34,18 @@ class SummaryQuery
       p.to_s.include?('(') || p.to_s.include?('.') ? p : [model_class.table_name, p].join('.')
     end
     rows = scope
-           .where.not(currency: Currency.hidden)
            .group(*meta[:grouped_by])
            .reorder('')
            .order(meta[:grouped_by].first)
-           .pluck(plucks.join(', '))
-           .map { |row| prepare_row row, meta[:aggregations] }
+
+    # hide records with merged currencies
+    if model_class.column_names.include?('currency_id')
+      rows = rows.where.not(currency: Currency.hidden)
+    elsif model_class.column_names.include?('currency_code')
+      rows = rows.where.not(currency_code: Currency.hidden.pluck(:cc_code))
+    end
+
+    rows = rows.pluck(plucks.join(', ')).map { |row| prepare_row row, meta[:aggregations] }
 
     {
       grouped_by: meta[:grouped_by].map { |col| RANSAK_COLUMN_MAPPING[col] || col },
