@@ -33,9 +33,9 @@ class DivergenceNotifierWorker
                    if old_amount.nil? && new_amount.present?
                      "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
                    elsif old_amount.present? && new_amount.present?
-                     if old_amount.to_d < new_amount
+                     if old_amount.to_d.abs < new_amount.abs
                        "\t :chart_with_upwards_trend:*#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
-                      elsif old_amount.to_d > new_amount
+                     elsif old_amount.to_d.abs > new_amount.abs
                        "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
                      end
                    elsif old_amount.present? && new_amount.nil?
