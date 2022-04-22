@@ -50,6 +50,7 @@ class DivergenceNotifierWorker
 
     messages << ":white_check_mark: Все расхождения устранены" if current_divergent_currencies.none?
     messages << "#{dashboard_url}"
+    messages.prepend "*Информация о расхождениях*\n"
 
     SlackNotifier.notifications.ping(messages.join("\n"))
 
@@ -82,7 +83,7 @@ class DivergenceNotifierWorker
 
         amount, currency = item.values[0].split(/\s+/)
 
-        next if DIV_LIMITS[currency].present? && amount.to_d < DIV_LIMITS[currency]
+        next if DIV_LIMITS[currency].present? && amount.to_d.abs < DIV_LIMITS[currency]
 
         data[currency] ||= {}
         data[currency][headers[i]] = amount.to_d
