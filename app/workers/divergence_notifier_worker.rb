@@ -57,11 +57,12 @@ class DivergenceNotifierWorker
 
   def find_divergent_currencies
     app = ActionDispatch::Integration::Session.new(Rails.application)
-    authorization = if Rails.env.production?
-                      credentials = Rails.application.credentials.dig(:http_basic_auth)
-                      authorization = ActionController::HttpAuthentication::Basic.encode_credentials(credentials[:name], credentials[:password])
-                    end
-    app.process :get, dashboard_url, params: {}, headers: { 'Authorization' => authorization }
+    # пока отдключил, в будущем будет JWT-токен
+    #authorization = if Rails.env.production?
+                      #credentials = Rails.application.credentials.dig(:http_basic_auth)
+                      #authorization = ActionController::HttpAuthentication::Basic.encode_credentials(credentials[:name], credentials[:password])
+                    #end
+    app.process :get, dashboard_url, params: {} #, headers: { 'Authorization' => authorization }
 
     page = Nokogiri::HTML(app.response.body)
     headers = page.css('.thead-dark tr th div').map(&:text)

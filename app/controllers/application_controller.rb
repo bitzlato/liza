@@ -4,7 +4,6 @@
 
 class ApplicationController < ActionController::Base
   self.default_url_options = Settings.default_url_options.symbolize_keys
-  http_basic_authenticate_with(**Rails.application.credentials.dig(:http_basic_auth)) unless Rails.env.development?
 
   include CurrentUser
   include RescueErrors
