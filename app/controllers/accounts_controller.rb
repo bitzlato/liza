@@ -10,4 +10,10 @@ class AccountsController < ResourcesController
   def show
     render locals: { account: Account.find(params[:id]) }
   end
+
+  private
+
+  def index_form
+    'accounts_form'
+  end
 end
