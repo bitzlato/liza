@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate
+    return if ENV.true? 'DISABLE_JWT'
     raise HumanizedError, 'Not authenticated' unless current_user.present?
   end
 end
