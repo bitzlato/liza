@@ -57,7 +57,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  config.log_tags = [:request_id, lambda { |request| request.headers["Authorization"] } ]
 
   config.cache_store = if ENV.true?('LIZA_REDIS_CLUSTER')
                          [:redis_cache_store,
