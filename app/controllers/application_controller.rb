@@ -11,5 +11,13 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token if Rails.env.development?
 
+  before_action :authenticate
+
   layout 'application'
+
+  private
+
+  def authenticate
+    raise HumanizedError, 'Not authenticated' unless current_user.present?
+  end
 end
