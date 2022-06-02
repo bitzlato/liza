@@ -21,7 +21,6 @@ class DivergenceNotifierWorker
   sidekiq_options queue: :reports
 
   def perform
-
     data = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
       saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
     )
@@ -97,24 +96,12 @@ class DivergenceNotifierWorker
     end
   end
 
-  def dashboard_url
-    @dashboard_url ||= Rails.application.routes.url_helpers.url_for(controller: :dashboard, action: :index)
-  end
-
   def get_dashboard_html
-    conn = Faraday.new url: ENV['BITZLATO_PRIVATE_URL'], ssl: { verify: false } do |c|
-      c.headers = {
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json',
-        'Origin' => ENV['BITZLATO_PRIVATE_URL']
-      }
-      c.request :json
-      c.use :cookie_jar
-      c.options.timeout = 30
-    end
-    # login
-    conn.post("#{ENV['BARONG_PRIVATE_API_URL']}/identity/sessions", { email: ENV['LIZA_USER_EMAIL'], password: ENV['LIZA_USER_PASSWORD'], otp_code: "" })
-    # liza dashobard
-    conn.get('https://liza.lgk.one').body
+    DashboardController.render :index, locals: {
+      bitzlato_balances: BitzlatoWallet.market_balances,
+      system_balances: Wallet.balances,
+      accountable_fee: Transaction.accountable_fee.group(:fee_currency_id).sum(:fee),
+      adjustments: Adjustment.accepted.group(:currency_id, :category).sum(:amount),
+    }
   end
 end
