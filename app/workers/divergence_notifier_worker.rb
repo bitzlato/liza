@@ -96,6 +96,10 @@ class DivergenceNotifierWorker
     end
   end
 
+  def dashboard_url
+    @dashboard_url ||= Rails.application.routes.url_helpers.url_for(controller: :dashboard, action: :index)
+  end
+
   def get_dashboard_html
     DashboardController.render :index, locals: {
       bitzlato_balances: BitzlatoWallet.market_balances,
