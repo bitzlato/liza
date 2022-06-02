@@ -21,6 +21,7 @@ class DivergenceNotifierWorker
   sidekiq_options queue: :reports
 
   def perform
+
     data = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
       saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
     )
@@ -63,12 +64,12 @@ class DivergenceNotifierWorker
   end
 
   def find_divergent_currencies
-    disable_jwt = ENV['DISABLE_JWT']
-    forced_member_uid = ENV['FORCED_MEMBER_UID']
-    ENV['DISABLE_JWT'] = 'true'
-    ENV['FORCED_MEMBER_UID'] = 'IDF75BAE8BD1'
-
     app = ActionDispatch::Integration::Session.new(Rails.application)
+    # пока отдключил, в будущем будет JWT-токен
+    #authorization = if Rails.env.production?
+                      #credentials = Rails.application.credentials.dig(:http_basic_auth)
+                      #authorization = ActionController::HttpAuthentication::Basic.encode_credentials(credentials[:name], credentials[:password])
+                    #end
     app.process :get, dashboard_url, params: {} #, headers: { 'Authorization' => authorization }
 
     page = Nokogiri::HTML(app.response.body)
@@ -90,9 +91,6 @@ class DivergenceNotifierWorker
     end
 
     data
-  ensure
-    ENV['DISABLE_JWT'] = disable_jwt
-    ENV['FORCED_MEMBER_UID'] = forced_member_uid
   end
 
   def save_divergent_currencies!(currencies)
