@@ -64,15 +64,7 @@ class DivergenceNotifierWorker
   end
 
   def find_divergent_currencies
-    app = ActionDispatch::Integration::Session.new(Rails.application)
-    # пока отдключил, в будущем будет JWT-токен
-    #authorization = if Rails.env.production?
-                      #credentials = Rails.application.credentials.dig(:http_basic_auth)
-                      #authorization = ActionController::HttpAuthentication::Basic.encode_credentials(credentials[:name], credentials[:password])
-                    #end
-    app.process :get, dashboard_url, params: {} #, headers: { 'Authorization' => authorization }
-
-    page = Nokogiri::HTML(app.response.body)
+    page = Nokogiri::HTML(get_dashboard_html)
     headers = page.css('.thead-dark tr th div').map(&:text)
     data = {}
 
@@ -107,5 +99,22 @@ class DivergenceNotifierWorker
 
   def dashboard_url
     @dashboard_url ||= Rails.application.routes.url_helpers.url_for(controller: :dashboard, action: :index)
+  end
+
+  def get_dashboard_html
+    conn = Faraday.new url: ENV['BITZLATO_PRIVATE_URL'], ssl: { verify: false } do |c|
+      c.headers = {
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'Origin' => ENV['BITZLATO_PRIVATE_URL']
+      }
+      c.request :json
+      c.use :cookie_jar
+      c.options.timeout = 30
+    end
+    # login
+    conn.post("#{ENV['BARONG_PRIVATE_API_URL']}/identity/sessions", { email: ENV['LIZA_USER_EMAIL'], password: ENV['LIZA_USER_PASSWORD'], otp_code: "" })
+    # liza dashobard
+    conn.get('https://liza.lgk.one').body
   end
 end

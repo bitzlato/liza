@@ -145,3 +145,7 @@ gem 'money', '~> 6.16'
 gem 'mini_racer', '~> 0.4.0'
 
 gem 'active_record_extended', '~> 2.1.1'
+
+gem "faraday", "~> 1.8"
+gem 'faraday-cookie_jar'
+gem "faraday_middleware", "~> 1.2"
