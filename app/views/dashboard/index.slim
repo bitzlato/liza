@@ -7,7 +7,7 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'P2P баланс + На системных кошельках + на депозитных счетах'
       th.text-right
         div Операционные активы по базе
-        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции + Незачисленные_депозиты'
+        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции - Компенсации + Незачисленные_депозиты'
       th.text-right
         div Расчетный баланс на системных счетах
         = column_tip 'Депозиты - Списания + Трансферы - Комиссия_сети + Зарегистрированные_активы '
@@ -43,6 +43,7 @@ table.table.table-condensed.table-striped.table-cross-row
       - total_operations_amount = Operations::Revenue.where(currency_id: ids).sum('credit - debit')
       - total_operations_assets_credit = Operations::Asset.where(currency_id: ids).sum('credit - debit')
       - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
+      - compensation_amount = ids.sum { |id| adjustments[[id, 'compensation']].to_d }
       - asset_registration_amount = ids.sum { |id| adjustments[[id, 'asset_registration']].to_d }
       - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
 
@@ -70,7 +71,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money paymand_address_amounts, currency, show_currency: false
         // 3
         td.text-right
-          = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount), currency_id, show_currency: false
+          = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount - compensation_amount), currency_id, show_currency: false
           .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
               = format_money total_operations_assets_credit, currency, show_currency: false
@@ -80,6 +81,9 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '-'
             = link_to adjustments_path(q: { currency_id_eq: currency_id, category_eq: 'investment' }) do
               = format_money investment_amount, currency_id, show_currency: false
+            span.ml-2.mr-2= '-'
+            = link_to adjustments_path(q: { currency_id_eq: currency_id, category_eq: 'compensation' }) do
+              = format_money compensation_amount, currency_id, show_currency: false
             span.ml-2.mr-2= '+'
             = link_to deposits_path(q: { aasm_state_eq: :skipped, currency_id_eq: currency.id }) do
               = format_money total_skipped_deposits, currency_id, show_currency: false
