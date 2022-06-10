@@ -19,7 +19,7 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'Доступно + Заблокировано'
       th.text-right
         div Расхождение балансов (внутренний аудит)
-        = column_tip 'Расчетный - Фактический - Операционная_прибыль + Инвестиции - Незачисленные_депозиты - Зарегистрированные_активы'
+        = column_tip 'Расчетный - Фактический - Операционная_прибыль + Инвестиции - Незачисленные_депозиты - Зарегистрированные_активы + Компенсации'
       th.text-right
         div Расчётный баланс заблокированных сумм
         = column_tip 'Заблокировано_на_счетах - Заблокировано_в_депозитах - Заблокировано_в_списаниях - Заблокировано_в_сделках'
@@ -136,7 +136,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money row[2], currency_id, show_currency: false
         // 7
         td.text-right
-          = format_divergence (total_deposit - total_withdraw + total_member_transfers) - (row[1] + row[2]) - total_operations_amount + investment_amount - total_skipped_deposits + asset_registration_amount, currency, show_currency: false
+          = format_divergence (total_deposit - total_withdraw + total_member_transfers) - (row[1] + row[2]) - total_operations_amount + investment_amount - total_skipped_deposits + asset_registration_amount + compensation_amount, currency, show_currency: false
           .text-small.text-muted.mt-2
         // 8
         td.text-right
