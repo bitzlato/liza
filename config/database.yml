@@ -12,6 +12,13 @@ bitzlato_default: &bitzlato
   url: <%= ENV.fetch( 'BITZLATO_DATABASE_URL', 'postgres://localhost/bitzlato_development'  ) %>
   migrations_paths: db/migrate_bitzlato
 
+belomor_default: &belomor
+  adapter: postgresql
+  encoding: utf8
+  url: <%= ENV.fetch( 'BELOMOR_DATABASE_URL', 'postgres://localhost/belomor_development'  ) %>
+  migrations_paths: db/migrate_belomor
+
+
 default: &default
   adapter: <%= ENV.fetch('DATABASE_ADAPTER', 'postgresql') %>
   encoding: utf8
@@ -41,11 +48,16 @@ staging:
     <<: *whaler
   bitzlato:
     <<: *bitzlato
+  belomor:
+    <<: *belomor
+
 development:
   whaler:
     <<: *whaler
   bitzlato:
     <<: *bitzlato
+  belomor:
+    <<: *belomor
   primary:
     <<: *primary
     database: peatio_development_reports
@@ -56,22 +68,28 @@ development:
 <% else ENV['PEATIO_DATABASE_NAME'] %>
     database: <%= ENV.fetch('PEATIO_DATABASE_NAME', 'peatio_development') %>
 <% end %>
+
 test:
   whaler:
     <<: *whaler
   bitzlato:
     <<: *bitzlato
+  belomor:
+    <<: *belomor
   peatio:
     <<: *peatio
     database: liza_test
   primary:
     <<: *primary
     database: liza_test_reports
+
 production:
   whaler:
     <<: *whaler
   bitzlato:
     <<: *bitzlato
+  belomor:
+    <<: *belomor
   primary:
     <<: *primary
     database: <%= ENV.fetch('REPORTS_DATABASE_NAME', 'liza_reports_production') %>
