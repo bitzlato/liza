@@ -149,3 +149,5 @@ gem 'active_record_extended', '~> 2.1.1'
 gem "faraday", "~> 1.8"
 gem 'faraday-cookie_jar'
 gem "faraday_middleware", "~> 1.2"
+
+gem "influxer", "~> 1.4"
