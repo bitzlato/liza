@@ -1,0 +1,5 @@
+= render 'time_range_form', form: form, report_type: report_type do |f|
+  .row
+    .col-md-4
+      .mb-2
+        = f.input :group_by, collection: [ ['Hour', '1h'], ['Day', '1d'], ['Week', '1w'] ], include_blank: false

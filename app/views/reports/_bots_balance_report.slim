@@ -1,0 +1,41 @@
+h1= t '.bots_balances'
+hr
+
+table.table.table-striped.table-narrow.table-bordered
+  tbody
+    tr
+      th align='left' style='white-space: nowrap' Total
+      - results['dates'].each do |date|
+        th align='left' style='white-space: nowrap'
+          - total_usd_amount = results['totals'][date]
+          = number_to_currency(total_usd_amount, precision: 2, format: "%u%n", unit: '$', strip_insignificant_zeros: true)
+
+    - results['currencies'].each do |currency|
+      tr
+        th align='left' style='white-space: nowrap' = currency
+        - results['dates'].each do |date|
+          td align='left' style='white-space: nowrap'
+            - amount = results['records'][date][currency]['amount']
+            = number_with_delimiter(amount, precision: 2, strip_insignificant_zeros: true)
+    tr
+      th
+      - results['dates'].each do |date|
+        - date = Time.parse(date)
+        th align='left' style='white-space: nowrap'
+          = l(date, format: :long)
+
+br
+
+table.table.table-striped.table-narrow.table-bordered
+  tbody
+    tr
+      th colspan=3 Bots
+    tr
+      th ID
+      th UID
+      th Email
+    - Member.bots.each do |member|
+      tr
+        td = member.id
+        td = member.uid
+        td = member.email

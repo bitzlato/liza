@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+header = wb.styles.add_style b: true, alignment: { horizontal: :center }
+total_header = wb.styles.add_style b: true, alignment: { horizontal: :right }
+bold = wb.styles.add_style b: true
+
+results = report.results
+
+wb.add_worksheet(name: report.name) do |sheet|
+
+  totals = results['dates'].map do |date|
+    total_usd_amount = results['totals'][date]
+    number_to_currency(total_usd_amount, precision: 2, format: "%u%n", unit: '$', strip_insignificant_zeros: true)
+  end
+  sheet.add_row ['Total'] + totals, style: bold
+
+  results['currencies'].each do |currency|
+    cols = results['dates'].map do |date|
+      amount = results['records'][date][currency]['amount'].to_d
+      number_with_delimiter(amount, precision: 2, strip_insignificant_zeros: true)
+    end
+    sheet.add_row [currency] + cols, style: [bold]
+  end
+
+  cols = results['dates'].map do |date|
+    date = Time.parse(date)
+    l(date, format: :long)
+  end
+
+  sheet.add_row [' '] + cols, style: bold
+end
