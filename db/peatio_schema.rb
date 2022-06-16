@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 2021_08_31_072354) do
     t.bigint "blockchain_id", null: false
     t.bigint "base_factor", null: false
     t.string "contract_address"
-    t.string "merged_token_id"
     t.index ["blockchain_id"], name: "index_currencies_on_blockchain_id"
     t.index ["position"], name: "index_currencies_on_position"
     t.index ["visible"], name: "index_currencies_on_visible"
