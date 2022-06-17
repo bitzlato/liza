@@ -37,6 +37,24 @@ class StatsMailer < ApplicationMailer
   private
 
   def init_stat_for_period(period)
+    @current_rates = whaler_client.rates(TARGET_CURRENCY_RATE).yield_self do |data|
+      data['rates'].transform_keys!(&:downcase)
+      data
+    end
+
+    @revenue_scope = Operations::Revenue.where(created_at: period)
+
+    # Количество активных пользователей
+    @active_users_count = @revenue_scope.select(:member_id).distinct.count
+    # Среднее количество операций на 1-го активного клиента
+    @avg_trade_per_active_user = (@revenue_scope.count / @active_users_count.to_d).round(1)
+    # Доходы биржи в разрезе операций (в usdt)
+    @revenue_total_amount = @revenue_scope.group(:currency_id)
+                                          .sum('credit - debit')
+                                          .sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
+    # Средняя доходность на 1-го активного клиента (usdt)
+    @avg_revenue_per_active_user = (@revenue_total_amount / @avg_trade_per_active_user)
+
     # Member stat
     @new_users_count    = Member.where(created_at: period).count
 
@@ -50,15 +68,11 @@ class StatsMailer < ApplicationMailer
     @total_trade_users_count  = trade_scope.user_trades.count
     @total_trade_bots_count   = trade_scope.bot_trades.count
 
+
     # Currency stat
     @currencies   = Currency.all
     @total_deposit  = Deposit.success.where(created_at: period).group(:currency_id).sum(:amount)
     @total_withdraw = Withdraw.success.where(created_at: period).group(:currency_id).sum(:amount)
-
-    @current_rates = whaler_client.rates(TARGET_CURRENCY_RATE).yield_self do |data|
-      data['rates'].transform_keys!(&:downcase)
-      data
-    end
 
     whaler_transfers_scope = WhalerTransfer.success.where(created_at: period)
     @total_whaler_transfers_count = whaler_transfers_scope.count

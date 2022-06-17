@@ -6,15 +6,27 @@ html
     h2 = @title
 
     table border="#ACD13C" cellpadding="5" cellspacing="0"
-      caption Пользователи
+      caption Пользователи и Доходы
       tr
-        th Зарегистрировано
-        td align='right'
-          = @new_users_count
+        th align='right' Всего пользователей
+        td align='right'= Member.count
       tr
-        th Всего
+        th align='right' Кол-во новых пользователей
+        td align='right'= @new_users_count
+      tr
+        th align='right' Кол-во активных пользователей
+        td align='right'= @active_users_count
+      tr
+        th align='right' Среднее количество операций на 1-го активного пользователя
+        td align='right'= @avg_trade_per_active_user
+      tr
+        th align='right' Доходы биржи в разрезе операций
         td align='right'
-          = Member.count
+          = number_to_currency(@revenue_total_amount, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      tr
+        th align='right' Средняя доходность на 1-го активного пользователя
+        td align='right'
+          = number_to_currency(@avg_revenue_per_active_user, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
 
     br
     br
@@ -145,4 +157,3 @@ html
     p
       small
         | Боты: #{ENV.fetch('STATS_EXCLUDE_MEMBER_UIDS')}
-
