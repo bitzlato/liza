@@ -53,7 +53,7 @@ class StatsMailer < ApplicationMailer
                                           .sum('credit - debit')
                                           .sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
     # Средняя доходность на 1-го активного клиента (usdt)
-    @avg_revenue_per_active_user = (@revenue_total_amount / @avg_trade_per_active_user)
+    @avg_revenue_per_active_user = (@revenue_total_amount / @active_users_count)
 
     # Member stat
     @new_users_count    = Member.where(created_at: period).count
