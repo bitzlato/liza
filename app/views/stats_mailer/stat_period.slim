@@ -27,6 +27,60 @@ html
         th align='right' Средняя доходность на 1-го активного пользователя
         td align='right'
           = number_to_currency(@avg_revenue_per_active_user, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      tr
+        th align='right' Доход по Ботам
+        td align='right'
+          - bots_total = @revenue_scope.where(member_id: Member.bots.ids).group(:currency_id).sum(:credit).sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
+          = number_to_currency(bots_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      tr
+        th align='right' Доход по Пользователям
+        td align='right'
+          - members_total = @revenue_scope.where.not(member_id: Member.bots.ids).group(:currency_id).sum(:credit).sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
+          = number_to_currency(members_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+
+      tr
+        td colspan=2
+          table border="#ACD13C" cellpadding="5" cellspacing="0" width="100%" frame='void'
+            caption Боты
+            tr
+              th align='center' style='white-space: nowrap' Валюта
+              th align='center' style='white-space: nowrap' Тип операции
+              th align='center' style='white-space: nowrap' Сумма
+              th align='center' style='white-space: nowrap' Сумма в $
+
+            - @revenue_scope.where(member_id: Member.bots.ids).group(:currency_id, :reference_type).sum(:credit).sort_by { |g, s| g[0] }.each do |(currency_id, reference_type), amount|
+              tr
+                td align='right' = currency_id
+                td align='right' = reference_type
+                td align='right'
+                  = number_to_currency(amount, unit: currency_id, precision: 8, delimiter: ' ', strip_insignificant_zeros: true)
+                td align='right'
+                  = number_to_currency(amount * @current_rates['rates'][currency_id].to_d, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+            tr
+              th align='right' colspan=3 Всего
+              td align='right' = number_to_currency(bots_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      tr
+        td colspan=2
+          table border="#ACD13C" cellpadding="5" cellspacing="0" width="100%" frame='void'
+            caption Пользователи
+            tr
+              th align='center' style='white-space: nowrap' Валюта
+              th align='center' style='white-space: nowrap' Тип операции
+              th align='center' style='white-space: nowrap' Сумма
+              th align='center' style='white-space: nowrap' Сумма в $
+
+            - @revenue_scope.where.not(member_id: Member.bots.ids).group(:currency_id, :reference_type).sum(:credit).sort_by { |g, s| g[0] }.each do |(currency_id, reference_type), amount|
+              tr
+                td align='right' = currency_id
+                td align='right' = reference_type
+                td align='right'
+                  = number_to_currency(amount, unit: currency_id, precision: 8, delimiter: ' ', strip_insignificant_zeros: true)
+                td align='right'
+                  = number_to_currency(amount * @current_rates['rates'][currency_id].to_d, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+            tr
+              th align='right' colspan=3 Всего
+              td align='right' = number_to_currency(members_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+
 
     br
     br

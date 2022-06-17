@@ -37,7 +37,7 @@ class StatsMailer < ApplicationMailer
   private
 
   def init_stat_for_period(period)
-    @current_rates = whaler_client.rates(TARGET_CURRENCY_RATE).yield_self do |data|
+    @current_rates = whaler_client.rates(StatsMailer::TARGET_CURRENCY_RATE).yield_self do |data|
       data['rates'].transform_keys!(&:downcase)
       data
     end
@@ -54,6 +54,7 @@ class StatsMailer < ApplicationMailer
                                           .sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
     # Средняя доходность на 1-го активного клиента (usdt)
     @avg_revenue_per_active_user = (@revenue_total_amount / @active_users_count)
+
 
     # Member stat
     @new_users_count    = Member.where(created_at: period).count
