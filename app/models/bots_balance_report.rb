@@ -49,11 +49,11 @@ class BotsBalanceReport < Report
 
     def bots_metrics
       where =  if form.time_from.present? && form.time_to.present?
-                 "time >= #{form.time_from}s AND time <= #{form.time_to}s"
+                 "time >= #{form.time_from.to_i}s AND time <= #{form.time_to.to_i}s"
                elsif form.time_from.present? && form.time_to.nil?
-                "time >= #{form.time_from}s"
+                 "time >= #{form.time_from.to_i}s"
                elsif form.time_from.nil? && form.time_to.present?
-                "time <= #{form.time_to}s"
+                 "time <= #{form.time_to.to_i}s"
                end
       BotsMetrics.where(where)
                  .amount_changes(form.group_by, 'previous')
