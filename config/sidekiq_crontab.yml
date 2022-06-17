@@ -22,3 +22,7 @@ DivergenceNotifierWorker:
 WalletLowBalanceCheckerWorker:
   cron: '*/15 * * * *'
   class: WalletLowBalanceCheckerWorker
+
+BotsAccountMetricsWorker:
+  cron: '*/30 * * * * *'
+  class: BotsMetricsWorker

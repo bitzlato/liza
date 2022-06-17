@@ -1,0 +1,25 @@
+default: &default
+  host: <%= ENV.fetch("INFLUXDB_HOST", "127.0.0.1").split(',') %>
+  port: <%= ENV.fetch("INFLUXDB_PORT", 8086) %>
+  username: <%= ENV.fetch("INFLUXDB_USER", "root") %>
+  password: <%= ENV.fetch("INFLUXDB_PASS", "root") %>
+
+development:
+  <<: *default
+  database: peatio_production
+
+test:
+  <<: *default
+  database: peatio_test
+
+production:
+  <<: *default
+  database: <%= ENV.fetch('INFLUXDB_DATABASE_NAME', "peatio_production") %>
+
+sandbox:
+  <<: *default
+  database: <%= ENV.fetch('INFLUXDB_DATABASE_NAME', "peatio_sandbox") %>
+
+staging:
+  <<: *default
+  database: <%= ENV.fetch('INFLUXDB_DATABASE_NAME', "peatio_staging") %>

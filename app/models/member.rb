@@ -27,6 +27,12 @@ class Member < PeatioRecord
     Member.where(uid: BOT_UIDS)
   end
 
+  def self.bots_total_balances
+    bots.joins(:accounts => :currency)
+        .where(currencies: { merged_token_id: nil })
+        .group(:currency_id).sum('balance + locked')
+  end
+
   def to_s
     uid
   end
