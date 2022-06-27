@@ -10,6 +10,7 @@ auth_args = {
   secret: Rails.configuration.x.jwt_public_key,
   options: Rails.configuration.x.jwt_options,
   verify: Rails.configuration.x.jwt_public_key.present?,
+  exclude: %w[/signin]
 }
 
 Rails.application.config.middleware.use JWT::Rack::Auth, auth_args unless ENV.true? 'DISABLE_JWT'
