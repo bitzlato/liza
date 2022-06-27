@@ -45,7 +45,7 @@ table.table.table-condensed.table-striped.table-cross-row
       - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
       - compensation_amount = ids.sum { |id| adjustments[[id, 'compensation']].to_d }
       - asset_registration_amount = ids.sum { |id| adjustments[[id, 'asset_registration']].to_d }
-      - paymand_address_amounts = PaymentAddress.total_balances[currency_id.downcase].to_d
+      - paymant_address_amounts = AddressBalancesQuery.new.deposit_balances[currency_id.downcase].to_d
       - swaps_amount = WhalerSwap.wallet_total_amount_for(currency.cc_code)
 
       - bitzlato_balance = currencies.sum { |currency| bitzlato_balances.dig(currency.id) || bitzlato_balances.dig(currency.cc_code.to_s.downcase) || 0 }
@@ -60,7 +60,7 @@ table.table.table-condensed.table-striped.table-cross-row
           = format_currency currency_id
         // 2
         td.text-right
-          = format_money total_balance = (bitzlato_balance + system_balance + paymand_address_amounts), currency, show_currency: false
+          = format_money total_balance = (bitzlato_balance + system_balance + paymant_address_amounts), currency, show_currency: false
           .text-small.mt-2
             = link_to bitzlato_wallets_path(q: { cc_code_i_cont: currency_id}) do
               = format_money bitzlato_balance, currency, show_currency: false
@@ -69,7 +69,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money system_balance, currency, show_currency: false
             span.ml-2.mr-2= '+'
             = link_to payment_addresses_path(q: { currency_id_eq: currency_id, with_balances: true }) do
-              = format_money paymand_address_amounts, currency, show_currency: false
+              = format_money paymant_address_amounts, currency, show_currency: false
         // 3
         td.text-right
           = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount - compensation_amount + swaps_amount), currency_id, show_currency: false

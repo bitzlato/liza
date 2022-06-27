@@ -85,7 +85,7 @@ class StatsMailer < ApplicationMailer
     @total_p2p_wallets_balances = BitzlatoWallet.market_balances.sum do |c, b|
       b.to_d * @current_rates['rates'][c].to_d
     end
-    @total_deposits_balances = PaymentAddress.total_balances.sum {|c, v| v.to_d * @current_rates['rates'][c].to_d }
+    @total_deposits_balances = AddressBalancesQuery.new.deposit_balances.sum {|c, v| v.to_d * @current_rates['rates'][c].to_d }
 
     # swaps
     swap_trade_scope = Trade.swap_trades.where(created_at: period, market: @markets)
