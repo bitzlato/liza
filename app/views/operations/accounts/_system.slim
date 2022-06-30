@@ -1,6 +1,6 @@
 - bw =  BitzlatoWallet.market_balances.transform_values { |v| { p2p: v } }
-- w = Wallet.balances.transform_values { |v| { market: v } }
-- pa = PaymentAddress.total_balances.transform_values { |v| {payment_address: v} }
+- w = AddressBalancesQuery.new.service_balances.transform_values { |v| { market: v } }
+- pa = AddressBalancesQuery.new.deposit_balances.transform_values { |v| {payment_address: v} }
 - balances = bw.deep_merge(w).deep_merge(pa)
 
 thead.thead-dark
