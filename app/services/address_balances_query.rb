@@ -5,7 +5,7 @@ class AddressBalancesQuery
     belomor_balances = BelomorDepositAddress
                        .connection
                        .execute("SELECT \"ckey\", sum(\"val\"::decimal) FROM deposit_addresses JOIN blockchains ON deposit_addresses.blockchain_id = blockchains.id, LATERAL jsonb_each_text(balances) AS each(CKEY,val) WHERE blockchains.key <> 'solana-mainnet' AND kind = 0 AND client_application_id = 2 GROUP BY \"ckey\"")
-                       .each_with_object({}) { |r, a| a[r['key'].downcase] = r['sum'] }
+                       .each_with_object({}) { |r, a| a[r['ckey'].downcase] = r['sum'] }
     solana_balances = PaymentAddress
                       .connection
                       .execute("SELECT \"ckey\", sum(\"val\"::decimal) FROM payment_addresses JOIN blockchains ON payment_addresses.blockchain_id = blockchains.id, LATERAL jsonb_each_text(balances) AS each(CKEY,val) WHERE blockchains.key = 'solana-mainnet' GROUP BY \"ckey\"")
