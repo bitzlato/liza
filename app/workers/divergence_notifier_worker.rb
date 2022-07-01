@@ -8,15 +8,15 @@ class DivergenceNotifierWorker
   STATUS_FILE = Rails.root.join('./tmp/divergence_exists')
 
   DIV_LIMITS = {
-    'btc'       => 0.00022,
-    'eth'       => 0.0031,
-    'usdt'      => 10,
-    'ustc'      => 10,
+    'btc' => 0.00022,
+    'eth' => 0.0031,
+    'usdt' => 10,
+    'ustc' => 10,
     'bnb-bep20' => 0.024,
-    'ht-hrc20'  => 1,
-    'avax'      => 0.12,
-    'trx'       => 152
-  }
+    'ht-hrc20' => 1,
+    'avax' => 0.12,
+    'trx' => 152
+  }.freeze
 
   sidekiq_options queue: :reports
 
@@ -25,30 +25,30 @@ class DivergenceNotifierWorker
       saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
     )
     messages = data.map do |currency, columns|
-                 columns.map  do |column, data|
-                   new_amount = data['new_amount']
-                   old_amount = data['old_amount']
+      columns.map  do |column, data|
+        new_amount = data['new_amount']
+        old_amount = data['old_amount']
 
-                   if old_amount.nil? && new_amount.present?
-                     "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
-                   elsif old_amount.present? && new_amount.present?
-                     if old_amount.to_d.abs < new_amount.abs
-                       "\t :chart_with_upwards_trend:*#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
-                     elsif old_amount.to_d.abs > new_amount.abs
-                       "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
-                     end
-                   elsif old_amount.present? && new_amount.nil?
-                     "\t :white_check_mark: *#{column}* Расхождение устранено:\n"
-                   end
-                 end.yield_self do |messages|
-                   "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
-                 end
-              end.select(&:present?)
+        if old_amount.nil? && new_amount.present?
+          "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
+        elsif old_amount.present? && new_amount.present?
+          if old_amount.to_d.abs < new_amount.abs
+            "\t :chart_with_upwards_trend:*#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
+          elsif old_amount.to_d.abs > new_amount.abs
+            "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
+          end
+        elsif old_amount.present? && new_amount.nil?
+          "\t :white_check_mark: *#{column}* Расхождение устранено:\n"
+        end
+      end.yield_self do |messages|
+        "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
+      end
+    end.select(&:present?)
 
     return if messages.blank?
 
-    messages << ":white_check_mark: Все расхождения устранены" if current_divergent_currencies.none?
-    messages << "#{dashboard_url}"
+    messages << ':white_check_mark: Все расхождения устранены' if current_divergent_currencies.none?
+    messages << dashboard_url.to_s
     messages.prepend "*Информация о расхождениях*\n"
 
     SlackNotifier.notifications.ping(messages.join("\n"))
@@ -104,8 +104,8 @@ class DivergenceNotifierWorker
     DashboardController.render :index, locals: {
       bitzlato_balances: BitzlatoWallet.market_balances,
       system_balances: AddressBalancesQuery.new.service_balances,
-      accountable_fee: Transaction.accountable_fee.group(:fee_currency_id).sum(:fee),
-      adjustments: Adjustment.accepted.group(:currency_id, :category).sum(:amount),
+      accountable_fee: AccountableFeeCalculator.new.call,
+      adjustments: Adjustment.accepted.group(:currency_id, :category).sum(:amount)
     }
   end
 end
