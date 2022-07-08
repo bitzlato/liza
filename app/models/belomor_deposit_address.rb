@@ -10,6 +10,17 @@ class BelomorDepositAddress < BelomorRecord
 
   scope :active, -> { where(archived_at: nil) }
 
+  class << self
+    def service_balances
+      BelomorDepositAddress.service.each_with_object({}) do |da, a|
+        da.available_balances.each_pair do |c, b|
+          a[c] ||= 0.0
+          a[c] += b.to_d
+        end
+      end
+    end
+  end
+
   def available_balances
     (balances || {}).slice(*blockchain.currencies.ids)
   end
