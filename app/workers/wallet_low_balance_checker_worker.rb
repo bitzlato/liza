@@ -41,11 +41,11 @@ class WalletLowBalanceCheckerWorker
   def perform
     current = {}
     messages = []
-    Wallet.active.hot.each do |w|
+    BelomorDepositAddress.service.active.each do |w|
       w.available_balances.each do |c, b|
         limit = BLOCKCHAIN_LIMITS.dig(w.blockchain.key, c) || LIMITS[c]
         next unless limit
-        next if TURNED_OFF.dig(w.blockchain.key)&.include?(c)
+        next if TURNED_OFF[w.blockchain.key]&.include?(c)
 
         if b.to_d < limit.to_d
           current['market'] ||= {}
