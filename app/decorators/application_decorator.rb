@@ -62,7 +62,7 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def from_address
-    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank', cass: 'text-monospace' do
+    h.link_to object.blockchain.explore_address_url(object.from_address), target: '_blank', class: 'text-monospace' do
       h.present_address object.from_address
     end
   end
