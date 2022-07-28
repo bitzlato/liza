@@ -88,6 +88,8 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to deposits_path(q: { aasm_state_eq: :skipped, currency_id_eq: currency.id }) do
               = format_money total_skipped_deposits, currency_id, show_currency: false
+            span.ml-2.mr-2= '+'
+            = format_money swaps_amount, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency , show_currency: false
         // 4
@@ -108,6 +110,9 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to adjustments_path(q: { currency_id_eq: currency_id, category_eq: 'asset_registration' }) do
               = format_money asset_registration_amount, currency_id, show_currency: false
+            span.ml-2.mr-2= '+'
+            = format_money swaps_amount, currency_id, show_currency: false
+
           .text-small.mt-2
             = format_divergence calculated_total_balance - total_balance, currency, show_currency: false
         // 5
