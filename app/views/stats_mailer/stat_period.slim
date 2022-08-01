@@ -20,9 +20,13 @@ html
         th align='right' Среднее количество операций на 1-го активного пользователя
         td align='right'= @avg_trade_per_active_user
       tr
-        th align='right' Доходы биржи в разрезе операций
+        th align='right' Расходы биржи
         td align='right'
-          = number_to_currency(@revenue_total_amount, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+          = number_to_currency(@transaction_fees_amount, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      tr
+        th align='right' Доходы биржи в разрезе операций - Расходы биржи
+        td align='right'
+          = number_to_currency(@revenue_total_amount - @transaction_fees_amount, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
       tr
         th align='right' Средняя доходность на 1-го активного пользователя
         td align='right'
@@ -58,7 +62,7 @@ html
                   = number_to_currency(amount * @current_rates['rates'][currency_id].to_d, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
             tr
               th align='right' colspan=3 Всего
-              td align='right' = number_to_currency(bots_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+              td align='right'= number_to_currency(bots_total, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
       tr
         td colspan=2
           table border="#ACD13C" cellpadding="5" cellspacing="0" width="100%" frame='void'

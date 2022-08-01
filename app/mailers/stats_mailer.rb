@@ -48,12 +48,19 @@ class StatsMailer < ApplicationMailer
     @active_users_count = @revenue_scope.select(:member_id).distinct.count
     # Среднее количество операций на 1-го активного клиента
     @avg_trade_per_active_user = (@revenue_scope.count / @active_users_count.to_d).round(1)
+
+    # Расходы сети
+    @transaction_fees_amount = AccountableFeeCalculator.new
+                                                       .call(created_at: period)
+                                                       .sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
+
     # Доходы биржи в разрезе операций (в usdt)
     @revenue_total_amount = @revenue_scope.group(:currency_id)
                                           .sum('credit - debit')
                                           .sum { |currency_id, amount| amount * @current_rates['rates'][currency_id].to_d }
+
     # Средняя доходность на 1-го активного клиента (usdt)
-    @avg_revenue_per_active_user = (@revenue_total_amount / @active_users_count)
+    @avg_revenue_per_active_user = ((@revenue_total_amount - @transaction_fees_amount) / @active_users_count)
 
 
     # Member stat
@@ -68,7 +75,6 @@ class StatsMailer < ApplicationMailer
     @total_trade_users_volume = trade_scope.user_trades.sum(:amount)
     @total_trade_users_count  = trade_scope.user_trades.count
     @total_trade_bots_count   = trade_scope.bot_trades.count
-
 
     # Currency stat
     @currencies   = Currency.all
