@@ -8,10 +8,10 @@ class AddressBalancesQuery
       .each_with_object({}) { |r, a| a[r['key'].downcase] = r['sum'] }
   end
 
-  def service_balances
-    BelomorDepositAddress
+  def peatio_wallet_balances
+    BelomorWallet
       .connection
-      .execute('SELECT "key", sum("val"::decimal) FROM deposit_addresses, LATERAL jsonb_each_text(balances) AS each(KEY,val) WHERE kind = 1 AND client_application_id = 2 GROUP BY "key"')
+      .execute('SELECT "key", sum("val"::decimal) FROM wallets, LATERAL jsonb_each_text(balances) AS each(KEY,val) WHERE client_application_id = 2 GROUP BY "key"')
       .each_with_object({}) { |r, a| a[r['key'].downcase] = r['sum'] }
   end
 end
