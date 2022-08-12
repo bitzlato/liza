@@ -4,6 +4,7 @@ class BelomorWallet < BelomorRecord
   self.table_name = 'wallets'
 
   belongs_to :blockchain, class_name: 'BelomorBlockchain'
+  belongs_to :client_application, class_name: 'BelomorClientApplication'
   has_many :currency_wallets, class_name: 'BelomorCurrencyWallet', foreign_key: 'wallet_id'
   has_many :currencies, class_name: 'BelomorCurrency', through: :currency_wallets
 
