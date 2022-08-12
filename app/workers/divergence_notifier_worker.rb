@@ -103,7 +103,7 @@ class DivergenceNotifierWorker
   def get_dashboard_html
     DashboardController.render :index, locals: {
       bitzlato_balances: BitzlatoWallet.market_balances,
-      system_balances: AddressBalancesQuery.new.service_balances,
+      system_balances: AddressBalancesQuery.new.peatio_wallet_balances,
       accountable_fee: AccountableFeeCalculator.new.call,
       adjustments: Adjustment.accepted.group(:currency_id, :category).sum(:amount)
     }
