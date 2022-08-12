@@ -41,26 +41,26 @@ class WalletLowBalanceCheckerWorker
   def perform
     current = {}
     messages = []
-    BelomorDepositAddress.service.active.each do |sda|
-      sda.available_balances.each do |c, b|
-        limit = BLOCKCHAIN_LIMITS.dig(sda.blockchain.key, c) || LIMITS[c]
+    BelomorWallet.joins(:client_application).where(client_applications: { key: 'peatio' }).active.each do |wallet|
+      wallet.available_balances.each do |c, b|
+        limit = BLOCKCHAIN_LIMITS.dig(wallet.blockchain.key, c) || LIMITS[c]
         next unless limit
-        next if TURNED_OFF[sda.blockchain.key]&.include?(c)
+        next if TURNED_OFF[wallet.blockchain.key]&.include?(c)
 
         if b.to_d < limit.to_d
           current['market'] ||= {}
-          current['market'][sda.id] ||= []
-          current['market'][sda.id] << c
+          current['market'][wallet.id] ||= []
+          current['market'][wallet.id] << c
         end
 
-        saved_value = saved_low_balances.dig('market', sda.id.to_s) || []
+        saved_value = saved_low_balances.dig('market', wallet.id.to_s) || []
 
         if b.to_d < limit.to_d && !saved_value.include?(c)
-          messages << ":exclamation: Низкий баланс кошелька (биржа): #{sda.blockchain.name} #{c.upcase}: #{b} < #{limit}"
+          messages << ":exclamation: Низкий баланс кошелька (биржа): #{wallet.name} #{c.upcase}: #{b} < #{limit}"
         end
 
         if b.to_d >= limit.to_d && saved_value.include?(c)
-          messages << ":white_check_mark: Баланс кошелька востановлен (биржа): #{sda.blockchain.name} #{c.upcase}: #{b} > #{limit}"
+          messages << ":white_check_mark: Баланс кошелька востановлен (биржа): #{wallet.name} #{c.upcase}: #{b} > #{limit}"
         end
       end
     end
