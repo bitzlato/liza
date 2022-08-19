@@ -21,11 +21,17 @@ class ExpanseReport < Report
     private
 
     def q
-      { reference_type_in: %w[Wallet Withdraw], created_at_gt: form.time_from, created_at_lteq: form.time_to }
+      { created_at_gt: form.time_from, created_at_lteq: form.time_to }
     end
 
     def transaction_fees
-      Transaction.ransack(q).result.joins(:blockchain).group(:'blockchains.name', :fee_currency_id).sum(:fee)
+      BelomorBlockchainTransaction.accountable_fee
+                                  .peatio
+                                  .ransack(q)
+                                  .result
+                                  .joins(:blockchain)
+                                  .group(:'blockchains.name', :fee_currency_id)
+                                  .sum(:fee)
     end
   end
 end
