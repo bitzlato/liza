@@ -17,6 +17,7 @@ ru:
       member_makers_trades_report: Кол-во сделок user-мэйкеров
       active_members_report: Кол-во активных пользователей
       bots_balance_report: Общий баланс по ботам
+      summary_report: Сводный отчет(Доходы - Расходы)
       wallet:
         one: Системный кошелёк
         many: Системные кошельки

@@ -1,0 +1,34 @@
+h1= t '.summary'
+hr
+table.table.table-striped.table-narrow.table-bordered
+  thead.thead-dark
+    tr
+      th= t '.currency_id'
+      th= t '.revenue'
+      th= t '.expanse'
+      th= t '.total'
+      th
+        = t '.total_$'
+  tbody
+    - results[:currencies].each do |currency_id|
+      tr
+        td.nowrap= currency_id
+        td.nowrap= results[:revenues][currency_id].to_d
+        td.nowrap= results[:expanses][currency_id].to_d
+        td.nowrap= results[:total][currency_id].to_d
+        td.nowrap
+          = number_to_currency(results[:total][currency_id].to_d * get_rate_for(currency_id), unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+
+    - res = results[:currencies].each_with_object({revenues: 0, expanses: 0, total: 0}) do |currency_id, hsh|
+      - hsh[:revenues] += results[:revenues][currency_id].to_d * get_rate_for(currency_id)
+      - hsh[:expanses] += results[:expanses][currency_id].to_d * get_rate_for(currency_id)
+      - hsh[:total]    += results[:total][currency_id].to_d * get_rate_for(currency_id)
+
+    tr
+      td.nowrap= t '.total_$'
+      td.nowrap
+        = number_to_currency(res[:revenues], unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      td.nowrap
+        = number_to_currency(res[:expanses], unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+      td.nowrap
+        = number_to_currency(res[:total], unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
