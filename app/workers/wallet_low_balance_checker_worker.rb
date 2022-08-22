@@ -17,7 +17,6 @@ class WalletLowBalanceCheckerWorker
 
   LIMITS = {
     'usdt'  => 3000,
-    'usdc'  => 500,
     'btc'   => 0.1,
     'bnb-bep20'   => 7,
     'ht-hrc20'    =>100,
@@ -29,7 +28,6 @@ class WalletLowBalanceCheckerWorker
     'btc' => 0.15,
     'eth' => 1.2,
     'usdt' => 3000,
-    'usdc' => 1000
   }
 
   STATUS_FILE = Rails.root.join('./tmp/wallet_low_balances')
