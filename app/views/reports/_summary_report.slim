@@ -17,12 +17,12 @@ table.table.table-striped.table-narrow.table-bordered
         td.nowrap= results[:expanses][currency_id].to_d
         td.nowrap= results[:total][currency_id].to_d
         td.nowrap
-          = number_to_currency(results[:total][currency_id].to_d * get_rate_for(currency_id), unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
+          = number_to_currency(results[:total][currency_id].to_d * get_rate_for(currency_id).to_d, unit: '$', format: "%u%n", precision: 2, delimiter: ' ')
 
     - res = results[:currencies].each_with_object({revenues: 0, expanses: 0, total: 0}) do |currency_id, hsh|
-      - hsh[:revenues] += results[:revenues][currency_id].to_d * get_rate_for(currency_id)
-      - hsh[:expanses] += results[:expanses][currency_id].to_d * get_rate_for(currency_id)
-      - hsh[:total]    += results[:total][currency_id].to_d * get_rate_for(currency_id)
+      - hsh[:revenues] += results[:revenues][currency_id].to_d * get_rate_for(currency_id).to_d
+      - hsh[:expanses] += results[:expanses][currency_id].to_d * get_rate_for(currency_id).to_d
+      - hsh[:total]    += results[:total][currency_id].to_d * get_rate_for(currency_id).to_d
 
     tr
       td.nowrap= t '.total_$'
