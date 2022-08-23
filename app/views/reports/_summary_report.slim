@@ -7,8 +7,7 @@ table.table.table-striped.table-narrow.table-bordered
       th= t '.revenue'
       th= t '.expanse'
       th= t '.total'
-      th
-        = t '.total_$'
+      th= t '.total_$'
   tbody
     - results[:currencies].each do |currency_id|
       tr

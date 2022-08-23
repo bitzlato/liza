@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+header = wb.styles.add_style b: true, alignment: { horizontal: :center }
+total_header = wb.styles.add_style b: true, alignment: { horizontal: :right }
+bold = wb.styles.add_style b: true
+
+wb.add_worksheet(name: report.name) do |sheet|
+  results = report.results
+
+  sheet.add_row [t('.currency', default: 'Currency'), t('.revenue', default: 'Revenue'), t('.expanse', default: 'Expanse'), t('.total', default: 'Total'), t('.total_$', default: 'Total $')], style: header
+  results[:currencies].each do |currency_id|
+    sheet.add_row([
+      currency_id,
+      results[:revenues][currency_id].to_d,
+      results[:expanses][currency_id].to_d,
+      results[:total][currency_id].to_d,
+      (results[:total][currency_id].to_d * get_rate_for(currency_id).to_d).round(2)
+    ])
+  end
+
+  res = results[:currencies].each_with_object({revenues: 0, expanses: 0, total: 0}) do |currency_id, hsh|
+    hsh[:revenues] += results[:revenues][currency_id].to_d * get_rate_for(currency_id).to_d
+    hsh[:expanses] += results[:expanses][currency_id].to_d * get_rate_for(currency_id).to_d
+    hsh[:total]    += results[:total][currency_id].to_d * get_rate_for(currency_id).to_d
+  end
+
+  sheet.add_row([
+    t('.total_$', default: 'Total $'),
+    res[:revenues].round(2),
+    res[:expanses].round(2),
+    res[:total].round(2)
+  ])
+end
