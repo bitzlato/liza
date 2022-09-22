@@ -6,6 +6,7 @@ set :stage, :production
 set :rails_env, :production
 set :user, 'liza'
 fetch(:default_env)[:rails_env] = :production
+set :puma_bind, %w(tcp://0.0.0.0:9601)
 
 server ENV['PRODUCTION_SERVER'],
        user: fetch(:user),
