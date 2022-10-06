@@ -2,16 +2,13 @@
 
 # frozen_string_literal: true
 
-raise 'No JWT_PUBLIC_KEY env variable' unless ENV.key? 'JWT_PUBLIC_KEY'
+Rails.configuration.x.jwt_public_key =
+  if ENV['JWT_PUBLIC_KEY'].present?
+    key = OpenSSL::PKey.read(Base64.urlsafe_decode64(ENV['JWT_PUBLIC_KEY']))
+    raise ArgumentError, 'JWT_PUBLIC_KEY was set to private key, however it should be public.' if key.private?
 
-Rails.configuration.x.jwt_public_key = OpenSSL::PKey
-                                       .read(Base64.urlsafe_decode64(ENV['JWT_PUBLIC_KEY']))
-                                       .yield_self do |key|
-  if key.private?
-    raise ArgumentError,
-          'JWT_PUBLIC_KEY was set to private key, however it should be public.'
+    key
   end
-end
 
 Rails.configuration.x.jwt_options = {
   algorithm: ENV.fetch('JWT_ALGORITHM', 'RS256'),

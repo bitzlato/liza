@@ -5,7 +5,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read('.ruby-version')
+ruby '2.7.4'
 
 gem 'dotenv-rails'
 
@@ -38,7 +38,7 @@ gem 'composite_primary_keys'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'aasm', '~> 5.0.8'
 gem 'active_link_to'
-gem 'auto_logger'
+# gem 'auto_logger'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'enumerize'
 gem 'env-tweaks', '~> 1.0.0'
