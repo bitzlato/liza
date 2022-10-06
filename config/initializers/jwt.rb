@@ -20,8 +20,6 @@ Rails.configuration.x.jwt_options = {
   verify_jti: true,
   aud: ENV['JWT_AUDIENCE'].to_s.split(',').reject(&:blank?),
   verify_aud: ENV['JWT_AUDIENCE'].present?,
-  sub: 'session',
-  verify_sub: true
 }.compact.tap do |jwt_options|
   leeway_options = {
     leeway: ENV['JWT_DEFAULT_LEEWAY'],
