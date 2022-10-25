@@ -8,12 +8,12 @@ class WalletLowBalanceCheckerWorker
 
   BLOCKCHAIN_LIMITS = {
     'tron-mainnet' => {
-      'usdt' => 10000
+      'usdt' => 10_000
     },
     'bsc-mainnet' => {
-      'usdt' => 5000
+      'usdt' => 10_000
     }
-  }
+  }.freeze
 
   LIMITS = {
     'usdt'  => 3000,
@@ -27,8 +27,8 @@ class WalletLowBalanceCheckerWorker
   BITZLATO_LIMITS = {
     'btc' => 0.15,
     'eth' => 1.2,
-    'usdt' => 3000,
-  }
+    'usdt' => 10_000
+  }.freeze
 
   STATUS_FILE = Rails.root.join('./tmp/wallet_low_balances')
 
@@ -78,11 +78,11 @@ class WalletLowBalanceCheckerWorker
       saved_value = saved_low_balances.dig('bitzlato', w.id.to_s) || []
 
       if b.to_d < BITZLATO_LIMITS[c].to_d && !saved_value.include?(c)
-        messages << ":exclamation: Низкий баланс кошелька(p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} < #{BITZLATO_LIMITS[c]}"
+        messages << ":exclamation: Низкий баланс кошелька (p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} < #{BITZLATO_LIMITS[c]}"
       end
 
       if b.to_d >= BITZLATO_LIMITS[c].to_d && saved_value.include?(c)
-        messages << ":white_check_mark: Баланс кошелька востановлен(p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} > #{BITZLATO_LIMITS[c]}"
+        messages << ":white_check_mark: Баланс кошелька востановлен (p2p): <#{bitzlato_wallet_url(id: w.id)}> #{c.upcase}: #{b} > #{BITZLATO_LIMITS[c]}"
       end
     end
 
