@@ -130,14 +130,7 @@ GEM
     ar_outer_joins (0.2.0)
       activerecord (>= 3.2)
     ast (2.4.2)
-    auto_logger (0.1.7)
-      activesupport
-      beautiful-log
-    awesome_print (1.8.0)
     base58 (0.2.3)
-    beautiful-log (0.2.2)
-      awesome_print (~> 1.8.0)
-      colorize (~> 0.8.1)
     bindex (0.8.1)
     bootsnap (1.7.4)
       msgpack (~> 1.0)
@@ -215,7 +208,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    colorize (0.8.1)
     composite_primary_keys (13.0.0)
       activerecord (~> 6.1.0)
     concurrent-ruby (1.1.10)
@@ -568,7 +560,6 @@ DEPENDENCIES
   aasm (~> 5.0.8)
   active_link_to
   active_record_extended (~> 2.1.1)
-  auto_logger
   bitzlato!
   bootsnap (>= 1.4.4)
   bugsnag
