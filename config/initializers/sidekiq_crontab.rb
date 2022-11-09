@@ -2,9 +2,10 @@
 
 # frozen_string_literal: true
 
-return if ENV.key? 'DOCKER_BUILD'
 
 CRONTAB_FILE = './config/sidekiq_crontab.yml'
+
+return if ENV.true? 'SKIP_MANAGEMENT_API'
 
 if Rails.env.staging? || Rails.env.production? || ENV.true?('LOAD_SIDEKIQ_CRONTAB')
   Sidekiq::Cron::Job.destroy_all!

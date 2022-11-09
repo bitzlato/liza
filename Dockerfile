@@ -1,25 +1,5 @@
-# syntax=docker/dockerfile:1
+FROM ruby:2.7.4-bullseye
 
-FROM ruby:2.7.4-slim-buster AS Builder
-
-ARG RAILS_ENV=production
-
-ENV RAILS_ENV=${RAILS_ENV} \
-  APP_HOME=/home/app
-
-RUN apt-get update -qq \
-      && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends curl git make gcc libpq-dev g++ shared-mime-info tzdata vim xz-utils automake pkg-config libtool libffi-dev libssl-dev libgmp-dev python-dev gnupg gnupg2
-
-WORKDIR $APP_HOME
-COPY Gemfile Gemfile.lock $APP_HOME/
-
-RUN gem update bundler --no-document
-RUN if [ "$RAILS_ENV" = "production" ]; then bundle config set --local without 'development:test:deploy'; fi
-RUN bundle config set --local system 'true' \
-      && bundle install --jobs=$(nproc) \
-      && bundle binstubs --all
-
-FROM Builder AS App
 # By default image is built using RAILS_ENV=production.
 # You may want to customize it:
 #
@@ -28,18 +8,22 @@ FROM Builder AS App
 # See https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables-build-arg
 #
 ARG RAILS_ENV=production
+ENV RAILS_ENV=${RAILS_ENV} APP_HOME=/home/app
 
-# Devise requires secret key to be set during image build or it raises an error
-# preventing from running any scripts.
-# Users should override this variable by passing environment variable on container start.
-ENV RAILS_ENV=${RAILS_ENV} \
-  APP_HOME=/home/app \
-  DOCKER_BUILD=true
+
+# Allow customization of user ID and group ID (it's useful when you use Docker bind mounts)
+ARG UID=1000
+ARG GID=1000
+
+# Set the TZ variable to avoid perpetual system calls to stat(/etc/localtime)
+ENV TZ=UTC
 
 # Create group "app" and user "app".
-RUN addgroup --gid 1000 --system app \
-      && adduser --system --home ${APP_HOME} --shell /sbin/nologin --ingroup app --uid 1000 app
+RUN groupadd -r --gid ${GID} app \
+  && useradd --system --create-home --home ${APP_HOME} --shell /sbin/nologin --no-log-init \
+  --gid ${GID} --uid ${UID} app
 
+# install nodejs && yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
@@ -47,32 +31,41 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
 RUN apt-get update -qq && apt-get install -y build-essential yarn
 
 WORKDIR $APP_HOME
-COPY Gemfile Gemfile.lock $APP_HOME/
 
-# Install dependencies
-RUN if [ "$RAILS_ENV" = "production" ]; then bundle config set --local without 'development:test:deploy'; fi
-RUN bundle config set --local system 'true' \
-      && bundle install --jobs=$(nproc) \
-      && bundle binstubs --all
+COPY --chown=app:app yarn.lock $APP_HOME/
+RUN yarn install --check-files
 
-RUN apt-get remove -yq git gcc g++ \
-      && chown -R app:app $APP_HOME
+# Upgrade RubyGems and install the latest Bundler version
+RUN gem update --system && \
+    gem install bundler
 
-USER app
+# Install dependencies defined in Gemfile.
+COPY --chown=app:app Gemfile Gemfile.lock .ruby-version $APP_HOME/
+RUN mkdir -p /opt/vendor/bundle \
+  && chown -R app:app /opt/vendor $APP_HOME \
+  && su app -s /bin/bash -c "bundle config --local deployment 'true'" \
+  && su app -s /bin/bash -c "bundle config --local path '/opt/vendor/bundle'" \
+  && su app -s /bin/bash -c "bundle config --local without 'development test'" \
+  && su app -s /bin/bash -c "bundle config --local clean 'true'" \
+  && su app -s /bin/bash -c "bundle config --local no-cache 'true'" \
+  && su app -s /bin/bash -c "bundle install --jobs=4"
 
-# Copy the main application.
+# Copy application sources.
 COPY --chown=app:app . $APP_HOME
 
-RUN yarn install --check-files
-RUN if [ "$RAILS_ENV" = "production" ]; then SECRET_KEY_BASE=secret SKIP_MANAGEMENT_API=true bundle exec rake assets:precompile; fi
+# Switch to application user.
+USER app
 
-# Expose port 3000 to the Docker host, so we can access it
-# from the outside.
+# Initialize application configuration & assets.
+# RUN chmod +x ./bin/logger
+RUN bundle exec rake tmp:create
+
+RUN ls -la config
+
+RUN SECRET_KEY_BASE=secret SKIP_MANAGEMENT_API=true bundle exec rake assets:precompile
+
+# Expose port 3000 to the Docker host, so we can access it from the outside.
 EXPOSE 3000
 
-# The main command to run when the container starts. Also
-# tell the Rails dev server to bind to all interfaces by
-# default.
-# COPY --chown=app:app config/docker/docker-entrypoint.sh /
-# RUN chmod +x /docker-entrypoint.sh
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+# The main command to run when the container starts.
+CMD ["bundle", "exec", "puma", "--config", "config/puma.rb"]
