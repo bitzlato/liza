@@ -1,5 +1,5 @@
 VERSION ?= latest
-REPO=barong
+REPO=liza
 REGISTRY=nexus.lgk.one
 IMAGE_NAME=${REGISTRY}/${REPO}:${VERSION}
 
