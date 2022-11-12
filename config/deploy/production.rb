@@ -8,7 +8,7 @@ set :user, 'liza'
 fetch(:default_env)[:rails_env] = :production
 set :puma_bind, %w(tcp://0.0.0.0:9601)
 
-server ENV['PRODUCTION_SERVER'],
+server ENV['LIZA_PRODUCTION_SERVER'],
        user: fetch(:user),
        port: '22',
        roles: %w[sidekiq web app db bugsnag].freeze,
