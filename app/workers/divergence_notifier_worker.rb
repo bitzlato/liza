@@ -8,7 +8,7 @@ class DivergenceNotifierWorker
   STATUS_FILE = Rails.root.join('./tmp/divergence_exists')
 
   DIV_LIMITS = {
-    'btc' => 0.00022,
+    'btc' => 0.001,
     'eth' => 0.0031,
     'usdt' => 10,
     'ustc' => 10,
