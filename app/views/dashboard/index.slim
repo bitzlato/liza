@@ -7,7 +7,7 @@ table.table.table-condensed.table-striped.table-cross-row
         = column_tip 'P2P баланс + На системных кошельках + на депозитных счетах + Сторонние кошельки (Беломор)'
       th.text-right
         div Операционные активы по базе
-        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции - Компенсации + Незачисленные_депозиты + Свопы'
+        = column_tip 'Операционна_активы_по_базе - Блокчейн_комиссии - Инвестиции - Компенсации + Незачисленные_депозиты + Свопы - Подтверждающиеся_списания'
       th.text-right
         div Расчетный баланс на системных счетах
         = column_tip 'Депозиты - Списания + Трансферы - Комиссия_сети + Зарегистрированные_активы + Свопы'
@@ -40,6 +40,7 @@ table.table.table-condensed.table-striped.table-cross-row
       - ids = [currency_id] + currency.merged_tokens.ids
       - total_deposit = Deposit.accountable.where(currency_id: ids).sum(:amount)
       - total_withdraw = Withdraw.success.where(currency_id: ids).sum(:amount)
+      - confirming_withdrawals_amount = Withdraw.confirming.where(currency_id: ids).sum(:amount)
       - total_operations_amount = Operations::Revenue.where(currency_id: ids).sum('credit - debit')
       - total_operations_assets_credit = Operations::Asset.where(currency_id: ids).sum('credit - debit')
       - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
@@ -73,7 +74,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money paymant_address_amounts, currency, show_currency: false
         // 3
         td.text-right
-          = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount - compensation_amount + swaps_amount), currency_id, show_currency: false
+          = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount - compensation_amount + swaps_amount - confirming_withdrawals_amount), currency_id, show_currency: false
           .text-small.mt-2
             = link_to operations_assets_path(q: { currency_id_eq: currency_id} ) do
               = format_money total_operations_assets_credit, currency, show_currency: false
@@ -91,6 +92,8 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money total_skipped_deposits, currency_id, show_currency: false
             span.ml-2.mr-2= '+'
             = format_money swaps_amount, currency_id, show_currency: false
+            span.ml-2.mr-2= '-'
+            = format_money confirming_withdrawals_amount, currency_id, show_currency: false
           .text-small.mt-2
             = format_divergence total_balance - assets_amount, currency , show_currency: false
         // 4

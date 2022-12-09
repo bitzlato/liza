@@ -32,6 +32,7 @@ class Withdraw < PeatioRecord
   scope :completed, -> { where(aasm_state: COMPLETED_STATES) }
   scope :uncompleted, -> { where.not(aasm_state: COMPLETED_STATES) }
   scope :succeed_processing, -> { where(aasm_state: SUCCEED_PROCESSING_STATES) }
+  scope :confirming, -> { where(aasm_state: :confirming) }
   scope :last_24_hours, -> { where('created_at > ?', 24.hour.ago) }
   scope :last_1_month, -> { where('created_at > ?', 1.month.ago) }
   scope :locked, -> { where(is_locked: true) }
