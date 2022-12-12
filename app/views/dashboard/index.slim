@@ -72,6 +72,8 @@ table.table.table-condensed.table-striped.table-cross-row
             span.ml-2.mr-2= '+'
             = link_to payment_addresses_path(q: { currency_id_eq: currency_id, with_balances: true }) do
               = format_money paymant_address_amounts, currency, show_currency: false
+            span.ml-2.mr-2= '+'
+            = format_money belomor_balance, currency, show_currency: false
         // 3
         td.text-right
           = format_money assets_amount = (total_operations_assets_credit - ids.sum { |id| accountable_fee[id].to_d } + total_skipped_deposits - investment_amount - compensation_amount + swaps_amount - confirming_withdrawals_amount), currency_id, show_currency: false
