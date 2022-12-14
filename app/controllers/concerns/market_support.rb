@@ -13,6 +13,6 @@ module MarketSupport
 
   def market
     market_id = params.dig(:q, :market_id_eq)
-    Market.find(market_id) if market_id.present?
+    Market.find_by!(symbol: market_id) if market_id.present?
   end
 end

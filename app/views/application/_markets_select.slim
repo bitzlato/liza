@@ -3,5 +3,5 @@ ul.nav.nav-pills.mb-3
     = link_to t('.all'), url_for(q: request.query_parameters.fetch(:q, {}).except(:market_id_eq)), class: active_class('nav-link', market.nil?)
   - Market.order(:id).each do |m|
     li.nav-item
-      = link_to m, 
-        url_for(q: request.query_parameters.fetch(:q, {}).merge(market_id_eq: m.id)), class: active_class('nav-link', market == m)
+      = link_to m,
+        url_for(q: request.query_parameters.fetch(:q, {}).merge(market_id_eq: m.symbol)), class: active_class('nav-link', market == m)
