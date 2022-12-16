@@ -8,26 +8,34 @@ class RevenuesReport < Report
     # rubocop:disable Metrics/MethodLength
     def perform
       currency_fees = {}
-      markets = Market.enabled.ordered.each_with_object({}) { |m, a| a[m.symbol] = m.as_json }
+      markets = {}
       trades.each do |g|
         market_id, amount, volume = g
+        markets[market_id] ||= {}
         markets[market_id][:base_turnover] = amount
         markets[market_id][:quote_turnover] = volume
       end
       revenues_scope('member_id = maker_id').each_pair do |keys, amount|
         market_id, currency = keys
+        markets[market_id] ||= {}
         markets[market_id][currency] = amount
         currency_fees[currency] ||= 0
         currency_fees[currency] += amount
       end
       revenues_scope('member_id = taker_id and taker_id <> maker_id').each_pair do |keys, amount|
         market_id, currency = keys
+        markets[market_id] ||= {}
         markets[market_id][currency] = amount
         currency_fees[currency] ||= 0
         currency_fees[currency] += amount
       end
 
-      { records_count: markets.count + currency_fees.count, markets: markets, currency_fees: currency_fees }
+      markets = Market.ordered
+                      .where(symbol: markets.keys)
+                      .each_with_object({}) { |m, a| a[m.symbol] = m.as_json }
+                      .merge(markets)
+
+      { records_count: markets.size + currency_fees.count, markets: markets, currency_fees: currency_fees }
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
