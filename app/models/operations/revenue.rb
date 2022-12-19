@@ -12,6 +12,8 @@ module Operations
       where.not(member_id: [Member::DEEP_STONER_BOT_ID, Member::BARGAINER_BOT_ID]) if exclude
     end
 
+    scope :accountable, -> { where.not(reference_type: 'Adjustment') }
+
     def self.ransackable_scopes(auth_object = nil)
       [:exclude_bots]
     end

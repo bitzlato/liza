@@ -42,7 +42,7 @@ class StatsMailer < ApplicationMailer
       data
     end
 
-    @revenue_scope = Operations::Revenue.where(created_at: period)
+    @revenue_scope = Operations::Revenue.accountable.where(created_at: period)
 
     # Количество активных пользователей
     @active_users_count = @revenue_scope.select(:member_id).distinct.count
