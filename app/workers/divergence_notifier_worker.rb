@@ -18,33 +18,16 @@ class DivergenceNotifierWorker
     'trx' => 152
   }.freeze
 
+  RETRY_PAUSE = 30
+
   sidekiq_options queue: :reports
 
   def perform
-    data = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
-      saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
-    )
-    messages = data.map do |currency, columns|
-      columns.map  do |column, data|
-        new_amount = data['new_amount']
-        old_amount = data['old_amount']
-
-        if old_amount.nil? && new_amount.present?
-          "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
-        elsif old_amount.present? && new_amount.present?
-          if old_amount.to_d.abs < new_amount.abs
-            "\t :chart_with_upwards_trend:*#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
-          elsif old_amount.to_d.abs > new_amount.abs
-            "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
-          end
-        elsif old_amount.present? && new_amount.nil?
-          "\t :white_check_mark: *#{column}* Расхождение устранено:\n"
-        end
-      end.yield_self do |messages|
-        "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
-      end
-    end.select(&:present?)
-
+    messages = divergent_messages
+    if messages.present?
+      sleep RETRY_PAUSE
+      messages = divergent_messages
+    end
     return if messages.blank?
 
     messages << ':white_check_mark: Все расхождения устранены' if current_divergent_currencies.none?
@@ -58,12 +41,38 @@ class DivergenceNotifierWorker
 
   private
 
+  def divergent_messages
+    amounts = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
+      saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
+    )
+    amounts.map do |currency, columns|
+      columns.map  do |column, data|
+        new_amount = data['new_amount']
+        old_amount = data['old_amount']
+
+        if old_amount.nil? && new_amount.present?
+          "\t :exclamation: *#{column}*: Новое расхождение *#{new_amount} #{currency.upcase}*\n"
+        elsif old_amount.present? && new_amount.present?
+          if old_amount.to_d.abs < new_amount.abs
+            "\t :chart_with_upwards_trend: *#{column}*: Расхождение увеличилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
+          elsif old_amount.to_d.abs > new_amount.abs
+            "\t :chart_with_downwards_trend: *#{column}*: Расхождение уменьшилось ~#{old_amount}~ *#{new_amount} #{currency.upcase}*\n"
+          end
+        elsif old_amount.present? && new_amount.nil?
+          "\t :white_check_mark: *#{column}* Расхождение устранено:\n"
+        end
+      end.then do |messages|
+        "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
+      end
+    end.select(&:present?)
+  end
+
   def current_divergent_currencies
     @current_divergent_currencies ||= find_divergent_currencies
   end
 
   def find_divergent_currencies
-    page = Nokogiri::HTML(get_dashboard_html)
+    page = Nokogiri::HTML(fetch_dashboard_html)
     headers = page.css('.thead-dark tr th div').map(&:text)
     data = {}
 
@@ -100,7 +109,7 @@ class DivergenceNotifierWorker
     @dashboard_url ||= Rails.application.routes.url_helpers.url_for(controller: :dashboard, action: :index)
   end
 
-  def get_dashboard_html
+  def fetch_dashboard_html
     DashboardController.render :index, locals: {
       bitzlato_balances: BitzlatoWallet.market_balances,
       system_balances: AddressBalancesQuery.new.peatio_wallet_balances,
