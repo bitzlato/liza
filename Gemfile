@@ -42,7 +42,7 @@ gem 'active_link_to'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'enumerize'
 gem 'env-tweaks', '~> 1.0.0'
-gem 'jwt', github: 'jwt/ruby-jwt'
+gem 'jwt', '~> 2.3.0'
 gem 'jwt-multisig', '~> 1.0.0'
 gem 'jwt-rack', '~> 0.1.0', require: false
 gem 'memoist'
@@ -114,7 +114,7 @@ gem 'coffee-rails', '~> 5.0'
 
 gem 'carrierwave', '~> 2.2'
 
-gem 'bitzlato', github: 'finfex/bitzlato', branch: 'main'
+gem 'bitzlato', github: 'bitzlato/bitzlato', branch: 'main'
 gem 'sd_notify'
 
 gem 'bugsnag'
