@@ -18,7 +18,7 @@ class DivergenceNotifierWorker
     'trx' => 152
   }.freeze
 
-  RETRY_PAUSE = 30
+  RETRY_PAUSE = 45
 
   sidekiq_options queue: :reports
 
