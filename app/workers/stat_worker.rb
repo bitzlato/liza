@@ -8,6 +8,6 @@ class StatWorker
   def perform(args)
     period = args['period']
 
-    StatsMailer.send(period, date: Date.yesterday).deliver_now!
+    StatsMailer.send(period, date: Time.yesterday).deliver_now!
   end
 end

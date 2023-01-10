@@ -64,7 +64,8 @@ class StatsMailer < ApplicationMailer
 
 
     # Member stat
-    @new_users_count    = Member.where(created_at: period).count
+    @new_users_count   = Member.where(created_at: period).count
+    @total_users_count = Member.where("created_at <= ?", period.last).count
 
     # Markets stat
     @markets            = Market.active
