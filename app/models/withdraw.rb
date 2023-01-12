@@ -36,7 +36,6 @@ class Withdraw < PeatioRecord
   scope :last_24_hours, -> { where('created_at > ?', 24.hour.ago) }
   scope :last_1_month, -> { where('created_at > ?', 1.month.ago) }
   scope :locked, -> { where(is_locked: true) }
-  scope :accountable, -> { where(aasm_state: %i[confirming succeed]) }
 
   delegate :uid, to: :member, prefix: true
 
