@@ -39,8 +39,9 @@ table.table.table-condensed.table-striped.table-cross-row
       - currencies = [currency] + currency.merged_tokens
       - ids = [currency_id] + currency.merged_tokens.ids
       - total_deposit = Deposit.accountable.where(currency_id: ids).sum(:amount)
-      - total_withdraw = Withdraw.accountable.where(currency_id: ids).sum(:amount)
       - confirming_withdrawals_amount = Withdraw.confirming.where(currency_id: ids).sum(:amount)
+      - success_withdrawals_amount = Withdraw.success.where(currency_id: ids).sum(:amount)
+      - total_withdraw = confirming_withdrawals_amount + success_withdrawals_amount
       - total_operations_amount = Operations::Revenue.where(currency_id: ids).sum('credit - debit')
       - total_operations_assets_credit = Operations::Asset.where(currency_id: ids).sum('credit - debit')
       - investment_amount = ids.sum { |id| adjustments[[id, 'investment']].to_d }
@@ -148,7 +149,7 @@ table.table.table-condensed.table-striped.table-cross-row
               = format_money row[2], currency_id, show_currency: false
         // 7
         td.text-right
-          = format_divergence (total_deposit - total_withdraw + total_member_transfers) - (row[1] + row[2]) - total_operations_amount + investment_amount - total_skipped_deposits + asset_registration_amount + compensation_amount, currency, show_currency: false
+          = format_divergence (total_deposit - success_withdrawals_amount + total_member_transfers) - (row[1] + row[2]) - total_operations_amount + investment_amount - total_skipped_deposits + asset_registration_amount + compensation_amount, currency, show_currency: false
           .text-small.text-muted.mt-2
         // 8
         td.text-right
