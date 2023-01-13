@@ -23,10 +23,13 @@ class DivergenceNotifierWorker
   sidekiq_options queue: :reports
 
   def perform
-    messages = divergent_messages
+    current_divergent_currencies = find_divergent_currencies
+    messages = divergent_messages(current_divergent_currencies)
+
     if messages.present?
       sleep RETRY_PAUSE
-      messages = divergent_messages
+      current_divergent_currencies = find_divergent_currencies
+      messages = divergent_messages(current_divergent_currencies)
     end
     return if messages.blank?
 
@@ -41,7 +44,7 @@ class DivergenceNotifierWorker
 
   private
 
-  def divergent_messages
+  def divergent_messages(current_divergent_currencies)
     amounts = current_divergent_currencies.deep_transform_values { |v| { 'new_amount' => v } }.deep_merge(
       saved_divergent_currencies.deep_transform_values { |v| { 'old_amount' => v } }
     )
@@ -65,10 +68,6 @@ class DivergenceNotifierWorker
         "*#{currency.upcase}:*\n#{messages.join}" unless messages.compact.blank?
       end
     end.select(&:present?)
-  end
-
-  def current_divergent_currencies
-    @current_divergent_currencies ||= find_divergent_currencies
   end
 
   def find_divergent_currencies
