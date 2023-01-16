@@ -8,10 +8,13 @@ xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
   report.results[:markets].each_pair do |market, data|
     market = Market.find_by(symbol: market)
 
-    sheet.add_row [market.to_s, data[:base_turnover], data[market.base_unit]]
-    sheet.add_row [market.to_s, data[:quote_turnover], data[market.quote_unit]]
-    sheet.add_row [market.to_s, data[market.base_unit], data[market.base_unit]]
-    sheet.add_row [market.to_s, data[market.quote_unit], data[market.quote_unit]]
+    sheet.add_row([
+      market.to_s,
+      number_to_currency(data[:base_turnover], unit: market.base_unit, precision: 8),
+      number_to_currency(data[:quote_turnover], unit: market.quote_unit, precision: 8),
+      number_to_currency(data[market.base_unit], unit: market.base_unit, precision: 8),
+      number_to_currency(data[market.quote_unit], unit: market.quote_unit, precision: 8)
+    ])
   end
 
   sheet.add_row []
