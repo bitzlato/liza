@@ -26,8 +26,8 @@ set :repo_url, ENV.fetch('DEPLOY_REPO_URL', `git remote -v | grep origin | head 
 
 set :keep_releases, 10
 
-set :linked_files, %w[.env config/master.key config/settings.yml]
-set :linked_dirs, %w[log node_modules tmp/pids tmp/cache tmp/sockets tmp/divergence_exists tmp/wallet_low_balances public/assets public/uploads public/uploads public/packs]
+set :linked_files, %w[.env config/master.key config/settings.yml tmp/divergence_exists tmp/wallet_low_balances]
+set :linked_dirs, %w[log node_modules tmp/pids tmp/cache tmp/sockets public/assets public/uploads public/uploads public/packs]
 
 set :config_files, fetch(:linked_files)
 
