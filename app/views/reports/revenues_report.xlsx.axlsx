@@ -3,8 +3,8 @@
 xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
   render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
 
-  sheet.add_row [t('.fees_by_market', default: 'Fees By Market')]
-  sheet.add_row [t('.currency', default: 'Currency'), t('.base_turnover', 'Base Turnover'), t('.quote_turnover', default: 'Quote Turnover'), t('.makers_fee', 'Makers Fee'), t('.takers_fee', default: 'Takers Fee')]
+  sheet.add_row ['Fees By Market']
+  sheet.add_row ['Currency', 'Base Turnover', 'Quote Turnover', 'Makers Fee','Takers Fee']
   report.results[:markets].each_pair do |market, data|
     market = Market.find_by(symbol: market)
 
@@ -15,8 +15,8 @@ xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
   end
 
   sheet.add_row []
-  sheet.add_row [t('.fees_by_currency', default: 'Fees By Currency')]
-  sheet.add_row [t('.currency', 'Currency'), t('.fee', 'Fee')]
+  sheet.add_row ['Fees By Currency']
+  sheet.add_row ['Currency', 'Fee']
 
   report.results[:currency_fees].each_pair do |currency, amount|
     sheet.add_row [currency, amount]
