@@ -27,6 +27,6 @@ tbody
               = middot
             - else
               - par = d == :balance ? {} : { d.to_s+"_gt" => 0}
-              = link_to url_for([:operations, account.records_name, q: par.merge( account_id_eq: account.id, currency_id_eq: currency.id )]) do
+              = link_to url_for([:operations, account.records_name.to_sym, q: par.merge( account_id_eq: account.id, currency_id_eq: currency.id )]) do
                 = format_money data[d], currency
             = check_operations_amount(account)
