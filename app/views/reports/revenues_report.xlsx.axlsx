@@ -2,7 +2,6 @@
 
 wb = xlsx_package.workbook
 header = wb.styles.add_style b: true, alignment: { horizontal: :center }
-currency = wb.styles.add_style :num_fmt => 5
 
 wb.add_worksheet(name: report.name) do |sheet|
   render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
@@ -12,15 +11,13 @@ wb.add_worksheet(name: report.name) do |sheet|
   report.results[:markets].each_pair do |market, data|
     market = Market.find_by(symbol: market)
 
-    number = wb.styles.add_style :format_code => '#.########0\,00000000'
-
     sheet.add_row([
       market.to_s,
       number_to_currency(data[:base_turnover], unit: market.base_unit.upcase, precision: 8),
       number_to_currency(data[:quote_turnover], unit: market.quote_unit.upcase, precision: 8),
       number_to_currency(data[market.base_unit], unit: market.base_unit.upcase, precision: 8),
       number_to_currency(data[market.quote_unit], unit: market.quote_unit.upcase, precision: 8)
-    ], styles: [nil, number, currency, nil, nil])
+    ])
   end
 
   sheet.add_row []
