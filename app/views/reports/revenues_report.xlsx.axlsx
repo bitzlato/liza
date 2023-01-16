@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
+wb = xlsx_package.workbook
 header = wb.styles.add_style b: true, alignment: { horizontal: :center }
 
-xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+wb.add_worksheet(name: report.name) do |sheet|
   render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
 
   sheet.add_row ['Fees By Market'], style: header
