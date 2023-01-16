@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+
+xlsx_package.workbook.add_worksheet(name: report.name) do |sheet|
+  render 'present_form', sheet: sheet, form: report.form_object if report.form_object.present?
+
+  sheet.add_row [t('.fees_by_market')]
+  sheet.add_row [t('.currency'), t('.base_turnover'), t('.quote_turnover'), t('.makers_fee'), t('.takers_fee')]
+  report.results[:markets].each_pair do |market, data|
+    market = Market.find_by(symbol: market)
+
+    sheet.add_row [market.to_s, data[:base_turnover], data[market.base_unit]]
+    sheet.add_row [market.to_s, data[:quote_turnover], data[market.quote_unit]]
+    sheet.add_row [market.to_s, data[market.base_unit], data[market.base_unit]]
+    sheet.add_row [market.to_s, data[market.quote_unit], data[market.quote_unit]]
+  end
+
+  sheet.add_row []
+  sheet.add_row [t('.fees_by_currency')]
+  sheet.add_row [t('.currency'), t('.fee')]
+
+  report.results[:currency_fees].each_pair do |currency, amount|
+    sheet.add_row [currency, amount]
+  end
+end
