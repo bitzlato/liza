@@ -33,7 +33,7 @@ class WalletLowBalanceCheckerWorker
   STATUS_FILE = Rails.root.join('./tmp/wallet_low_balances')
 
   TURNED_OFF = {
-    'avax-mainnet' => ['usdc']
+    'avax-mainnet' => ['usdc', 'usdt', 'avax']
   }
 
   def perform
