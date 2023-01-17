@@ -8,10 +8,10 @@ class WalletLowBalanceCheckerWorker
 
   BLOCKCHAIN_LIMITS = {
     'tron-mainnet' => {
-      'usdt' => 10_000
+      'usdt' => 30_000
     },
     'bsc-mainnet' => {
-      'usdt' => 10_000
+      'usdt' => 20_000
     }
   }.freeze
 
